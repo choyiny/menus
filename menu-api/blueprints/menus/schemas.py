@@ -8,7 +8,9 @@ class TagSchema(Schema):
 
 class SectionSchema(Schema):
     name = fields.Str(example="A la carte")
-    image = fields.Url(description="Image for the section", example="https://via.placeholder.com/150")
+    image = fields.Url(
+        description="Image for the section", example="https://via.placeholder.com/150"
+    )
 
 
 class ItemSchema(Schema):

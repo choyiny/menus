@@ -36,4 +36,12 @@ APISPEC_SPEC = APISpec(
     produces=["application/json"],
     openapi_version="2.0.0",
     tags=TAGS,
+    securityDefinitions={
+        "Authorization": {
+            "description": "Basic Auth",
+            "in": "header",
+            "type": "basic",
+            "required": True,
+        },
+    },
 )

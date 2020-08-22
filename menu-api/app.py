@@ -11,6 +11,7 @@ from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 import config as c
 import loggers
+from cli import register_commands
 from extensions import logger
 from spec import APISPEC_SPEC
 
@@ -30,6 +31,8 @@ def create_app(for_celery=False, testing=False):
     )
 
     app.before_request(loggers.before_request)
+
+    register_commands(app)
 
     register_extensions(testing)
     register_blueprints(app)

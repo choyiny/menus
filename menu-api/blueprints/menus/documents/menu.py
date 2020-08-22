@@ -14,6 +14,7 @@ class Tag(EmbeddedDocument):
     """
     A tag for an item.
     """
+
     icon = StringField(required=True)
     text = StringField(required=True)
 
@@ -78,14 +79,6 @@ class Menu(Document):
         # combine it with section data
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
-            sectionized.append(
-                {
-                    "name": section_name,
-                    "menu_items": list_of_items
-                }
-            )
+            sectionized.append({"name": section_name, "menu_items": list_of_items})
 
-        return {
-            "name": self.name,
-            "sections": sectionized
-        }
+        return {"name": self.name, "sections": sectionized}
