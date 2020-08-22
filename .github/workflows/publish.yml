@@ -20,7 +20,7 @@ jobs:
       with:
         IMAGE_NAME: 'menu-api'
         TAG: 'latest'
-        DOCKERFILE_PATH: 'Dockerfile'
+        DOCKERFILE_PATH: 'menu-api/Dockerfile'
         BUILD_CONTEXT: 'menu-api'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
