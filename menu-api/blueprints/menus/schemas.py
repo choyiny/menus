@@ -1,16 +1,38 @@
 from marshmallow import Schema, fields
 
 
+class TagSchema(Schema):
+    icon = fields.Str(example="fas-star")
+    text = fields.Str(example="Chef Featured")
+
+
+class SectionSchema(Schema):
+    name = fields.Str(example="A la carte")
+    image = fields.Url(description="Image for the section", example="https://via.placeholder.com/150")
+
+
 class ItemSchema(Schema):
-    image_url = fields.Url()
+    image = fields.Url(example="https://via.placeholder.com/150")
     name = fields.Str(example="Meatball Pasta")
     price = fields.Str(example="$6.99")
-    tags = fields.List(fields.Str(), example=["Halal", "Vegan"])
-    sections = fields.List(fields.Str(), example=["A la carte"])
+    tags = fields.List(fields.Nested(TagSchema))
+    sections = fields.List(fields.Str(), example=["A la carte", "Chef's Featured"])
 
 
 class MenuSchema(Schema):
-    slug = fields.Str()
-    name = fields.Str()
+    slug = fields.Str(description="Slug of the menu", example="hollywood")
+    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    image = fields.Url(example="https://via.placeholder.com/150")
     menu_items = fields.List(fields.Nested(ItemSchema))
-    sections = fields.List(fields.Str())
+    sections = fields.List(fields.Nested(SectionSchema))
+
+
+class SectionItemSchema(Schema):
+    name = fields.Str(description="Name of section", example="A la carte")
+    menu_items = fields.List(fields.Nested(ItemSchema))
+
+
+class GetMenuSchema(Schema):
+    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    image = fields.Url(example="https://via.placeholder.com/150")
+    sections = fields.List(fields.Nested(SectionItemSchema, required=True))
