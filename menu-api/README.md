@@ -37,11 +37,3 @@ Remember to fill any necessary fields in `config.py`.
     ```
     (flask-starter-venv) $ flask run
     ```
-3. Start Celery worker
-    ```
-    (flask-starter-venv) $ celery worker -A worker.celery --loglevel=info
-    ```
-    
-### Setting up Blueprints
-Flask blueprints are like modules. To create a new one, you can copy the example blueprint, and modify the `__init__.py`
-to change the prefix url. Ensure that it is also included in `app.py`.
