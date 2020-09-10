@@ -1,4 +1,4 @@
-import {SectionInterface} from './SectionIterface';
+import { SectionInterface } from './SectionIterface';
 
 export interface MenuInterface {
   image: string;

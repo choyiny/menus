@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { SectionComponent } from './section/section.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent, SectionComponent, MenuItemComponent],

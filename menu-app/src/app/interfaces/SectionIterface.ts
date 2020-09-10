@@ -1,6 +1,6 @@
-import {MenuItemInterface} from './MenuItemInterface';
+import { MenuItemInterface } from './MenuItemInterface';
 
-export interface SectionInterface{
+export interface SectionInterface {
   name: string;
   menu_items: MenuItemInterface[];
 }

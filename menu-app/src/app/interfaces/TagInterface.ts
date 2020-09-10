@@ -1,4 +1,4 @@
-export interface TagInterface{
+export interface TagInterface {
   icon: string;
   text: string;
 }

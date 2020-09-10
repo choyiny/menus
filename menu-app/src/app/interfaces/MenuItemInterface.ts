@@ -1,9 +1,9 @@
-import {TagInterface} from './TagInterface';
+import { TagInterface } from './TagInterface';
 
-export interface MenuItemInterface{
+export interface MenuItemInterface {
   image: string;
   name: string;
   price: string;
-  sections: string [];
+  sections: string[];
   tags: TagInterface[];
 }
