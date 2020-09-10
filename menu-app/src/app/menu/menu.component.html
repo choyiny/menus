@@ -1,8 +1,10 @@
 <div *ngIf="menu" class="rectangle">
   <div class="head container-fluid">
-    <h1 [ngStyle]="{ 'font-size': '20px', margin: '2em' }">{{ menu.name }}</h1>
+    <h1 >{{ menu.name }}</h1>
     <div *ngFor="let section of menu.sections" class="row" [ngStyle]="{ margin: '2em' }">
-      <button class="col-sm text-center" (click)="scrollToSection(section.name)">{{ section.name }}</button>
+      <button class="col-sm text-center" (click)="scrollToSection(section.name)">
+        {{ section.name }}
+      </button>
     </div>
   </div>
   <div *ngFor="let section of menu.sections">
