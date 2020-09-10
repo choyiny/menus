@@ -28,4 +28,9 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  scrollToSection(id: string): void {
+    console.log(id);
+    document.getElementById(id).scrollIntoView();
+  }
+
 }
