@@ -1,0 +1,6 @@
+<div *ngIf="menu">
+  <h1>{{menu.name}}</h1>
+  <div *ngFor="let section of menu.sections">
+    <app-section [section]="section"></app-section>
+  </div>
+</div>
