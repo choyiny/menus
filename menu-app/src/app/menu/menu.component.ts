@@ -10,6 +10,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
   menu: MenuInterface;
+  showImage = true;
 
   constructor(
     private menuservice: MenuService,
@@ -32,4 +33,5 @@ export class MenuComponent implements OnInit {
   scrollToSection(id: string): void {
     document.getElementById(id).scrollIntoView();
   }
+
 }

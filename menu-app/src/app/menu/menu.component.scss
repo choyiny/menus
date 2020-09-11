@@ -1,11 +1,14 @@
 .rectangle{
   border: solid 0.5px #979797;
-  background-image: linear-gradient(to bottom, #ffffff 57%, #ced6e7);
   min-height: 100vh;
+  top: 0;
 }
 
 .head{
-  background: white;
+  background: #ffffff;;
+  box-shadow: 0 1.5px 6px 0 rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
 }
 
 h1{
@@ -13,7 +16,6 @@ h1{
   margin: 1em;
   font-weight: bold;
 }
-
 
 .scrolling-wrapper {
   overflow-x: scroll;
@@ -25,10 +27,10 @@ h1{
     color: white;
     border-radius: 20px;
     border-style: none;
-    padding: 10px;
+    padding: 7px;
     text-align: center;
-    margin: 2%;
-    display: inline-block;
+    margin: 0.5% 2% 2% 2%;
+    display: inline-block;;
   }
 }
 

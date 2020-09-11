@@ -1,5 +1,7 @@
 <div *ngIf="menu" class="rectangle">
   <div class="head">
+    <div *ngIf="showImage">
+    </div>
     <h1 >{{ menu.name }}</h1>
     <div class="scrolling-wrapper">
       <button *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
