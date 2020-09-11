@@ -13,13 +13,25 @@ h1{
   margin: 2em;
 }
 
-button{
-  background: black;
-  color: white;
-  border-radius: 20px;
-  border-style: none;
-  padding: 10px;
-  text-align: center;
-  margin: 1%;
-  display:inline-block;
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  button{
+    background: black;
+    color: white;
+    border-radius: 20px;
+    border-style: none;
+    padding: 10px;
+    text-align: center;
+    margin: 2%;
+    display: inline-block;
+  }
+}
+
+.horizontal {
+  display: flex;
+  justify-content: space-between;
 }

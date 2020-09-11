@@ -18,7 +18,9 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.slug;
-    this.getMenu(id);
+    if (id){
+      this.getMenu(id);
+    }
   }
 
   getMenu(id: string): void {
@@ -28,7 +30,6 @@ export class MenuComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-    console.log(id);
     document.getElementById(id).scrollIntoView();
   }
 }
