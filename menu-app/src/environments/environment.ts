@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  menu_api: 'http://127.0.0.1:5000/menus/'
+  menu_api: 'http://127.0.0.1:5000/menus/',
 };
 
 /*
