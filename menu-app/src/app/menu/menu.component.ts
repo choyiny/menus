@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MenuInterface } from '../interfaces/MenuInterface';
 import { MenuService } from '../services/menu.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -12,14 +12,11 @@ export class MenuComponent implements OnInit {
   menu: MenuInterface;
   showImage = true;
 
-  constructor(
-    private menuservice: MenuService,
-    private route: ActivatedRoute,
-  ) {}
+  constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.slug;
-    if (id){
+    if (id) {
       this.getMenu(id);
     }
   }
@@ -29,7 +26,6 @@ export class MenuComponent implements OnInit {
       this.menu = menu;
     });
   }
-
 
   @HostListener('window:scroll', ['$event'])
   checkScroll(): void {
@@ -43,7 +39,6 @@ export class MenuComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-
     const header = document.getElementById('header');
     const section = document.getElementById(id);
     const headerOffset = header.offsetHeight;
@@ -54,10 +49,9 @@ export class MenuComponent implements OnInit {
     } else {
       offsetPosition = sectionPosition - headerOffset;
     }
-    console.log({offsetPosition, headerOffset, sectionPosition} );
+    console.log({ offsetPosition, headerOffset, sectionPosition });
     window.scrollTo({
       top: offsetPosition,
     });
   }
-
 }
