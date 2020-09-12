@@ -1,7 +1,7 @@
-<div *ngIf="menu" class="rectangle">
+
+
+<div *ngIf="menu">
   <div class="head">
-    <div *ngIf="showImage">
-    </div>
     <h1 >{{ menu.name }}</h1>
     <div class="scrolling-wrapper">
       <button *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
@@ -9,8 +9,10 @@
       </button>
     </div>
   </div>
-  <div *ngFor="let section of menu.sections">
-    <app-section [section]="section" id="{{ section.name }}"></app-section>
+  <div class="rectangle scrolling-wrapper">
+    <div *ngFor="let section of menu.sections">
+      <app-section [section]="section" id="{{ section.name }}"></app-section>
+    </div>
   </div>
   <app-footer></app-footer>
 </div>
