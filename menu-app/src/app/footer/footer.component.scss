@@ -1,10 +1,14 @@
 h1 {
-  font-size: 15px;
+  font-size: 18px;
   padding-top: 2em;
+  font-weight: 300;
+
 }
 
 p{
-  font-size: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 0.5em;
 }
 
 footer{
@@ -16,5 +20,11 @@ footer{
   left: 0;
   bottom: 0;
   width: 100%;
+}
+
+img {
+  width: 150px;
+  height: 53px;
+  padding-bottom: 2em;
 }
 
