@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { MenuInterface } from '../interfaces/MenuInterface';
 import { MenuService } from '../services/menu.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -30,14 +30,30 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  scrollToSection(id: string): void {
 
+  @HostListener('window:scroll', ['$event'])
+  checkScroll(): void {
+    const scrollPosition = window.pageYOffset;
+
+    if (scrollPosition >= 150) {
+      this.showImage = false;
+    } else {
+      this.showImage = true;
+    }
+  }
+
+  scrollToSection(id: string): void {
 
     const header = document.getElementById('header');
     const section = document.getElementById(id);
     const headerOffset = header.offsetHeight;
     const sectionPosition = section.getBoundingClientRect().top;
-    const offsetPosition = sectionPosition + headerOffset;
+    let offsetPosition;
+    if (sectionPosition < 0) {
+      offsetPosition = sectionPosition + headerOffset;
+    } else {
+      offsetPosition = sectionPosition - headerOffset;
+    }
     console.log({offsetPosition, headerOffset, sectionPosition} );
     window.scrollTo({
       top: offsetPosition,

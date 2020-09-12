@@ -12,6 +12,10 @@
   overflow: hidden;
 }
 
+.top{
+  padding-top: 3em;
+}
+
 h1{
   font-size: 20px;
   margin: 1em;
@@ -32,7 +36,7 @@ h1{
     border-style: none;
     padding: 7px;
     text-align: center;
-    margin: 3px 6px% 20px 20px;
+    margin: 3px 6px 20px 20px;
     display: inline-block;
   }
 }
