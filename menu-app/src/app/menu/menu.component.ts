@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
   checkScroll(): void {
     const scrollPosition = window.pageYOffset;
 
-    if (scrollPosition >= 150) {
+    if (scrollPosition >= 15) {
       this.showImage = false;
     } else {
       this.showImage = true;
