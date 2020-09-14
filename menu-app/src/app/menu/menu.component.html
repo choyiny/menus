@@ -1,7 +1,10 @@
 <router-outlet></router-outlet>
 <div *ngIf="menu">
   <div class="head" [ngClass]="{ top: showImage }" id="header">
-    <h1>{{ menu.name }}</h1>
+    <div>
+      <h1>{{ menu.name }}</h1>
+      <p>{{menu.description}}</p>
+    </div>
     <div class="scrolling-wrapper">
       <button *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
         {{ section.name }}
