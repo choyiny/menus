@@ -6,4 +6,5 @@ export interface MenuItemInterface {
   price: string;
   sections: string[];
   tags: TagInterface[];
+  description: string;
 }
