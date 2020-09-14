@@ -43,8 +43,7 @@ export class MenuComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   checkScroll(): void {
     const scrollPosition = window.pageYOffset;
-
-    if (scrollPosition >= 15) {
+    if (scrollPosition > 0) {
       this.showImage = false;
     } else {
       this.showImage = true;
@@ -52,7 +51,6 @@ export class MenuComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-    window.scroll({top: 0});
     const headerOffset = document.getElementById('header').offsetHeight;
     const topOfElement = document.getElementById(id).getBoundingClientRect().top - headerOffset;
     console.log(topOfElement);
@@ -60,5 +58,4 @@ export class MenuComponent implements OnInit {
     this.selectedSection = id;
     console.log(this.selectedSection);
   }
-
 }
