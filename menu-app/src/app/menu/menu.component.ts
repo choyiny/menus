@@ -39,19 +39,8 @@ export class MenuComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-    const header = document.getElementById('header');
-    const section = document.getElementById(id);
-    const headerOffset = header.offsetHeight;
-    const sectionPosition = section.getBoundingClientRect().top;
-    let offsetPosition;
-    if (sectionPosition < 0) {
-      offsetPosition = sectionPosition + headerOffset;
-    } else {
-      offsetPosition = sectionPosition - headerOffset;
-    }
-    console.log({ offsetPosition, headerOffset, sectionPosition });
-    window.scrollTo({
-      top: offsetPosition,
-    });
+    const headerOffset = document.getElementById('header').offsetHeight;
+    const topOfElement = document.getElementById(id).getBoundingClientRect().top - headerOffset;
+    window.scroll({ top: topOfElement});
   }
 }
