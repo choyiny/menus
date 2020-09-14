@@ -5,16 +5,13 @@
 
 .head{
   background: #ffffff;
-  box-shadow: 0 1.5px 6px 0 rgba(0, 0, 0, 0.08);
+  border-width: thin;
   position: sticky ;
   top: 0;
   width: 100%;
   overflow: hidden;
+  transition: all 0.3s;
 
-}
-
-.top{
-  padding-top: 3em;
 }
 
 h1{
@@ -31,14 +28,14 @@ h1{
   white-space: nowrap;
 
   button{
-    background: black;
-    color: white;
-    border-radius: 20px;
-    border-style: none;
-    padding: 7px;
-    text-align: center;
-    margin: 3px 6px 20px 20px;
-    display: inline-block;
+    padding: 14px;
+    margin: 3px 6px 20px 0px;
+    border: none;
+    opacity: 0.2;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1824;
+    background-color: #ffffff;
   }
 }
 
@@ -49,5 +46,19 @@ p{
   color: #8c8b91;
 }
 
+.selected{
+  color: black;
+  font-size: 12px;
+}
+
+.bio{
+  border-bottom:  solid rgba(196, 208, 217, 0.5);
+  border-width: thin;
+  border-radius: 20px 20px 0px 0px;
+  background: #ffffff;
+}
 
 
+.image{
+  padding: 20%;
+}
