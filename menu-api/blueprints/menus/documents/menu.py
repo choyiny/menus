@@ -86,4 +86,9 @@ class Menu(Document):
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
             sectionized.append({"name": section_name, "menu_items": list_of_items})
-        return {"name": self.name, "description": self.description, "sections": sectionized, "slug": self.slug}
+        return {
+            "name": self.name,
+            "description": self.description,
+            "sections": sectionized,
+            "image": self.image,
+        }

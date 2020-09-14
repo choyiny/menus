@@ -39,5 +39,5 @@ class SectionItemSchema(Schema):
 class GetMenuSchema(Schema):
     name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
-    description = fields.Str(example='A cafe in Hollywood')
+    description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))

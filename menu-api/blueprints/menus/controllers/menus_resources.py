@@ -8,9 +8,7 @@ from ..documents import Menu, Item, Section
 from ..schemas import MenuSchema, GetMenuSchema
 
 
-@doc(
-    description="""Menu collection related operations"""
-)
+@doc(description="""Menu collection related operations""")
 class MenusResource(MenusBaseResource):
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
