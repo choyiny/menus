@@ -44,6 +44,9 @@ class Item(EmbeddedDocument):
     sections = ListField(StringField(required=True))
     # a list of sections this item is part of
 
+    description = StringField()
+    # description of menu item
+
 
 class Menu(Document):
     """
@@ -58,6 +61,9 @@ class Menu(Document):
 
     name = StringField(required=True)
     # name of this menu, usually the restaurant name
+
+    description = StringField()
+    # Description of menu
 
     menu_items = ListField(EmbeddedDocumentField(Item))
     # a list of menu items
@@ -80,5 +86,4 @@ class Menu(Document):
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
             sectionized.append({"name": section_name, "menu_items": list_of_items})
-
-        return {"name": self.name, "sections": sectionized}
+        return {"name": self.name, "description": self.description, "sections": sectionized, "slug": self.slug}
