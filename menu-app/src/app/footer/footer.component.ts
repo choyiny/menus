@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
+  // faFacebook = faFacebookSquare;
+  // faTwitter = faTwitter;
+  // faInstagram = faInstagram;
+
   constructor() {}
 
   ngOnInit(): void {}

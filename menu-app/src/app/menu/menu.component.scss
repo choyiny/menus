@@ -27,6 +27,7 @@ h1{
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  margin-left: 5px;
 
   button{
     padding: 14px;
@@ -44,6 +45,7 @@ h1{
     font-size: 18px;
     padding: 7px;
     box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
+    opacity: 0.2;
   }
 
   .selected{

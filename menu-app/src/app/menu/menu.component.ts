@@ -1,8 +1,8 @@
-import {Component, HostListener, Input, OnInit, AfterViewChecked} from '@angular/core';
+import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { MenuInterface } from '../interfaces/MenuInterface';
 import { MenuService } from '../services/menu.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import {style, state, animate, transition, trigger} from '@angular/animations';
+import { style, state, animate, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-menu',
@@ -10,20 +10,15 @@ import {style, state, animate, transition, trigger} from '@angular/animations';
   styleUrls: ['./menu.component.scss'],
   animations: [
     trigger('fade', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate(500, style({opacity: 1}))
-      ]),
-      transition(':leave', [
-        animate(500, style({opacity: 0}))
-      ])
-    ])
-  ]
+      transition(':enter', [style({ opacity: 0 }), animate(500, style({ opacity: 1 }))]),
+      transition(':leave', [animate(500, style({ opacity: 0 }))]),
+    ]),
+  ],
 })
-export class MenuComponent implements OnInit, AfterViewChecked{
+export class MenuComponent implements OnInit, AfterViewChecked {
   menu: MenuInterface;
   showImage = true;
-  @Input()selectedSection: string;
+  @Input() selectedSection: string;
   // blockChange = false;
   // willScroll = false;
   // scrollToId;
@@ -54,16 +49,16 @@ export class MenuComponent implements OnInit, AfterViewChecked{
   }
 
   scrollToSection(id: string): void {
-    if (window.scrollY === 0){
-      window.scrollTo(0, document.body.scrollHeight);
-    }
+    // if (window.scrollY === 0){
+    //   window.scrollTo(0, document.body.scrollHeight);
+    // }
     this.selectedSection = id;
     document.getElementById(id).scrollIntoView();
     const height = window.scrollY;
     const headerHeight = document.getElementById('header').offsetHeight;
-    console.log({height, headerHeight});
-    if (height){
-      window.scroll(0, height + headerHeight);
+    console.log({ height, headerHeight });
+    if (height) {
+      window.scroll(0, height - headerHeight);
     }
   }
 

@@ -1,17 +1,19 @@
 <router-outlet></router-outlet>
 <div *ngIf="menu">
-  <div class="head" id="header" >
-    <div *ngIf="showImage" [@fade] [ngStyle]="{'background': 'url('+ menu.image +')', 'width': '100%' }">
-      <div class="image">
-      </div>
-      <div class="bio" >
+  <div class="head" id="header">
+    <div *ngIf="showImage" [ngStyle]="{ background: 'url(' + menu.image + ')', width: '100%' }">
+      <div class="image"></div>
+      <div class="bio">
         <h1>{{ menu.name }}</h1>
-        <p>{{menu.description}}</p>
+        <p>{{ menu.description }}</p>
       </div>
     </div>
     <div class="scrolling-wrapper">
-      <button *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)"
-               [ngClass]="{'selected': this.selectedSection === section.name, 'button-small': !showImage}">
+      <button
+        *ngFor="let section of menu.sections"
+        (click)="scrollToSection(section.name)"
+        [ngClass]="{ selected: this.selectedSection === section.name, 'button-small': !showImage }"
+      >
         {{ section.name }}
       </button>
     </div>

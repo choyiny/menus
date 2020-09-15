@@ -1,17 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {TagInterface} from '../interfaces/TagInterface';
+import { Component, Input, OnInit } from '@angular/core';
+import { TagInterface } from '../interfaces/TagInterface';
 
 @Component({
   selector: 'app-tags',
   templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss']
+  styleUrls: ['./tags.component.scss'],
 })
 export class TagsComponent implements OnInit {
-  @Input()tag: TagInterface;
+  @Input() tag: TagInterface;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
