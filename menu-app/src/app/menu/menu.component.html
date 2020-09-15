@@ -11,7 +11,7 @@
     </div>
     <div class="scrolling-wrapper">
       <button *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)"
-              ng-class="{selected: section === 'A la carte'}" class="selected">{{ section.name }}
+               [ngClass]="{'selected': this.selectedSection === section.name}">{{ section.name }}
       </button>
     </div>
   </div>

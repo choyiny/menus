@@ -36,6 +36,11 @@ h1{
     color: #1a1824;
     background-color: #ffffff;
   }
+
+  .selected{
+    opacity: 1;
+    color: black;
+  }
 }
 
 p{
@@ -45,10 +50,6 @@ p{
   color: #8c8b91;
 }
 
-.selected{
-  color: black;
-  font-size: 12px;
-}
 
 .bio{
   border-bottom:  solid rgba(196, 208, 217, 0.5);
