@@ -1,0 +1,80 @@
+.rectangle{
+  min-height: 100vh;
+  margin-left: 20px;
+  border-radius: 0px 0px 30px 30px;
+}
+
+.head{
+  background: #ffffff;
+  border-width: thin;
+  position: sticky ;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+
+h1{
+  font-size: 30px;
+  margin-left: 20px;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  padding-top: 1em;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  margin-left: 5px;
+
+  button{
+    padding: 14px;
+    margin: 3px 6px 20px 0px;
+    border: none;
+    opacity: 0.2;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1824;
+    background: transparent;
+    transition: 0.2s;
+  }
+
+  .button-small{
+    font-size: 18px;
+    padding: 7px;
+    box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
+    opacity: 0.2;
+  }
+
+  .selected{
+    opacity: 1;
+    color: black;
+  }
+}
+
+p{
+  margin-left: 20px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  color: #8c8b91;
+}
+
+
+.bio{
+  border-bottom:  solid rgba(196, 208, 217, 0.5);
+  border-width: thin;
+  border-radius: 20px 20px 0px 0px;
+  background: #ffffff;
+}
+
+.image{
+  padding: 20%;
+}
+
+button:focus {
+  outline: 0;
+}
+
+

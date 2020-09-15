@@ -19,12 +19,14 @@ class ItemSchema(Schema):
     price = fields.Str(example="$6.99")
     tags = fields.List(fields.Nested(TagSchema))
     sections = fields.List(fields.Str(), example=["A la carte", "Chef's Featured"])
+    description = fields.Str(example="A Pasta with Meatballs")
 
 
 class MenuSchema(Schema):
     slug = fields.Str(description="Slug of the menu", example="hollywood")
     name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
+    description = fields.Str(example="A cafe in Hollywood")
     menu_items = fields.List(fields.Nested(ItemSchema))
     sections = fields.List(fields.Nested(SectionSchema))
 
@@ -37,4 +39,5 @@ class SectionItemSchema(Schema):
 class GetMenuSchema(Schema):
     name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
+    description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))

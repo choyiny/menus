@@ -1,0 +1,6 @@
+<div class="section">
+  <h1>{{ section.name }}</h1>
+  <div *ngFor="let item of section.menu_items">
+    <app-menu-item [item]="item"></app-menu-item>
+  </div>
+</div>

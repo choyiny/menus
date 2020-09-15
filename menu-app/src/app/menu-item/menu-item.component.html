@@ -1,0 +1,10 @@
+<div class="menu-item">
+  <div class="menu-price">
+    <h1 class="item">{{ item.name }}</h1>
+    <h1 class="price">{{ item.price }}</h1>
+  </div>
+  <p>{{ item.description }}</p>
+  <div *ngFor="let tag of item.tags">
+    <app-tags [tag]="tag"></app-tags>
+  </div>
+</div>
