@@ -11,7 +11,8 @@
     </div>
     <div class="scrolling-wrapper">
       <button *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)"
-               [ngClass]="{'selected': this.selectedSection === section.name}">{{ section.name }}
+               [ngClass]="{'selected': this.selectedSection === section.name, 'button-small': !showImage}">
+        {{ section.name }}
       </button>
     </div>
   </div>

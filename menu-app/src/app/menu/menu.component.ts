@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit, AfterViewChecked} from '@angular/core';
 import { MenuInterface } from '../interfaces/MenuInterface';
 import { MenuService } from '../services/menu.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -20,10 +20,13 @@ import {style, state, animate, transition, trigger} from '@angular/animations';
     ])
   ]
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, AfterViewChecked{
   menu: MenuInterface;
   showImage = true;
   @Input()selectedSection: string;
+  // blockChange = false;
+  // willScroll = false;
+  // scrollToId;
 
   constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
 
@@ -51,11 +54,23 @@ export class MenuComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-    const headerOffset = document.getElementById('header').offsetHeight;
-    const topOfElement = document.getElementById(id).getBoundingClientRect().top - headerOffset;
-    console.log(topOfElement);
-    window.scroll({ top: topOfElement});
+    if (window.scrollY === 0){
+      window.scrollTo(0, document.body.scrollHeight);
+    }
     this.selectedSection = id;
-    console.log(this.selectedSection);
+    document.getElementById(id).scrollIntoView();
+    const height = window.scrollY;
+    const headerHeight = document.getElementById('header').offsetHeight;
+    console.log({height, headerHeight});
+    if (height){
+      window.scroll(0, height + headerHeight);
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    // if (this.willScroll){
+    //   const headerSize = document.getElementById('header').offsetHeight;
+    //   document.get
+    // }
   }
 }

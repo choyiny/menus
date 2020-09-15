@@ -1,6 +1,7 @@
 .rectangle{
   min-height: 100vh;
   margin-left: 20px;
+  border-radius: 0px 0px 30px 30px;
 }
 
 .head{
@@ -12,6 +13,7 @@
   overflow: hidden;
   transition: all 0.3s;
 }
+
 
 h1{
   font-size: 30px;
@@ -34,7 +36,14 @@ h1{
     font-size: 24px;
     font-weight: 600;
     color: #1a1824;
-    background-color: #ffffff;
+    background: transparent;
+    transition: 0.2s;
+  }
+
+  .button-small{
+    font-size: 18px;
+    padding: 7px;
+    box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
   }
 
   .selected{
@@ -65,3 +74,5 @@ p{
 button:focus {
   outline: 0;
 }
+
+
