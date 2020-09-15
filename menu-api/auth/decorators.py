@@ -14,10 +14,6 @@ def with_current_user(f):
     @wraps(f)
     def wrapped(*args, **kwargs):
         # Check for Authorization header in the form of "Bearer <token>"
-
-        g.user = User.objects.first()
-        return f(*args, **kwargs)
-
         if "Authorization" not in request.headers:
             g.user = None
             return f(*args, **kwargs)
