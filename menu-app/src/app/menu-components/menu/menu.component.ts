@@ -41,7 +41,7 @@ export class MenuComponent implements OnInit, AfterViewChecked {
   @HostListener('window:scroll', ['$event'])
   checkScroll(): void {
     const scrollPosition = window.pageYOffset;
-    if (scrollPosition > 0) {
+    if (scrollPosition > 300) {
       this.showImage = false;
     } else {
       this.showImage = true;
