@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  <div class="scrolling-wrapper" [ngClass]="{sticky: !showImage}">
+  <div class="scrolling-wrapper" [ngClass]="{ sticky: !showImage }">
     <button
       *ngFor="let section of menu.sections"
       (click)="scrollToSection(section.name)"
