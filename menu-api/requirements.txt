@@ -11,7 +11,7 @@ flask_marshmallow===0.10.1
 marshmallow-sqlalchemy===0.21.0
 flask-apispec===0.8.8
 apispec===3.3.0
-webargs=6.1.1
+webargs===6.1.1
 
 # sending external requests
 requests==2.21.0
