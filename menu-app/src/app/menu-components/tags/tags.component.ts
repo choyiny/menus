@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TagInterface } from '../interfaces/TagInterface';
+import { TagInterface } from '../../interfaces/tag-interface';
 
 @Component({
   selector: 'app-tags',

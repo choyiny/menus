@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
-import { MenuInterface } from '../interfaces/MenuInterface';
-import { MenuService } from '../services/menu.service';
+import { MenuInterface } from '../../interfaces/menu-interface';
+import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { style, state, animate, transition, trigger } from '@angular/animations';
 

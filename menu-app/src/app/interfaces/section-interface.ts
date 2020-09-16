@@ -1,4 +1,4 @@
-import { MenuItemInterface } from './MenuItemInterface';
+import { MenuItemInterface } from './menu-item-interface';
 
 export interface SectionInterface {
   name: string;

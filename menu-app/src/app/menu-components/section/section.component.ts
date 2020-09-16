@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SectionInterface } from '../interfaces/SectionIterface';
+import { SectionInterface } from '../../interfaces/section-interface';
 
 @Component({
   selector: 'app-section',

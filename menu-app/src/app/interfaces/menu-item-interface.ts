@@ -1,4 +1,4 @@
-import { TagInterface } from './TagInterface';
+import { TagInterface } from './tag-interface';
 
 export interface MenuItemInterface {
   image: string;

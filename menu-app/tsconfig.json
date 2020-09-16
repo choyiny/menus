@@ -14,7 +14,8 @@
     "module": "es2020",
     "lib": ["es2018", "dom"],
     "paths": {
-      "root": ["src/app/*"]
+      "root": ["src/app/*"],
+      "menu-components": ["src/app/menu-components/*"]
     }
   }
 }

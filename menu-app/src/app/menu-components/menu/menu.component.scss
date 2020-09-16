@@ -1,21 +1,20 @@
-.rectangle{
+.rectangle {
   min-height: 100vh;
   margin-left: 20px;
   border-radius: 0px 0px 30px 30px;
 }
 
-.head{
+.head {
   background: #ffffff;
   border-width: thin;
-  position: sticky ;
+  position: sticky;
   top: 0;
   width: 100%;
   overflow: hidden;
   transition: all 0.3s;
 }
 
-
-h1{
+h1 {
   font-size: 30px;
   margin-left: 20px;
   margin-bottom: 0.5em;
@@ -29,7 +28,7 @@ h1{
   white-space: nowrap;
   margin-left: 5px;
 
-  button{
+  button {
     padding: 14px;
     margin: 3px 6px 20px 0px;
     border: none;
@@ -41,40 +40,37 @@ h1{
     transition: 0.2s;
   }
 
-  .button-small{
+  .button-small {
     font-size: 18px;
     padding: 7px;
     box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
     opacity: 0.2;
   }
 
-  .selected{
+  .selected {
     opacity: 1;
     color: black;
   }
 }
 
-p{
+p {
   margin-left: 20px;
   font-weight: 300;
   margin-bottom: 10px;
   color: #8c8b91;
 }
 
-
-.bio{
-  border-bottom:  solid rgba(196, 208, 217, 0.5);
+.bio {
+  border-bottom: solid rgba(196, 208, 217, 0.5);
   border-width: thin;
   border-radius: 20px 20px 0px 0px;
   background: #ffffff;
 }
 
-.image{
+.image {
   padding: 20%;
 }
 
 button:focus {
   outline: 0;
 }
-
-
