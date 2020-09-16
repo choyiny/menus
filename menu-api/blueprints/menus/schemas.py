@@ -44,6 +44,4 @@ class GetMenuSchema(Schema):
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
 
 
-import_args = {
-    'csv': fields.Field()
-}
+import_args = {"csv": fields.Field()}
