@@ -7,11 +7,15 @@
 .head {
   background: #ffffff;
   border-width: thin;
+  transition: all 0.3s;
+}
+
+.sticky{
   position: sticky;
   top: 0;
   width: 100%;
   overflow: hidden;
-  transition: all 0.3s;
+  background: #ffffff;
 }
 
 h1 {
