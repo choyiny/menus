@@ -1,11 +1,14 @@
 from flask import g
 from flask_apispec import marshal_with, use_kwargs, doc
+from webargs.flaskparser import use_args
+import csv
+from io import StringIO
 
 from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
-from ..documents import Menu, Item, Section
-from ..schemas import MenuSchema, GetMenuSchema
+from ..documents import Menu, Item, Section, Tag
+from ..schemas import MenuSchema, GetMenuSchema, import_args
 
 
 @doc(description="""Menu collection related operations""")
@@ -25,7 +28,47 @@ class MenusResource(MenusBaseResource):
         return menu
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Upload menu to server""")
+class ImportMenuResource(MenusBaseResource):
+    @use_args(import_args, location='files')
+    def post(self, args, slug):
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+        file_str = args['csv'].read()
+        reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
+        menu_items = []
+        total_sections = set()
+        for row in reader:
+            sections = [section.strip() for section in row['Sections'].split('|')]
+
+            menu_items.append(
+                Item(
+                    description=row['Description'],
+                    name=row['Name'],
+                    price=row['Price'],
+                    tags=self.get_tags(row['Tags']),
+                    sections=sections,
+                    image='https://via.placeholder.com/150')
+            )
+            # print(menu_items[-1])
+            total_sections = total_sections.union(sections)
+        menu.menu_items = menu_items
+        menu.sections = list(map(lambda x: Section(name=x, image='https://via.placeholder.com/150'), sections))
+        menu.save()
+        return "success"
+
+    def get_tags(self, tag_string):
+        menu_tags = []
+        if tag_string == '':
+            return menu_tags
+        tags = tag_string.split('|')
+        for tag in tags:
+            menu_tags.append(Tag(text=tag, icon='no-icon'))
+        return menu_tags
+
+
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
