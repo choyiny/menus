@@ -1,4 +1,5 @@
-from marshmallow import Schema, fields
+from marshmallow import Schema
+from webargs import fields
 
 
 class TagSchema(Schema):
@@ -41,3 +42,6 @@ class GetMenuSchema(Schema):
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
+
+
+import_args = {"csv": fields.Field()}
