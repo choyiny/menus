@@ -49,18 +49,13 @@ class ImportMenuResource(MenusBaseResource):
                     price=row["Price"],
                     tags=self.get_tags(row["Tags"]),
                     sections=sections,
-                    image="https://via.placeholder.com/150",
+                    image=None,
                 )
             )
             # print(menu_items[-1])
             total_sections = total_sections.union(sections)
         menu.menu_items = menu_items
-        menu.sections = list(
-            map(
-                lambda x: Section(name=x, image="https://via.placeholder.com/150"),
-                sections,
-            )
-        )
+        menu.sections = [Section(name=section, image=None) for section in total_sections]
         menu.save()
         return "success"
 
