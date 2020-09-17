@@ -10,7 +10,7 @@ import { TagService } from '../../services/tag.service';
 export class TagsComponent implements OnInit {
   @Input() tag: TagInterface;
 
-  private icon;
+  icon: string;
 
   constructor(private tagService: TagService) {}
 
