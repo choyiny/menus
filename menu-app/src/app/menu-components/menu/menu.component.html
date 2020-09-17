@@ -20,6 +20,7 @@
       [ngClass]="{ selected: this.selectedSection === section.name, 'button-small': !showImage }"
     >
       {{ section.name }}
+      <p class="section-description">{{section.description}}</p>
     </button>
   </div>
   <div class="menu-items">
