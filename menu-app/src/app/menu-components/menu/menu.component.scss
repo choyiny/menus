@@ -37,7 +37,6 @@
   top: 0;
   width: 100%;
   overflow: hidden;
-
 }
 
 .scrolling-wrapper {
@@ -55,6 +54,11 @@
     color: #1a1824;
     transition: all 0.3s;
     background-color: white;
+
+    .section-description {
+      font-size: 14px;
+      font-weight: 300;
+    }
 
     &:focus {
       outline: 0;
@@ -75,6 +79,3 @@
 .image {
   padding: 30%;
 }
-
-
-

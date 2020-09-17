@@ -22,6 +22,7 @@ class Tag(EmbeddedDocument):
 class Section(EmbeddedDocument):
     name = StringField(required=True)
     image = URLField()
+    description = StringField()
 
 
 class Item(EmbeddedDocument):
@@ -69,6 +70,7 @@ class Menu(Document):
     # a list of menu items
 
     sections = ListField(EmbeddedDocumentField(Section))
+
     # a list of sections in order
 
     def sectionized_menu(self) -> dict:
@@ -77,15 +79,30 @@ class Menu(Document):
         """
         # loop through all menus and then bucket it into different sections
         section_to_items = defaultdict(list)
+        name_to_section = {}
 
         for item in self.menu_items:
             for section in item.sections:
                 section_to_items[section].append(item)
 
+        for section in self.sections:
+            name_to_section[section.name] = section
+
+        print(name_to_section)
+
         # combine it with section data
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
-            sectionized.append({"name": section_name, "menu_items": list_of_items})
+            x = section_name in name_to_section
+            print(section_name, x)
+            sectionized.append(
+                {
+                    "name": section_name,
+                    "menu_items": list_of_items,
+                    "description": name_to_section[section_name].description,
+                }
+            )
+        print(sectionized)
         return {
             "name": self.name,
             "description": self.description,

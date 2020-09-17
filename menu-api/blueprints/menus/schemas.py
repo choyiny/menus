@@ -12,6 +12,9 @@ class SectionSchema(Schema):
     image = fields.Url(
         description="Image for the section", example="https://via.placeholder.com/150"
     )
+    description = fields.Str(
+        example="Piece by piece", description="Description of section"
+    )
 
 
 class ItemSchema(Schema):
@@ -35,6 +38,7 @@ class MenuSchema(Schema):
 class SectionItemSchema(Schema):
     name = fields.Str(description="Name of section", example="A la carte")
     menu_items = fields.List(fields.Nested(ItemSchema))
+    description = fields.Str(description="Name of section", example="Piece by piece")
 
 
 class GetMenuSchema(Schema):
