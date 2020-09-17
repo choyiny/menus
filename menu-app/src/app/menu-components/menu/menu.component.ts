@@ -49,17 +49,12 @@ export class MenuComponent implements OnInit, AfterViewChecked {
   }
 
   scrollToSection(id: string): void {
-    // if (window.scrollY === 0){
-    //   window.scrollTo(0, document.body.scrollHeight);
-    // }
-    this.selectedSection = id;
-    document.getElementById(id).scrollIntoView();
-    const height = window.scrollY;
-    const headerHeight = document.getElementById('header').offsetHeight;
-    console.log({ height, headerHeight });
-    if (height) {
-      window.scroll(0, height - headerHeight);
-    }
+    const element = document.getElementById(id);
+    const headerOffset = document.getElementById('wrapper').offsetHeight;
+    const elementPosition = element.offsetTop;
+    const offsetPosition = elementPosition - headerOffset;
+    document.documentElement.scrollTop = offsetPosition;
+    document.body.scrollTop = offsetPosition;
   }
 
   ngAfterViewChecked(): void {
