@@ -12,6 +12,6 @@ export class MenuService {
 
   constructor(private http: HttpClient) {}
   getMenu(slug: string): Observable<MenuInterface> {
-    return this.http.get<MenuInterface>(`${this.url}/${slug}`);
+    return this.http.get<MenuInterface>(`${this.url}/menus/${slug}`);
   }
 }
