@@ -1,10 +1,12 @@
 <div *ngIf="menu">
   <div class="header">
-    <div  [ngStyle]="{
-      background: 'url(' + menu.image + ')',
-      backgroundSize: '100%',
-      backgroundRepeat: 'no repeat'
-     }">
+    <div
+      [ngStyle]="{
+        background: 'url(' + menu.image + ')',
+        backgroundSize: '100%',
+        backgroundRepeat: 'no repeat'
+      }"
+    >
       <div class="image"></div>
       <div class="bio">
         <h1 class="name">{{ menu.name }}</h1>
@@ -12,15 +14,10 @@
       </div>
     </div>
   </div>
-  <div  class="scrolling-wrapper" [ngClass]="{ sticky: !showImage}" id="wrapper">
-    <button
-      class="menu-section"
-      *ngFor="let section of menu.sections"
-      (click)="scrollToSection(section.name)"
-      [ngClass]="{ selected: this.selectedSection === section.name, 'button-small': !showImage }"
-    >
+  <div class="scrolling-wrapper" [ngClass]="{ sticky: !showImage }" id="wrapper">
+    <button class="menu-section" *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
       {{ section.name }}
-      <p class="section-description">{{section.description}}</p>
+      <p class="section-description">{{ section.description }}</p>
     </button>
   </div>
   <div class="menu-items">
