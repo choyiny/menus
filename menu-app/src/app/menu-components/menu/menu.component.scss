@@ -37,13 +37,14 @@
   top: 0;
   width: 100%;
   overflow: hidden;
-  background: #ffffff;
+
 }
 
 .scrolling-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  background: #ffffff;
 
   .menu-section {
     padding: 14px 20px;
@@ -72,5 +73,8 @@
 }
 
 .image {
-  padding: 20%;
+  padding: 30%;
 }
+
+
+

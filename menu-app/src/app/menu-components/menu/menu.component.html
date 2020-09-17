@@ -1,6 +1,10 @@
 <div *ngIf="menu">
   <div class="header">
-    <div [ngStyle]="{ background: 'url(' + menu.image + ')', width: '100%' }">
+    <div  [ngStyle]="{
+      background: 'url(' + menu.image + ')',
+      backgroundSize: '100%',
+      backgroundRepeat: 'no repeat'
+     }">
       <div class="image"></div>
       <div class="bio">
         <h1 class="name">{{ menu.name }}</h1>
