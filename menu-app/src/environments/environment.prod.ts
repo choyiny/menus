@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  menu_api: 'http://menu.pickeasy.ca/api',
+  menu_api: 'https://menu.pickeasy.ca/api',
 };
