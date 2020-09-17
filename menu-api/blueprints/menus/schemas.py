@@ -12,7 +12,9 @@ class SectionSchema(Schema):
     image = fields.Url(
         description="Image for the section", example="https://via.placeholder.com/150"
     )
-    description = fields.Str(example="Piece by piece", description="Description of section")
+    description = fields.Str(
+        example="Piece by piece", description="Description of section"
+    )
 
 
 class ItemSchema(Schema):

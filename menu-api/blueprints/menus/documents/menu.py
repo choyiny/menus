@@ -90,11 +90,13 @@ class Menu(Document):
         # combine it with section data
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
-            sectionized.append({
-                "name": section_name,
-                "menu_items": list_of_items,
-                "description": name_to_section[section.name].description
-            })
+            sectionized.append(
+                {
+                    "name": section_name,
+                    "menu_items": list_of_items,
+                    "description": name_to_section[section.name].description,
+                }
+            )
         print(sectionized)
         return {
             "name": self.name,
