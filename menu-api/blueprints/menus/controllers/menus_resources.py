@@ -30,6 +30,7 @@ class MenusResource(MenusBaseResource):
 
 @doc(description="""Upload menu to server""")
 class ImportMenuResource(MenusBaseResource):
+    @marshal_with(GetMenuSchema)
     @use_args(import_args, location="files")
     def post(self, args, slug):
         menu = Menu.objects(slug=slug).first()
@@ -38,10 +39,9 @@ class ImportMenuResource(MenusBaseResource):
         file_str = args["csv"].read()
         reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
         menu_items = []
-        total_sections = set()
         for row in reader:
             sections = [section.strip() for section in row["Sections"].split("|")]
-
+            self.get_sections(row)
             menu_items.append(
                 Item(
                     description=row["Description"],
@@ -52,12 +52,11 @@ class ImportMenuResource(MenusBaseResource):
                     image=None,
                 )
             )
-            # print(menu_items[-1])
-            total_sections = total_sections.union(sections)
         menu.menu_items = menu_items
-        menu.sections = [Section(name=section, image=None) for section in total_sections]
+        menu.sections = [self.all_sections[section] for section in self.all_sections]
         menu.save()
-        return "success"
+        menu.reload()
+        return menu.sectionized_menu()
 
     def get_tags(self, tag_string):
         menu_tags = []
@@ -68,8 +67,26 @@ class ImportMenuResource(MenusBaseResource):
             menu_tags.append(Tag(text=tag, icon="no-icon"))
         return menu_tags
 
+    def get_sections(self, row):
+        section_list = [section.strip() for section in row["Sections"].split("|")]
+        for section in section_list:
+            if section not in self.all_sections:
+                self.all_sections[section] = Section(
+                    name=section,
+                    image=row['Section Image'],
+                    description=row['Section Description']
+                )
 
-@doc(description="""Menu element related operations""",)
+            if self.all_sections[section].image == '':
+                self.all_sections[section].image = None
+            if self.all_sections[section].description == '':
+                self.all_sections[section].description == ''
+
+    def __init__(self):
+        self.all_sections = {}
+
+
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
