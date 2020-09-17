@@ -5,9 +5,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 
-ARG baseHref=/
-
-RUN npm run build:prod -- --baseHref=$baseHref
+RUN npm run build:prod
 
 # Stage 2: serving the actual app
 FROM nginx:alpine
