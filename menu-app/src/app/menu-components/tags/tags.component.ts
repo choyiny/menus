@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TagInterface } from '../../interfaces/tag-interface';
+import { TagService } from '../../services/tag.service';
 
 @Component({
   selector: 'app-tags',
@@ -9,7 +10,11 @@ import { TagInterface } from '../../interfaces/tag-interface';
 export class TagsComponent implements OnInit {
   @Input() tag: TagInterface;
 
-  constructor() {}
+  private icon;
 
-  ngOnInit(): void {}
+  constructor(private tagService: TagService) {}
+
+  ngOnInit(): void {
+    this.icon = this.tagService.getTag(this.tag.text);
+  }
 }
