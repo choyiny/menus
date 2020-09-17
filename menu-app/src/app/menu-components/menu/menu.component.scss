@@ -32,19 +32,19 @@
   }
 }
 
+.sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+
+}
+
 .scrolling-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  background-color: white;
-
-  &.sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    overflow: hidden;
-    background: #ffffff;
-  }
+  background: #ffffff;
 
   .menu-section {
     padding: 14px 20px;
@@ -53,7 +53,7 @@
     font-size: 24px;
     font-weight: 600;
     color: #1a1824;
-    transition: all 0.5s;
+    transition: all 0.3s;
     background-color: white;
 
     &:focus {
@@ -73,5 +73,8 @@
 }
 
 .image {
-  padding: 20%;
+  padding: 30%;
 }
+
+
+
