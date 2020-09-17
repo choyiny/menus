@@ -73,20 +73,20 @@ class ImportMenuResource(MenusBaseResource):
             if section not in self.all_sections:
                 self.all_sections[section] = Section(
                     name=section,
-                    image=row['Section Image'],
-                    description=row['Section Description']
+                    image=row["Section Image"],
+                    description=row["Section Description"],
                 )
 
-            if self.all_sections[section].image == '':
+            if self.all_sections[section].image == "":
                 self.all_sections[section].image = None
-            if self.all_sections[section].description == '':
-                self.all_sections[section].description == ''
+            if self.all_sections[section].description == "":
+                self.all_sections[section].description == ""
 
     def __init__(self):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
