@@ -9,7 +9,7 @@ mongoengine==0.20.0
 marshmallow===3.8.0
 flask_marshmallow===0.10.1
 marshmallow-sqlalchemy===0.21.0
-flask-apispec===0.10.8
+flask-apispec===0.10.0
 apispec===3.3.0
 webargs===6.1.1
 
