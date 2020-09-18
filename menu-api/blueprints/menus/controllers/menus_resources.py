@@ -58,29 +58,34 @@ class ImportMenuResource(MenusBaseResource):
         menu.reload()
         return menu.sectionized_menu()
 
+    def parse(self, string):
+        return [elem.strip() for elem in string.split("|")]
+
     def get_tags(self, tag_string):
         menu_tags = []
         if tag_string == "":
             return menu_tags
-        tags = tag_string.split("|")
+        tags = self.parse(tag_string)
         for tag in tags:
             menu_tags.append(Tag(text=tag, icon="no-icon"))
         return menu_tags
 
     def get_sections(self, row):
-        section_list = [section.strip() for section in row["Sections"].split("|")]
-        for section in section_list:
-            if section not in self.all_sections:
-                self.all_sections[section] = Section(
-                    name=section,
+        section_list = self.parse(row['Sections'])
+        descriptions = self.parse(row['Section Description'])
+
+        for i in range(len(section_list)):
+            if section_list[i] not in self.all_sections:
+                self.all_sections[section_list[i]] = Section(
+                    name=section_list[i],
                     image=row["Section Image"],
-                    description=row["Section Description"],
+                    description=descriptions[i],
                 )
 
-            if self.all_sections[section].image == "":
-                self.all_sections[section].image = None
-            if self.all_sections[section].description == "":
-                self.all_sections[section].description == ""
+            if self.all_sections[section_list[i]].image == "":
+                self.all_sections[section_list[i]].image = None
+            if self.all_sections[section_list[i]].description == "":
+                self.all_sections[section_list[i]].description = None
 
     def __init__(self):
         self.all_sections = {}
