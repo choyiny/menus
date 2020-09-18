@@ -88,10 +88,10 @@ class Menu(Document):
         for section in self.sections:
             name_to_section[section.name] = section
 
+
         # combine it with section data
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
-            x = section_name in name_to_section
             sectionized.append(
                 {
                     "name": section_name,
