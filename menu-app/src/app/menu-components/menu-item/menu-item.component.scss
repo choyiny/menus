@@ -2,10 +2,11 @@
   border-bottom: solid 0.5px #dfe0e3;
   font-size: 12px;
   margin-top: 5px;
-}
 
-p {
-  font-weight: 100;
+  .item-description {
+    font-weight: 300;
+    color: rgba(26, 24, 36, 0.5);
+  }
 }
 
 .price {
@@ -15,6 +16,7 @@ p {
 .item {
   float: left;
 }
+
 h1 {
   font-size: 14px;
   font-weight: 500;
@@ -24,6 +26,6 @@ h1 {
   overflow: hidden;
 }
 
-.description{
+.description {
   margin-bottom: 10px;
 }

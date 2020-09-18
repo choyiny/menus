@@ -11,7 +11,5 @@ export class SectionComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.section);
-  }
+  ngOnInit(): void {}
 }

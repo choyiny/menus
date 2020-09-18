@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { faPepperHot } from '@fortawesome/free-solid-svg-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class TagService {
 
   constructor() {}
 
-  getTag(tag: string): any {
+  getTag(tag: string): IconDefinition {
     return this.tags[tag];
   }
 }

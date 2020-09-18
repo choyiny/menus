@@ -1,5 +1,4 @@
 <div class="tag">
-  <!--  <img src={{tag.icon}}>-->
-  <fa-icon [icon]="icon"></fa-icon>
+  <fa-icon *ngIf="icon" [icon]="icon"></fa-icon>
   {{ tag.text }}
 </div>

@@ -32,18 +32,28 @@
   }
 }
 
-.sticky {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  overflow: hidden;
-}
-
 .scrolling-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
   background: #ffffff;
+
+  &.sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    overflow-y: hidden;
+
+    .menu-section {
+      font-size: 18px;
+      margin: 0 2px 0 0;
+      padding: 9px 17px;
+    }
+
+    .menu-description {
+      font-size: 12px;
+    }
+  }
 
   .menu-section {
     padding: 14px 20px;
@@ -54,6 +64,7 @@
     color: #1a1824;
     transition: all 0.3s;
     background-color: white;
+    cursor: pointer;
 
     .section-description {
       font-size: 14px;
