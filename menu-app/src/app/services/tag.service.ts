@@ -8,7 +8,7 @@ import { faPepperHot } from '@fortawesome/free-solid-svg-icons';
 export class TagService {
   tags = {
     'Chef Featured': faCarrot,
-    spicy: faPepperHot,
+    Spicy: faPepperHot,
   };
 
   constructor() {}
