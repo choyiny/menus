@@ -111,6 +111,7 @@ class MenuResource(MenusBaseResource):
         """
         Replace attributes for Menu that matches slug.
         """
+
         if g.user is None:
             return {"description": "You do not have permission"}, 401
 
@@ -129,6 +130,12 @@ class MenuResource(MenusBaseResource):
 
         if kwargs.get("menu_items"):
             menu.menu_items = [Item(**item_dict) for item_dict in kwargs["menu_items"]]
+
+        if kwargs.get('image'):
+            menu.image = kwargs['image']
+
+        if kwargs.get('description'):
+            menu.description = kwargs['description']
 
         return menu.save()
 
