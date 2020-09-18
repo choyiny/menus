@@ -88,13 +88,10 @@ class Menu(Document):
         for section in self.sections:
             name_to_section[section.name] = section
 
-        print(name_to_section)
-
         # combine it with section data
         sectionized = []
         for section_name, list_of_items in section_to_items.items():
             x = section_name in name_to_section
-            print(section_name, x)
             sectionized.append(
                 {
                     "name": section_name,
@@ -102,7 +99,6 @@ class Menu(Document):
                     "description": name_to_section[section_name].description,
                 }
             )
-        print(sectionized)
         return {
             "name": self.name,
             "description": self.description,

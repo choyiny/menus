@@ -112,8 +112,6 @@ class MenuResource(MenusBaseResource):
         Replace attributes for Menu that matches slug.
         """
 
-        print(kwargs)
-
         if g.user is None:
             return {"description": "You do not have permission"}, 401
 
