@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TagInterface } from '../../interfaces/tag-interface';
 import { TagService } from '../../services/tag.service';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import { TagDisplay } from '../../interfaces/tag-display';
 
 @Component({
   selector: 'app-tags',
@@ -11,11 +12,11 @@ import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 export class TagsComponent implements OnInit {
   @Input() tag: TagInterface;
 
-  icon: IconDefinition;
+  tagDisplay: TagDisplay;
 
   constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
-    this.icon = this.tagService.getTag(this.tag.text);
+    this.tagDisplay = this.tagService.getTag(this.tag.text);
   }
 }

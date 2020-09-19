@@ -1,4 +1,6 @@
-<div class="tag">
-  <fa-icon *ngIf="icon" [icon]="icon"></fa-icon>
-  {{ tag.text }}
+<div class="tag" *ngIf="tagDisplay" [style.background-color]="tagDisplay.backgroundColor">
+  <span *ngFor="let icon of tagDisplay.icons">
+    <fa-icon [icon]="icon"></fa-icon>
+  </span>
+  {{ tagDisplay.text }}
 </div>
