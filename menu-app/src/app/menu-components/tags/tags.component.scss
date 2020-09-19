@@ -3,13 +3,13 @@
   color: white;
   border-radius: 20px;
   border-style: none;
-  padding: 5px 7px 5px 7px;
+  padding: 5px 18px;
   font-size: 10px;
   text-align: center;
   margin: 0px 5px 10px 0px;
   display: inline-block;
-  img {
-    width: 1%;
-    height: 1%;
+
+  fa-icon {
+    margin-right: 5px;
   }
 }

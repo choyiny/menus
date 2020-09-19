@@ -4,6 +4,11 @@
   border-radius: 0px 0px 30px 30px;
 }
 
+.background-image {
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
 .header {
   background: #ffffff;
   border-width: thin;
@@ -13,20 +18,11 @@
   .bio {
     border-radius: 20px 20px 0 0;
     background: #ffffff;
-    padding-bottom: 20px;
-
-    .name {
-      font-size: 30px;
-      margin-left: 20px;
-      margin-bottom: 0.5em;
-      font-weight: 600;
-      padding-top: 1em;
-    }
+    padding: 20px 0;
 
     .description {
       margin-left: 20px;
       font-weight: 300;
-      margin-bottom: 10px;
       color: #8c8b91;
     }
   }
@@ -87,6 +83,19 @@
   }
 }
 
-.image {
-  padding: 30%;
+.card-overlay {
+  height: 250px;
+  width: 100%;
+  display: flex;
+
+  .overlay-container {
+    align-self: flex-end;
+    color: white;
+    margin-left: 18px;
+    margin-bottom: 10px;
+
+    .name {
+      font-weight: 600;
+    }
+  }
 }

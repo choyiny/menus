@@ -1,15 +1,17 @@
 <div *ngIf="menu">
   <div class="header">
     <div
-      [ngStyle]="{
-        background: 'url(' + menu.image + ')',
-        backgroundSize: '100%',
-        backgroundRepeat: 'no repeat'
-      }"
+      [style.background-image]="
+        'linear-gradient(to bottom, rgba(255, 255, 255, 0.52), rgba(0, 0, 0, 0.73)), url(' + menu.image + ')'
+      "
+      class="background-image"
     >
-      <div class="image"></div>
+      <div class="card-overlay">
+        <div class="overlay-container">
+          <h1>{{ menu.name }}</h1>
+        </div>
+      </div>
       <div class="bio">
-        <h1 class="name">{{ menu.name }}</h1>
         <p class="description">{{ menu.description }}</p>
       </div>
     </div>
