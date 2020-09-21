@@ -187,7 +187,7 @@ class QRMenuResource(MenusBaseResource):
         template = Image.open('menu-api/assets/print template huge.png')
         for coord in self.generate_tuples(1065, 800):
             template.paste(img, coord)
-        return self.serve_pil_image(template)
+        return self.serve_pil_image(template, slug + '.png')
 
     def generate_tuples(self, x, y):
         """Mathematically generate coordinate tuple"""
@@ -201,8 +201,8 @@ class QRMenuResource(MenusBaseResource):
                 coords.append(boxify(x, y))
         return coords
 
-    def serve_pil_image(self, pil_img):
+    def serve_pil_image(self, pil_img, image_name):
         img_io = BytesIO()
         pil_img.save(img_io, 'png', quality=70)
         img_io.seek(0)
-        return send_file(img_io, mimetype='png')
+        return send_file(img_io, mimetype='png',  attachment_filename=image_name,as_attachment=True)
