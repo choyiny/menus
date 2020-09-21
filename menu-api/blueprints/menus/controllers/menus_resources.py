@@ -9,6 +9,7 @@ from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import MenuSchema, GetMenuSchema, import_args, GetAllMenusSchema
+import qrcode as qr
 
 
 @doc(description="""Menu collection related operations""")
@@ -163,3 +164,12 @@ class MenuResource(MenusBaseResource):
         menu.delete()
 
         return menu
+
+
+@doc(description="""Generate QR code of url on template""")
+class QRMenuResource(MenusBaseResource):
+    def get(self, slug):
+        """Generate QR code in template"""
+        url = 'https://menu.pickeasy.ca/menu/' + slug
+        img = qr.make(url)
+        return 'success'
