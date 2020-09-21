@@ -194,8 +194,8 @@ class QRMenuResource(MenusBaseResource):
         def boxify(x, y):
             return tuple((x, y, x + 950, y + 950))
 
-        for x in range(1075, 6040, 2475):
-            for y in range(815, 3880, 3035):
+        for x in range(1065, 6040, 2475):
+            for y in range(800, 3880, 3035):
                 coords.append(boxify(x, y))
         return coords
 
@@ -204,5 +204,7 @@ class QRMenuResource(MenusBaseResource):
         pil_img.save(img_io, "png", quality=70)
         img_io.seek(0)
         return send_file(
-            img_io, mimetype="png"
+            img_io, mimetype="png",
+            attachment_filename=image_name,
+            as_attachment=True
         )
