@@ -16,7 +16,6 @@ from ..documents import Menu, Item, Section, Tag
 from ..schemas import MenuSchema, GetMenuSchema, import_args
 
 
-
 @doc(description="""Menu collection related operations""")
 class MenusResource(MenusBaseResource):
     @marshal_with(MenuSchema)
