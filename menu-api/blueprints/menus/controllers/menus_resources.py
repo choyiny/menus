@@ -10,6 +10,7 @@ from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import MenuSchema, GetMenuSchema, import_args, GetAllMenusSchema
 import qrcode as qr
+from PIL import Image
 
 
 @doc(description="""Menu collection related operations""")
@@ -172,4 +173,22 @@ class QRMenuResource(MenusBaseResource):
         """Generate QR code in template"""
         url = 'https://menu.pickeasy.ca/menu/' + slug
         img = qr.make(url)
+        img = img.resize((950, 950))
+        template = Image.open('menu-api/assets/print template huge.png')
+        for coord in self.generate_tuples(1065, 800):
+            template.paste(img, coord)
+        template.show()
+        print(self.generate_tuples(1065, 800))
         return 'success'
+
+    def generate_tuples(self, x, y):
+        """Mathematically generate coordinate tuple"""
+        coords = []
+
+        def boxify(x, y):
+            return tuple((x, y, x + 950, y + 950))
+
+        for x in range(1065, 6030, 2475):
+            for y in range(800, 3840, 3035):
+                coords.append(boxify(x, y))
+        return coords
