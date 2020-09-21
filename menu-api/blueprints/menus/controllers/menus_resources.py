@@ -33,11 +33,10 @@ class MenusResource(MenusBaseResource):
 
 @doc(description="""get all the menus from the database""")
 class AllMenuResource(MenusBaseResource):
-
     @marshal_with(GetAllMenusSchema)
     def get(self):
         menus = [menu.sectionized_menu() for menu in Menu.objects()]
-        return {'menus': menus}
+        return {"menus": menus}
 
 
 @doc(description="""Upload menu to server""")
@@ -83,8 +82,8 @@ class ImportMenuResource(MenusBaseResource):
         return menu_tags
 
     def get_sections(self, row):
-        section_list = self.parse(row['Sections'])
-        descriptions = self.parse(row['Section Description'])
+        section_list = self.parse(row["Sections"])
+        descriptions = self.parse(row["Section Description"])
 
         for i in range(len(section_list)):
             if section_list[i] not in self.all_sections:
@@ -103,7 +102,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -143,11 +142,11 @@ class MenuResource(MenusBaseResource):
         if kwargs.get("menu_items"):
             menu.menu_items = [Item(**item_dict) for item_dict in kwargs["menu_items"]]
 
-        if kwargs.get('image'):
-            menu.image = kwargs['image']
+        if kwargs.get("image"):
+            menu.image = kwargs["image"]
 
-        if kwargs.get('description'):
-            menu.description = kwargs['description']
+        if kwargs.get("description"):
+            menu.description = kwargs["description"]
 
         return menu.save()
 
@@ -172,7 +171,7 @@ class MenuResource(MenusBaseResource):
 class QRMenuResource(MenusBaseResource):
     def get(self, slug):
         """Generate QR code in template"""
-        url = 'https://menu.pickeasy.ca/menu/' + slug
+        url = "https://menu.pickeasy.ca/menu/" + slug
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -181,13 +180,12 @@ class QRMenuResource(MenusBaseResource):
         )
         qr.add_data(url)
         qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
-        img = img.resize((910, 910))
-        img = ImageOps.expand(img, border=20, fill='black')
-        template = Image.open('menu-api/assets/print template huge.png')
+        img = qr.make_image(fill_color="white", back_color="black")
+        img = img.resize((950, 950))
+        template = Image.open("menu-api/assets/print template huge.png")
         for coord in self.generate_tuples(1065, 800):
             template.paste(img, coord)
-        return self.serve_pil_image(template, slug + '.png')
+        return self.serve_pil_image(template, slug + ".png")
 
     def generate_tuples(self, x, y):
         """Mathematically generate coordinate tuple"""
@@ -196,13 +194,15 @@ class QRMenuResource(MenusBaseResource):
         def boxify(x, y):
             return tuple((x, y, x + 950, y + 950))
 
-        for x in range(1065, 6030, 2475):
-            for y in range(800, 3840, 3035):
+        for x in range(1075, 6040, 2475):
+            for y in range(815, 3880, 3035):
                 coords.append(boxify(x, y))
         return coords
 
     def serve_pil_image(self, pil_img, image_name):
         img_io = BytesIO()
-        pil_img.save(img_io, 'png', quality=70)
+        pil_img.save(img_io, "png", quality=70)
         img_io.seek(0)
-        return send_file(img_io, mimetype='png', attachment_filename=image_name, as_attachment=True)
+        return send_file(
+            img_io, mimetype="png"
+        )
