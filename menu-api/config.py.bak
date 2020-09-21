@@ -12,3 +12,4 @@ TEST_MONGODB_URL = "mongomock://localhost/test"
 FRONTEND_URL = "http://localhost:4200"
 
 SENTRY_DSN = ""
+QR_CODE_ROOT_URL = 'https://menu.pickeasy.ca/menu/'

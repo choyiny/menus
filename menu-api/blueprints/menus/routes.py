@@ -18,7 +18,7 @@ def set_routes(app: Flask, bp: Blueprint, docs: FlaskApiSpec):
         (MenuResource, "/menus/<string:slug>", "user", ["GET", "PATCH", "DELETE"]),
         (ImportMenuResource, "/menus/<string:slug>/items/import", "import", ["POST"]),
         (AllMenuResource, "menus/all", "all", ["GET"]),
-        (QRMenuResource, "menus/generate_qr/<string:slug>", "QR", ["GET"]),
+        (QRMenuResource, "menus/<string:slug>/generate", "QR", ["GET"]),
     ]
 
     for resource, route, name, methods in resources:

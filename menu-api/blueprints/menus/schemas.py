@@ -48,8 +48,4 @@ class GetMenuSchema(Schema):
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
 
 
-class GetAllMenusSchema(Schema):
-    menus = fields.List(fields.Nested(GetMenuSchema))
-
-
 import_args = {"csv": fields.Field()}

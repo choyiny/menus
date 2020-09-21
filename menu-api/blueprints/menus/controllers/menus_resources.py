@@ -3,15 +3,17 @@ from flask_apispec import marshal_with, use_kwargs, doc
 from webargs.flaskparser import use_args
 from flask import send_file
 import csv
-from io import StringIO, BytesIO
+from io import BytesIO
+
+import qrcode
+from PIL import Image
 
 from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
-from ..schemas import MenuSchema, GetMenuSchema, import_args, GetAllMenusSchema
-import qrcode
-from PIL import Image, ImageOps
+from ..schemas import MenuSchema, GetMenuSchema, import_args
+
 
 
 @doc(description="""Menu collection related operations""")
@@ -33,6 +35,9 @@ class MenusResource(MenusBaseResource):
 
 @doc(description="""get all the menus from the database""")
 class AllMenuResource(MenusBaseResource):
+    class GetAllMenusSchema(Schema):
+        menus = fields.List(fields.Nested(GetMenuSchema))
+
     @marshal_with(GetAllMenusSchema)
     def get(self):
         menus = [menu.sectionized_menu() for menu in Menu.objects()]
@@ -205,6 +210,6 @@ class QRMenuResource(MenusBaseResource):
         img_io.seek(0)
         return send_file(
             img_io, mimetype="png",
-            attachment_filename=image_name,
-            as_attachment=True
+            # attachment_filename=image_name,
+            # as_attachment=True
         )
