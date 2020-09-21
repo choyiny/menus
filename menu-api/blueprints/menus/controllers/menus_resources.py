@@ -8,7 +8,7 @@ from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
-from ..schemas import MenuSchema, GetMenuSchema, import_args
+from ..schemas import MenuSchema, GetMenuSchema, import_args, GetAllMenusSchema
 
 
 @doc(description="""Menu collection related operations""")
@@ -26,6 +26,15 @@ class MenusResource(MenusBaseResource):
         menu = Menu(**menu_info).save()
 
         return menu
+
+
+@doc(description="""get all the menus from the database""")
+class AllMenuResource(MenusBaseResource):
+
+    @marshal_with(GetAllMenusSchema)
+    def get(self):
+        menus = [menu.sectionized_menu() for menu in Menu.objects()]
+        return {'menus': menus}
 
 
 @doc(description="""Upload menu to server""")
@@ -91,7 +100,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
