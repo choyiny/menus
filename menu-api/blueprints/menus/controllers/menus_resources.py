@@ -1,16 +1,17 @@
 from flask import g
 from flask_apispec import marshal_with, use_kwargs, doc
 from webargs.flaskparser import use_args
+from flask import send_file
 import csv
-from io import StringIO
+from io import StringIO, BytesIO
 
 from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import MenuSchema, GetMenuSchema, import_args, GetAllMenusSchema
-import qrcode as qr
-from PIL import Image
+import qrcode
+from PIL import Image, ImageOps
 
 
 @doc(description="""Menu collection related operations""")
@@ -172,14 +173,21 @@ class QRMenuResource(MenusBaseResource):
     def get(self, slug):
         """Generate QR code in template"""
         url = 'https://menu.pickeasy.ca/menu/' + slug
-        img = qr.make(url)
-        img = img.resize((950, 950))
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        qr.add_data(url)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
+        img = img.resize((910, 910))
+        img = ImageOps.expand(img, border=20, fill='black')
         template = Image.open('menu-api/assets/print template huge.png')
         for coord in self.generate_tuples(1065, 800):
             template.paste(img, coord)
-        template.show()
-        print(self.generate_tuples(1065, 800))
-        return 'success'
+        return self.serve_pil_image(template)
 
     def generate_tuples(self, x, y):
         """Mathematically generate coordinate tuple"""
@@ -192,3 +200,9 @@ class QRMenuResource(MenusBaseResource):
             for y in range(800, 3840, 3035):
                 coords.append(boxify(x, y))
         return coords
+
+    def serve_pil_image(self, pil_img):
+        img_io = BytesIO()
+        pil_img.save(img_io, 'png', quality=70)
+        img_io.seek(0)
+        return send_file(img_io, mimetype='png')
