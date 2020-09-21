@@ -7,6 +7,7 @@ from io import BytesIO
 
 import qrcode
 from PIL import Image
+from marshmallow import Schema, fields
 
 from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
@@ -199,8 +200,8 @@ class QRMenuResource(MenusBaseResource):
         def boxify(x, y):
             return tuple((x, y, x + 950, y + 950))
 
-        for x in range(1065, 6040, 2475):
-            for y in range(800, 3880, 3035):
+        for x in range(1075, 6040, 2475):
+            for y in range(820, 3880, 3035):
                 coords.append(boxify(x, y))
         return coords
 
