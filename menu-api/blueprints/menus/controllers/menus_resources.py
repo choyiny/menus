@@ -205,4 +205,4 @@ class QRMenuResource(MenusBaseResource):
         img_io = BytesIO()
         pil_img.save(img_io, 'png', quality=70)
         img_io.seek(0)
-        return send_file(img_io, mimetype='png',  attachment_filename=image_name,as_attachment=True)
+        return send_file(img_io, mimetype='png', attachment_filename=image_name, as_attachment=True)
