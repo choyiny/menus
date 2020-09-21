@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { faCarrot } from '@fortawesome/free-solid-svg-icons';
 import { faPepperHot } from '@fortawesome/free-solid-svg-icons';
+import { faHatChef } from '@fortawesome/pro-light-svg-icons';
 import { TagDisplay } from '../interfaces/tag-display';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class TagService {
   tags = {
     'Chef Featured': {
       text: "Chef's Featured",
-      icons: [faCarrot],
+      icons: [faHatChef],
       backgroundColor: 'black',
     },
     Recommended: {
