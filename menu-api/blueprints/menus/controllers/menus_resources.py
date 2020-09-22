@@ -13,7 +13,7 @@ from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
-from ..schemas import MenuSchema, GetMenuSchema, import_args
+from ..schemas import MenuSchema, GetMenuSchema, import_args, pagination_args
 import config
 
 
@@ -40,14 +40,15 @@ class AllMenuResource(MenusBaseResource):
         menus = fields.List(fields.Nested(GetMenuSchema))
 
     @marshal_with(GetAllMenusSchema)
-    def get(self, page):
-        page_size = config.PAGE_SIZE
+    @use_args(pagination_args, location="querystring")
+    def get(self, args):
+        limit = args["limit"]
+        page = args["page"]
         menus = [menu.sectionized_menu() for menu in Menu.objects()]
-        if page_size * (page - 1) > len(menus):
+        if limit * (page - 1) > len(menus):
             return {"menus": []}
         else:
-            print(page - 1, page)
-            return {"menus": menus[(page - 1) * page_size: page * page_size]}
+            return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -113,7 +114,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):

@@ -15,4 +15,3 @@ SENTRY_DSN = ""
 
 # Constants
 QR_CODE_ROOT_URL = 'https://menu.pickeasy.ca/menu/'
-PAGE_size = 5
