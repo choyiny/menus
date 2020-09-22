@@ -14,6 +14,7 @@ from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import MenuSchema, GetMenuSchema, import_args
+from ....config import QR_CODE_ROOT_URL
 
 
 @doc(description="""Menu collection related operations""")
@@ -107,7 +108,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -176,7 +177,7 @@ class MenuResource(MenusBaseResource):
 class QRMenuResource(MenusBaseResource):
     def get(self, slug):
         """Generate QR code in template"""
-        url = "https://menu.pickeasy.ca/menu/" + slug
+        url = 'https://menu.pickeasy.ca/menu/' + slug
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -199,8 +200,11 @@ class QRMenuResource(MenusBaseResource):
         def boxify(x, y):
             return tuple((x, y, x + 950, y + 950))
 
-        for x in range(1075, 6040, 2475):
-            for y in range(820, 3880, 3035):
+        coords_x = [1070, 3560, 6020]
+        coords_y = [820, 3840]
+
+        for x in coords_x:
+            for y in coords_y:
                 coords.append(boxify(x, y))
         return coords
 
@@ -210,6 +214,6 @@ class QRMenuResource(MenusBaseResource):
         img_io.seek(0)
         return send_file(
             img_io, mimetype="png",
-            # attachment_filename=image_name,
-            # as_attachment=True
+            attachment_filename=image_name,
+            as_attachment=True
         )
