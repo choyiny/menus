@@ -44,10 +44,10 @@ class AllMenuResource(MenusBaseResource):
         page_size = config.PAGE_SIZE
         menus = [menu.sectionized_menu() for menu in Menu.objects()]
         if page_size * (page - 1) > len(menus):
-            return {'menus': []}
+            return {"menus": []}
         else:
-            print(page-1, page)
-            return {"menus": menus[(page-1) * page_size: page * page_size]}
+            print(page - 1, page)
+            return {"menus": menus[(page - 1) * page_size : page * page_size]}
 
 
 @doc(description="""Upload menu to server""")
@@ -113,7 +113,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
