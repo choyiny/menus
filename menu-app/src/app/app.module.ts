@@ -17,6 +17,7 @@ import { MenuItemComponent } from './menu-components/menu-item/menu-item.compone
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
+    LayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
