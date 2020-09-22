@@ -14,7 +14,7 @@ from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import MenuSchema, GetMenuSchema, import_args
-from ....config import QR_CODE_ROOT_URL
+import config
 
 
 @doc(description="""Menu collection related operations""")
@@ -40,9 +40,14 @@ class AllMenuResource(MenusBaseResource):
         menus = fields.List(fields.Nested(GetMenuSchema))
 
     @marshal_with(GetAllMenusSchema)
-    def get(self):
+    def get(self, page):
+        page_size = config.PAGE_SIZE
         menus = [menu.sectionized_menu() for menu in Menu.objects()]
-        return {"menus": menus}
+        if page_size * (page - 1) > len(menus):
+            return {'menus': []}
+        else:
+            print(page-1, page)
+            return {"menus": menus[(page-1) * page_size: page * page_size]}
 
 
 @doc(description="""Upload menu to server""")
@@ -177,7 +182,7 @@ class MenuResource(MenusBaseResource):
 class QRMenuResource(MenusBaseResource):
     def get(self, slug):
         """Generate QR code in template"""
-        url = 'https://menu.pickeasy.ca/menu/' + slug
+        url = config.QR_CODE_ROOT_URL + slug
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -189,11 +194,11 @@ class QRMenuResource(MenusBaseResource):
         img = qr.make_image(fill_color="white", back_color="black")
         img = img.resize((950, 950))
         template = Image.open("menu-api/assets/print template huge.png")
-        for coord in self.generate_tuples(1065, 800):
+        for coord in self.generate_tuples():
             template.paste(img, coord)
         return self.serve_pil_image(template, slug + ".png")
 
-    def generate_tuples(self, x, y):
+    def generate_tuples(self):
         """Mathematically generate coordinate tuple"""
         coords = []
 
@@ -213,7 +218,5 @@ class QRMenuResource(MenusBaseResource):
         pil_img.save(img_io, "png", quality=70)
         img_io.seek(0)
         return send_file(
-            img_io, mimetype="png",
-            attachment_filename=image_name,
-            as_attachment=True
+            img_io, mimetype="png", attachment_filename=image_name, as_attachment=True
         )
