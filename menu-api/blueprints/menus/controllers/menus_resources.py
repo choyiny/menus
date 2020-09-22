@@ -113,7 +113,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
