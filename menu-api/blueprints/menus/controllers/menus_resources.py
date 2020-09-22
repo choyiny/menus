@@ -37,14 +37,14 @@ class MenusResource(MenusBaseResource):
 @doc(description="""get all the menus from the database""")
 class AllMenuResource(MenusBaseResource):
     class GetAllMenusSchema(Schema):
-        menus = fields.List(fields.Nested(GetMenuSchema))
+        menus = fields.List(fields.Nested(MenuSchema))
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
     def get(self, args):
         limit = args["limit"]
         page = args["page"]
-        menus = [menu.sectionized_menu() for menu in Menu.objects()]
+        menus = [menu for menu in Menu.objects()]
         if limit * (page - 1) > len(menus):
             return {"menus": []}
         else:
@@ -163,6 +163,7 @@ class MenuResource(MenusBaseResource):
         return menu.save()
 
     @marshal_with(ErrorResponseSchema, code=404)
+    @marshal_with(MenuSchema)
     @with_current_user
     def delete(self, slug):
         """
