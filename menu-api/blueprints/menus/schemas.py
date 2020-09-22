@@ -49,8 +49,8 @@ class GetMenuSchema(Schema):
 
 
 pagination_args = {
-    "page": fields.Int(description="Page number of table"),
-    "limit": fields.Int(description="How many entries per page"),
+    "page": fields.Int(description="Page number of table", default=1),
+    "limit": fields.Int(description="How many entries per page", default=5),
 }
 
 import_args = {"csv": fields.Field()}
