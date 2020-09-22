@@ -47,7 +47,7 @@ class AllMenuResource(MenusBaseResource):
             return {"menus": []}
         else:
             print(page - 1, page)
-            return {"menus": menus[(page - 1) * page_size : page * page_size]}
+            return {"menus": menus[(page - 1) * page_size: page * page_size]}
 
 
 @doc(description="""Upload menu to server""")
