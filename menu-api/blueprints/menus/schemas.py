@@ -54,3 +54,4 @@ pagination_args = {
 }
 
 import_args = {"csv": fields.Field()}
+image_args = {"image": fields.Field()}

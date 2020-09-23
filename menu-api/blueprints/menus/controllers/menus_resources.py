@@ -10,11 +10,18 @@ from PIL import Image
 from marshmallow import Schema, fields
 
 from auth.decorators import with_current_user
-from helpers import ErrorResponseSchema
+from helpers import ErrorResponseSchema, s3
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
-from ..schemas import MenuSchema, GetMenuSchema, import_args, pagination_args
+from ..schemas import (
+    MenuSchema,
+    GetMenuSchema,
+    import_args,
+    pagination_args,
+    image_args,
+)
 import config
+import uuid
 
 
 @doc(description="""Menu collection related operations""")
@@ -48,7 +55,7 @@ class AllMenuResource(MenusBaseResource):
         if limit * (page - 1) > len(menus):
             return {"menus": []}
         else:
-            return {"menus": menus[(page - 1) * limit: page * limit]}
+            return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -221,4 +228,37 @@ class QRMenuResource(MenusBaseResource):
         img_io.seek(0)
         return send_file(
             img_io, mimetype="png", attachment_filename=image_name, as_attachment=True
+        )
+
+
+class ImageMenuResource(MenusBaseResource):
+    @use_args(image_args, location="files")
+    @with_current_user
+    def post(self, args, slug, item_id):
+        """Upload image to server"""
+        image_bytes = args["image"].read()
+        loaded_image = Image.open(BytesIO(image_bytes))
+        out_img = BytesIO()
+        loaded_image.save(out_img, "PNG")
+        out_img.seek(0)
+        menu = Menu.objects(slug=slug).first()
+        for item in menu.menu_items:
+            if item.name == item_id:
+                item.image = self.upload_file(out_img)
+                menu.save()
+                return item.image
+
+    def upload_file(self, file):
+        filename = str(uuid.uuid4()) + ".png"
+        s3.put_object(
+            Bucket=config.S3_BUCKET_NAME,
+            Key=filename,
+            Body=file,
+            ACL="public-read",
+            ContentType="image/png",
+        )
+        return "https://%s.s3.%s.amazonaws.com/%s" % (
+            config.S3_BUCKET_NAME,
+            config.AWS_REGION,
+            filename,
         )

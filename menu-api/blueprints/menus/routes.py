@@ -8,6 +8,7 @@ from .controllers import (
     ImportMenuResource,
     AllMenuResource,
     QRMenuResource,
+    ImageMenuResource,
 )
 
 
@@ -19,6 +20,12 @@ def set_routes(app: Flask, bp: Blueprint, docs: FlaskApiSpec):
         (ImportMenuResource, "/menus/<string:slug>/items/import", "import", ["POST"]),
         (AllMenuResource, "menus/all", "all", ["GET"]),
         (QRMenuResource, "menus/<string:slug>/generate", "QR", ["GET"]),
+        (
+            ImageMenuResource,
+            "menus/<string:slug>/items/<item_id>/pictures/upload",
+            "Image",
+            ["POST"],
+        ),
     ]
 
     for resource, route, name, methods in resources:
