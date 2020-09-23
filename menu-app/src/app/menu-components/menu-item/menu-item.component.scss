@@ -9,6 +9,14 @@
   }
 }
 
+@media only screen and (min-width: 600px) {
+  .menu-item {
+    padding: 1em;
+    border-radius: 20px;
+    border: solid 0.5px #dfe0e3;
+  }
+}
+
 .price {
   float: right;
 }
