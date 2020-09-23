@@ -40,6 +40,7 @@
     top: 0;
     width: 100%;
     overflow-y: hidden;
+    overflow: hidden;
 
     .menu-section {
       font-size: 18px;
@@ -99,4 +100,21 @@
       font-weight: 600;
     }
   }
+}
+
+.desktop-header {
+  display: inline-block;
+}
+
+.desktopSection {
+  background: white;
+  margin: 4em 3em 1em 3em;
+  border-radius: 40px;
+}
+
+.desktop-description {
+  background: white;
+  margin: 4em 3em 1em 3em;
+  border-radius: 40px;
+  padding: 2em;
 }

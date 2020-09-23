@@ -3,6 +3,7 @@ import { MenuInterface } from '../../interfaces/menu-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { style, state, animate, transition, trigger } from '@angular/animations';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-menu',
@@ -19,17 +20,27 @@ export class MenuComponent implements OnInit, AfterViewChecked {
   menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
-  // blockChange = false;
-  // willScroll = false;
-  // scrollToId;
+  @Input() desktopMode: boolean;
 
-  constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
+  constructor(
+    private menuservice: MenuService,
+    private route: ActivatedRoute,
+    public breakpointObserver: BreakpointObserver
+  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.slug;
     if (id) {
       this.getMenu(id);
     }
+
+    this.breakpointObserver.observe(['(min-width: 600px)']).subscribe((mode: BreakpointState) => {
+      if (mode.matches) {
+        this.desktopMode = true;
+      } else {
+        this.desktopMode = false;
+      }
+    });
   }
 
   getMenu(id: string): void {

@@ -1,7 +1,11 @@
 <div class="section">
   <h1>{{ section.name }}</h1>
-  <p>{{section.description}}</p>
-  <div *ngFor="let item of section.menu_items">
-    <app-menu-item [item]="item"></app-menu-item>
+  <p>{{ section.description }}</p>
+  <div class="row">
+    <app-menu-item
+      *ngFor="let item of section.menu_items"
+      [item]="item"
+      class="col-md-4 col-sm-6 col-12"
+    ></app-menu-item>
   </div>
 </div>

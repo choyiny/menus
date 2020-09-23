@@ -8,7 +8,7 @@ import { SectionInterface } from '../../interfaces/section-interface';
 })
 export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
-
+  @Input() desktopMode: boolean;
   constructor() {}
 
   ngOnInit(): void {}
