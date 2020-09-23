@@ -35,8 +35,8 @@
     </button>
   </div>
   <div *ngIf="desktopMode" class="desktop-description">
-    <h1>{{ menu.name }}</h1>
-    <h2>{{ menu.description }}</h2>
+    <h1 class="desc">{{ menu.name }}</h1>
+    <p class="paragraph">{{ menu.description }}</p>
   </div>
   <div [ngClass]="{ desktopSection: desktopMode }">
     <div *ngFor="let section of menu.sections">
