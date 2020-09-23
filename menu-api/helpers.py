@@ -1,6 +1,7 @@
+import boto3
 from flask_apispec.views import MethodResource
 from marshmallow import Schema, fields
-import boto3, botocore
+
 import config
 
 

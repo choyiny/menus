@@ -52,10 +52,7 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
-        if limit * (page - 1) > len(menus):
-            return {"menus": []}
-        else:
-            return {"menus": menus[(page - 1) * limit : page * limit]}
+        return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
 @doc(description="""Upload menu to server""")
