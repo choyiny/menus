@@ -48,4 +48,9 @@ class GetMenuSchema(Schema):
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
 
 
+pagination_args = {
+    "page": fields.Int(description="Page number of table", default=1),
+    "limit": fields.Int(description="How many entries per page", default=5),
+}
+
 import_args = {"csv": fields.Field()}

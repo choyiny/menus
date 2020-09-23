@@ -1,14 +1,20 @@
 from flask import g
 from flask_apispec import marshal_with, use_kwargs, doc
 from webargs.flaskparser import use_args
+from flask import send_file
 import csv
-from io import StringIO
+from io import BytesIO
+
+import qrcode
+from PIL import Image
+from marshmallow import Schema, fields
 
 from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
-from ..schemas import MenuSchema, GetMenuSchema, import_args
+from ..schemas import MenuSchema, GetMenuSchema, import_args, pagination_args
+import config
 
 
 @doc(description="""Menu collection related operations""")
@@ -26,6 +32,23 @@ class MenusResource(MenusBaseResource):
         menu = Menu(**menu_info).save()
 
         return menu
+
+
+@doc(description="""get all the menus from the database""")
+class AllMenuResource(MenusBaseResource):
+    class GetAllMenusSchema(Schema):
+        menus = fields.List(fields.Nested(MenuSchema))
+
+    @marshal_with(GetAllMenusSchema)
+    @use_args(pagination_args, location="querystring")
+    def get(self, args):
+        limit = args["limit"]
+        page = args["page"]
+        menus = [menu for menu in Menu.objects()]
+        if limit * (page - 1) > len(menus):
+            return {"menus": []}
+        else:
+            return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -71,8 +94,8 @@ class ImportMenuResource(MenusBaseResource):
         return menu_tags
 
     def get_sections(self, row):
-        section_list = self.parse(row['Sections'])
-        descriptions = self.parse(row['Section Description'])
+        section_list = self.parse(row["Sections"])
+        descriptions = self.parse(row["Section Description"])
 
         for i in range(len(section_list)):
             if section_list[i] not in self.all_sections:
@@ -131,15 +154,16 @@ class MenuResource(MenusBaseResource):
         if kwargs.get("menu_items"):
             menu.menu_items = [Item(**item_dict) for item_dict in kwargs["menu_items"]]
 
-        if kwargs.get('image'):
-            menu.image = kwargs['image']
+        if kwargs.get("image"):
+            menu.image = kwargs["image"]
 
-        if kwargs.get('description'):
-            menu.description = kwargs['description']
+        if kwargs.get("description"):
+            menu.description = kwargs["description"]
 
         return menu.save()
 
     @marshal_with(ErrorResponseSchema, code=404)
+    @marshal_with(MenuSchema)
     @with_current_user
     def delete(self, slug):
         """
@@ -154,3 +178,47 @@ class MenuResource(MenusBaseResource):
         menu.delete()
 
         return menu
+
+
+@doc(description="""Generate QR code of url on template""")
+class QRMenuResource(MenusBaseResource):
+    def get(self, slug):
+        """Generate QR code in template"""
+        url = config.QR_CODE_ROOT_URL + slug
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        qr.add_data(url)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="white", back_color="black")
+        img = img.resize((950, 950))
+        template = Image.open("menu-api/assets/print template huge.png")
+        for coord in self.generate_tuples():
+            template.paste(img, coord)
+        return self.serve_pil_image(template, slug + ".png")
+
+    def generate_tuples(self):
+        """Mathematically generate coordinate tuple"""
+        coords = []
+
+        def boxify(x, y):
+            return tuple((x, y, x + 950, y + 950))
+
+        coords_x = [1070, 3560, 6020]
+        coords_y = [820, 3840]
+
+        for x in coords_x:
+            for y in coords_y:
+                coords.append(boxify(x, y))
+        return coords
+
+    def serve_pil_image(self, pil_img, image_name):
+        img_io = BytesIO()
+        pil_img.save(img_io, "png", quality=70)
+        img_io.seek(0)
+        return send_file(
+            img_io, mimetype="png", attachment_filename=image_name, as_attachment=True
+        )
