@@ -20,7 +20,6 @@
     border-radius: 20px 20px 0 0;
     background: #ffffff;
     padding: 20px 0;
-
     .description {
       margin-left: 20px;
       font-weight: 300;
@@ -101,10 +100,6 @@
   }
 }
 
-.desktop-header {
-  display: inline-block;
-}
-
 .desktopSection {
   background: white;
   margin: 3em 3em 1em 3em;
@@ -117,6 +112,7 @@
   border-radius: 40px;
   padding: 2em;
   width: 50%;
+
   .desc {
     color: #1a1824;
     font-size: 36px;
@@ -128,5 +124,38 @@
     font-size: 14px;
     color: #8c8b91;
     font-weight: 300;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .scrolling-wrapper {
+    background: #ffffff;
+
+    &.menu-section {
+      padding: 14px 20px;
+      margin: 20px 6px 20px 0;
+      border: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1824;
+      transition: all 0.3s;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .desktop-header {
+      display: inline-block;
+      margin-right: 10em;
+      transition: all 0.3s;
+
+      .desktop-name {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .logo {
+        display: inline;
+      }
+    }
   }
 }
