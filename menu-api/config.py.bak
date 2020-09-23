@@ -15,3 +15,9 @@ SENTRY_DSN = ""
 
 # Constants
 QR_CODE_ROOT_URL = 'https://menu.pickeasy.ca/menu/'
+
+# AWS Secrets
+AWS_KEY_ID = "AKIAX7MH2ROBO3P2RAHI"
+AWS_SECRET = "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"
+AWS_REGION = "us-east-1"
+S3_BUCKET_NAME = "pickeasy-restaurant-images"
