@@ -36,9 +36,10 @@
   background: #ffffff;
 
   &.sticky {
+    position: sticky;
+    top: 0;
     width: 100%;
     overflow-y: hidden;
-    overflow: hidden;
 
     .menu-section {
       font-size: 18px;

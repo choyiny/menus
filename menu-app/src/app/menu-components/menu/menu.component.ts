@@ -63,7 +63,8 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     const element = document.getElementById(id);
     const headerOffset = document.getElementById('wrapper').offsetHeight;
     const elementPosition = element.offsetTop;
-    const offsetPosition = elementPosition - headerOffset;
+    const offsetPosition = elementPosition - 2.5 * headerOffset;
+    console.log({ headerOffset, offsetPosition, elementPosition });
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
   }
