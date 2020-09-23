@@ -1,5 +1,7 @@
 from flask_apispec.views import MethodResource
 from marshmallow import Schema, fields
+import boto3, botocore
+import config
 
 
 class ErrorResponseSchema(Schema):
@@ -8,3 +10,8 @@ class ErrorResponseSchema(Schema):
 
 class BaseResource(MethodResource):
     pass
+
+
+s3 = boto3.client(
+    "s3", aws_access_key_id=config.AWS_KEY_ID, aws_secret_access_key=config.AWS_SECRET
+)
