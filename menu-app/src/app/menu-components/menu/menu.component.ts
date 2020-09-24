@@ -63,7 +63,7 @@ export class MenuComponent implements OnInit {
     const element = document.getElementById(id);
     const headerOffset = document.getElementById('wrapper').offsetHeight;
     const elementPosition = element.offsetTop;
-    const offsetPosition = elementPosition - 2.5 * headerOffset;
+    const offsetPosition = elementPosition - headerOffset;
     console.log({ headerOffset, offsetPosition, elementPosition });
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
