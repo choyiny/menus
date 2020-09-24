@@ -41,7 +41,7 @@
     <h1 class="desc">{{ menu.name }}</h1>
     <p class="paragraph">{{ menu.description }}</p>
   </div>
-  <div [ngClass]="{ desktopSection: desktopMode }">
+  <div [ngClass]="{ desktopSection: desktopMode, mobileBackground: !desktopMode }" class="menu-items">
     <div *ngFor="let section of menu.sections">
       <app-section [section]="section" id="{{ section.name }}"></app-section>
     </div>

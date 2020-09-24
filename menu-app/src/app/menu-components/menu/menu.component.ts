@@ -1,8 +1,8 @@
 import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { MenuInterface } from '../../interfaces/menu-interface';
 import { MenuService } from '../../services/menu.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { style, state, animate, transition, trigger } from '@angular/animations';
+import { ActivatedRoute } from '@angular/router';
+import { style, animate, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 @Component({
@@ -16,7 +16,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
     ]),
   ],
 })
-export class MenuComponent implements OnInit, AfterViewChecked {
+export class MenuComponent implements OnInit {
   menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
@@ -67,12 +67,5 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     console.log({ headerOffset, offsetPosition, elementPosition });
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
-  }
-
-  ngAfterViewChecked(): void {
-    // if (this.willScroll){
-    //   const headerSize = document.getElementById('header').offsetHeight;
-    //   document.get
-    // }
   }
 }

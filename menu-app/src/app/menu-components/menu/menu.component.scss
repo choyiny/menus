@@ -1,6 +1,5 @@
 .menu-items {
   min-height: 100vh;
-  margin-left: 20px;
   border-radius: 0px 0px 30px 30px;
 }
 
@@ -20,10 +19,44 @@
     border-radius: 20px 20px 0 0;
     background: #ffffff;
     padding: 20px 0;
+    box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
     .description {
       margin-left: 20px;
       font-weight: 300;
       color: #8c8b91;
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .scrolling-wrapper {
+    background: #ffffff;
+
+    &.menu-section {
+      padding: 14px 20px;
+      margin: 20px 6px 20px 0;
+      border: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1824;
+      transition: all 0.3s;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .desktop-header {
+      display: inline-block;
+      margin-right: 10em;
+      transition: all 0.3s;
+
+      .desktop-name {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .logo {
+        display: inline;
+      }
     }
   }
 }
@@ -71,16 +104,6 @@
       outline: 0;
     }
   }
-
-  .button-small {
-    font-size: 18px;
-    padding: 7px 20px;
-  }
-
-  .selected {
-    opacity: 1;
-    color: black;
-  }
 }
 
 .card-overlay {
@@ -127,35 +150,6 @@
   }
 }
 
-@media only screen and (min-width: 600px) {
-  .scrolling-wrapper {
-    background: #ffffff;
-
-    &.menu-section {
-      padding: 14px 20px;
-      margin: 20px 6px 20px 0;
-      border: none;
-      font-size: 20px;
-      font-weight: 600;
-      color: #1a1824;
-      transition: all 0.3s;
-      background-color: white;
-      cursor: pointer;
-    }
-
-    .desktop-header {
-      display: inline-block;
-      margin-right: 10em;
-      transition: all 0.3s;
-
-      .desktop-name {
-        font-size: 24px;
-        font-weight: 600;
-      }
-
-      .logo {
-        display: inline;
-      }
-    }
-  }
+.mobileBackground {
+  box-shadow: inset 0px 7px 20px 0px rgba(101, 30, 27, 0.22);
 }
