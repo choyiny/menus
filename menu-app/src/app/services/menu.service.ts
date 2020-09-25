@@ -14,4 +14,10 @@ export class MenuService {
   getMenu(slug: string): Observable<MenuInterface> {
     return this.http.get<MenuInterface>(`${this.url}/menus/${slug}`);
   }
+
+  uploadPhoto(slug: string, item: string, uploadForm): Observable<string> {
+    const url = `${this.url}/menus/${slug}/items/${item}/pictures/upload`;
+    console.log({ slug, item, uploadForm });
+    return this.http.post<string>(url, uploadForm);
+  }
 }

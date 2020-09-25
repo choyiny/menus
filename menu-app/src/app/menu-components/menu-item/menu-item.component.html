@@ -1,4 +1,7 @@
-<div class="menu-item">
+<div class="menu-item" (click)="showImage()">
+  <div class="logo">
+    <img src="{{ item.image }}" />
+  </div>
   <div class="description">
     <div class="menu-price">
       <h1 class="item">{{ item.name }}</h1>
@@ -9,4 +12,9 @@
   <span *ngFor="let tag of item.tags">
     <app-tags [tag]="tag"></app-tags>
   </span>
+  <div class="form">
+    <input type="file" (change)="onChange($event)" />
+    <button (click)="onSubmit()">Add Photo</button>
+  </div>
 </div>
+<!--<app-modal  [image]="item.image"></app-modal>-->

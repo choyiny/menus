@@ -7,6 +7,9 @@
     font-weight: 300;
     color: rgba(26, 24, 36, 0.5);
   }
+  .menu-item text {
+    display: block;
+  }
 }
 
 @media only screen and (min-width: 600px) {
@@ -34,8 +37,23 @@ h1 {
 
 .menu-price {
   overflow: hidden;
+  display: block;
 }
 
 .description {
   margin-bottom: 10px;
+}
+img {
+  object-fit: cover;
+  float: left;
+  margin-right: 1em;
+  max-width: 80px;
+  height: 50px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 1em;
+}
+
+.form {
+  margin-left: 1em;
 }
