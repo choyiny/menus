@@ -52,7 +52,7 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -85,7 +85,8 @@ class ImportMenuResource(MenusBaseResource):
         menu.reload()
         return menu.sectionized_menu()
 
-    def parse(self, string):
+    @staticmethod
+    def parse(string):
         return [elem.strip() for elem in string.split("|")]
 
     def get_tags(self, tag_string):
@@ -204,7 +205,8 @@ class QRMenuResource(MenusBaseResource):
             template.paste(img, coord)
         return self.serve_pil_image(template, slug + ".png")
 
-    def generate_tuples(self):
+    @staticmethod
+    def generate_tuples():
         """Mathematically generate coordinate tuple"""
         coords = []
 
@@ -219,7 +221,8 @@ class QRMenuResource(MenusBaseResource):
                 coords.append(boxify(x, y))
         return coords
 
-    def serve_pil_image(self, pil_img, image_name):
+    @staticmethod
+    def serve_pil_image(pil_img, image_name):
         img_io = BytesIO()
         pil_img.save(img_io, "png", quality=70)
         img_io.seek(0)
@@ -245,7 +248,8 @@ class ImageMenuResource(MenusBaseResource):
                 menu.save()
                 return item.image
 
-    def upload_file(self, file):
+    @staticmethod
+    def upload_file(file):
         filename = str(uuid.uuid4()) + ".png"
         s3.put_object(
             Bucket=config.S3_BUCKET_NAME,
