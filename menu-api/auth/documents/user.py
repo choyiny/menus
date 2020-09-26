@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from mongoengine import Document, StringField, ListField, BooleanField
+from mongoengine import Document, StringField, ListField, BooleanField, ObjectIdField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

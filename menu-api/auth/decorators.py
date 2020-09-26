@@ -30,13 +30,6 @@ def with_current_user(f):
             g.user = User.objects(username=username).first()
             if g.user is None or not g.user.verify_password(password):
                 g.user = None
-            else:
-                try:  # will split from with_current_user to user_permissions, but unsure how to do it atm
-                    slug = kwargs["slug"]
-                except KeyError:
-                    return f(*args, **kwargs)
-                if not g.user.isAdmin and slug not in g.user.menus:
-                    g.user = None
 
         return f(*args, **kwargs)
 
