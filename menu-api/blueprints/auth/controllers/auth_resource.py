@@ -50,4 +50,8 @@ class UserResource(AuthBaseResource):
         return {'users': [user for user in User.objects()]}
 
 # class PromoteUser(AuthBaseResource):
-#     def patch
+#     @with_current_user
+#     @marshal_with(GetUserSchema)
+#     def patch(self):
+#         if g.user is None or not g.user.is_admin:
+#             return

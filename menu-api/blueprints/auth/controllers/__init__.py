@@ -1,3 +1,3 @@
 from .auth_resource import (
-    AuthResource, ClaimSlugResource
+    AuthResource, ClaimSlugResource, UserResource
 )

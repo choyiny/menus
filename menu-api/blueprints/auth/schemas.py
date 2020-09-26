@@ -23,4 +23,4 @@ class UserPromotionSchema(Schema):
 
 
 class GetUsersSchema(Schema):
-    users = fields.List(GetUserSchema)
+    users = fields.List(fields.Nested(GetUserSchema))

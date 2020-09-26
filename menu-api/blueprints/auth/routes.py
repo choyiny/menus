@@ -2,14 +2,15 @@ from flask import Blueprint, Flask
 from flask_apispec import FlaskApiSpec
 
 from . import bp_name
-from .controllers import AuthResource, ClaimSlugResource
+from .controllers import AuthResource, ClaimSlugResource, UserResource
 
 
 def set_routes(app: Flask, bp: Blueprint, docs: FlaskApiSpec):
     # a list of resources
     resources = [
         (AuthResource, 'auth/', 'authentication', ['GET', 'POST']),
-        (ClaimSlugResource, 'claim/', 'claim', ['PATCH'])
+        (ClaimSlugResource, 'claim/', 'claim', ['PATCH']),
+        (UserResource, 'users/', 'users', ['GET'])
     ]
 
     for resource, route, name, methods in resources:
