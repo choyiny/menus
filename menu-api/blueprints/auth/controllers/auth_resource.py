@@ -4,7 +4,14 @@ from flask_apispec import marshal_with, use_kwargs, doc
 
 from auth.decorators import with_current_user
 from auth.documents.user import User
-from ..schemas import PostUserSchema, UserAuthenticatedSchema, UserPromotionSchema, GetUserSchema, GetUsersSchema
+from ..schemas import (
+    PostUserSchema,
+    UserAuthenticatedSchema,
+    ClaimSlugSchema,
+    GetUserSchema,
+    GetUsersSchema,
+    PromoteUserSchema,
+)
 
 
 class AuthResource(AuthBaseResource):
@@ -12,28 +19,28 @@ class AuthResource(AuthBaseResource):
     @use_kwargs(PostUserSchema)
     def post(self, **kwargs):
         User.create(**kwargs).save()
-        return 'new user created'
+        return "new user created"
 
     @doc(description="""Authenticate User""")
     @with_current_user
     @marshal_with(UserAuthenticatedSchema)
     def get(self):
         if g.user is None:
-            return {'authenticated': False}, 401
+            return {"authenticated": False}, 401
         else:
-            return {'authenticated': True}
+            return {"authenticated": True}
 
 
 class ClaimSlugResource(AuthBaseResource):
     @doc(description="""Claim Restaurant url for user""")
     @with_current_user
-    @use_kwargs(UserPromotionSchema)
+    @use_kwargs(ClaimSlugSchema)
     @marshal_with(GetUserSchema)
     def patch(self, **kwargs):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
-        slug = kwargs['slug']
-        pk = kwargs['id']
+        slug = kwargs["slug"]
+        pk = kwargs["user_id"]
         user = User.objects(pk=pk).first()
         if slug not in user.menus:
             user.menus.append(slug)
@@ -47,11 +54,18 @@ class UserResource(AuthBaseResource):
     def get(self):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
-        return {'users': [user for user in User.objects()]}
+        return {"users": [user for user in User.objects()]}
 
-# class PromoteUser(AuthBaseResource):
-#     @with_current_user
-#     @marshal_with(GetUserSchema)
-#     def patch(self):
-#         if g.user is None or not g.user.is_admin:
-#             return
+
+class PromoteUser(AuthBaseResource):
+    @with_current_user
+    @marshal_with(GetUserSchema)
+    @use_kwargs(PromoteUserSchema)
+    def patch(self, **kwargs):
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
+        pk = kwargs["user_id"]
+        user = User.objects(pk=pk).first()
+        user.is_admin = True
+        user.save()
+        return user

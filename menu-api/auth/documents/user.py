@@ -13,7 +13,12 @@ class User(Document):
     @classmethod
     def create(cls, username: str, password: str):
         print(username, password)
-        return User(username=username, password_hash=cls.hash_password(password), menus=[], is_admin=False).save()
+        return User(
+            username=username,
+            password_hash=cls.hash_password(password),
+            menus=[],
+            is_admin=False,
+        ).save()
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
