@@ -14,10 +14,13 @@ import { MenuComponent } from './menu-components/menu/menu.component';
 import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
+import { ModalComponent } from './util-components/modal/modal.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutModule } from '@angular/cdk/layout';
+import { LoginComponent } from './auth-components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     MenuItemComponent,
     FooterComponent,
     TagsComponent,
+    ModalComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +40,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     BrowserAnimationsModule,
     FontAwesomeModule,
     LayoutModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
