@@ -1,13 +1,15 @@
 <div class="menu-item" (click)="showImage()">
-  <div class="logo">
-    <img src="{{ item.image }}" />
-  </div>
-  <div class="description">
-    <div class="menu-price">
-      <h1 class="item">{{ item.name }}</h1>
-      <h1 class="price">{{ item.price }}</h1>
+  <div class="img-description">
+    <div class="logo">
+      <img class="img-responsive" src="{{ item.image }}" />
     </div>
-    <p class="item-description">{{ item.description }}</p>
+    <div class="description">
+      <div class="menu-price">
+        <h1 class="item">{{ item.name }}</h1>
+        <h1 class="price">{{ item.price }}</h1>
+      </div>
+      <p class="item-description">{{ item.description }}</p>
+    </div>
   </div>
   <span *ngFor="let tag of item.tags">
     <app-tags [tag]="tag"></app-tags>

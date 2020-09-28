@@ -2,14 +2,11 @@
   border-bottom: solid 0.5px #dfe0e3;
   font-size: 12px;
   margin-top: 5px;
+}
 
-  .item-description {
-    font-weight: 300;
-    color: rgba(26, 24, 36, 0.5);
-  }
-  .menu-item text {
-    display: block;
-  }
+.item-description {
+  font-weight: 300;
+  color: rgba(26, 24, 36, 0.5);
 }
 
 @media only screen and (min-width: 600px) {
@@ -24,6 +21,7 @@
 
 .price {
   float: right;
+  display: block;
 }
 
 .item {
@@ -41,19 +39,30 @@ h1 {
 }
 
 .description {
+  display: block;
   margin-bottom: 10px;
+  width: 80%;
 }
 img {
   object-fit: cover;
   float: left;
   margin-right: 1em;
-  max-width: 80px;
-  height: 50px;
+  height: 4em;
   border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 1em;
+  width: 100%;
+  object-fit: cover;
 }
 
 .form {
-  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+.logo {
+  width: 20%;
+  display: flex;
+}
+
+.img-description {
+  display: flex;
 }
