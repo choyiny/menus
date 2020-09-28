@@ -14,7 +14,7 @@ import { MenuComponent } from './menu-components/menu/menu.component';
 import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
-import { ModalComponent } from './util-components/modal/modal.component';
+// import { ModalComponent } from './util-components/modal/modal.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -30,7 +30,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MenuItemComponent,
     FooterComponent,
     TagsComponent,
-    ModalComponent,
+    // ModalComponent,
     LoginComponent,
   ],
   imports: [
