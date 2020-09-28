@@ -23,7 +23,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string): Observable<any> {
+  login(username: string, password: string): Observable<UserInterface> {
     return this.http
       .post<any>(
         `${environment.menu_api}/auth/`,

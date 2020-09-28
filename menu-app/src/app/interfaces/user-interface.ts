@@ -1,4 +1,6 @@
 export interface UserInterface {
+  authdata?: string;
   username: string;
-  password: string;
+  id: string;
+  menus: string[];
 }
