@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl(''),
   });
+  error: string;
+  loggedIn = false;
 
   constructor(private auth: AuthService) {}
 
@@ -22,9 +24,12 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
     this.auth.login(username, password).subscribe(
       (res) => {
-        console.log(res);
+        this.loggedIn = true;
       },
-      (err) => console.log('HTTP Error', err)
+      (err) => {
+        console.log(err);
+        this.error = err.error.description;
+      }
     );
   }
 }
