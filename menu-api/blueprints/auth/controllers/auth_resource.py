@@ -23,8 +23,8 @@ class AuthResource(AuthBaseResource):
         user = User.objects(username=username).first()
         if user is None:
             return {"description": "user does not exist"}, 404
-        elif user.verify_password(password):
-            return {"description": "You do not have permission"}, 401
+        elif not user.verify_password(password):
+            return {"description": "Invalid Credentials"}, 401
         else:
             return user
 
