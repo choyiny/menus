@@ -236,6 +236,8 @@ class ImageMenuResource(MenusBaseResource):
     @with_current_user
     def post(self, args, slug, item_id):
         """Upload image to server"""
+        if g.user is None or not (g.user.is_admin or slug not in g.user.menus):
+            return {"description": "You do not have permission"}, 401
         image_bytes = args["image"].read()
         loaded_image = Image.open(BytesIO(image_bytes))
         out_img = BytesIO()
