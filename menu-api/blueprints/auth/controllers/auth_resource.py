@@ -1,6 +1,7 @@
 from .auth_base_resource import AuthBaseResource
 from flask import g
 from flask_apispec import marshal_with, use_kwargs, doc
+from flask_cors import cross_origin
 
 from auth.decorators import with_current_user
 from auth.documents.user import User
@@ -15,18 +16,17 @@ from ..schemas import (
 
 
 class AuthResource(AuthBaseResource):
-    @doc(description="""Create new User""")
-    @use_kwargs(PostUserSchema)
-    def post(self, **kwargs):
-        User.create(**kwargs).save()
-        return "new user created"
-
     @doc(description="""Authenticate User""")
-    @with_current_user
+    @use_kwargs(PostUserSchema)
     @marshal_with(UserAuthenticatedSchema)
-    def get(self):
-        if g.user is None:
-            return {"authenticated": False}, 401
+    def post(self, **kwargs):
+        username = kwargs["username"]
+        password = kwargs["password"]
+        user = User.objects(username=username).first()
+        if user is None:
+            return {"description": "user does not exist"}, 404
+        elif not user.verify_password(password):
+            return {"description": "You do not have permission"}, 401
         else:
             return {"authenticated": True}
 
@@ -49,6 +49,12 @@ class ClaimSlugResource(AuthBaseResource):
 
 
 class UserResource(AuthBaseResource):
+    @doc(description="""Create new User""")
+    @use_kwargs(PostUserSchema)
+    def post(self, **kwargs):
+        User.create(**kwargs).save()
+        return "new user created"
+
     @with_current_user
     @marshal_with(GetUsersSchema)
     def get(self):

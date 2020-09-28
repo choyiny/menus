@@ -80,6 +80,7 @@ def register_blueprints(app: Flask):
     # menus blueprint
     from blueprints.menus import menus_bp
     from blueprints.menus import routes as menus_route
+
     # auth blueprint
     from blueprints.auth import auth_bp
     from blueprints.auth import routes as auth_route

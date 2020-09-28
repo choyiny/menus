@@ -8,10 +8,10 @@ from .controllers import AuthResource, ClaimSlugResource, UserResource, PromoteU
 def set_routes(app: Flask, bp: Blueprint, docs: FlaskApiSpec):
     # a list of resources
     resources = [
-        (AuthResource, "auth/", "authentication", ["GET", "POST"]),
+        (AuthResource, "auth/", "authentication", ["POST"]),
         (ClaimSlugResource, "claim/", "claim", ["PATCH"]),
-        (UserResource, "users/", "users", ["GET"]),
-        (PromoteUser, 'promote/', 'promote', ['PATCH'])
+        (UserResource, "users/", "users", ["GET", "POST"]),
+        (PromoteUser, "promote/", "promote", ["PATCH"]),
     ]
 
     for resource, route, name, methods in resources:
