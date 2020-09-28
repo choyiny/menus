@@ -1,7 +1,7 @@
 // Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Routes
@@ -14,6 +14,7 @@ import { MenuComponent } from './menu-components/menu/menu.component';
 import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
+import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
 // import { ModalComponent } from './util-components/modal/modal.component';
 
 // NPM packages
@@ -42,7 +43,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     LayoutModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

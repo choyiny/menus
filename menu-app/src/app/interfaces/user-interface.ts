@@ -3,4 +3,5 @@ export interface UserInterface {
   username: string;
   id: string;
   menus: string[];
+  is_admin: boolean;
 }

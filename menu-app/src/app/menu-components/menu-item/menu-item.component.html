@@ -12,7 +12,7 @@
   <span *ngFor="let tag of item.tags">
     <app-tags [tag]="tag"></app-tags>
   </span>
-  <div class="form">
+  <div *ngIf="editMode" class="form">
     <input type="file" (change)="onChange($event)" />
     <button (click)="onSubmit()">Add Photo</button>
   </div>

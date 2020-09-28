@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,10 +14,20 @@ export class MenuItemComponent implements OnInit {
   image: string;
   show: boolean;
   selectedFile;
+  editMode: boolean;
+  slug: string;
 
-  constructor(private menuService: MenuService, private route: ActivatedRoute) {}
+  constructor(
+    private menuService: MenuService,
+    private route: ActivatedRoute,
+    private auth: AuthService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.slug = this.route.snapshot.params.slug;
+    const user = this.auth.currentUserValue;
+    this.editMode = user.is_admin || this.slug in user.menus;
+  }
 
   onChange(event): void {
     this.selectedFile = event.target.files[0];
@@ -26,8 +37,7 @@ export class MenuItemComponent implements OnInit {
   onSubmit(): void {
     const formData = new FormData();
     formData.append('image', this.selectedFile);
-    const id = this.route.snapshot.params.slug;
-    this.menuService.uploadPhoto(id, this.item.name, formData).subscribe((url) => {
+    this.menuService.uploadPhoto(this.slug, this.item.name, formData).subscribe((url) => {
       this.item.image = url;
     });
   }
