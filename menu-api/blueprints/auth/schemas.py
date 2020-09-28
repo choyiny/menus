@@ -6,10 +6,6 @@ class PostUserSchema(Schema):
     password = fields.Str(required=True)
 
 
-class UserAuthenticatedSchema(Schema):
-    authenticated = fields.Bool()
-
-
 class GetUserSchema(Schema):
     id = fields.Str(required=True)
     username = fields.Str(required=True)
