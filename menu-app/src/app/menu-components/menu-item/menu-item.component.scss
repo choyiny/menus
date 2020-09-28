@@ -4,11 +4,6 @@
   margin-top: 5px;
 }
 
-.item-description {
-  font-weight: 300;
-  color: rgba(26, 24, 36, 0.5);
-}
-
 @media only screen and (min-width: 600px) {
   .menu-item {
     padding: 1em;
@@ -19,39 +14,9 @@
   }
 }
 
-.price {
-  float: right;
-  display: block;
-}
-
-.item {
-  float: left;
-}
-
 h1 {
   font-size: 14px;
   font-weight: 500;
-}
-
-.menu-price {
-  overflow: hidden;
-  display: block;
-}
-
-.description {
-  display: block;
-  margin-bottom: 10px;
-  width: 80%;
-}
-img {
-  object-fit: cover;
-  float: left;
-  margin-right: 1em;
-  height: 4em;
-  border-radius: 20px;
-  overflow: hidden;
-  width: 100%;
-  object-fit: cover;
 }
 
 .form {
@@ -61,8 +26,44 @@ img {
 .logo {
   width: 20%;
   display: flex;
+
+  img {
+    object-fit: cover;
+    float: left;
+    margin-right: 1em;
+    height: 4em;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
+  }
 }
 
 .img-description {
   display: flex;
+
+  .description {
+    display: block;
+    margin-bottom: 10px;
+    width: 80%;
+  }
+
+  .menu-price {
+    overflow: hidden;
+    display: block;
+
+    .price {
+      float: right;
+      display: block;
+    }
+
+    .item {
+      float: left;
+    }
+  }
+
+  .item-description {
+    font-weight: 300;
+    color: rgba(26, 24, 36, 0.5);
+  }
 }
