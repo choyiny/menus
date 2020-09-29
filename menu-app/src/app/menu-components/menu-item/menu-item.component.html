@@ -1,6 +1,9 @@
-<div class="menu-item" (click)="showImage()">
+<ng-template #content let-modal>
+  <img src="{{ item.image }}" />
+</ng-template>
+<div class="menu-item">
   <div class="img-description">
-    <div class="logo">
+    <div class="logo" (click)="showImage(content)">
       <img class="img-responsive" src="{{ item.image }}" />
     </div>
     <div class="description">
@@ -19,4 +22,3 @@
     <button (click)="onSubmit()">Add Photo</button>
   </div>
 </div>
-<!--<app-modal  [image]="item.image"></app-modal>-->

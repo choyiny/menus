@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit {
   showImage = true;
   @Input() selectedSection: string;
   @Input() desktopMode: boolean;
+  @Input() selectedImage: string;
 
   constructor(
     private menuservice: MenuService,

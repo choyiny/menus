@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-menu-item',
@@ -20,7 +21,8 @@ export class MenuItemComponent implements OnInit {
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
-    private auth: AuthService
+    private auth: AuthService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -42,8 +44,7 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
-  showImage(): void {
-    this.show = true;
-    console.log(this.show);
+  showImage(content): void {
+    this.modalService.open(content);
   }
 }

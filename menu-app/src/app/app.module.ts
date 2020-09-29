@@ -15,13 +15,13 @@ import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
 import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
-// import { ModalComponent } from './util-components/modal/modal.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './auth-components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     MenuItemComponent,
     FooterComponent,
     TagsComponent,
-    // ModalComponent,
     LoginComponent,
   ],
   imports: [
@@ -42,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FontAwesomeModule,
     LayoutModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
