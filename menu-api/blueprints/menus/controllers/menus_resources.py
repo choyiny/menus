@@ -19,6 +19,7 @@ from ..schemas import (
     import_args,
     pagination_args,
     image_args,
+    qr_args
 )
 import config
 import uuid
@@ -187,9 +188,11 @@ class MenuResource(MenusBaseResource):
 
 @doc(description="""Generate QR code of url on template""")
 class QRMenuResource(MenusBaseResource):
-    def get(self, slug):
+    @use_args(qr_args, location='query')
+    def get(self, args):
         """Generate QR code in template"""
-        url = config.QR_CODE_ROOT_URL + slug
+        url = args['url']
+        name = args['name']
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -203,7 +206,7 @@ class QRMenuResource(MenusBaseResource):
         template = Image.open("menu-api/assets/print template huge.png")
         for coord in self.generate_tuples():
             template.paste(img, coord)
-        return self.serve_pil_image(template, slug + ".png")
+        return self.serve_pil_image(template, name + ".png")
 
     @staticmethod
     def generate_tuples():

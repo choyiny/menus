@@ -53,5 +53,10 @@ pagination_args = {
     "limit": fields.Int(description="How many entries per page", default=5),
 }
 
+qr_args = {
+    'url': fields.Str(description='url of website to be encoded'),
+    'name': fields.Str(description='name of generated qr')
+}
+
 import_args = {"csv": fields.Field()}
 image_args = {"image": fields.Field()}
