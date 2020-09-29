@@ -12,15 +12,15 @@
     margin: 20px 0px 20px 0em;
     height: 80%;
   }
+
+  .form {
+    margin-bottom: 1em;
+  }
 }
 
 h1 {
   font-size: 14px;
   font-weight: 500;
-}
-
-.form {
-  margin-bottom: 1em;
 }
 
 .logo {
@@ -69,12 +69,21 @@ h1 {
 }
 
 .img-display {
-  width: 90%;
+  width: 100%;
+  border-radius: 20px;
   overflow: hidden;
   margin: 0 auto;
   justify-content: center;
 }
 
-.modal-container {
-  background: transparent;
+::ng-deep {
+  .modal-content {
+    margin-top: 40px;
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.template {
+  background: blue;
 }
