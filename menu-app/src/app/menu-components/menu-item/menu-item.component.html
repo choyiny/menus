@@ -1,10 +1,13 @@
 <ng-template #content let-modal>
-  <img src="{{ item.image }}" />
+  <div class="modal-container">
+    <img class="img-display" src="{{ item.image }}" />
+    <img src="assets/superlike.png" (click)="modal.close(content)" />
+  </div>
 </ng-template>
 <div class="menu-item">
   <div class="img-description">
     <div class="logo" (click)="showImage(content)">
-      <img class="img-responsive" src="{{ item.image }}" />
+      <img class="img-responsive icon" src="{{ item.image }}" />
     </div>
     <div class="description">
       <div class="menu-price">

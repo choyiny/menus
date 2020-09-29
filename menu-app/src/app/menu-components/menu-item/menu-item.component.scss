@@ -27,7 +27,7 @@ h1 {
   width: 20%;
   display: flex;
 
-  img {
+  .icon {
     object-fit: cover;
     float: left;
     margin-right: 1em;
@@ -66,4 +66,15 @@ h1 {
     font-weight: 300;
     color: rgba(26, 24, 36, 0.5);
   }
+}
+
+.img-display {
+  width: 90%;
+  overflow: hidden;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.modal-container {
+  background: transparent;
 }
