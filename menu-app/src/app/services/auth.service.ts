@@ -14,7 +14,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
-      JSON.parse(localStorage.getItem('currentUser'))
+      JSON.parse(sessionStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -33,10 +33,14 @@ export class AuthService {
       .pipe(
         map((user) => {
           user.authdata = window.btoa(username + ':' + password);
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          sessionStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return user;
         })
       );
+  }
+
+  logout(): void {
+    sessionStorage.removeItem('currentUser');
   }
 }

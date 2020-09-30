@@ -6,7 +6,7 @@
 </ng-template>
 <div class="menu-item">
   <div class="img-description">
-    <div class="logo" (click)="showImage(content)">
+    <div *ngIf="item.image" class="logo" (click)="showImage(content)">
       <img class="img-responsive icon" src="{{ item.image }}" />
     </div>
     <div class="description">

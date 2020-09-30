@@ -28,7 +28,11 @@ export class MenuItemComponent implements OnInit {
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
     const user = this.auth.currentUserValue;
-    this.editMode = user.is_admin || this.slug in user.menus;
+    if (user) {
+      this.editMode = user.is_admin || this.slug in user.menus;
+    } else {
+      this.editMode = false;
+    }
   }
 
   onChange(event): void {
