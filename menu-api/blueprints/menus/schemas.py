@@ -35,6 +35,7 @@ class MenuSchema(Schema):
     menu_items = fields.List(fields.Nested(ItemSchema))
     sections = fields.List(fields.Nested(SectionSchema))
     external_link = fields.Str(description='external link')
+    link_name = fields.Str(description='name of link')
 
 
 class SectionItemSchema(Schema):
@@ -50,6 +51,7 @@ class GetMenuSchema(Schema):
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
     external_link = fields.Str(description='external link')
+    link_name = fields.Str(description='name of link')
 
 
 pagination_args = {

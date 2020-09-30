@@ -77,6 +77,10 @@ class Menu(Document):
 
     # optional external link provided by user
 
+    link_name = StringField()
+
+    # name for external link
+
     def sectionized_menu(self) -> dict:
         """
         Output a list of sections with associated menu items.
