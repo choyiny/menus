@@ -42,7 +42,7 @@ export class MenuItemComponent implements OnInit {
 
   onSubmit(): void {
     const formData = new FormData();
-    formData.append('image', this.selectedFile);
+    formData.append('file', this.selectedFile);
     this.menuService.uploadPhoto(this.slug, this.item.name, formData).subscribe((url) => {
       this.item.image = url;
     });
