@@ -9,12 +9,14 @@
     <div *ngIf="item.image" class="logo" (click)="showImage(content)">
       <img class="img-responsive icon" src="{{ item.image }}" />
     </div>
-    <div class="description">
+    <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
         <h1 class="item">{{ item.name }}</h1>
         <h1 class="price">{{ item.price }}</h1>
       </div>
-      <p class="item-description">{{ item.description }}</p>
+      <div *ngFor="let description of descriptions">
+        <p class="item-description">{{ description }}</p>
+      </div>
     </div>
   </div>
   <span *ngFor="let tag of item.tags">

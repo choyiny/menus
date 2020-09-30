@@ -47,7 +47,6 @@ h1 {
   .description {
     display: block;
     margin-bottom: 10px;
-    width: 80%;
   }
 
   .menu-price {
@@ -84,4 +83,11 @@ h1 {
     background-color: transparent;
     border: none;
   }
+}
+
+.logo-description {
+  width: 80%;
+}
+.no-logo-description {
+  width: 100%;
 }

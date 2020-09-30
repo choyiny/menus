@@ -12,11 +12,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class MenuItemComponent implements OnInit {
   @Input() item: MenuItemInterface;
-  image: string;
-  show: boolean;
   selectedFile;
   editMode: boolean;
   slug: string;
+  descriptions: string[];
 
   constructor(
     private menuService: MenuService,
@@ -33,6 +32,7 @@ export class MenuItemComponent implements OnInit {
     } else {
       this.editMode = false;
     }
+    this.descriptions = this.item.description.split('^');
   }
 
   onChange(event): void {
