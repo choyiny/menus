@@ -111,4 +111,6 @@ class Menu(Document):
             "description": self.description,
             "sections": sectionized,
             "image": self.image,
+            'link_name': self.link_name,
+            'external_link': self.external_link
         }
