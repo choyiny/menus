@@ -31,6 +31,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.slug;
+    console.log(id);
     if (id) {
       this.getMenu(id);
     }
@@ -65,7 +66,6 @@ export class MenuComponent implements OnInit {
     const headerOffset = document.getElementById('wrapper').offsetHeight;
     const elementPosition = element.offsetTop;
     const offsetPosition = elementPosition - headerOffset;
-    console.log({ headerOffset, offsetPosition, elementPosition });
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
   }
