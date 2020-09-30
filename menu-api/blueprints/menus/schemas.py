@@ -15,7 +15,7 @@ class SectionSchema(Schema):
     description = fields.Str(
         example="Piece by piece", description="Description of section"
     )
-    headers = fields.Str(description="Headers for section anchors")
+    subtitle = fields.Str(description="Headers for section anchors")
 
 
 class ItemSchema(Schema):
@@ -41,7 +41,7 @@ class SectionItemSchema(Schema):
     name = fields.Str(description="Name of section", example="A la carte")
     menu_items = fields.List(fields.Nested(ItemSchema))
     description = fields.Str(description="Name of section", example="Piece by piece")
-    headers = fields.Str(description="Headers for section anchors")
+    subtitle = fields.Str(description="Headers for section anchors")
 
 
 class GetMenuSchema(Schema):
@@ -49,7 +49,6 @@ class GetMenuSchema(Schema):
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
-    pdf = fields.Field(description='pdf of menu')
     external_link = fields.Str(description='external link')
 
 

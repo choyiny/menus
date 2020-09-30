@@ -29,7 +29,6 @@ class MenusResource(MenusBaseResource):
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
     @with_current_user
-    @use_args(file_args, location='files')
     def post(self, **menu_info):
         """
         Create a new Menu.
@@ -38,11 +37,6 @@ class MenusResource(MenusBaseResource):
             return {"description": "You do not have permission"}, 401
 
         menu = Menu(**menu_info).save()
-        try:
-            file = file_args['file']
-        except KeyError:
-            return menu
-        menu.pdf = file
         menu.save()
         return menu
 
@@ -106,14 +100,14 @@ class ImportMenuResource(MenusBaseResource):
 
     def get_sections(self, row):
         section_list = self.parse(row["Sections"])
-        section_headers = self.parse(row['Section headers'])
+        section_subtitle = self.parse(row['Section Subtitle'])
         descriptions = self.parse(row["Section Description"])
 
         for i in range(len(section_list)):
             if section_list[i] not in self.all_sections:
                 self.all_sections[section_list[i]] = Section(
                     name=section_list[i],
-                    headers=section_headers[i],
+                    subtitle=section_subtitle[i],
                     image=row["Section Image"],
                     description=descriptions[i],
                 )
