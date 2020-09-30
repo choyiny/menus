@@ -34,6 +34,7 @@ class MenuSchema(Schema):
     description = fields.Str(example="A cafe in Hollywood")
     menu_items = fields.List(fields.Nested(ItemSchema))
     sections = fields.List(fields.Nested(SectionSchema))
+    external_link = fields.Str(description='external link')
 
 
 class SectionItemSchema(Schema):
@@ -42,11 +43,14 @@ class SectionItemSchema(Schema):
     description = fields.Str(description="Name of section", example="Piece by piece")
     headers = fields.Str(description="Headers for section anchors")
 
+
 class GetMenuSchema(Schema):
     name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
+    pdf = fields.Field(description='pdf of menu')
+    external_link = fields.Str(description='external link')
 
 
 pagination_args = {
@@ -59,5 +63,4 @@ qr_args = {
     'name': fields.Str(description='name of generated qr')
 }
 
-import_args = {"csv": fields.Field()}
-image_args = {"image": fields.Field()}
+file_args = {'file': fields.Field()}

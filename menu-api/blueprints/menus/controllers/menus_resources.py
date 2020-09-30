@@ -16,9 +16,8 @@ from ..documents import Menu, Item, Section, Tag
 from ..schemas import (
     MenuSchema,
     GetMenuSchema,
-    import_args,
     pagination_args,
-    image_args,
+    file_args,
     qr_args
 )
 import config
@@ -30,6 +29,7 @@ class MenusResource(MenusBaseResource):
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
     @with_current_user
+    @use_args(file_args, location='files')
     def post(self, **menu_info):
         """
         Create a new Menu.
@@ -38,7 +38,12 @@ class MenusResource(MenusBaseResource):
             return {"description": "You do not have permission"}, 401
 
         menu = Menu(**menu_info).save()
-
+        try:
+            file = file_args['file']
+        except KeyError:
+            return menu
+        menu.pdf = file
+        menu.save()
         return menu
 
 
@@ -59,12 +64,12 @@ class AllMenuResource(MenusBaseResource):
 @doc(description="""Upload menu to server""")
 class ImportMenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
-    @use_args(import_args, location="files")
+    @use_args(file_args, location="files")
     def post(self, args, slug):
         menu = Menu.objects(slug=slug).first()
         if menu is None:
             return {"description": "Menu not found."}, 404
-        file_str = args["csv"].read()
+        file_str = args["file"].read()
         reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
         menu_items = []
         for row in reader:
@@ -237,13 +242,13 @@ class QRMenuResource(MenusBaseResource):
 
 
 class ImageMenuResource(MenusBaseResource):
-    @use_args(image_args, location="files")
+    @use_args(file_args, location="files")
     @with_current_user
     def post(self, args, slug, item_id):
         """Upload image to server"""
         if g.user is None or not (g.user.is_admin or slug not in g.user.menus):
             return {"description": "You do not have permission"}, 401
-        image_bytes = args["image"].read()
+        image_bytes = args["file"].read()
         loaded_image = Image.open(BytesIO(image_bytes))
         out_img = BytesIO()
         loaded_image.save(out_img, "PNG")
