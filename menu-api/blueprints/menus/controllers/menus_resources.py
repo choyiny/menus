@@ -101,12 +101,14 @@ class ImportMenuResource(MenusBaseResource):
 
     def get_sections(self, row):
         section_list = self.parse(row["Sections"])
+        section_headers = self.parse(row['Section headers'])
         descriptions = self.parse(row["Section Description"])
 
         for i in range(len(section_list)):
             if section_list[i] not in self.all_sections:
                 self.all_sections[section_list[i]] = Section(
                     name=section_list[i],
+                    headers=section_headers[i],
                     image=row["Section Image"],
                     description=descriptions[i],
                 )
