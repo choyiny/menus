@@ -10,7 +10,7 @@ from PIL import Image
 from marshmallow import Schema, fields
 
 from auth.decorators import with_current_user
-from helpers import ErrorResponseSchema, s3
+from helpers import ErrorResponseSchema, upload_image
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import (
@@ -250,22 +250,6 @@ class ImageMenuResource(MenusBaseResource):
         menu = Menu.objects(slug=slug).first()
         for item in menu.menu_items:
             if item.name == item_id:
-                item.image = self.upload_file(out_img)
+                item.image = upload_image(out_img)
                 menu.save()
                 return item.image
-
-    @staticmethod
-    def upload_file(file):
-        filename = str(uuid.uuid4()) + ".png"
-        s3.put_object(
-            Bucket=config.S3_BUCKET_NAME,
-            Key=filename,
-            Body=file,
-            ACL="public-read",
-            ContentType="image/png",
-        )
-        return "https://%s.s3.%s.amazonaws.com/%s" % (
-            config.S3_BUCKET_NAME,
-            config.AWS_REGION,
-            filename,
-        )
