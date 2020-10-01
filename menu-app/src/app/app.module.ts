@@ -1,7 +1,7 @@
 // Angular
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Routes
@@ -14,9 +14,14 @@ import { MenuComponent } from './menu-components/menu/menu.component';
 import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
+import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LayoutModule } from '@angular/cdk/layout';
+import { LoginComponent } from './auth-components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MenuItemComponent,
     FooterComponent,
     TagsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +39,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
+    LayoutModule,
+    ReactiveFormsModule,
+    NgbModule,
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

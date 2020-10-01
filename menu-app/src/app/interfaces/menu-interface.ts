@@ -5,4 +5,6 @@ export interface MenuInterface {
   name: string;
   sections: SectionInterface[];
   description: string;
+  external_link: string;
+  link_name: string;
 }

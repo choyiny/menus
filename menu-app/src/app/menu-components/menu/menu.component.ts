@@ -1,8 +1,8 @@
 import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { MenuInterface } from '../../interfaces/menu-interface';
 import { MenuService } from '../../services/menu.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { style, state, animate, transition, trigger } from '@angular/animations';
+import { ActivatedRoute } from '@angular/router';
+import { style, animate, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-menu',
@@ -15,18 +15,17 @@ import { style, state, animate, transition, trigger } from '@angular/animations'
     ]),
   ],
 })
-export class MenuComponent implements OnInit, AfterViewChecked {
+export class MenuComponent implements OnInit {
   menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
-  // blockChange = false;
-  // willScroll = false;
-  // scrollToId;
+  @Input() selectedImage: string;
 
   constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.slug;
+    console.log(id);
     if (id) {
       this.getMenu(id);
     }
@@ -55,12 +54,5 @@ export class MenuComponent implements OnInit, AfterViewChecked {
     const offsetPosition = elementPosition - headerOffset;
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
-  }
-
-  ngAfterViewChecked(): void {
-    // if (this.willScroll){
-    //   const headerSize = document.getElementById('header').offsetHeight;
-    //   document.get
-    // }
   }
 }

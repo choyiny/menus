@@ -8,8 +8,11 @@ import { SectionInterface } from '../../interfaces/section-interface';
 })
 export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
+  descriptions: string[];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.descriptions = this.section.description.split('^');
+  }
 }

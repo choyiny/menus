@@ -23,6 +23,7 @@ class Section(EmbeddedDocument):
     name = StringField(required=True)
     image = URLField()
     description = StringField()
+    subtitle = StringField()
 
 
 class Item(EmbeddedDocument):
@@ -48,6 +49,9 @@ class Item(EmbeddedDocument):
     description = StringField()
     # description of menu item
 
+    _id = StringField()
+    # unique id of menu-item
+
 
 class Menu(Document):
     """
@@ -70,9 +74,14 @@ class Menu(Document):
     # a list of menu items
 
     sections = ListField(EmbeddedDocumentField(Section))
-
     # a list of sections in order
 
+    external_link = URLField()
+
+    # optional external link provided by user
+    link_name = StringField()
+
+    # name for external link
     def sectionized_menu(self) -> dict:
         """
         Output a list of sections with associated menu items.
@@ -96,6 +105,7 @@ class Menu(Document):
                     "name": section_name,
                     "menu_items": list_of_items,
                     "description": name_to_section[section_name].description,
+                    "subtitle": name_to_section[section_name].subtitle,
                 }
             )
         return {
@@ -103,4 +113,6 @@ class Menu(Document):
             "description": self.description,
             "sections": sectionized,
             "image": self.image,
+            "link_name": self.link_name,
+            "external_link": self.external_link,
         }

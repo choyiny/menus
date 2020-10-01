@@ -1,16 +1,23 @@
 from __future__ import annotations
 
-from mongoengine import Document, StringField
+from mongoengine import Document, StringField, ListField, BooleanField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(Document):
     username = StringField(required=True)
     password_hash = StringField(required=True)
+    menus = ListField()
+    is_admin = BooleanField(required=True)
 
     @classmethod
     def create(cls, username: str, password: str):
-        return User(username=username, password_hash=cls.hash_password(password)).save()
+        return User(
+            username=username,
+            password_hash=cls.hash_password(password),
+            menus=[],
+            is_admin=False,
+        ).save()
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -18,3 +25,6 @@ class User(Document):
     @staticmethod
     def hash_password(password):
         return generate_password_hash(password)
+
+    def has_permission(self, slug):
+        return self.is_admin or slug in self.menus

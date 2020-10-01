@@ -2,19 +2,22 @@
   border-bottom: solid 0.5px #dfe0e3;
   font-size: 12px;
   margin-top: 5px;
+}
 
-  .item-description {
-    font-weight: 300;
-    color: rgba(26, 24, 36, 0.5);
+@media only screen and (min-width: 600px) {
+  .menu-item {
+    padding: 1em;
+    border-radius: 20px;
+    border: solid 0.5px #dfe0e3;
+    margin: 20px 0px 20px 0em;
+    height: 80%;
   }
 }
 
-.price {
-  float: right;
-}
-
-.item {
-  float: left;
+@media only screen and (max-width: 600px) {
+  .form {
+    margin-bottom: 1em;
+  }
 }
 
 h1 {
@@ -22,10 +25,69 @@ h1 {
   font-weight: 500;
 }
 
-.menu-price {
-  overflow: hidden;
+.logo {
+  width: 20%;
+  display: flex;
+
+  .icon {
+    object-fit: cover;
+    float: left;
+    margin-right: 1em;
+    height: 60px;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 100%;
+  }
 }
 
-.description {
-  margin-bottom: 10px;
+.img-description {
+  display: flex;
+
+  .description {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .menu-price {
+    overflow: hidden;
+    display: block;
+
+    .price {
+      float: right;
+      display: block;
+    }
+
+    .item {
+      float: left;
+    }
+  }
+
+  .item-description {
+    font-weight: 300;
+    color: rgba(26, 24, 36, 0.5);
+    margin: 2.5px 0px 2.5px 0px;
+  }
+}
+
+.img-display {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+::ng-deep {
+  .modal-content {
+    margin-top: 40px;
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.logo-description {
+  width: 80%;
+}
+.no-logo-description {
+  width: 100%;
 }

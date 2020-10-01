@@ -1,14 +1,30 @@
 .section {
-  margin: 3em 1em 1em 0px;
+  margin: 0em 1em 0em 1em;
+  padding-top: 4em;
+}
+
+@media only screen and (min-width: 600px) {
+  .section {
+    margin-top: 2em;
+  }
 }
 
 h1 {
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 600;
 }
 
-p{
+p {
   font-size: 16px;
   font-weight: 300;
   margin-bottom: 1em;
+}
+
+.description-container {
+  margin-bottom: 2em;
+}
+
+.section-description {
+  font-size: 16px;
+  margin: 2.5px 0px 2.5px 0px;
 }

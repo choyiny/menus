@@ -1,6 +1,5 @@
 .menu-items {
   min-height: 100vh;
-  margin-left: 20px;
   border-radius: 0px 0px 30px 30px;
 }
 
@@ -12,6 +11,7 @@
 .header {
   background: #ffffff;
   border-width: thin;
+  border-radius: 31px;
   transition: all 0.3s;
   box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
 
@@ -19,11 +19,44 @@
     border-radius: 20px 20px 0 0;
     background: #ffffff;
     padding: 20px 0;
-
+    box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
     .description {
       margin-left: 20px;
       font-weight: 300;
       color: #8c8b91;
+    }
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .scrolling-wrapper {
+    background: #ffffff;
+
+    &.menu-section {
+      padding: 14px 20px;
+      margin: 20px 6px 20px 0;
+      border: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1824;
+      transition: all 0.3s;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .desktop-header {
+      display: inline-block;
+      margin-right: 10em;
+      transition: all 0.3s;
+
+      .desktop-name {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .logo {
+        display: inline;
+      }
     }
   }
 }
@@ -65,21 +98,12 @@
     .section-description {
       font-size: 14px;
       font-weight: 300;
+      margin-bottom: 0;
     }
 
     &:focus {
       outline: 0;
     }
-  }
-
-  .button-small {
-    font-size: 18px;
-    padding: 7px 20px;
-  }
-
-  .selected {
-    opacity: 1;
-    color: black;
   }
 }
 
@@ -97,5 +121,62 @@
     .name {
       font-weight: 600;
     }
+  }
+}
+
+.desktop-description {
+  background: white;
+  margin: 4em 3em 1em 3em;
+  border-radius: 40px;
+  padding: 2em;
+  width: 50%;
+
+  .desc {
+    color: #1a1824;
+    font-size: 36px;
+    font-weight: 550;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  .paragraph {
+    font-size: 14px;
+    color: #8c8b91;
+    font-weight: 300;
+  }
+}
+
+.link {
+  margin-top: 0px;
+  margin-left: 1em;
+}
+
+// mobile view
+@media only screen and (max-width: 600px) {
+  .desktop-background {
+    background: white;
+  }
+
+  .desktop-header {
+    display: none;
+  }
+
+  .desktop-description {
+    display: none;
+  }
+
+  .section-background {
+    box-shadow: inset 0px 7px 20px 0px rgba(101, 30, 27, 0.22);
+  }
+}
+
+// desktop view
+@media only screen and (min-width: 600px) {
+  .header {
+    display: none;
+  }
+  .section-background {
+    background: white;
+    margin: 3em 3em 1em 3em;
+    border-radius: 40px;
   }
 }

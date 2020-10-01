@@ -4,4 +4,5 @@ export interface SectionInterface {
   name: string;
   menu_items: MenuItemInterface[];
   description: string;
+  subtitle: string;
 }

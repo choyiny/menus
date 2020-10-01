@@ -15,9 +15,11 @@ class SectionSchema(Schema):
     description = fields.Str(
         example="Piece by piece", description="Description of section"
     )
+    subtitle = fields.Str(description="Headers for section anchors")
 
 
 class ItemSchema(Schema):
+    _id = fields.Str()
     image = fields.Url(example="https://via.placeholder.com/150")
     name = fields.Str(example="Meatball Pasta")
     price = fields.Str(example="$6.99")
@@ -33,12 +35,15 @@ class MenuSchema(Schema):
     description = fields.Str(example="A cafe in Hollywood")
     menu_items = fields.List(fields.Nested(ItemSchema))
     sections = fields.List(fields.Nested(SectionSchema))
+    external_link = fields.Str(description="external link")
+    link_name = fields.Str(description="name of link")
 
 
 class SectionItemSchema(Schema):
     name = fields.Str(description="Name of section", example="A la carte")
     menu_items = fields.List(fields.Nested(ItemSchema))
     description = fields.Str(description="Name of section", example="Piece by piece")
+    subtitle = fields.Str(description="Headers for section anchors")
 
 
 class GetMenuSchema(Schema):
@@ -46,6 +51,10 @@ class GetMenuSchema(Schema):
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
+    external_link = fields.Str(
+        description="external link", example="https://mydeliverysite.com"
+    )
+    link_name = fields.Str(description="name of link")
 
 
 pagination_args = {
@@ -53,4 +62,9 @@ pagination_args = {
     "limit": fields.Int(description="How many entries per page", default=5),
 }
 
-import_args = {"csv": fields.Field()}
+qr_args = {
+    "url": fields.Str(description="url of website to be encoded"),
+    "name": fields.Str(description="name of generated qr"),
+}
+
+file_args = {"file": fields.Field()}

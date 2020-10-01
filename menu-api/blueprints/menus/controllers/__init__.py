@@ -4,4 +4,5 @@ from .menus_resources import (
     ImportMenuResource,
     AllMenuResource,
     QRMenuResource,
+    ImageMenuResource,
 )
