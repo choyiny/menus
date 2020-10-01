@@ -9,7 +9,11 @@ import { SectionInterface } from '../../interfaces/section-interface';
 export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
   @Input() desktopMode: boolean;
+  descriptions: string[];
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.descriptions = this.section.description.split('^');
+  }
 }
