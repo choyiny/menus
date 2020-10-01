@@ -26,3 +26,6 @@ class User(Document):
     @staticmethod
     def hash_password(password):
         return generate_password_hash(password)
+
+    def has_permission(self, slug):
+        return self.is_admin or slug in self.menus
