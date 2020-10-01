@@ -49,9 +49,11 @@ class ClaimSlugResource(AuthBaseResource):
 class UserResource(AuthBaseResource):
     @doc(description="""Create new User""")
     @use_kwargs(PostUserSchema)
+    @marshal_with(GetUserSchema)
     def post(self, **kwargs):
-        User.create(**kwargs).save()
-        return "new user created"
+        user = User.create(**kwargs)
+        user.save()
+        return user
 
     @with_current_user
     @marshal_with(GetUsersSchema)

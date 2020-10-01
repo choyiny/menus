@@ -33,7 +33,7 @@ class MenusResource(MenusBaseResource):
         """
         Create a new Menu.
         """
-        if g.user is None:
+        if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
 
         menu = Menu(**menu_info).save()
@@ -48,7 +48,12 @@ class AllMenuResource(MenusBaseResource):
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
+    @with_current_user
     def get(self, args):
+
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
+
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
@@ -59,10 +64,16 @@ class AllMenuResource(MenusBaseResource):
 class ImportMenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     @use_args(file_args, location="files")
+    @with_current_user
     def post(self, args, slug):
+
+        if g.user is None and not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
         menu = Menu.objects(slug=slug).first()
         if menu is None:
             return {"description": "Menu not found."}, 404
+
         file_str = args["file"].read()
         reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
         menu_items = []
@@ -141,12 +152,13 @@ class MenuResource(MenusBaseResource):
         """
         Replace attributes for Menu that matches slug.
         """
+        slug = kwargs["slug"]
 
-        if g.user is None:
+        if g.user is None and not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
 
         # modify the user id
-        menu = Menu.objects(slug=kwargs["slug"]).first()
+        menu = Menu.objects(slug=slug).first()
         if menu is None:
             return {"description": "Menu not found."}, 404
 
@@ -174,9 +186,9 @@ class MenuResource(MenusBaseResource):
     @with_current_user
     def delete(self, slug):
         """
-        Delete User that matches user_id.
+        Delete menu that matches menu_id.
         """
-        if g.user is None:
+        if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
         menu = Menu.objects(slug=slug).first()
         if menu is None:
@@ -190,8 +202,11 @@ class MenuResource(MenusBaseResource):
 @doc(description="""Generate QR code of url on template""")
 class QRMenuResource(MenusBaseResource):
     @use_args(qr_args, location='query')
+    @with_current_user
     def get(self, args):
         """Generate QR code in template"""
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
         url = args['url']
         name = args['name']
         qr = qrcode.QRCode(

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from mongoengine import Document, StringField, ListField, BooleanField, ObjectIdField
+from mongoengine import Document, StringField, ListField, BooleanField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -12,7 +12,6 @@ class User(Document):
 
     @classmethod
     def create(cls, username: str, password: str):
-        print(username, password)
         return User(
             username=username,
             password_hash=cls.hash_password(password),
