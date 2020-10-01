@@ -1,7 +1,8 @@
-import boto3
+import uuid
+
 from flask_apispec.views import MethodResource
 from marshmallow import Schema, fields
-import uuid
+from extensions import s3
 
 import config
 
@@ -14,11 +15,6 @@ class BaseResource(MethodResource):
     pass
 
 
-s3 = boto3.client(
-    "s3", aws_access_key_id=config.AWS_KEY_ID, aws_secret_access_key=config.AWS_SECRET
-)
-
-
 def upload_image(file):
     filename = str(uuid.uuid4()) + ".png"
     s3.put_object(
@@ -28,8 +24,4 @@ def upload_image(file):
         ACL="public-read",
         ContentType="image/png",
     )
-    return "https://%s.s3.%s.amazonaws.com/%s" % (
-        config.S3_BUCKET_NAME,
-        config.AWS_REGION,
-        filename,
-    )
+    return f"https://{config.S3_BUCKET_NAME}.s3.{config.AWS_REGION}.amazonaws.com/{filename}"

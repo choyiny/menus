@@ -50,7 +50,7 @@ class GetMenuSchema(Schema):
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
-    external_link = fields.Str(description='external link')
+    external_link = fields.Str(description='external link', example='https://mydeliverysite.com')
     link_name = fields.Str(description='name of link')
 
 
