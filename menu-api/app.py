@@ -2,7 +2,7 @@ import os
 
 import mongoengine
 import sentry_sdk
-from flask import Flask, jsonify
+from flask import Flask, jsonify, Blueprint
 from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -79,14 +79,16 @@ def register_blueprints(app: Flask):
 
     # menus blueprint
     from blueprints.menus import menus_bp
-    from blueprints.menus import routes as menus_route
+    from blueprints.menus.routes import resources as menu_resources
+    from blueprints.menus import bp_name as menu_bp_name
 
     # auth blueprint
     from blueprints.auth import auth_bp
-    from blueprints.auth import routes as auth_route
+    from blueprints.auth.routes import resources as auth_resources
+    from blueprints.auth import bp_name as auth_bp_name
 
-    menus_route.set_routes(app, menus_bp, docs)
-    auth_route.set_routes(app, auth_bp, docs)
+    set_routes(menu_resources, app, menus_bp, docs, menu_bp_name)
+    set_routes(auth_resources, app, auth_bp, docs, auth_bp_name)
 
 
 def register_external(skip_sentry=False):
@@ -105,3 +107,13 @@ def register_external(skip_sentry=False):
                 SqlalchemyIntegration(),
             ],
         )
+
+
+def set_routes(resources, app: Flask, bp: Blueprint, docs: FlaskApiSpec, bp_name):
+    for resource, route, name, methods in resources:
+        bp.add_url_rule(route, view_func=resource.as_view(name), methods=methods)
+
+    app.register_blueprint(bp)
+
+    for resource, route, name, methods in resources:
+        docs.register(resource, blueprint=bp_name, endpoint=name)
