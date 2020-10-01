@@ -2,6 +2,7 @@
 FROM node:13-alpine as build-app
 WORKDIR /usr/src/app
 COPY package*.json ./
+COPY .npmrc ./
 RUN npm install
 COPY . .
 
