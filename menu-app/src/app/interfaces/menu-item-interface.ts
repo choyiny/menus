@@ -7,4 +7,5 @@ export interface MenuItemInterface {
   sections: string[];
   tags: TagInterface[];
   description: string;
+  _id: string;
 }
