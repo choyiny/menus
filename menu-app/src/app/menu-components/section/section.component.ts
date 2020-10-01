@@ -13,6 +13,10 @@ export class SectionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.descriptions = this.section.description.split('^');
+    if (this.section.description) {
+      this.descriptions = this.section.description.split('^');
+    } else {
+      this.descriptions = [];
+    }
   }
 }

@@ -1,8 +1,11 @@
 <div class="section">
   <h1>{{ section.name }}</h1>
-  <div *ngFor="let description of descriptions">
-    <p>{{ description }}</p>
+  <div class="description-container">
+    <p *ngFor="let description of descriptions" class="section-description">
+      {{ description }}
+    </p>
   </div>
+
   <div class="row">
     <app-menu-item
       *ngFor="let item of section.menu_items"
