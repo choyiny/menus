@@ -1,51 +1,52 @@
 <div
   *ngIf="menu"
-  [ngStyle]="
-    desktopMode && {
-      background: 'url(' + menu.image + ')',
-      backgroundSize: '100%',
-      backgroundRepeat: 'no repeat'
-    }
-  "
+  [ngStyle]="{
+    background: 'url(' + menu.image + ')',
+    backgroundSize: '100%',
+    backgroundRepeat: 'no repeat'
+  }"
+  class="desktop-background"
 >
-  <div *ngIf="!desktopMode" class="header">
-    <div
-      [style.background-image]="
-        'linear-gradient(to bottom, rgba(255, 255, 255, 0.52), rgba(0, 0, 0, 0.73)), url(' + menu.image + ')'
-      "
-      class="background-image"
-    >
-      <div class="card-overlay">
-        <div class="overlay-container">
-          <h1>{{ menu.name }}</h1>
+  <div class="desktop-background">
+    <div class="header">
+      <div
+        [style.background-image]="
+          'linear-gradient(to bottom, rgba(255, 255, 255, 0.52), rgba(0, 0, 0, 0.73)), url(' + menu.image + ')'
+        "
+        class="background-image"
+      >
+        <div class="card-overlay">
+          <div class="overlay-container">
+            <h1>{{ menu.name }}</h1>
+          </div>
+        </div>
+        <div class="bio">
+          <p class="description">{{ menu.description }}</p>
+          <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
         </div>
       </div>
-      <div class="bio">
-        <p class="description">{{ menu.description }}</p>
-        <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
+    </div>
+    <div class="scrolling-wrapper sticky-top" [ngClass]="{ sticky: !showImage }" id="wrapper">
+      <div class="desktop-header">
+        <h1><img class="logo" src="assets/group-2.png" /></h1>
+      </div>
+      <div class="desktop-header">
+        <h1 class="desktop-name">{{ menu.name }}</h1>
+      </div>
+      <button class="menu-section" *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
+        {{ section.name }}
+        <p class="section-description">{{ section.subtitle ? section.subtitle : section.description }}</p>
+      </button>
+    </div>
+    <div class="desktop-description">
+      <h1 class="desc">{{ menu.name }}</h1>
+      <p class="paragraph">{{ menu.description }}</p>
+    </div>
+    <div class="menu-items section-background">
+      <div *ngFor="let section of menu.sections">
+        <app-section [section]="section" id="{{ section.name }}"></app-section>
       </div>
     </div>
+    <app-footer></app-footer>
   </div>
-  <div class="scrolling-wrapper sticky-top" [ngClass]="{ sticky: !showImage }" id="wrapper">
-    <div *ngIf="desktopMode" class="desktop-header">
-      <h1><img class="logo" src="assets/group-2.png" /></h1>
-    </div>
-    <div *ngIf="desktopMode" class="desktop-header">
-      <h1 class="desktop-name">{{ menu.name }}</h1>
-    </div>
-    <button class="menu-section" *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
-      {{ section.name }}
-      <p class="section-description">{{ section.subtitle ? section.subtitle : section.description }}</p>
-    </button>
-  </div>
-  <div *ngIf="desktopMode" class="desktop-description">
-    <h1 class="desc">{{ menu.name }}</h1>
-    <p class="paragraph">{{ menu.description }}</p>
-  </div>
-  <div [ngClass]="{ desktopSection: desktopMode, mobileBackground: !desktopMode }" class="menu-items">
-    <div *ngFor="let section of menu.sections">
-      <app-section [section]="section" id="{{ section.name }}"></app-section>
-    </div>
-  </div>
-  <app-footer></app-footer>
 </div>

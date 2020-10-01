@@ -123,12 +123,6 @@
   }
 }
 
-.desktopSection {
-  background: white;
-  margin: 3em 3em 1em 3em;
-  border-radius: 40px;
-}
-
 .desktop-description {
   background: white;
   margin: 4em 3em 1em 3em;
@@ -150,11 +144,38 @@
   }
 }
 
-.mobileBackground {
-  box-shadow: inset 0px 7px 20px 0px rgba(101, 30, 27, 0.22);
-}
-
 .link {
   margin-top: 0px;
   margin-left: 1em;
+}
+
+// mobile view
+@media only screen and (max-width: 600px) {
+  .desktop-background {
+    background: white;
+  }
+
+  .desktop-header {
+    display: none;
+  }
+
+  .desktop-description {
+    display: none;
+  }
+
+  .section-background {
+    box-shadow: inset 0px 7px 20px 0px rgba(101, 30, 27, 0.22);
+  }
+}
+
+// desktop view
+@media only screen and (min-width: 600px) {
+  .header {
+    display: none;
+  }
+  .section-background {
+    background: white;
+    margin: 3em 3em 1em 3em;
+    border-radius: 40px;
+  }
 }
