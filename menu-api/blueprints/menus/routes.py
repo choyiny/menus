@@ -16,7 +16,7 @@ resources = [
     (QRMenuResource, "menus/generate", "QR", ["GET"]),
     (
         ImageMenuResource,
-        "menus/<string:slug>/items/<item_id>/pictures/upload",
+        "menus/<string:slug>/items/<string:item_id>/pictures/upload",
         "Image",
         ["POST"],
     ),

@@ -15,8 +15,9 @@ def generate_tuples():
     return coords
 
 
-def boxify(x, y):
-    return tuple((x, y, x + 950, y + 950))
+def boxify(x: int, y: int):
+    """Generate box coords given upper left corner"""
+    return x, y, x + 950, y + 950
 
 
 def serve_pil_image(pil_img, image_name):
