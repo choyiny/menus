@@ -11,5 +11,3 @@ resources = [
     (ClaimSlugResource, "claim/", "claim", ["PATCH"]),
     (UserResource, "users/", "users", ["GET", "POST"]),
 ]
-
-

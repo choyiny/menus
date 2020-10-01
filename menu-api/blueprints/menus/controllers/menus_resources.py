@@ -14,13 +14,7 @@ from ..helpers import csv_helper
 from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
-from ..schemas import (
-    MenuSchema,
-    GetMenuSchema,
-    pagination_args,
-    file_args,
-    qr_args
-)
+from ..schemas import MenuSchema, GetMenuSchema, pagination_args, file_args, qr_args
 
 
 @doc(description="""Menu collection related operations""")
@@ -49,7 +43,6 @@ class AllMenuResource(MenusBaseResource):
     @use_args(pagination_args, location="querystring")
     @with_current_user
     def get(self, args):
-
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
 
@@ -97,7 +90,7 @@ class ImportMenuResource(MenusBaseResource):
 
     def get_sections(self, row):
         section_list = csv_helper.parse(row["Sections"])
-        section_subtitle = csv_helper.parse(row['Section Subtitle'])
+        section_subtitle = csv_helper.parse(row["Section Subtitle"])
         descriptions = csv_helper.parse(row["Section Description"])
 
         for i in range(len(section_list)):
@@ -187,14 +180,14 @@ class MenuResource(MenusBaseResource):
 
 @doc(description="""Generate QR code of url on template""")
 class QRMenuResource(MenusBaseResource):
-    @use_args(qr_args, location='query')
+    @use_args(qr_args, location="query")
     @with_current_user
     def get(self, args):
         """Generate QR code in template"""
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
-        url = args['url']
-        name = args['name']
+        url = args["url"]
+        name = args["name"]
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,

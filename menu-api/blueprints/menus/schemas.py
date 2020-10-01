@@ -34,8 +34,8 @@ class MenuSchema(Schema):
     description = fields.Str(example="A cafe in Hollywood")
     menu_items = fields.List(fields.Nested(ItemSchema))
     sections = fields.List(fields.Nested(SectionSchema))
-    external_link = fields.Str(description='external link')
-    link_name = fields.Str(description='name of link')
+    external_link = fields.Str(description="external link")
+    link_name = fields.Str(description="name of link")
 
 
 class SectionItemSchema(Schema):
@@ -50,8 +50,10 @@ class GetMenuSchema(Schema):
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
-    external_link = fields.Str(description='external link', example='https://mydeliverysite.com')
-    link_name = fields.Str(description='name of link')
+    external_link = fields.Str(
+        description="external link", example="https://mydeliverysite.com"
+    )
+    link_name = fields.Str(description="name of link")
 
 
 pagination_args = {
@@ -60,8 +62,8 @@ pagination_args = {
 }
 
 qr_args = {
-    'url': fields.Str(description='url of website to be encoded'),
-    'name': fields.Str(description='name of generated qr')
+    "url": fields.Str(description="url of website to be encoded"),
+    "name": fields.Str(description="name of generated qr"),
 }
 
-file_args = {'file': fields.Field()}
+file_args = {"file": fields.Field()}

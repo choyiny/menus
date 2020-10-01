@@ -102,7 +102,7 @@ class Menu(Document):
                     "name": section_name,
                     "menu_items": list_of_items,
                     "description": name_to_section[section_name].description,
-                    "subtitle": name_to_section[section_name].subtitle
+                    "subtitle": name_to_section[section_name].subtitle,
                 }
             )
         return {
@@ -110,6 +110,6 @@ class Menu(Document):
             "description": self.description,
             "sections": sectionized,
             "image": self.image,
-            'link_name': self.link_name,
-            'external_link': self.external_link
+            "link_name": self.link_name,
+            "external_link": self.external_link,
         }

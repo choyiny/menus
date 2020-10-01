@@ -21,4 +21,3 @@ resources = [
         ["POST"],
     ),
 ]
-
