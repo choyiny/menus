@@ -49,6 +49,9 @@ class Item(EmbeddedDocument):
     description = StringField()
     # description of menu item
 
+    _id = StringField()
+    # unique id of menu-item
+
 
 class Menu(Document):
     """

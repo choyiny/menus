@@ -1,4 +1,4 @@
-from ..documents import Section, Tag
+from ..documents import Tag
 
 
 def parse(string):

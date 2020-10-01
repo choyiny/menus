@@ -19,6 +19,7 @@ class SectionSchema(Schema):
 
 
 class ItemSchema(Schema):
+    _id = fields.Str()
     image = fields.Url(example="https://via.placeholder.com/150")
     name = fields.Str(example="Meatball Pasta")
     price = fields.Str(example="$6.99")
