@@ -1,7 +1,6 @@
 from flask import g
 from flask_apispec import marshal_with, use_kwargs, doc
 from webargs.flaskparser import use_args
-from flask import send_file
 import csv
 from io import BytesIO
 
@@ -11,6 +10,8 @@ from marshmallow import Schema, fields
 
 from auth.decorators import with_current_user
 from helpers import ErrorResponseSchema, upload_image
+from ..helpers import csv_helper
+from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section, Tag
 from ..schemas import (
@@ -20,8 +21,6 @@ from ..schemas import (
     file_args,
     qr_args
 )
-import config
-import uuid
 
 
 @doc(description="""Menu collection related operations""")
@@ -67,7 +66,7 @@ class ImportMenuResource(MenusBaseResource):
     @with_current_user
     def post(self, args, slug):
 
-        if g.user is None and not g.user.has_permission(slug):
+        if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
 
         menu = Menu.objects(slug=slug).first()
@@ -85,7 +84,7 @@ class ImportMenuResource(MenusBaseResource):
                     description=row["Description"],
                     name=row["Name"],
                     price=row["Price"],
-                    tags=self.get_tags(row["Tags"]),
+                    tags=csv_helper.get_tags(row["Tags"]),
                     sections=sections,
                     image=None,
                 )
@@ -96,23 +95,10 @@ class ImportMenuResource(MenusBaseResource):
         menu.reload()
         return menu.sectionized_menu()
 
-    @staticmethod
-    def parse(string):
-        return [elem.strip() for elem in string.split("|")]
-
-    def get_tags(self, tag_string):
-        menu_tags = []
-        if tag_string == "":
-            return menu_tags
-        tags = self.parse(tag_string)
-        for tag in tags:
-            menu_tags.append(Tag(text=tag, icon="no-icon"))
-        return menu_tags
-
     def get_sections(self, row):
-        section_list = self.parse(row["Sections"])
-        section_subtitle = self.parse(row['Section Subtitle'])
-        descriptions = self.parse(row["Section Description"])
+        section_list = csv_helper.parse(row["Sections"])
+        section_subtitle = csv_helper.parse(row['Section Subtitle'])
+        descriptions = csv_helper.parse(row["Section Description"])
 
         for i in range(len(section_list)):
             if section_list[i] not in self.all_sections:
@@ -154,7 +140,7 @@ class MenuResource(MenusBaseResource):
         """
         slug = kwargs["slug"]
 
-        if g.user is None and not g.user.has_permission(slug):
+        if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
 
         # modify the user id
@@ -220,34 +206,9 @@ class QRMenuResource(MenusBaseResource):
         img = qr.make_image(fill_color="white", back_color="black")
         img = img.resize((950, 950))
         template = Image.open("menu-api/assets/print template huge.png")
-        for coord in self.generate_tuples():
+        for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
-        return self.serve_pil_image(template, name + ".png")
-
-    @staticmethod
-    def generate_tuples():
-        """Mathematically generate coordinate tuple"""
-        coords = []
-
-        def boxify(x, y):
-            return tuple((x, y, x + 950, y + 950))
-
-        coords_x = [1070, 3560, 6020]
-        coords_y = [820, 3840]
-
-        for x in coords_x:
-            for y in coords_y:
-                coords.append(boxify(x, y))
-        return coords
-
-    @staticmethod
-    def serve_pil_image(pil_img, image_name):
-        img_io = BytesIO()
-        pil_img.save(img_io, "png", quality=70)
-        img_io.seek(0)
-        return send_file(
-            img_io, mimetype="png", attachment_filename=image_name, as_attachment=True
-        )
+        return qr_helper.serve_pil_image(template, name + ".png")
 
 
 class ImageMenuResource(MenusBaseResource):

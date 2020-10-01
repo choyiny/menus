@@ -61,17 +61,3 @@ class UserResource(AuthBaseResource):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
         return {"users": [user for user in User.objects()]}
-
-
-class PromoteUser(AuthBaseResource):
-    @with_current_user
-    @marshal_with(GetUserSchema)
-    @use_kwargs(PromoteUserSchema)
-    def patch(self, **kwargs):
-        if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
-        pk = kwargs["user_id"]
-        user = User.objects(pk=pk).first()
-        user.is_admin = True
-        user.save()
-        return user

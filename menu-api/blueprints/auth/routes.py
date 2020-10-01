@@ -2,7 +2,7 @@ from flask import Blueprint, Flask
 from flask_apispec import FlaskApiSpec
 
 from . import bp_name
-from .controllers import AuthResource, ClaimSlugResource, UserResource, PromoteUser
+from .controllers import AuthResource, ClaimSlugResource, UserResource
 
 
 def set_routes(app: Flask, bp: Blueprint, docs: FlaskApiSpec):
@@ -11,7 +11,6 @@ def set_routes(app: Flask, bp: Blueprint, docs: FlaskApiSpec):
         (AuthResource, "", "authentication", ["POST"]),
         (ClaimSlugResource, "claim/", "claim", ["PATCH"]),
         (UserResource, "users/", "users", ["GET", "POST"]),
-        (PromoteUser, "promote/", "promote", ["PATCH"]),
     ]
 
     for resource, route, name, methods in resources:
