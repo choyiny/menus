@@ -52,7 +52,6 @@ class UserResource(AuthBaseResource):
     @marshal_with(GetUserSchema)
     def post(self, **kwargs):
         user = User.create(**kwargs)
-        user.save()
         return user
 
     @with_current_user
