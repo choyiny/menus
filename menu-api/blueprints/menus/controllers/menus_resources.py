@@ -161,12 +161,14 @@ class MenuResource(MenusBaseResource):
         if kwargs.get('external_link'):
             if menu.external_link == '':
                 menu.external_link = None
-            menu.external_link = kwargs.get('external_link')
+            else:
+                menu.external_link = kwargs.get('external_link')
 
         if kwargs.get('link_name'):
             if menu.link_name == '':
                 menu.link_name = None
-            menu.link_name = kwargs.get('link_name')
+            else:
+                menu.link_name = kwargs.get('link_name')
 
         return menu.save()
 
