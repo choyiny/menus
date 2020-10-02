@@ -4,6 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
 
 @Component({
   selector: 'app-menu-item',
@@ -13,7 +14,7 @@ import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-
 export class MenuItemComponent implements OnInit {
   @Input() item: MenuItemInterface;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
-  selectedFile;
+  @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   editMode: boolean;
   slug: string;
   descriptions: string[];
@@ -35,20 +36,27 @@ export class MenuItemComponent implements OnInit {
     this.descriptions = this.item.description.split('^');
   }
 
-  onChange(event): void {
-    this.selectedFile = event.target.files[0];
-    console.log(this.selectedFile);
-  }
-
   onSubmit(): void {
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    this.menuService.uploadPhoto(this.slug, this.item._id, formData).subscribe((url) => {
-      this.item.image = url;
-    });
+    const dataUrl = this.imgForm.file;
+    if (dataUrl) {
+      fetch(dataUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], 'image', { type: 'image/png' });
+          const formData = new FormData();
+          formData.append('file', file);
+          this.menuService.uploadPhoto(this.slug, this.item._id, formData).subscribe((url) => {
+            this.item.image = url;
+          });
+        });
+    }
   }
 
   showImage(): void {
     this.imgView.open();
+  }
+
+  cropImage(): void {
+    this.imgForm.open();
   }
 }
