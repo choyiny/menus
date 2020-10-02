@@ -158,17 +158,17 @@ class MenuResource(MenusBaseResource):
         if kwargs.get("description"):
             menu.description = kwargs["description"]
 
-        if kwargs.get('external_link'):
-            if menu.external_link == '':
+        if kwargs.get("external_link"):
+            if len(kwargs.get("external_link")) == 0:
                 menu.external_link = None
             else:
-                menu.external_link = kwargs.get('external_link')
+                menu.external_link = kwargs.get("external_link")
 
-        if kwargs.get('link_name'):
-            if menu.link_name == '':
+        if kwargs.get("link_name"):
+            if len(kwargs.get("link_name")) == 0:
                 menu.link_name = None
             else:
-                menu.link_name = kwargs.get('link_name')
+                menu.link_name = kwargs.get("link_name")
 
         return menu.save()
 
