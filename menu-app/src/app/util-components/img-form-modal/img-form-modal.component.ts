@@ -20,8 +20,6 @@ export class ImgFormModalComponent implements OnInit {
     this.modalService.open(this.input);
   }
 
-  closeModal(): void {}
-
   setImage(modal, image): void {
     modal.close();
     console.log(image);

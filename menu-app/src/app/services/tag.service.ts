@@ -35,8 +35,8 @@ export class TagService {
       backgroundColor: '#EE3353',
     },
     Peanut: {
-      test: '',
-      icons: [faAcorn],
+      text: 'May Contain Peanuts',
+      icons: [],
       backgroundColor: 'black',
     },
   };
