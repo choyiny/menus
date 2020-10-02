@@ -1,6 +1,0 @@
-{
-  "production": "true",
-  "settings": {
-    "endpoint": "http://localhost:5000"
-  }
-}
