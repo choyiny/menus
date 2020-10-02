@@ -1,5 +1,0 @@
-{
-  //  "menu_api" : "http://localhost:5000"
-  "production": "true",
-  "menu_api": "https://menu.pickeasy.ca/"
-}

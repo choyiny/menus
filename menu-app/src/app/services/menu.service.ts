@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class MenuService {
-  private url: string = environment.menu_api;
+  private url: string = environment.settings.endpoint;
 
   constructor(private http: HttpClient) {}
   getMenu(slug: string): Observable<MenuInterface> {

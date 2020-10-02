@@ -26,7 +26,7 @@ export class AuthService {
   login(username: string, password: string): Observable<UserInterface> {
     return this.http
       .post<any>(
-        `${environment.menu_api}/auth/`,
+        `${environment.settings.endpoint}/auth/`,
         { username, password },
         { headers: { 'Content-Type': 'application/json' } }
       )

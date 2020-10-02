@@ -1,6 +1,6 @@
 // Angular
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,6 +22,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { LoginComponent } from './auth-components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { EnvironmentLoaderService } from './services/environment-loader.service';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,22 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     NgbModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: EnvironmentLoaderService) => () => {
+        configService
+          .loadConfigurations()
+          .toPromise()
+          .then((env) => {
+            environment.settings = env.settings;
+          });
+      },
+      deps: [EnvironmentLoaderService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

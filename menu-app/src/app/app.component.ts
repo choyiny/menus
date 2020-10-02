@@ -1,5 +1,5 @@
 import { APP_INITIALIZER, Component } from '@angular/core';
-import { ConfigService } from './services/config.service';
+import { EnvironmentLoaderService } from './services/environment-loader.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +8,9 @@ import { ConfigService } from './services/config.service';
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: (config: ConfigService) => () => config.loadConfigurations().toPromise(),
-      deps: [ConfigService],
+      useFactory: (config: EnvironmentLoaderService) => () =>
+        config.loadConfigurations().toPromise(),
+      deps: [EnvironmentLoaderService],
       multi: true,
     },
   ],
