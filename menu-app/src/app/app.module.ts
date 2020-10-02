@@ -31,6 +31,7 @@ import { EnvironmentLoaderService } from './services/environment-loader.service'
 import { environment } from '../environments/environment';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { QuillModule } from 'ngx-quill';
+import { AngularFireModule } from '@angular/fire';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { QuillModule } from 'ngx-quill';
     FormsModule,
     DragDropModule,
     QuillModule.forRoot(),
+    AngularFireModule.initializeApp(environment.settings.firebase),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },

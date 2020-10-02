@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,11 @@ export class LoginComponent implements OnInit {
   error: string;
   loggedIn = false;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    public angularAuth: AngularFireAuth
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -24,7 +30,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
-    this.auth.login(username, password).subscribe(
+    this.authService.login(username, password).subscribe(
       (res) => {
         this.loggedIn = true;
       },
@@ -33,5 +39,12 @@ export class LoginComponent implements OnInit {
         this.error = err.error.description;
       }
     );
+  }
+
+  login() {
+    this.angularAuth.signInWithPopup(new auth.GoogleAuthProvider());
+  }
+  logout() {
+    this.angularAuth.signOut();
   }
 }
