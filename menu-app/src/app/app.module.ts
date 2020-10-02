@@ -27,6 +27,8 @@ import { EnvironmentLoaderService } from './services/environment-loader.service'
 import { environment } from '../environments/environment';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormsModule } from '@angular/forms';
+import { ImgViewModalComponent } from './util-components/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from './util-components/img-form-modal/img-form-modal.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { FormsModule } from '@angular/forms';
     TagsComponent,
     LoginComponent,
     ImageFormComponent,
+    ImgViewModalComponent,
+    ImgFormModalComponent,
   ],
   imports: [
     BrowserModule,
