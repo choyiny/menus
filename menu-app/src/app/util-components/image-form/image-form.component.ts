@@ -19,7 +19,6 @@ export class ImageFormComponent implements OnInit {
   }
   imageCropped(event: ImageCroppedEvent): void {
     this.croppedImage = event.base64;
-    console.log(event);
   }
   imageLoaded(): void {
     // show cropper

@@ -1,6 +1,6 @@
 <ng-template #template let-modal>
-  <div>
-    <app-image-form></app-image-form>
-    <button>OK</button>
+  <div class="crop-container">
+    <app-image-form #crop></app-image-form>
+    <button (click)="setImage(modal, crop.croppedImage)">OK</button>
   </div>
 </ng-template>
