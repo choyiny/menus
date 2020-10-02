@@ -30,21 +30,13 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
-    this.authService.login(username, password).subscribe(
-      (res) => {
-        this.loggedIn = true;
-      },
-      (err) => {
-        console.log(err);
-        this.error = err.error.description;
-      }
-    );
+    this.authService.login(username, password);
   }
 
-  login() {
+  login(): void {
     this.angularAuth.signInWithPopup(new auth.GoogleAuthProvider());
   }
-  logout() {
+  logout(): void {
     this.angularAuth.signOut();
   }
 }
