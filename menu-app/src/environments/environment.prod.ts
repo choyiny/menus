@@ -1,4 +1,8 @@
-export const environment = {
+import { EnvironmentInterface } from '../app/interfaces/environment-interface';
+
+export const environment: EnvironmentInterface = {
   production: true,
-  menu_api: 'https://menu.pickeasy.ca/api',
+  settings: {
+    endpoint: 'https://menu.pickeasy.ca/api',
+  },
 };

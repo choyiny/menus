@@ -1,0 +1,6 @@
+{
+  "production": "true",
+  "settings": {
+    "endpoint": "https://menu.pickeasy.ca/api"
+  }
+}
