@@ -3,7 +3,7 @@ import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 
 @Component({
   selector: 'app-menu-item',
@@ -12,6 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class MenuItemComponent implements OnInit {
   @Input() item: MenuItemInterface;
+  @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   selectedFile;
   editMode: boolean;
   slug: string;
@@ -20,8 +21,7 @@ export class MenuItemComponent implements OnInit {
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
-    private auth: AuthService,
-    private modalService: NgbModal
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
-  showImage(content): void {
-    this.modalService.open(content);
+  showImage(): void {
+    this.imgView.open();
   }
 }
