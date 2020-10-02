@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from mongoengine import Document, StringField, ListField, BooleanField
+from mongoengine import Document, StringField, ListField, BooleanField, EmailField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -9,6 +9,9 @@ class User(Document):
     password_hash = StringField(required=True)
     menus = ListField()
     is_admin = BooleanField(required=True)
+    firebase_id = StringField()
+    email = EmailField()
+    phone_number = StringField(max_length=10)
 
     @classmethod
     def create(cls, username: str, password: str):
@@ -28,3 +31,8 @@ class User(Document):
 
     def has_permission(self, slug):
         return self.is_admin or slug in self.menus
+
+    @classmethod
+    def first_or_create(cls, **kwargs):
+        """ Select first cls that matches by kwargs, and create it if it doesn't exist. """
+        return cls.query.filter_by(**kwargs).first() or cls.create(**kwargs)
