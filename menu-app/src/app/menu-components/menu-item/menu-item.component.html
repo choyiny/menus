@@ -1,12 +1,8 @@
-<ng-template #content let-modal>
-  <div>
-    <img class="img-display" src="{{ item.image }}" />
-    <img src="assets/superlike.png" (click)="modal.close(content)" />
-  </div>
-</ng-template>
+<app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
+<app-img-form-modal></app-img-form-modal>
 <div class="menu-item">
   <div class="img-description">
-    <div *ngIf="item.image" class="logo" (click)="showImage(content)">
+    <div *ngIf="item.image" class="logo" (click)="showImage()">
       <img class="img-responsive icon" src="{{ item.image }}" />
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
@@ -23,7 +19,7 @@
     <app-tags [tag]="tag"></app-tags>
   </span>
   <div *ngIf="editMode" class="form">
-    <input type="file" (change)="onChange($event)" />
-    <button (click)="onSubmit()">Add Photo</button>
+    <button (click)="cropImage()">Add image</button>
+    <button (click)="onSubmit()">Upload!</button>
   </div>
 </div>
