@@ -13,13 +13,11 @@
   border-width: thin;
   border-radius: 31px;
   transition: all 0.3s;
-  box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
 
   .bio {
     border-radius: 20px 20px 0 0;
     background: #ffffff;
     padding: 20px 0;
-    box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
     .description {
       margin-left: 20px;
       font-weight: 300;
@@ -134,7 +132,7 @@
   .desc {
     color: #1a1824;
     font-size: 36px;
-    font-weight: 550;
+    font-weight: 500;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   }
@@ -146,7 +144,7 @@
 }
 
 .link {
-  margin-top: 0px;
+  margin-top: 0;
   margin-left: 1em;
 }
 
@@ -162,10 +160,6 @@
 
   .desktop-description {
     display: none;
-  }
-
-  .section-background {
-    box-shadow: inset 0px 7px 20px 0px rgba(101, 30, 27, 0.22);
   }
 }
 
