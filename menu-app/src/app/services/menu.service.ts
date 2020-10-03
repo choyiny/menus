@@ -8,15 +8,13 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class MenuService {
-  private url: string = environment.settings.endpoint;
-
   constructor(private http: HttpClient) {}
   getMenu(slug: string): Observable<MenuInterface> {
-    return this.http.get<MenuInterface>(`${this.url}/menus/${slug}`);
+    return this.http.get<MenuInterface>(`${environment.settings.endpoint}/menus/${slug}`);
   }
 
   uploadPhoto(slug: string, item: string, uploadForm): Observable<string> {
-    const url = `${this.url}/menus/${slug}/items/${item}/pictures/upload`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item}/pictures/upload`;
     return this.http.post<string>(url, uploadForm);
   }
 }
