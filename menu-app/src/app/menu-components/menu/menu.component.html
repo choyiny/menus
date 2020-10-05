@@ -15,7 +15,8 @@
         "
         class="background-image"
       >
-        <button (click)="toggleEditMode()">Edit</button>
+        <button *ngIf="!editMode" (click)="toggleEditMode()">Edit</button>
+        <button *ngIf="editMode" (click)="toggleEditMode()">Send</button>
         <div class="card-overlay">
           <div *ngIf="!editMode" class="overlay-container">
             <h1>{{ menu.name }}</h1>
