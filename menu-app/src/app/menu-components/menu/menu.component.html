@@ -15,14 +15,24 @@
         "
         class="background-image"
       >
+        <button (click)="toggleEditMode()">Edit</button>
         <div class="card-overlay">
-          <div class="overlay-container">
-            <h1 [contentEditable]="!editMode" (input)="menu.name = $event.target.textContent">{{ menu.name }}</h1>
+          <div *ngIf="!editMode" class="overlay-container">
+            <h1>{{ menu.name }}</h1>
+          </div>
+          <div *ngIf="editMode" class="overlay-container">
+            <input type="text" [(ngModel)]="menu.name" />
           </div>
         </div>
         <div class="bio">
-          <p class="description">{{ menu.description }}</p>
-          <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
+          <div *ngIf="!editMode">
+            <p class="description">{{ menu.description }}</p>
+            <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
+          </div>
+          <div *ngIf="editMode">
+            <input type="text" [(ngModel)]="menu.description" />
+            <input *ngIf="this.menu.external_link" type="text" [(ngModel)]="menu.link_name" />
+          </div>
         </div>
       </div>
     </div>
