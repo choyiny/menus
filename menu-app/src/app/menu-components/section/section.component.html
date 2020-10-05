@@ -5,9 +5,9 @@
       {{ description }}
     </p>
   </div>
-
-  <div class="row">
+  <div class="row" cdkDropList [cdkDropListData]="section.menu_items" (cdkDropListDropped)="drop($event)">
     <app-menu-item
+      cdkDrag
       *ngFor="let item of section.menu_items"
       [item]="item"
       class="col-md-4 col-sm-6 col-12"
