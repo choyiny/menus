@@ -7,11 +7,14 @@
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
-        <h1 class="item">{{ item.name }}</h1>
-        <h1 class="price">{{ item.price }}</h1>
+        <h1 *ngIf="!editMode" class="item">{{ item.name }}</h1>
+        <h1 *ngIf="!editMode" class="price">{{ item.price }}</h1>
+        <input *ngIf="editMode" type="text" class="item" [(ngModel)]="item.price" />
+        <input *ngIf="editMode" type="text" class="price" [(ngModel)]="item.price" />
       </div>
       <div *ngFor="let description of descriptions">
-        <p class="item-description">{{ description }}</p>
+        <p *ngIf="!editMode" class="item-description">{{ description }}</p>
+        <input *ngIf="editMode" type="text" class="item-description" [(ngModel)]="item.description" />
       </div>
     </div>
   </div>
