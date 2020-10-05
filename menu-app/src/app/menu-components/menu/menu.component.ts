@@ -16,10 +16,11 @@ import { style, animate, transition, trigger } from '@angular/animations';
   ],
 })
 export class MenuComponent implements OnInit {
-  menu: MenuInterface;
+  @Input() menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
   @Input() selectedImage: string;
+  editMode: true;
 
   constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
 

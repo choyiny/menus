@@ -17,7 +17,7 @@
       >
         <div class="card-overlay">
           <div class="overlay-container">
-            <h1>{{ menu.name }}</h1>
+            <h1 [contentEditable]="!editMode" (input)="menu.name = $event.target.textContent">{{ menu.name }}</h1>
           </div>
         </div>
         <div class="bio">
