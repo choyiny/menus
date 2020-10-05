@@ -3,6 +3,7 @@ import { MenuInterface } from '../../interfaces/menu-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
@@ -20,13 +21,12 @@ export class MenuComponent implements OnInit {
   showImage = true;
   @Input() selectedSection: string;
   @Input() selectedImage: string;
-  editMode: true;
+  editMode: boolean;
 
   constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.slug;
-    console.log(id);
     if (id) {
       this.getMenu(id);
     }
@@ -55,5 +55,9 @@ export class MenuComponent implements OnInit {
     const offsetPosition = elementPosition - headerOffset;
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
+  }
+
+  toggleEditMode(): void {
+    this.editMode = !this.editMode;
   }
 }
