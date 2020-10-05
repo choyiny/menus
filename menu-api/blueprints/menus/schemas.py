@@ -16,6 +16,7 @@ class SectionSchema(Schema):
         example="Piece by piece", description="Description of section"
     )
     subtitle = fields.Str(description="Headers for section anchors")
+    _id = fields.Str(description='Section id')
 
 
 class ItemSchema(Schema):
@@ -44,6 +45,7 @@ class SectionItemSchema(Schema):
     menu_items = fields.List(fields.Nested(ItemSchema))
     description = fields.Str(description="Name of section", example="Piece by piece")
     subtitle = fields.Str(description="Headers for section anchors")
+    _id = fields.Str(description='Section id')
 
 
 class GetMenuSchema(Schema):

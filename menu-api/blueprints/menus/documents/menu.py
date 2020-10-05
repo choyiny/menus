@@ -8,6 +8,7 @@ from mongoengine import (
     EmbeddedDocument,
     URLField,
 )
+import uuid
 
 
 class Tag(EmbeddedDocument):
@@ -24,6 +25,7 @@ class Section(EmbeddedDocument):
     image = URLField()
     description = StringField()
     subtitle = StringField()
+    _id = StringField(required=True)
 
 
 class Item(EmbeddedDocument):
@@ -102,6 +104,7 @@ class Menu(Document):
         for section_name, list_of_items in section_to_items.items():
             sectionized.append(
                 {
+                    '_id': name_to_section[section_name]._id,
                     "name": section_name,
                     "menu_items": list_of_items,
                     "description": name_to_section[section_name].description,
