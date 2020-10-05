@@ -32,7 +32,7 @@ export class TagService {
     Spicy3: {
       text: '',
       icons: [faPepperHot, faPepperHot, faPepperHot],
-      backgroundColor: '#EE3353',
+      backgroundColor: '#ee3353',
     },
     Peanut: {
       text: 'May Contain Peanuts',
