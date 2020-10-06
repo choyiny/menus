@@ -55,7 +55,7 @@
     </div>
     <div class="menu-items section-background">
       <div *ngFor="let section of menu.sections">
-        <app-section [section]="section" id="{{ section.name }}"></app-section>
+        <app-section [section]="section" [slug]="slug" id="{{ section.name }}"></app-section>
       </div>
     </div>
     <app-footer></app-footer>

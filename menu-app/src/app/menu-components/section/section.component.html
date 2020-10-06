@@ -1,4 +1,6 @@
 <div class="section">
+  <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+  <button *ngIf="editMode" (click)="sendRequest()">Send</button>
   <h1>{{ section.name }}</h1>
   <div class="description-container">
     <p>{{ section.subtitle }}</p>
@@ -6,7 +8,13 @@
       {{ description }}
     </p>
   </div>
-  <div class="row" cdkDropList [cdkDropListData]="section.menu_items" (cdkDropListDropped)="drop($event)">
+  <div
+    class="row"
+    cdkDropList
+    [cdkDropListDisabled]="!editMode"
+    [cdkDropListData]="section.menu_items"
+    (cdkDropListDropped)="drop($event)"
+  >
     <app-menu-item
       cdkDrag
       *ngFor="let item of section.menu_items"

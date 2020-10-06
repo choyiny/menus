@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SectionInterface } from '../../interfaces/section-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-section',
@@ -10,16 +11,22 @@ import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 })
 export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
+  @Input() slug: string;
   descriptions: string[];
+  editMode;
 
-  constructor() {}
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
     this.descriptions = this.section.description.split('^');
   }
 
+  sendRequest(): void {
+    this.menuService.editSection(this.slug, this.section).subscribe((menu) => {});
+    this.editMode = false;
+  }
+
   drop(event: CdkDragDrop<MenuItemInterface[]>): void {
-    console.log('drop');
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
