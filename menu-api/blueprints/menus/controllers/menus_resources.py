@@ -237,7 +237,6 @@ class SectionMenuResource(MenusBaseResource):
     @use_kwargs(SectionItemSchema)
     def patch(self, slug, section_id, **kwargs):
         """Edit restaurant section"""
-        print(kwargs)
 
         if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
@@ -251,8 +250,22 @@ class SectionMenuResource(MenusBaseResource):
 
             if section._id == section_id:
                 if kwargs['menu_items']:
-                    section.menu_items = kwargs['menu_items']
-                    print(len(section.menu_items))
+                    menu_items = [item._id for item in kwargs['menu_items']]
+                    menu_dict = {}
+                    ordered_list = []
+                    i, j = 0
+                    while j < len(menu_items):
+                        if menu.menu_items[i]._id == menu_items[j]._id:
+                            menu_dict[menu.menu_items[i]._id] = i
+                            ordered_list.append(i)
+                            j += 1
+                        i += 1
+                    ordered_list.sort()
+
+                    # rearrange menu_items to correct index
+                    for index in range(len(ordered_list)):
+                        menu.menu_items[ordered_list[index]] = menu.menu_items[menu_dict[menu_items[index]]]
+
 
                 if kwargs['subtitle']:
                     section.subtitle = kwargs['subtitle']
