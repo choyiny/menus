@@ -7,6 +7,7 @@ from .controllers import (
     QRMenuResource,
     ImageMenuResource,
     SectionMenuResource,
+    ItemMenuResource
 )
 
 resources = [
@@ -24,7 +25,13 @@ resources = [
     (
         SectionMenuResource,
         "menus/<string:slug>/section/<string:section_id>/edit",
-        "edit",
+        "edit_section",
         ["PATCH"],
     ),
+    (
+        ItemMenuResource,
+        "menus/<string:slug>/items/<item:section_id>/edit",
+        "edit_item",
+        ["PATCH"]
+    )
 ]

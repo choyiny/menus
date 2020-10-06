@@ -22,6 +22,7 @@ from ..schemas import (
     file_args,
     qr_args,
     SectionItemSchema,
+    ItemSchema
 )
 
 
@@ -198,8 +199,8 @@ class QRMenuResource(MenusBaseResource):
     @with_current_user
     def get(self, args):
         """Generate QR code in template"""
-        # if g.user is None or not g.user.is_admin:
-        #     return {"description": "You do not have permission"}, 401
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
         url = args["url"]
         name = args["name"]
         qr = qrcode.QRCode(
@@ -212,7 +213,7 @@ class QRMenuResource(MenusBaseResource):
         qr.make(fit=True)
         img = qr.make_image(fill_color="white", back_color="black")
         img = img.resize((950, 950))
-        template = Image.open("menu-api/assets/print template huge.png")
+        template = Image.open("../../../assets/print template huge.png")
         for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
         return qr_helper.serve_pil_image(template, name + ".png")
@@ -255,17 +256,49 @@ class SectionMenuResource(MenusBaseResource):
 
         for section in menu.sections:
             if section._id == section_id:
-                if kwargs["menu_items"]:
+                if kwargs.get('menu_items'):
                     menu.rearrange_section(kwargs["menu_items"])
 
-                if kwargs["subtitle"]:
+                if kwargs.get('subtitle'):
                     section.subtitle = kwargs["subtitle"]
 
-                if kwargs["name"]:
+                if kwargs.get('name'):
                     section.name = kwargs["name"]
 
-                if kwargs["description"]:
+                if kwargs.get('description'):
                     section.description = kwargs["description"]
 
-        menu.save()
-        return menu.sectionized_menu()
+            menu.save()
+            return section
+        return {"description": "Section not found."}, 404
+
+class ItemMenuResource(MenusBaseResource):
+
+    @with_current_user
+    @use_kwargs(ItemSchema)
+    @marshal_with(ItemSchema)
+    def patch(self, slug, item_id, **kwargs):
+        """Edit menu item"""
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        # modify the user id
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+
+        for item in menu.menu_items:
+            if item._id == item_id:
+                if kwargs.get('name'):
+                    item.name = kwargs['name']
+
+                if kwargs.get('price'):
+                    item.price = kwargs['price']
+
+                if kwargs.get('description'):
+                    item.description = kwargs['description']
+
+            menu.save()
+            return item
+        return {'description': 'Item not found'}, 404
