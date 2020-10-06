@@ -1,6 +1,7 @@
 <div class="section">
   <h1>{{ section.name }}</h1>
   <div class="description-container">
+    <p>{{ section.subtitle }}</p>
     <p *ngFor="let description of descriptions" class="section-description">
       {{ description }}
     </p>
