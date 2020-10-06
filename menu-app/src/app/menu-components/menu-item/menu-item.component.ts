@@ -16,23 +16,18 @@ export class MenuItemComponent implements OnInit {
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   editMode: boolean;
-  slug: string;
+  @Input() slug: string;
   descriptions: string[];
 
-  constructor(
-    private menuService: MenuService,
-    private route: ActivatedRoute,
-    private auth: AuthService
-  ) {}
+  constructor(private menuService: MenuService, private auth: AuthService) {}
 
   ngOnInit(): void {
-    this.slug = this.route.snapshot.params.slug;
     const user = this.auth.currentUserValue;
-    if (user) {
-      this.editMode = user.is_admin || this.slug in user.menus;
-    } else {
-      this.editMode = false;
-    }
+    // if (user) {
+    //   this.editMode = user.is_admin || this.slug in user.menus;
+    // } else {
+    //   this.editMode = false;
+    // }
     this.descriptions = this.item.description.split('^');
   }
 
@@ -58,5 +53,12 @@ export class MenuItemComponent implements OnInit {
 
   cropImage(): void {
     this.imgForm.open();
+  }
+
+  sendRequest(): void {
+    this.menuService.editItem(this.slug, this.item).subscribe((item) => {
+      this.item = item;
+    });
+    this.editMode = false;
   }
 }

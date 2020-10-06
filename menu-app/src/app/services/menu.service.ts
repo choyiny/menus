@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { MenuInterface } from '../interfaces/menu-interface';
 import { SectionInterface } from '../interfaces/section-interface';
+import { MenuItemInterface } from '../interfaces/menu-item-interface';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -29,8 +30,13 @@ export class MenuService {
     });
   }
 
-  editSection(slug: string, section: SectionInterface): Observable<MenuInterface> {
+  editSection(slug: string, section: SectionInterface): Observable<SectionInterface> {
     const url = `${environment.settings.endpoint}/menus/${slug}/section/${section._id}/edit`;
-    return this.http.patch<MenuInterface>(url, section);
+    return this.http.patch<SectionInterface>(url, section);
+  }
+
+  editItem(slug: string, item: MenuItemInterface): Observable<MenuItemInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/item/${item._id}/edit`;
+    return this.http.patch<MenuItemInterface>(url, item);
   }
 }

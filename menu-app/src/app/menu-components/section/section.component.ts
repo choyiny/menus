@@ -22,7 +22,9 @@ export class SectionComponent implements OnInit {
   }
 
   sendRequest(): void {
-    this.menuService.editSection(this.slug, this.section).subscribe((menu) => {});
+    this.menuService.editSection(this.slug, this.section).subscribe((section) => {
+      this.section = section;
+    });
     this.editMode = false;
   }
 
