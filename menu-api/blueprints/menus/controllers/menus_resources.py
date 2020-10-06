@@ -15,7 +15,7 @@ from ..helpers import csv_helper
 from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section
-from ..schemas import MenuSchema, GetMenuSchema, pagination_args, file_args, qr_args
+from ..schemas import MenuSchema, GetMenuSchema, pagination_args, file_args, qr_args, SectionItemSchema
 
 
 @doc(description="""Menu collection related operations""")
@@ -102,6 +102,7 @@ class ImportMenuResource(MenusBaseResource):
                     subtitle=section_subtitle[i],
                     image=row["Section Image"],
                     description=descriptions[i],
+                    _id=str(uuid.uuid4())
                 )
 
             if self.all_sections[section_list[i]].image == "":
@@ -222,3 +223,39 @@ class ImageMenuResource(MenusBaseResource):
                 item.image = upload_image(out_img)
                 menu.save()
                 return item.image
+
+
+class SectionMenuResource(MenusBaseResource):
+    @with_current_user
+    @marshal_with(GetMenuSchema)
+    @use_kwargs(SectionItemSchema)
+    def patch(self, slug, section_id, **kwargs):
+        """Edit restaurant section"""
+        print(kwargs)
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        # modify the user id
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+
+        for section in menu.sections:
+
+            if section._id == section_id:
+                if kwargs['menu_items']:
+                    section.menu_items = kwargs['menu_items']
+                    print(len(section.menu_items))
+
+                if kwargs['subtitle']:
+                    section.subtitle = kwargs['subtitle']
+
+                if kwargs['name']:
+                    section.name = kwargs['name']
+
+                if kwargs['description']:
+                    section.description = kwargs['description']
+
+        menu.save()
+        return menu.sectionized_menu()
