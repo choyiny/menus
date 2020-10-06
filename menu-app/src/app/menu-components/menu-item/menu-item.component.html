@@ -9,7 +9,7 @@
       <div class="menu-price">
         <h1 *ngIf="!editMode" class="item">{{ item.name }}</h1>
         <h1 *ngIf="!editMode" class="price">{{ item.price }}</h1>
-        <input *ngIf="editMode" type="text" class="item" [(ngModel)]="item.price" />
+        <input *ngIf="editMode" type="text" class="item" [(ngModel)]="item.name" />
         <input *ngIf="editMode" type="text" class="price" [(ngModel)]="item.price" />
       </div>
       <div *ngFor="let description of descriptions">
