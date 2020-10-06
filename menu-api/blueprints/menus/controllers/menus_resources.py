@@ -250,21 +250,23 @@ class SectionMenuResource(MenusBaseResource):
 
             if section._id == section_id:
                 if kwargs['menu_items']:
-                    menu_items = [item._id for item in kwargs['menu_items']]
+
+                    menu_items = [item['_id'] for item in kwargs['menu_items']]
+                    menu_copy = menu.menu_items[:]
+                    menu_set = set(menu_items)
                     menu_dict = {}
                     ordered_list = []
-                    i, j = 0
-                    while j < len(menu_items):
-                        if menu.menu_items[i]._id == menu_items[j]._id:
+                    i = 0
+                    while len(ordered_list) < len(menu_items):
+                        if menu.menu_items[i]._id in menu_set:
+                            print(menu.menu_items[i].name)
                             menu_dict[menu.menu_items[i]._id] = i
                             ordered_list.append(i)
-                            j += 1
                         i += 1
                     ordered_list.sort()
-
-                    # rearrange menu_items to correct index
-                    for index in range(len(ordered_list)):
-                        menu.menu_items[ordered_list[index]] = menu.menu_items[menu_dict[menu_items[index]]]
+                    # rearrange menu_items to correct placement
+                    for index in range(len(menu_items)):
+                        menu.menu_items[ordered_list[index]] = menu_copy[menu_dict[menu_items[index]]]
 
 
                 if kwargs['subtitle']:
