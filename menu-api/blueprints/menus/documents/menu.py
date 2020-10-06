@@ -104,7 +104,7 @@ class Menu(Document):
         for section_name, list_of_items in section_to_items.items():
             sectionized.append(
                 {
-                    '_id': name_to_section[section_name]._id,
+                    "_id": name_to_section[section_name]._id,
                     "name": section_name,
                     "menu_items": list_of_items,
                     "description": name_to_section[section_name].description,
@@ -119,3 +119,22 @@ class Menu(Document):
             "link_name": self.link_name,
             "external_link": self.external_link,
         }
+
+    def rearrange_section(self, menu_items):
+        menu_items = [item["_id"] for item in menu_items]
+        menu_copy = self.menu_items[:]
+        menu_set = set(menu_items)
+        menu_dict = {}
+        ordered_list = []
+        i = 0
+        while len(ordered_list) < len(menu_items):
+            if self.menu_items[i]._id in menu_set:
+                menu_dict[self.menu_items[i]._id] = i
+                ordered_list.append(i)
+            i += 1
+        ordered_list.sort()
+        # rearrange menu_items to correct placement
+        for index in range(len(menu_items)):
+            self.menu_items[ordered_list[index]] = menu_copy[
+                menu_dict[menu_items[index]]
+            ]

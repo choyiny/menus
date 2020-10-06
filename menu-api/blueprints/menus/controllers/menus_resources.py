@@ -15,7 +15,14 @@ from ..helpers import csv_helper
 from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
 from ..documents import Menu, Item, Section
-from ..schemas import MenuSchema, GetMenuSchema, pagination_args, file_args, qr_args, SectionItemSchema
+from ..schemas import (
+    MenuSchema,
+    GetMenuSchema,
+    pagination_args,
+    file_args,
+    qr_args,
+    SectionItemSchema,
+)
 
 
 @doc(description="""Menu collection related operations""")
@@ -50,7 +57,7 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -102,7 +109,7 @@ class ImportMenuResource(MenusBaseResource):
                     subtitle=section_subtitle[i],
                     image=row["Section Image"],
                     description=descriptions[i],
-                    _id=str(uuid.uuid4())
+                    _id=str(uuid.uuid4()),
                 )
 
             if self.all_sections[section_list[i]].image == "":
@@ -112,7 +119,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -247,36 +254,18 @@ class SectionMenuResource(MenusBaseResource):
             return {"description": "Menu not found."}, 404
 
         for section in menu.sections:
-
             if section._id == section_id:
-                if kwargs['menu_items']:
+                if kwargs["menu_items"]:
+                    menu.rearrange_section(kwargs["menu_items"])
 
-                    menu_items = [item['_id'] for item in kwargs['menu_items']]
-                    menu_copy = menu.menu_items[:]
-                    menu_set = set(menu_items)
-                    menu_dict = {}
-                    ordered_list = []
-                    i = 0
-                    while len(ordered_list) < len(menu_items):
-                        if menu.menu_items[i]._id in menu_set:
-                            print(menu.menu_items[i].name)
-                            menu_dict[menu.menu_items[i]._id] = i
-                            ordered_list.append(i)
-                        i += 1
-                    ordered_list.sort()
-                    # rearrange menu_items to correct placement
-                    for index in range(len(menu_items)):
-                        menu.menu_items[ordered_list[index]] = menu_copy[menu_dict[menu_items[index]]]
+                if kwargs["subtitle"]:
+                    section.subtitle = kwargs["subtitle"]
 
+                if kwargs["name"]:
+                    section.name = kwargs["name"]
 
-                if kwargs['subtitle']:
-                    section.subtitle = kwargs['subtitle']
-
-                if kwargs['name']:
-                    section.name = kwargs['name']
-
-                if kwargs['description']:
-                    section.description = kwargs['description']
+                if kwargs["description"]:
+                    section.description = kwargs["description"]
 
         menu.save()
         return menu.sectionized_menu()

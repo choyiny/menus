@@ -6,7 +6,7 @@ from .controllers import (
     AllMenuResource,
     QRMenuResource,
     ImageMenuResource,
-    SectionMenuResource
+    SectionMenuResource,
 )
 
 resources = [
@@ -21,5 +21,10 @@ resources = [
         "Image",
         ["POST"],
     ),
-    (SectionMenuResource, 'menus/<string:slug>/section/<string:section_id>/edit', 'edit', ['PATCH'])
+    (
+        SectionMenuResource,
+        "menus/<string:slug>/section/<string:section_id>/edit",
+        "edit",
+        ["PATCH"],
+    ),
 ]
