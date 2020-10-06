@@ -1,12 +1,17 @@
 <div class="section">
-  <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
-  <button *ngIf="editMode" (click)="sendRequest()">Send</button>
-  <h1>{{ section.name }}</h1>
+  <div>
+    <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+    <button *ngIf="editMode" (click)="sendRequest()">Send</button>
+  </div>
+  <h1 *ngIf="!editMode">{{ section.name }}</h1>
+  <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
   <div class="description-container">
-    <p>{{ section.subtitle }}</p>
-    <p *ngFor="let description of descriptions" class="section-description">
+    <p *ngIf="!editMode">{{ section.subtitle }}</p>
+    <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
+    <p *ngFor="let description of descriptions; let i = index" class="section-description">
       {{ description }}
     </p>
+    <input />
   </div>
   <div
     class="row"
