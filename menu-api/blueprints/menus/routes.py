@@ -30,7 +30,7 @@ resources = [
     ),
     (
         ItemMenuResource,
-        "menus/<string:slug>/items/<item:section_id>/edit",
+        "menus/<string:slug>/item/<string:item_id>/edit",
         "edit_item",
         ["PATCH"]
     )

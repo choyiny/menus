@@ -299,6 +299,6 @@ class ItemMenuResource(MenusBaseResource):
                 if kwargs.get('description'):
                     item.description = kwargs['description']
 
-            menu.save()
-            return item
+                menu.save()
+                return item
         return {'description': 'Item not found'}, 404
