@@ -8,9 +8,10 @@
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
     <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
-    <p *ngFor="let description of descriptions; let i = index" class="section-description">
-      {{ description }}
-    </p>
+    <div *ngFor="let description of descriptions; let i = index">
+      <p *ngIf="!editMode" class="section-description">{{ description }}</p>
+      <input *ngIf="editMode" class="section-description" type="text" [(ngModel)]="descriptions[i]" />
+    </div>
   </div>
   <div
     class="row"

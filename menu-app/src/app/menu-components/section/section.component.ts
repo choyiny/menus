@@ -22,8 +22,12 @@ export class SectionComponent implements OnInit {
   }
 
   sendRequest(): void {
+    this.section.description = this.descriptions.join('^');
+    console.log(this.section.description);
     this.menuService.editSection(this.slug, this.section).subscribe((section) => {
       this.section = section;
+      this.descriptions = this.section.description.split('^');
+      console.log(this.section);
     });
     this.editMode = false;
   }
