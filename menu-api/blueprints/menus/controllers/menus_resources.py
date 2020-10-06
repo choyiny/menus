@@ -213,7 +213,7 @@ class QRMenuResource(MenusBaseResource):
         qr.make(fit=True)
         img = qr.make_image(fill_color="white", back_color="black")
         img = img.resize((950, 950))
-        template = Image.open("../../../assets/print template huge.png")
+        template = Image.open("assets/print_template_huge.png")
         for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
         return qr_helper.serve_pil_image(template, name + ".png")
@@ -267,10 +267,11 @@ class SectionMenuResource(MenusBaseResource):
 
                 if kwargs.get('description'):
                     section.description = kwargs["description"]
-
+            print(kwargs['description'])
             menu.save()
             return section
         return {"description": "Section not found."}, 404
+
 
 class ItemMenuResource(MenusBaseResource):
 
@@ -302,3 +303,4 @@ class ItemMenuResource(MenusBaseResource):
                 menu.save()
                 return item
         return {'description': 'Item not found'}, 404
+
