@@ -87,14 +87,13 @@ class ImportMenuResource(MenusBaseResource):
                     name=row["Name"],
                     price=row["Price"],
                     tags=csv_helper.get_tags(row["Tags"]),
-                    sections=sections,
+                    sections=[self.all_sections[section]._id for section in sections],
                     image=None,
                 )
             )
         menu.menu_items = menu_items
         menu.sections = [self.all_sections[section] for section in self.all_sections]
         menu.save()
-        menu.reload()
         return menu.sectionized_menu()
 
     def get_sections(self, row):
@@ -172,7 +171,8 @@ class MenuResource(MenusBaseResource):
         if kwargs.get("link_name"):
             menu.link_name = kwargs.get("link_name")
 
-        return menu.save()
+        menu.save()
+        return menu.sectionized_menu()
 
     @marshal_with(ErrorResponseSchema, code=404)
     @marshal_with(MenuSchema)
@@ -198,8 +198,8 @@ class QRMenuResource(MenusBaseResource):
     @with_current_user
     def get(self, args):
         """Generate QR code in template"""
-        if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+        # if g.user is None or not g.user.is_admin:
+        #     return {"description": "You do not have permission"}, 401
         url = args["url"]
         name = args["name"]
         qr = qrcode.QRCode(
