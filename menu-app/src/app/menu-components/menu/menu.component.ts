@@ -22,13 +22,14 @@ export class MenuComponent implements OnInit {
   @Input() selectedSection: string;
   @Input() selectedImage: string;
   editMode: boolean;
+  slug: string;
 
   constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params.slug;
-    if (id) {
-      this.getMenu(id);
+    this.slug = this.route.snapshot.params.slug;
+    if (this.slug) {
+      this.getMenu(this.slug);
     }
   }
 
@@ -57,7 +58,8 @@ export class MenuComponent implements OnInit {
     document.body.scrollTop = offsetPosition;
   }
 
-  toggleEditMode(): void {
-    this.editMode = !this.editMode;
+  sendRequest(): void {
+    this.menuservice.editMenu(this.slug, this.menu).subscribe((menu) => (this.menu = menu));
+    this.editMode = false;
   }
 }

@@ -17,4 +17,14 @@ export class MenuService {
     const url = `${environment.settings.endpoint}/menus/${slug}/items/${item}/pictures/upload`;
     return this.http.post<string>(url, uploadForm);
   }
+
+  editMenu(slug: string, menu: MenuInterface): Observable<MenuInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}`;
+    return this.http.patch<MenuInterface>(url, {
+      name: menu.name,
+      description: menu.description,
+      external_link: menu.external_link,
+      link_name: menu.link_name,
+    });
+  }
 }
