@@ -21,7 +21,7 @@ class SectionSchema(Schema):
 
 class ItemSchema(Schema):
     _id = fields.Str()
-    image = fields.Url(example="https://via.placeholder.com/150")
+    image = fields.Url(example="https://via.placeholder.com/150", allow_none=True, missing=None)
     name = fields.Str(example="Meatball Pasta")
     price = fields.Str(example="$6.99")
     tags = fields.List(fields.Nested(TagSchema))
