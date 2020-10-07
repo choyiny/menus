@@ -267,8 +267,11 @@ class SectionMenuResource(MenusBaseResource):
 
                 if kwargs.get('description'):
                     section.description = kwargs["description"]
+
                 menu.save()
-                return section
+                for get_section in menu.sectionized_menu()['sections']:
+                    if section._id == get_section['_id']:
+                        return get_section
         return {"description": "Section not found."}, 404
 
 
