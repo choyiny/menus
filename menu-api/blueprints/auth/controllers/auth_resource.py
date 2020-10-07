@@ -2,7 +2,7 @@ from .auth_base_resource import AuthBaseResource
 from flask import g
 from flask_apispec import marshal_with, use_kwargs, doc
 
-from auth.decorators import with_current_user, firebase_login_required
+from auth.decorators import firebase_login_required
 from auth.documents.user import User
 from ..schemas import (
     ClaimSlugSchema,
@@ -38,7 +38,7 @@ class ClaimSlugResource(AuthBaseResource):
 
 
 class UserResource(AuthBaseResource):
-    @with_current_user
+    @firebase_login_required
     @marshal_with(GetUsersSchema)
     def get(self):
         if g.user is None or not g.user.is_admin:
