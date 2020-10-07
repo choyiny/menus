@@ -1,7 +1,7 @@
 export interface UserInterface {
-  authdata?: string;
-  username: string;
-  id: string;
+  phone_number: string;
+  firebase_id: string;
   menus: string[];
   is_admin: boolean;
+  email: string;
 }

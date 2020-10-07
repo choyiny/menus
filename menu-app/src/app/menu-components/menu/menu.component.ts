@@ -44,7 +44,6 @@ export class MenuComponent implements OnInit {
     } else {
       this.hasPermission = false;
     }
-    console.log(this.hasPermission);
   }
 
   getMenu(id: string): void {
