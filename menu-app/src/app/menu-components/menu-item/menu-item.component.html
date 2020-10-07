@@ -16,9 +16,9 @@
         <input *ngIf="editMode" type="text" class="item" [(ngModel)]="item.name" />
         <input *ngIf="editMode" type="text" class="price" [(ngModel)]="item.price" />
       </div>
-      <div *ngFor="let description of descriptions; let i = index">
-        <p *ngIf="!editMode" class="item-description">{{ description }}</p>
-        <input *ngIf="editMode" type="text" class="item-description" [(ngModel)]="mockDescriptions[i]" />
+      <div>
+        <quill-view-html *ngIf="!editMode" [content]="item.description" theme="snow"></quill-view-html>
+        <quill-editor *ngIf="editMode" [(ngModel)]="item.description"></quill-editor>
       </div>
     </div>
   </div>

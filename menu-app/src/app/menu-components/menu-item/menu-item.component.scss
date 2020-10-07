@@ -2,6 +2,7 @@
   border-bottom: solid 0.5px #dfe0e3;
   font-size: 12px;
   margin-top: 5px;
+  margin-left: 0px;
 }
 
 @media only screen and (min-width: 600px) {
@@ -9,7 +10,7 @@
     padding: 1em;
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
-    margin: 20px 0px 0px 0em;
+    margin: 20px 0px 0px 0px;
     height: 80%;
   }
 }
@@ -27,6 +28,7 @@ h1 {
   width: 18%;
   display: flex;
   margin-bottom: 1em;
+  margin-right: 10px;
 
   .icon {
     object-fit: cover;
@@ -43,7 +45,7 @@ h1 {
   .description {
     display: block;
     margin-bottom: 10px;
-    margin-left: 10px;
+    //margin-left: 10px;
   }
 
   .menu-price {
