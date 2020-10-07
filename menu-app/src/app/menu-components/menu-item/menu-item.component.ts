@@ -18,6 +18,7 @@ export class MenuItemComponent implements OnInit {
   editMode: boolean;
   @Input() slug: string;
   descriptions: string[];
+  mockDescriptions: string[];
 
   constructor(private menuService: MenuService, private auth: AuthService) {}
 
@@ -29,6 +30,7 @@ export class MenuItemComponent implements OnInit {
     //   this.editMode = false;
     // }
     this.descriptions = this.item.description.split('^');
+    this.mockDescriptions = [...this.descriptions];
   }
 
   onSubmit(): void {
@@ -56,8 +58,12 @@ export class MenuItemComponent implements OnInit {
   }
 
   sendRequest(): void {
+    console.log(this.descriptions, this.mockDescriptions);
+    this.item.description = this.mockDescriptions.join('^');
     this.menuService.editItem(this.slug, this.item).subscribe((item) => {
       this.item = item;
+      this.descriptions = this.item.description.split('^');
+      this.mockDescriptions = [...this.descriptions];
     });
     this.editMode = false;
   }

@@ -10,7 +10,7 @@
     <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
     <div *ngFor="let description of descriptions; let i = index">
       <p *ngIf="!editMode" class="section-description">{{ description }}</p>
-      <input *ngIf="editMode" class="section-description" type="text" [(ngModel)]="descriptions[i]" />
+      <input *ngIf="editMode" class="section-description" type="text" [(ngModel)]="mockDescriptions[i]" />
     </div>
   </div>
   <div
