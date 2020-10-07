@@ -96,7 +96,6 @@ class Menu(Document):
             for section_id in item.sections:
                 section_to_items[section_id].append(item)
 
-
         for section in self.sections:
             id_to_section[section._id] = section
 
