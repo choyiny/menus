@@ -22,7 +22,7 @@ from ..schemas import (
     file_args,
     qr_args,
     SectionItemSchema,
-    ItemSchema
+    ItemSchema,
 )
 
 
@@ -58,7 +58,7 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -119,7 +119,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -256,21 +256,21 @@ class SectionMenuResource(MenusBaseResource):
 
         for section in menu.sections:
             if section._id == section_id:
-                if kwargs.get('menu_items'):
+                if kwargs.get("menu_items"):
                     menu.rearrange_section(kwargs["menu_items"])
 
-                if kwargs.get('subtitle'):
+                if kwargs.get("subtitle"):
                     section.subtitle = kwargs["subtitle"]
 
-                if kwargs.get('name'):
+                if kwargs.get("name"):
                     section.name = kwargs["name"]
 
-                if kwargs.get('description'):
+                if kwargs.get("description"):
                     section.description = kwargs["description"]
 
                 menu.save()
-                for get_section in menu.sectionized_menu()['sections']:
-                    if section._id == get_section['_id']:
+                for get_section in menu.sectionized_menu()["sections"]:
+                    if section._id == get_section["_id"]:
                         return get_section
         return {"description": "Section not found."}, 404
 
@@ -292,16 +292,16 @@ class ItemMenuResource(MenusBaseResource):
 
         for item in menu.menu_items:
             if item._id == item_id:
-                if kwargs.get('name'):
-                    item.name = kwargs['name']
+                if kwargs.get("name"):
+                    item.name = kwargs["name"]
 
-                if kwargs.get('price'):
-                    item.price = kwargs['price']
+                if kwargs.get("price"):
+                    item.price = kwargs["price"]
 
-                if kwargs.get('description'):
-                    item.description = kwargs['description']
+                if kwargs.get("description"):
+                    item.description = kwargs["description"]
 
                 menu.save()
                 return item
 
-        return {'description': 'Item not found'}, 404
+        return {"description": "Item not found"}, 404

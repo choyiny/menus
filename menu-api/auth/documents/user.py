@@ -17,7 +17,7 @@ class User(Document):
     @classmethod
     def first_or_create(cls, **kwargs):
         """ Select first cls that matches by kwargs, and create it if it doesn't exist. """
-        user = cls.objects(firebase_id=kwargs['firebase_id']).first()
+        user = cls.objects(firebase_id=kwargs["firebase_id"]).first()
         if user is None:
             cls.create(**kwargs)
         return user

@@ -39,7 +39,7 @@ def firebase_login_required(f):
                 "phoneNumber", decoded_token.get("phone_number"),
             ),
             is_admin=False,
-            menus=[]
+            menus=[],
         )
 
         return f(*args, **kwargs)

@@ -5,7 +5,7 @@ import config
 from firebase_admin import credentials
 import firebase_admin
 
-cred = credentials.Certificate('firebase.json')
+cred = credentials.Certificate("firebase.json")
 firebase_admin.initialize_app(cred)
 
 # logging
