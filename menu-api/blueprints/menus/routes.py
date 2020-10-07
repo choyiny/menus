@@ -24,13 +24,13 @@ resources = [
     ),
     (
         SectionMenuResource,
-        "menus/<string:slug>/section/<string:section_id>/edit",
+        "menus/<string:slug>/sections/<string:section_id>/edit",
         "edit_section",
         ["PATCH"],
     ),
     (
         ItemMenuResource,
-        "menus/<string:slug>/item/<string:item_id>/edit",
+        "menus/<string:slug>/items/<string:item_id>/edit",
         "edit_item",
         ["PATCH"]
     )

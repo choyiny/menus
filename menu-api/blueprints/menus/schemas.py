@@ -8,6 +8,7 @@ class TagSchema(Schema):
 
 
 class SectionSchema(Schema):
+    _id = fields.Str(description="Section id")
     name = fields.Str(example="A la carte")
     image = fields.Url(
         description="Image for the section", example="https://via.placeholder.com/150"
@@ -16,7 +17,6 @@ class SectionSchema(Schema):
         example="Piece by piece", description="Description of section"
     )
     subtitle = fields.Str(description="Headers for section anchors")
-    _id = fields.Str(description="Section id")
 
 
 class ItemSchema(Schema):
@@ -43,11 +43,11 @@ class MenuSchema(Schema):
 
 
 class SectionItemSchema(Schema):
+    _id = fields.Str(description="Section id")
     name = fields.Str(description="Name of section", example="A la carte")
     menu_items = fields.List(fields.Nested(ItemSchema))
     description = fields.Str(description="Name of section", example="Piece by piece")
     subtitle = fields.Str(description="Headers for section anchors")
-    _id = fields.Str(description="Section id")
 
 
 class GetMenuSchema(Schema):
