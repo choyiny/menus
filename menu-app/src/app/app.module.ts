@@ -4,6 +4,8 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { FormsModule } from '@angular/forms';
+import { LayoutModule } from '@angular/cdk/layout';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -18,18 +20,17 @@ import { MenuItemComponent } from './menu-components/menu-item/menu-item.compone
 import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
 import { ImageFormComponent } from './util-components/image-form/image-form.component';
 import { LoginComponent } from './auth-components/login/login.component';
+import { ImgViewModalComponent } from './util-components/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from './util-components/img-form-modal/img-form-modal.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EnvironmentLoaderService } from './services/environment-loader.service';
 import { environment } from '../environments/environment';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { FormsModule } from '@angular/forms';
-import { ImgViewModalComponent } from './util-components/img-view-modal/img-view-modal.component';
-import { ImgFormModalComponent } from './util-components/img-form-modal/img-form-modal.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ImgFormModalComponent } from './util-components/img-form-modal/img-form
     ImageCropperModule,
     FormsModule,
     DragDropModule,
+    QuillModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
