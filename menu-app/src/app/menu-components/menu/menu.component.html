@@ -46,7 +46,7 @@
       <!--      </div>-->
       <button class="menu-section" *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
         {{ section.name }}
-        <p class="section-description">{{ section.subtitle ? section.subtitle : section.description }}</p>
+        <p class="section-description">{{ section.subtitle }}</p>
       </button>
     </div>
     <div class="desktop-description">

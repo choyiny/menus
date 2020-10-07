@@ -12,24 +12,16 @@ import { MenuService } from '../../services/menu.service';
 export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
   @Input() slug: string;
-  descriptions: string[];
-  mockDescriptions: string[];
   editMode;
 
   constructor(private menuService: MenuService) {}
 
-  ngOnInit(): void {
-    this.descriptions = this.section.description.split('^');
-    this.mockDescriptions = [...this.descriptions];
-  }
+  ngOnInit(): void {}
 
   sendRequest(): void {
-    this.section.description = this.mockDescriptions.join('^');
-    this.descriptions = [...this.mockDescriptions];
     this.menuService.editSection(this.slug, this.section).subscribe((section) => {
-      // this.section = section;
-      // this.descriptions = this.section.description.split('^');
-      // this.mockDescriptions = [...this.descriptions];
+      console.log(section);
+      this.section = section;
     });
     this.editMode = false;
   }
