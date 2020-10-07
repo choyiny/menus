@@ -9,5 +9,5 @@ from .controllers import AuthResource, ClaimSlugResource, UserResource
 resources = [
     (AuthResource, "", "authentication", ["POST"]),
     (ClaimSlugResource, "claim/", "claim", ["PATCH"]),
-    (UserResource, "users/", "users", ["GET", "POST"]),
+    (UserResource, "users/", "users", ["GET"]),
 ]
