@@ -5,11 +5,9 @@ from flask_apispec import marshal_with, use_kwargs, doc
 from auth.decorators import with_current_user, firebase_login_required
 from auth.documents.user import User
 from ..schemas import (
-    PostUserSchema,
     ClaimSlugSchema,
     UserSchema,
     GetUsersSchema,
-    PromoteUserSchema,
 )
 
 

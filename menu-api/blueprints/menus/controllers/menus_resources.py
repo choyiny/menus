@@ -9,7 +9,7 @@ import qrcode
 from PIL import Image
 from marshmallow import Schema, fields
 
-from auth.decorators import with_current_user
+from auth.decorators import firebase_login_required
 from helpers import ErrorResponseSchema, upload_image
 from ..helpers import csv_helper
 from ..helpers import qr_helper
@@ -30,7 +30,7 @@ from ..schemas import (
 class MenusResource(MenusBaseResource):
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
-    @with_current_user
+    @firebase_login_required
     def post(self, **menu_info):
         """
         Create a new Menu.
@@ -50,7 +50,7 @@ class AllMenuResource(MenusBaseResource):
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
-    @with_current_user
+    @firebase_login_required
     def get(self, args):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
@@ -65,7 +65,7 @@ class AllMenuResource(MenusBaseResource):
 class ImportMenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     @use_args(file_args, location="files")
-    @with_current_user
+    @firebase_login_required
     def post(self, args, slug):
 
         if g.user is None or not g.user.has_permission(slug):
@@ -134,7 +134,7 @@ class MenuResource(MenusBaseResource):
 
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
-    @with_current_user
+    @firebase_login_required
     def patch(self, **kwargs):
         """
         Replace attributes for Menu that matches slug.
@@ -177,7 +177,7 @@ class MenuResource(MenusBaseResource):
 
     @marshal_with(ErrorResponseSchema, code=404)
     @marshal_with(MenuSchema)
-    @with_current_user
+    @firebase_login_required
     def delete(self, slug):
         """
         Delete menu that matches menu_id.
@@ -196,7 +196,7 @@ class MenuResource(MenusBaseResource):
 @doc(description="""Generate QR code of url on template""")
 class QRMenuResource(MenusBaseResource):
     @use_args(qr_args, location="query")
-    @with_current_user
+    @firebase_login_required
     def get(self, args):
         """Generate QR code in template"""
         if g.user is None or not g.user.is_admin:
@@ -221,7 +221,7 @@ class QRMenuResource(MenusBaseResource):
 
 class ImageMenuResource(MenusBaseResource):
     @use_args(file_args, location="files")
-    @with_current_user
+    @firebase_login_required
     def post(self, args, slug, item_id):
         """Upload image to server"""
         if g.user is None or not g.user.has_permission(slug):
@@ -240,7 +240,7 @@ class ImageMenuResource(MenusBaseResource):
 
 
 class SectionMenuResource(MenusBaseResource):
-    @with_current_user
+    @firebase_login_required
     @marshal_with(SectionItemSchema)
     @use_kwargs(SectionItemSchema)
     def patch(self, slug, section_id, **kwargs):
@@ -276,8 +276,7 @@ class SectionMenuResource(MenusBaseResource):
 
 
 class ItemMenuResource(MenusBaseResource):
-
-    @with_current_user
+    @firebase_login_required
     @use_kwargs(ItemSchema)
     @marshal_with(ItemSchema)
     def patch(self, slug, item_id, **kwargs):
