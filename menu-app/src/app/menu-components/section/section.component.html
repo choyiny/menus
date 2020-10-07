@@ -1,6 +1,6 @@
 <div class="section">
   <div>
-    <button *ngIf="!editMode" (click)="edit()">Edit</button>
+    <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
     <button *ngIf="editMode" (click)="sendRequest()">Send</button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
@@ -24,6 +24,7 @@
       [item]="item"
       class="col-md-4 col-sm-6 col-12"
       [slug]="slug"
+      [hasPermission]="hasPermission"
     ></app-menu-item>
   </div>
 </div>

@@ -18,17 +18,11 @@ export class MenuItemComponent implements OnInit {
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   editMode: boolean;
   @Input() slug: string;
+  @Input() hasPermission: boolean;
 
   constructor(private menuService: MenuService, private auth: AuthService) {}
 
-  ngOnInit(): void {
-    const user = this.auth.currentUserValue;
-    // if (user) {
-    //   this.editMode = user.is_admin || this.slug in user.menus;
-    // } else {
-    //   this.editMode = false;
-    // }
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     const dataUrl = this.imgForm.file;

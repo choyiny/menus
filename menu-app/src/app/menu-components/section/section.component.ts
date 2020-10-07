@@ -13,6 +13,7 @@ export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
   @Input() slug: string;
   editMode;
+  @Input() hasPermission: boolean;
 
   constructor(private menuService: MenuService) {}
 

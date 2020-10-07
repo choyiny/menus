@@ -4,6 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -23,14 +24,27 @@ export class MenuComponent implements OnInit {
   @Input() selectedImage: string;
   editMode: boolean;
   slug: string;
+  hasPermission: boolean;
 
-  constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
+  constructor(
+    private menuservice: MenuService,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
     if (this.slug) {
       this.getMenu(this.slug);
     }
+    const user = this.authService.currentUserValue;
+    console.log(user);
+    if (user) {
+      this.hasPermission = user.is_admin || this.slug in user.menus;
+    } else {
+      this.hasPermission = false;
+    }
+    console.log(this.hasPermission);
   }
 
   getMenu(id: string): void {

@@ -15,7 +15,7 @@
         "
         class="background-image"
       >
-        <button *ngIf="!editMode" (click)="edit()">Edit</button>
+        <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
         <button *ngIf="editMode" (click)="sendRequest()">Send</button>
         <div class="card-overlay">
           <div *ngIf="!editMode" class="overlay-container">
@@ -55,7 +55,8 @@
     </div>
     <div class="menu-items section-background">
       <div *ngFor="let section of menu.sections">
-        <app-section [section]="section" [slug]="slug" id="{{ section.name }}"></app-section>
+        <app-section [hasPermission]="hasPermission" [section]="section" [slug]="slug" id="{{ section.name }}">
+        </app-section>
       </div>
     </div>
     <app-footer></app-footer>
