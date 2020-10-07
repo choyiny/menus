@@ -62,4 +62,8 @@ export class MenuComponent implements OnInit {
     this.menuservice.editMenu(this.slug, this.menu).subscribe((menu) => (this.menu = menu));
     this.editMode = false;
   }
+
+  edit(): void {
+    this.editMode = true;
+  }
 }

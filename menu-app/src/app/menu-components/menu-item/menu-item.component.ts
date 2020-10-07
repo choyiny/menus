@@ -59,4 +59,8 @@ export class MenuItemComponent implements OnInit {
     });
     this.editMode = false;
   }
+
+  edit(): void {
+    this.editMode = true;
+  }
 }

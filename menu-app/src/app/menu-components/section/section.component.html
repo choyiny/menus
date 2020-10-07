@@ -1,6 +1,6 @@
 <div class="section">
   <div>
-    <button *ngIf="!editMode" (click)="editMode = true">Edit</button>
+    <button *ngIf="!editMode" (click)="edit()">Edit</button>
     <button *ngIf="editMode" (click)="sendRequest()">Send</button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
