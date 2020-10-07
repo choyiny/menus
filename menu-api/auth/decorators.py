@@ -66,8 +66,10 @@ def firebase_login_required(f):
             firebase_id=decoded_token["uid"],
             email=decoded_token.get("email"),
             phone_number=decoded_token.get(
-                "phoneNumber", decoded_token.get("phone_number")
+                "phoneNumber", decoded_token.get("phone_number"),
             ),
+            is_admin=False,
+            menus=[]
         )
 
         return f(*args, **kwargs)
