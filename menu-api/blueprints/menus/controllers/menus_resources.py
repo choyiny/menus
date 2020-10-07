@@ -241,7 +241,7 @@ class ImageMenuResource(MenusBaseResource):
 
 class SectionMenuResource(MenusBaseResource):
     @with_current_user
-    @marshal_with(GetMenuSchema)
+    @marshal_with(SectionItemSchema)
     @use_kwargs(SectionItemSchema)
     def patch(self, slug, section_id, **kwargs):
         """Edit restaurant section"""
@@ -267,9 +267,8 @@ class SectionMenuResource(MenusBaseResource):
 
                 if kwargs.get('description'):
                     section.description = kwargs["description"]
-            print(kwargs['description'])
-            menu.save()
-            return section
+                menu.save()
+                return section
         return {"description": "Section not found."}, 404
 
 
@@ -302,5 +301,5 @@ class ItemMenuResource(MenusBaseResource):
 
                 menu.save()
                 return item
-        return {'description': 'Item not found'}, 404
 
+        return {'description': 'Item not found'}, 404
