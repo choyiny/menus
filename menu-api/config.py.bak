@@ -21,3 +21,6 @@ AWS_KEY_ID = "AKIAX7MH2ROBO3P2RAHI"
 AWS_SECRET = "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"
 AWS_REGION = "us-east-1"
 S3_BUCKET_NAME = "pickeasy-restaurant-images"
+
+# Firebase
+FIREBASE_CERT_NAME = "pickeasy-app-firebase-adminsdk-94cx4-03192a4733.json"
