@@ -31,12 +31,12 @@ export class MenuService {
   }
 
   editSection(slug: string, section: SectionInterface): Observable<SectionInterface> {
-    const url = `${environment.settings.endpoint}/menus/${slug}/section/${section._id}/edit`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/sections/${section._id}/edit`;
     return this.http.patch<SectionInterface>(url, section);
   }
 
   editItem(slug: string, item: MenuItemInterface): Observable<MenuItemInterface> {
-    const url = `${environment.settings.endpoint}/menus/${slug}/item/${item._id}/edit`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item._id}/edit`;
     return this.http.patch<MenuItemInterface>(url, item);
   }
 }
