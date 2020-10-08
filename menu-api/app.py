@@ -117,7 +117,6 @@ def register_external(skip_sentry=False):
 
 def set_routes(resources, app: Flask, bp: Blueprint, docs: FlaskApiSpec, bp_name):
     for resource, route, name, methods in resources:
-        print(resource, route, name, methods)
         bp.add_url_rule(route, view_func=resource.as_view(name), methods=methods)
 
     app.register_blueprint(bp)
