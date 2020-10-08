@@ -55,7 +55,13 @@ export class MenuComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   checkScroll(): void {
     const scrollPosition = window.pageYOffset;
-    if (scrollPosition > 300) {
+    let transitionConstant: number;
+    if (window.innerWidth > 600) {
+      transitionConstant = 0;
+    } else {
+      transitionConstant = 300;
+    }
+    if (scrollPosition > transitionConstant) {
       this.showImage = false;
     } else {
       this.showImage = true;
