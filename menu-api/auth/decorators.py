@@ -1,7 +1,7 @@
-from base64 import b64decode
 from functools import wraps
 from firebase_admin import auth
 from firebase_admin.auth import InvalidIdTokenError
+from flask import jsonify
 
 from flask import request, g
 
@@ -15,33 +15,23 @@ def firebase_login_required(f):
 
     @wraps(f)
     def wrapped(*args, **kwargs):
-
         # Check for Authorization header in the form of "Bearer <token>"
         if "Authorization" not in request.headers:
-            return {"description": "Missing Authorization header"}, 401
+            return jsonify({"description": "Missing Authorization header"}), 401
 
         try:
             id_token = request.headers.get("Authorization").split(" ")[1]
         except IndexError:
-            return {"description": "Failed to parse Authorization header"}, 401
+            return jsonify({"description": "Failed to parse Authorization header"}), 401
 
         # verify with Firebase
         try:
             decoded_token = auth.verify_id_token(id_token)
         except InvalidIdTokenError:
-            return {"description": "Token is invalid."}, 401
+            return jsonify({"description": "Token is invalid."}), 401
 
         # get our user with the uid (create if not exists)
-        g.user = User.first_or_create(
-            firebase_id=decoded_token["uid"],
-            email=decoded_token.get("email"),
-            phone_number=decoded_token.get(
-                "phoneNumber", decoded_token.get("phone_number"),
-            ),
-            is_admin=False,
-            menus=[],
-        )
-
+        g.user = User.objects(firebase_id=decoded_token["uid"])
         return f(*args, **kwargs)
 
     return wrapped

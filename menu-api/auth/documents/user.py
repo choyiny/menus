@@ -8,7 +8,8 @@ class User(Document):
     is_admin = BooleanField(required=True)
     firebase_id = StringField()
     email = EmailField()
-    phone_number = StringField(max_length=10)
+    phone_number = StringField()
+    display_name = StringField()
 
     @classmethod
     def create(cls, **kwargs):
