@@ -31,7 +31,7 @@ def firebase_login_required(f):
             return jsonify({"description": "Token is invalid."}), 401
 
         # get our user with the uid (create if not exists)
-        g.user = User.objects(firebase_id=decoded_token["uid"])
+        g.user = User.objects(firebase_id=decoded_token["uid"]).first()
         return f(*args, **kwargs)
 
     return wrapped

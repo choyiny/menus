@@ -10,6 +10,7 @@ class User(Document):
     email = EmailField()
     phone_number = StringField()
     display_name = StringField()
+    photo_url = StringField()
 
     @classmethod
     def create(cls, **kwargs):

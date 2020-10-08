@@ -7,5 +7,6 @@ from helpers import BaseResource, ErrorResponseSchema
 @marshal_with(ErrorResponseSchema, code=401)
 @marshal_with(ErrorResponseSchema, code=422)
 @marshal_with(ErrorResponseSchema, code=404)
+@marshal_with(ErrorResponseSchema, code=400)
 class AdminBaseResource(BaseResource):
     pass
