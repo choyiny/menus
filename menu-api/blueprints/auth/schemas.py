@@ -7,3 +7,5 @@ class UserSchema(Schema):
     firebase_id = fields.Str(required=True)
     email = fields.Email()
     phone_number = fields.Str()
+    display_name = fields.Str()
+    photo_url = fields.Str()

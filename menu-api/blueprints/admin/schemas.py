@@ -1,4 +1,4 @@
-from marshmallow import fields, Schema
+from marshmallow import fields, Schema, INCLUDE
 from ..auth.schemas import UserSchema
 
 
@@ -12,9 +12,9 @@ class UsersSchema(Schema):
 
 
 class CreateUserSchema(Schema):
-    email = fields.Email(),
-    email_verified = fields.Bool(),
-    phone_number = fields.Str(),
-    password = fields.Str(),
-    display_name = fields.Str(),
+    email = fields.Email()
+    email_verified = fields.Bool()
+    phone_number = fields.Str()
+    password = fields.Str()
+    display_name = fields.Str()
     photo_url = fields.Str()

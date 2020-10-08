@@ -240,9 +240,9 @@ class ImageMenuResource(MenusBaseResource):
 
 
 class SectionMenuResource(MenusBaseResource):
-    @firebase_login_required
     @marshal_with(SectionItemSchema)
     @use_kwargs(SectionItemSchema)
+    @firebase_login_required
     def patch(self, slug, section_id, **kwargs):
         """Edit restaurant section"""
 
@@ -276,9 +276,9 @@ class SectionMenuResource(MenusBaseResource):
 
 
 class ItemMenuResource(MenusBaseResource):
-    @firebase_login_required
     @use_kwargs(ItemSchema)
     @marshal_with(ItemSchema)
+    @firebase_login_required
     def patch(self, slug, item_id, **kwargs):
         """Edit menu item"""
 
