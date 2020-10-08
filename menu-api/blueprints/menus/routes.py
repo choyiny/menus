@@ -1,4 +1,3 @@
-from . import bp_name
 from .controllers import (
     MenusResource,
     MenuResource,
