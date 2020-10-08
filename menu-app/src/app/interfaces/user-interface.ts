@@ -4,4 +4,6 @@ export interface UserInterface {
   menus: string[];
   is_admin: boolean;
   email: string;
+  display_name: string;
+  photo_url: string;
 }
