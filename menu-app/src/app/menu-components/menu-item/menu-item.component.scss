@@ -77,14 +77,11 @@ h1 {
 }
 
 ::ng-deep {
-  pre {
-    margin: 0 0 0 0;
-  }
-
   .ql-editor {
-    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    font-weight: 300;
   }
   p {
-    margin: 0 0 0 0;
+    font-weight: 300;
   }
 }
