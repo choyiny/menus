@@ -1,0 +1,1 @@
+from .admin_resource import PromoteUserResource, UserResource
