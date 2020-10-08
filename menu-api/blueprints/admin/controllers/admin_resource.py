@@ -13,7 +13,25 @@ from ..schemas import (
 from firebase_admin import auth
 
 
-class PromoteUserResource(AdminBaseResource):
+class AdminUserResource(AdminBaseResource):
+    @firebase_login_required
+    @marshal_with(UsersSchema)
+    def get(self):
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
+        return {"users": [user for user in User.objects()]}
+
+    @firebase_login_required
+    @use_kwargs(CreateUserSchema)
+    @marshal_with(UserSchema)
+    def post(self, **kwargs):
+        """Create firebase user"""
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
+        user = auth.create_user(kwargs)
+        print(user)
+        return user
+
     @doc(description="""Claim Restaurant url for user""")
     @firebase_login_required
     @use_kwargs(PromoteUserSchema)
@@ -27,23 +45,3 @@ class PromoteUserResource(AdminBaseResource):
         if slug not in user.menus:
             user.menus.append(slug)
         return user.save()
-
-
-class UserResource(AdminBaseResource):
-    @firebase_login_required
-    @marshal_with(UsersSchema)
-    def get(self):
-        if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
-        return {"users": [user for user in User.objects()]}
-
-    @firebase_login_required
-    @use_kwargs(CreateUserSchema)
-    @marshal_with(UserSchema)
-    def post(self, **kwargs):
-        """Create firebase user"""
-        # if g.user is None or not g.user.is_admin:
-        #     return {"description": "You do not have permission"}, 401
-
-        user = auth.create_user(kwargs)
-        print(user)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,19 +8,25 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, public angularAuth: AngularFireAuth) {}
+  loginForm;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService, private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: [''],
+      password: [''],
+    });
+  }
 
   login(): void {
-    this.authService.login().subscribe(
+    const username = this.loginForm.value.username;
+    const password = this.loginForm.value.password;
+    this.authService.login(username, password).subscribe(
       (user) => {},
       (err) => {
         console.log(err);
       }
     );
-  }
-  logout(): void {
-    this.angularAuth.signOut();
   }
 }

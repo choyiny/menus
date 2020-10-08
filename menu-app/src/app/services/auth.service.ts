@@ -29,9 +29,9 @@ export class AuthService {
     return this.authFireBase.idToken;
   }
 
-  login(): Observable<UserInterface> {
+  login(username: string, password: string): Observable<UserInterface> {
     const firebaseObservable = from(
-      this.authFireBase.signInWithPopup(new auth.GoogleAuthProvider())
+      this.authFireBase.signInWithEmailAndPassword(username, password)
     );
     return firebaseObservable.pipe(
       mergeMap((userCredentials) => {
