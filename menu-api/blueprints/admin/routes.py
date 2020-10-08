@@ -1,7 +1,6 @@
-from .controllers import PromoteUserResource, UserResource
+from .controllers import AdminUserResource
 
 # a list of resources
 resources = [
-    (PromoteUserResource, "promote/", "promote", ["POST"]),
-    (UserResource, "user/", 'user', ['POST', 'GET'])
+    (AdminUserResource, "users/", 'admin', ['POST', 'GET', 'PATCH'])
 ]

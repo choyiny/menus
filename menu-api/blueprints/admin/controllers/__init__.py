@@ -1,1 +1,1 @@
-from .admin_resource import PromoteUserResource, UserResource
+from .admin_resource import AdminUserResource
