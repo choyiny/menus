@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user-interface';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, flatMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
@@ -16,7 +16,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
-      JSON.parse(sessionStorage.getItem('currentUser'))
+      JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -34,10 +34,10 @@ export class AuthService {
       this.authFireBase.signInWithPopup(new auth.GoogleAuthProvider())
     );
     return firebaseObservable.pipe(
-      flatMap((userCredentials) => {
+      mergeMap((userCredentials) => {
         return this.http.post<any>(`${environment.settings.endpoint}/auth/`, {}).pipe(
           map((user) => {
-            sessionStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('currentUser', JSON.stringify(user));
             return user;
           })
         );
@@ -46,6 +46,6 @@ export class AuthService {
   }
 
   logout(): void {
-    sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
   }
 }
