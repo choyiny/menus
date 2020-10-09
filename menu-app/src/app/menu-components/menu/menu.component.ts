@@ -38,7 +38,6 @@ export class MenuComponent implements OnInit {
       this.getMenu(this.slug);
     }
     const user = this.authService.currentUserValue;
-    console.log(user);
     if (user) {
       this.hasPermission = user.is_admin || this.slug in user.menus;
     } else {

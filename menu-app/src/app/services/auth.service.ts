@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -29,10 +28,8 @@ export class AuthService {
     return this.authFireBase.idToken;
   }
 
-  login(username: string, password: string): Observable<UserInterface> {
-    const firebaseObservable = from(
-      this.authFireBase.signInWithEmailAndPassword(username, password)
-    );
+  login(email: string, password: string): Observable<UserInterface> {
+    const firebaseObservable = from(this.authFireBase.signInWithEmailAndPassword(email, password));
     return firebaseObservable.pipe(
       mergeMap((userCredentials) => {
         return this.http.post<any>(`${environment.settings.endpoint}/auth/`, {}).pipe(
