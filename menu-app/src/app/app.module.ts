@@ -23,7 +23,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { EnvironmentLoaderService } from './services/environment-loader.service';
 import { environment } from '../environments/environment';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FormsModule } from '@angular/forms';
@@ -55,22 +54,7 @@ import { ImgFormModalComponent } from './util-components/img-form-modal/img-form
     ImageCropperModule,
     FormsModule,
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (configService: EnvironmentLoaderService) => () => {
-        configService
-          .loadConfigurations()
-          .toPromise()
-          .then((env) => {
-            environment.settings = env.settings;
-          });
-      },
-      deps: [EnvironmentLoaderService],
-      multi: true,
-    },
-  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
