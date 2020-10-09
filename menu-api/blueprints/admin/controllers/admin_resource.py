@@ -25,13 +25,13 @@ class AdminUserResource(AdminBaseResource):
             return {"description": "You do not have permission"}, 401
         return {"users": [user for user in User.objects()]}
 
-    # @firebase_login_required
+    @firebase_login_required
     @use_kwargs(CreateUserSchema)
     @marshal_with(UserSchema)
     def post(self, **user_info):
         """Create firebase user"""
-        # if g.user is None or not g.user.is_admin:
-        #     return {"description": "You do not have permission"}, 401
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
         try:
             firebase_user = auth.create_user(**user_info)
         except EmailAlreadyExistsError:
