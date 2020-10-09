@@ -31,11 +31,19 @@ export class MenuService {
   }
 
   editSection(slug: string, section: SectionInterface): Observable<SectionInterface> {
+    // Must sanitize quill fields
+    if (section.description == null) {
+      section.description = '';
+    }
     const url = `${environment.settings.endpoint}/menus/${slug}/sections/${section._id}/edit`;
     return this.http.patch<SectionInterface>(url, section);
   }
 
   editItem(slug: string, item: MenuItemInterface): Observable<MenuItemInterface> {
+    // Must sanitize quill fields
+    if (item.description == null) {
+      item.description = '';
+    }
     const url = `${environment.settings.endpoint}/menus/${slug}/items/${item._id}/edit`;
     return this.http.patch<MenuItemInterface>(url, item);
   }
