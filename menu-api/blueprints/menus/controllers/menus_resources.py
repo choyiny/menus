@@ -58,7 +58,7 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -119,7 +119,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -256,16 +256,16 @@ class SectionMenuResource(MenusBaseResource):
 
         for section in menu.sections:
             if section._id == section_id:
-                if 'menu_items' in kwargs:
+                if "menu_items" in kwargs:
                     menu.rearrange_section(kwargs["menu_items"])
 
-                if 'subtitle' in kwargs:
+                if "subtitle" in kwargs:
                     section.subtitle = kwargs["subtitle"]
 
-                if 'name' in kwargs:
+                if "name" in kwargs:
                     section.name = kwargs["name"]
 
-                if 'description' in kwargs:
+                if "description" in kwargs:
                     section.description = kwargs["description"]
 
                 menu.save()
@@ -292,13 +292,13 @@ class ItemMenuResource(MenusBaseResource):
 
         for item in menu.menu_items:
             if item._id == item_id:
-                if 'name' in kwargs:
+                if "name" in kwargs:
                     item.name = kwargs["name"]
 
-                if 'price' in kwargs:
+                if "price" in kwargs:
                     item.price = kwargs["price"]
 
-                if 'description' in kwargs:
+                if "description" in kwargs:
                     item.description = kwargs["description"]
 
                 menu.save()

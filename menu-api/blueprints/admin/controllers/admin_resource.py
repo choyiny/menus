@@ -11,7 +11,10 @@ from ..schemas import (
     CreateUserSchema,
 )
 from firebase_admin import auth
-from firebase_admin._auth_utils import PhoneNumberAlreadyExistsError, EmailAlreadyExistsError
+from firebase_admin._auth_utils import (
+    PhoneNumberAlreadyExistsError,
+    EmailAlreadyExistsError,
+)
 
 
 class AdminUserResource(AdminBaseResource):
@@ -32,9 +35,9 @@ class AdminUserResource(AdminBaseResource):
         try:
             firebase_user = auth.create_user(**user_info)
         except EmailAlreadyExistsError:
-            return {'description': 'User already exists with that email'}, 400
+            return {"description": "User already exists with that email"}, 400
         except PhoneNumberAlreadyExistsError:
-            return {'description': 'User already exists with that phone-number'}, 400
+            return {"description": "User already exists with that phone-number"}, 400
         user = User.create(
             firebase_id=firebase_user.uid,
             email=firebase_user.email,
@@ -42,7 +45,7 @@ class AdminUserResource(AdminBaseResource):
             display_name=firebase_user.display_name,
             photo_url=firebase_user.photo_url,
             menus=[],
-            is_admin=False
+            is_admin=False,
         )
         return user
 
