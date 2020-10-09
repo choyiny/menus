@@ -60,12 +60,7 @@ import { ImgFormModalComponent } from './util-components/img-form-modal/img-form
     {
       provide: APP_INITIALIZER,
       useFactory: (configService: EnvironmentLoaderService) => () => {
-        configService
-          .loadConfigurations()
-          .toPromise()
-          .then((env) => {
-            environment.settings = env.settings;
-          });
+        configService.loadConfigurations().toPromise();
       },
       deps: [EnvironmentLoaderService],
       multi: true,
