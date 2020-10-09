@@ -1,1 +1,11 @@
 <p>Welcome {{ user.display_name }}</p>
+<div *ngIf="user.menus.length == 0">
+  <h1>No menus found</h1>
+</div>
+<div *ngIf="user.menus.length > 0">
+  <ul *ngFor="let menu of user.menus">
+    <li>
+      <a routerLink="/menu/{{ menu }}" routerLinkActive="active">{{ menu }}</a>
+    </li>
+  </ul>
+</div>

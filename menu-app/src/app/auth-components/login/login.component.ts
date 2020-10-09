@@ -15,17 +15,17 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: [''],
+      email: [''],
       password: [''],
     });
   }
 
   login(): void {
-    const username = this.loginForm.value.username;
+    const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-    this.authService.login(username, password).subscribe(
+    this.authService.login(email, password).subscribe(
       (user) => {
-        this.router.navigateByUrl('dashboard', { state: { user } });
+        this.router.navigateByUrl('dashboard');
         console.log(user);
       },
       (err) => {
