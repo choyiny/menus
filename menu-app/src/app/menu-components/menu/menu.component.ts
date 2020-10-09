@@ -34,7 +34,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
-    if (this.slug) {
+    if (this.slug != null) {
       this.getMenu(this.slug);
     }
     const user = this.authService.currentUserValue;
