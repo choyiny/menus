@@ -256,16 +256,16 @@ class SectionMenuResource(MenusBaseResource):
 
         for section in menu.sections:
             if section._id == section_id:
-                if kwargs.get("menu_items"):
+                if 'menu_items' in kwargs:
                     menu.rearrange_section(kwargs["menu_items"])
 
-                if kwargs.get("subtitle"):
+                if 'subtitle' in kwargs:
                     section.subtitle = kwargs["subtitle"]
 
-                if kwargs.get("name"):
+                if 'name' in kwargs:
                     section.name = kwargs["name"]
 
-                if kwargs.get("description"):
+                if 'description' in kwargs:
                     section.description = kwargs["description"]
 
                 menu.save()
@@ -292,13 +292,13 @@ class ItemMenuResource(MenusBaseResource):
 
         for item in menu.menu_items:
             if item._id == item_id:
-                if kwargs.get("name"):
+                if 'name' in kwargs:
                     item.name = kwargs["name"]
 
-                if kwargs.get("price"):
+                if 'price' in kwargs:
                     item.price = kwargs["price"]
 
-                if kwargs.get("description"):
+                if 'description' in kwargs:
                     item.description = kwargs["description"]
 
                 menu.save()
