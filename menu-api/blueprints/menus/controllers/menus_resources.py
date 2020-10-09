@@ -9,7 +9,7 @@ import qrcode
 from PIL import Image
 from marshmallow import Schema, fields
 
-from auth.decorators import with_current_user
+from auth.decorators import firebase_login_required
 from helpers import ErrorResponseSchema, upload_image
 from ..helpers import csv_helper
 from ..helpers import qr_helper
@@ -22,7 +22,7 @@ from ..schemas import (
     file_args,
     qr_args,
     SectionItemSchema,
-    ItemSchema
+    ItemSchema,
 )
 
 
@@ -30,7 +30,7 @@ from ..schemas import (
 class MenusResource(MenusBaseResource):
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
-    @with_current_user
+    @firebase_login_required
     def post(self, **menu_info):
         """
         Create a new Menu.
@@ -50,7 +50,7 @@ class AllMenuResource(MenusBaseResource):
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
-    @with_current_user
+    @firebase_login_required
     def get(self, args):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
@@ -58,14 +58,14 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [menu for menu in Menu.objects()]
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
 class ImportMenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     @use_args(file_args, location="files")
-    @with_current_user
+    @firebase_login_required
     def post(self, args, slug):
 
         if g.user is None or not g.user.has_permission(slug):
@@ -119,7 +119,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -134,7 +134,7 @@ class MenuResource(MenusBaseResource):
 
     @marshal_with(MenuSchema)
     @use_kwargs(MenuSchema)
-    @with_current_user
+    @firebase_login_required
     def patch(self, **kwargs):
         """
         Replace attributes for Menu that matches slug.
@@ -177,7 +177,7 @@ class MenuResource(MenusBaseResource):
 
     @marshal_with(ErrorResponseSchema, code=404)
     @marshal_with(MenuSchema)
-    @with_current_user
+    @firebase_login_required
     def delete(self, slug):
         """
         Delete menu that matches menu_id.
@@ -196,7 +196,7 @@ class MenuResource(MenusBaseResource):
 @doc(description="""Generate QR code of url on template""")
 class QRMenuResource(MenusBaseResource):
     @use_args(qr_args, location="query")
-    @with_current_user
+    @firebase_login_required
     def get(self, args):
         """Generate QR code in template"""
         if g.user is None or not g.user.is_admin:
@@ -221,7 +221,7 @@ class QRMenuResource(MenusBaseResource):
 
 class ImageMenuResource(MenusBaseResource):
     @use_args(file_args, location="files")
-    @with_current_user
+    @firebase_login_required
     def post(self, args, slug, item_id):
         """Upload image to server"""
         if g.user is None or not g.user.has_permission(slug):
@@ -240,9 +240,9 @@ class ImageMenuResource(MenusBaseResource):
 
 
 class SectionMenuResource(MenusBaseResource):
-    @with_current_user
     @marshal_with(SectionItemSchema)
     @use_kwargs(SectionItemSchema)
+    @firebase_login_required
     def patch(self, slug, section_id, **kwargs):
         """Edit restaurant section"""
 
@@ -256,30 +256,29 @@ class SectionMenuResource(MenusBaseResource):
 
         for section in menu.sections:
             if section._id == section_id:
-                if kwargs.get('menu_items'):
+                if "menu_items" in kwargs:
                     menu.rearrange_section(kwargs["menu_items"])
 
-                if kwargs.get('subtitle'):
+                if "subtitle" in kwargs:
                     section.subtitle = kwargs["subtitle"]
 
-                if kwargs.get('name'):
+                if "name" in kwargs:
                     section.name = kwargs["name"]
 
-                if kwargs.get('description'):
+                if "description" in kwargs:
                     section.description = kwargs["description"]
 
                 menu.save()
-                for get_section in menu.sectionized_menu()['sections']:
-                    if section._id == get_section['_id']:
+                for get_section in menu.sectionized_menu()["sections"]:
+                    if section._id == get_section["_id"]:
                         return get_section
         return {"description": "Section not found."}, 404
 
 
 class ItemMenuResource(MenusBaseResource):
-
-    @with_current_user
     @use_kwargs(ItemSchema)
     @marshal_with(ItemSchema)
+    @firebase_login_required
     def patch(self, slug, item_id, **kwargs):
         """Edit menu item"""
 
@@ -293,16 +292,16 @@ class ItemMenuResource(MenusBaseResource):
 
         for item in menu.menu_items:
             if item._id == item_id:
-                if kwargs.get('name'):
-                    item.name = kwargs['name']
+                if "name" in kwargs:
+                    item.name = kwargs["name"]
 
-                if kwargs.get('price'):
-                    item.price = kwargs['price']
+                if "price" in kwargs:
+                    item.price = kwargs["price"]
 
-                if kwargs.get('description'):
-                    item.description = kwargs['description']
+                if "description" in kwargs:
+                    item.description = kwargs["description"]
 
                 menu.save()
                 return item
 
-        return {'description': 'Item not found'}, 404
+        return {"description": "Item not found"}, 404

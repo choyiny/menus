@@ -2,7 +2,7 @@
 <app-img-form-modal></app-img-form-modal>
 <div class="menu-item">
   <div>
-    <button *ngIf="!editMode" (click)="edit()">Edit</button>
+    <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
     <button *ngIf="editMode" (click)="sendRequest()">Send</button>
   </div>
   <div class="img-description">
@@ -16,9 +16,20 @@
         <input *ngIf="editMode" type="text" class="item" [(ngModel)]="item.name" />
         <input *ngIf="editMode" type="text" class="price" [(ngModel)]="item.price" />
       </div>
-      <div>
-        <quill-view-html *ngIf="!editMode" [content]="item.description" theme="snow"></quill-view-html>
-        <quill-editor *ngIf="editMode" [(ngModel)]="item.description"></quill-editor>
+      <div class="editor-margin">
+        <quill-view-html
+          *ngIf="!editMode"
+          [content]="item.description"
+          [style]="{
+            fontWeight: 300,
+            color: 'rgba(26, 24, 36, 0.5)',
+            margin: '2.5px 0px 2.5px 0px',
+            'margin-left': '0px'
+          }"
+          theme="snow"
+        >
+        </quill-view-html>
+        <quill-editor *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
       </div>
     </div>
   </div>

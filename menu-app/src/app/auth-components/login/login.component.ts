@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,28 +10,25 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm;
-  error: string;
-  loggedIn = false;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) {}
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      username: [''],
+      email: [''],
       password: [''],
     });
   }
 
-  onSubmit(): void {
-    const username = this.loginForm.value.username;
+  login(): void {
+    const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-    this.auth.login(username, password).subscribe(
-      (res) => {
-        this.loggedIn = true;
+    this.authService.login(email, password).subscribe(
+      (user) => {
+        this.router.navigateByUrl('dashboard');
       },
       (err) => {
         console.log(err);
-        this.error = err.error.description;
       }
     );
   }

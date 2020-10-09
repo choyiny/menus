@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-menu-item',
@@ -17,17 +18,11 @@ export class MenuItemComponent implements OnInit {
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   editMode: boolean;
   @Input() slug: string;
+  @Input() hasPermission: boolean;
 
   constructor(private menuService: MenuService, private auth: AuthService) {}
 
-  ngOnInit(): void {
-    const user = this.auth.currentUserValue;
-    // if (user) {
-    //   this.editMode = user.is_admin || this.slug in user.menus;
-    // } else {
-    //   this.editMode = false;
-    // }
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     const dataUrl = this.imgForm.file;

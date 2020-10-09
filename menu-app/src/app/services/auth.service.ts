@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user-interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,9 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
   public currentUser: Observable<UserInterface>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
-      JSON.parse(sessionStorage.getItem('currentUser'))
+      JSON.parse(localStorage.getItem('currentUser'))
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -23,24 +24,25 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string): Observable<UserInterface> {
-    return this.http
-      .post<any>(
-        `${environment.settings.endpoint}/auth/`,
-        { username, password },
-        { headers: { 'Content-Type': 'application/json' } }
-      )
-      .pipe(
-        map((user) => {
-          user.authdata = window.btoa(username + ':' + password);
-          sessionStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
-        })
-      );
+  public getUserIdToken(): any {
+    return this.authFireBase.idToken;
+  }
+
+  login(email: string, password: string): Observable<UserInterface> {
+    const firebaseObservable = from(this.authFireBase.signInWithEmailAndPassword(email, password));
+    return firebaseObservable.pipe(
+      mergeMap((userCredentials) => {
+        return this.http.post<any>(`${environment.settings.endpoint}/auth/`, {}).pipe(
+          map((user) => {
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            return user;
+          })
+        );
+      })
+    );
   }
 
   logout(): void {
-    sessionStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUser');
   }
 }

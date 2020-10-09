@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pickeasy-app": {
+      "hosting": {
+        "menu-app": [
+          "pickeasy-app"
+        ]
+      }
+    }
+  }
+}
