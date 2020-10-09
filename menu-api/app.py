@@ -87,8 +87,14 @@ def register_blueprints(app: Flask):
     from blueprints.auth.routes import resources as auth_resources
     from blueprints.auth import bp_name as auth_bp_name
 
+    # admin blueprint
+    from blueprints.admin import admin_bp
+    from blueprints.admin.routes import resources as admin_resources
+    from blueprints.admin import bp_name as admin_bp_name
+
     set_routes(menu_resources, app, menus_bp, docs, menu_bp_name)
     set_routes(auth_resources, app, auth_bp, docs, auth_bp_name)
+    set_routes(admin_resources, app, admin_bp, docs, admin_bp_name)
 
 
 def register_external(skip_sentry=False):

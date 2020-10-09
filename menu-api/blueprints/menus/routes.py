@@ -1,4 +1,3 @@
-from . import bp_name
 from .controllers import (
     MenusResource,
     MenuResource,
@@ -6,6 +5,8 @@ from .controllers import (
     AllMenuResource,
     QRMenuResource,
     ImageMenuResource,
+    SectionMenuResource,
+    ItemMenuResource,
 )
 
 resources = [
@@ -19,5 +20,17 @@ resources = [
         "menus/<string:slug>/items/<string:item_id>/pictures/upload",
         "Image",
         ["POST"],
+    ),
+    (
+        SectionMenuResource,
+        "menus/<string:slug>/sections/<string:section_id>/edit",
+        "edit_section",
+        ["PATCH"],
+    ),
+    (
+        ItemMenuResource,
+        "menus/<string:slug>/items/<string:item_id>/edit",
+        "edit_item",
+        ["PATCH"],
     ),
 ]

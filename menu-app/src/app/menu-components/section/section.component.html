@@ -1,17 +1,30 @@
 <div class="section">
-  <h1>{{ section.name }}</h1>
-  <div class="description-container">
-    <p>{{ section.subtitle }}</p>
-    <p *ngFor="let description of descriptions" class="section-description">
-      {{ description }}
-    </p>
+  <div>
+    <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
+    <button *ngIf="editMode" (click)="sendRequest()">Send</button>
   </div>
-
-  <div class="row">
+  <h1 *ngIf="!editMode">{{ section.name }}</h1>
+  <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
+  <div class="description-container">
+    <p *ngIf="!editMode">{{ section.subtitle }}</p>
+    <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
+    <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
+    <quill-editor *ngIf="editMode" [(ngModel)]="section.description"></quill-editor>
+  </div>
+  <div
+    class="row"
+    cdkDropList
+    [cdkDropListDisabled]="!editMode"
+    [cdkDropListData]="section.menu_items"
+    (cdkDropListDropped)="drop($event)"
+  >
     <app-menu-item
+      cdkDrag
       *ngFor="let item of section.menu_items"
       [item]="item"
       class="col-md-4 col-sm-6 col-12"
+      [slug]="slug"
+      [hasPermission]="hasPermission"
     ></app-menu-item>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-menu-item',
@@ -16,25 +17,12 @@ export class MenuItemComponent implements OnInit {
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   editMode: boolean;
-  slug: string;
-  descriptions: string[];
+  @Input() slug: string;
+  @Input() hasPermission: boolean;
 
-  constructor(
-    private menuService: MenuService,
-    private route: ActivatedRoute,
-    private auth: AuthService
-  ) {}
+  constructor(private menuService: MenuService, private auth: AuthService) {}
 
-  ngOnInit(): void {
-    this.slug = this.route.snapshot.params.slug;
-    const user = this.auth.currentUserValue;
-    if (user) {
-      this.editMode = user.is_admin || this.slug in user.menus;
-    } else {
-      this.editMode = false;
-    }
-    this.descriptions = this.item.description.split('^');
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     const dataUrl = this.imgForm.file;
@@ -58,5 +46,16 @@ export class MenuItemComponent implements OnInit {
 
   cropImage(): void {
     this.imgForm.open();
+  }
+
+  sendRequest(): void {
+    this.menuService.editItem(this.slug, this.item).subscribe((item) => {
+      this.item = item;
+    });
+    this.editMode = false;
+  }
+
+  edit(): void {
+    this.editMode = true;
   }
 }

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SectionInterface } from '../../interfaces/section-interface';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MenuItemInterface } from '../../interfaces/menu-item-interface';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-section',
@@ -8,11 +11,36 @@ import { SectionInterface } from '../../interfaces/section-interface';
 })
 export class SectionComponent implements OnInit {
   @Input() section: SectionInterface;
-  descriptions: string[];
+  @Input() slug: string;
+  editMode;
+  @Input() hasPermission: boolean;
 
-  constructor() {}
+  constructor(private menuService: MenuService) {}
 
-  ngOnInit(): void {
-    this.descriptions = this.section.description.split('^');
+  ngOnInit(): void {}
+
+  sendRequest(): void {
+    this.menuService.editSection(this.slug, this.section).subscribe((section) => {
+      console.log(section);
+      this.section = section;
+    });
+    this.editMode = false;
+  }
+
+  drop(event: CdkDragDrop<MenuItemInterface[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  edit(): void {
+    this.editMode = true;
   }
 }

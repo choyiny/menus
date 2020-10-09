@@ -5,4 +5,5 @@ export interface SectionInterface {
   menu_items: MenuItemInterface[];
   description: string;
   subtitle: string;
+  _id: string;
 }

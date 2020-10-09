@@ -8,6 +8,7 @@ from mongoengine import (
     EmbeddedDocument,
     URLField,
 )
+import uuid
 
 
 class Tag(EmbeddedDocument):
@@ -24,6 +25,7 @@ class Section(EmbeddedDocument):
     image = URLField()
     description = StringField()
     subtitle = StringField()
+    _id = StringField(required=True)
 
 
 class Item(EmbeddedDocument):
@@ -88,24 +90,25 @@ class Menu(Document):
         """
         # loop through all menus and then bucket it into different sections
         section_to_items = defaultdict(list)
-        name_to_section = {}
+        id_to_section = {}
 
         for item in self.menu_items:
-            for section in item.sections:
-                section_to_items[section].append(item)
+            for section_id in item.sections:
+                section_to_items[section_id].append(item)
 
         for section in self.sections:
-            name_to_section[section.name] = section
+            id_to_section[section._id] = section
 
         # combine it with section data
         sectionized = []
-        for section_name, list_of_items in section_to_items.items():
+        for section_id, list_of_items in section_to_items.items():
             sectionized.append(
                 {
-                    "name": section_name,
+                    "_id": section_id,
+                    "name": id_to_section[section_id].name,
                     "menu_items": list_of_items,
-                    "description": name_to_section[section_name].description,
-                    "subtitle": name_to_section[section_name].subtitle,
+                    "description": id_to_section[section_id].description,
+                    "subtitle": id_to_section[section_id].subtitle,
                 }
             )
         return {
@@ -116,3 +119,22 @@ class Menu(Document):
             "link_name": self.link_name,
             "external_link": self.external_link,
         }
+
+    def rearrange_section(self, menu_items):
+        menu_items = [item["_id"] for item in menu_items]
+        menu_copy = self.menu_items[:]
+        menu_set = set(menu_items)
+        menu_dict = {}
+        ordered_list = []
+        i = 0
+        while len(ordered_list) < len(menu_items):
+            if self.menu_items[i]._id in menu_set:
+                menu_dict[self.menu_items[i]._id] = i
+                ordered_list.append(i)
+            i += 1
+        ordered_list.sort()
+        # rearrange menu_items to correct placement
+        for index in range(len(menu_items)):
+            self.menu_items[ordered_list[index]] = menu_copy[
+                menu_dict[menu_items[index]]
+            ]

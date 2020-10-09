@@ -15,14 +15,25 @@
         "
         class="background-image"
       >
+        <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
+        <button *ngIf="editMode" (click)="sendRequest()">Send</button>
         <div class="card-overlay">
-          <div class="overlay-container">
+          <div *ngIf="!editMode" class="overlay-container">
             <h1>{{ menu.name }}</h1>
+          </div>
+          <div *ngIf="editMode" class="overlay-container">
+            <input type="text" [(ngModel)]="menu.name" />
           </div>
         </div>
         <div class="bio">
-          <p class="description">{{ menu.description }}</p>
-          <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
+          <div *ngIf="!editMode">
+            <p class="description">{{ menu.description }}</p>
+            <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
+          </div>
+          <div *ngIf="editMode">
+            <input type="text" [(ngModel)]="menu.description" />
+            <input *ngIf="this.menu.external_link" type="text" [(ngModel)]="menu.link_name" />
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +46,7 @@
       <!--      </div>-->
       <button class="menu-section" *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
         {{ section.name }}
-        <p class="section-description">{{ section.subtitle ? section.subtitle : section.description }}</p>
+        <p class="section-description">{{ section.subtitle }}</p>
       </button>
     </div>
     <div class="desktop-description">
@@ -44,7 +55,8 @@
     </div>
     <div class="menu-items section-background">
       <div *ngFor="let section of menu.sections">
-        <app-section [section]="section" id="{{ section.name }}"></app-section>
+        <app-section [hasPermission]="hasPermission" [section]="section" [slug]="slug" id="{{ section.name }}">
+        </app-section>
       </div>
     </div>
     <app-footer></app-footer>

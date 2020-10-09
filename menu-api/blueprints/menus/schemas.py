@@ -8,6 +8,7 @@ class TagSchema(Schema):
 
 
 class SectionSchema(Schema):
+    _id = fields.Str(description="Section id")
     name = fields.Str(example="A la carte")
     image = fields.Url(
         description="Image for the section", example="https://via.placeholder.com/150"
@@ -20,7 +21,9 @@ class SectionSchema(Schema):
 
 class ItemSchema(Schema):
     _id = fields.Str()
-    image = fields.Url(example="https://via.placeholder.com/150")
+    image = fields.Url(
+        example="https://via.placeholder.com/150", allow_none=True, missing=None
+    )
     name = fields.Str(example="Meatball Pasta")
     price = fields.Str(example="$6.99")
     tags = fields.List(fields.Nested(TagSchema))
@@ -40,6 +43,7 @@ class MenuSchema(Schema):
 
 
 class SectionItemSchema(Schema):
+    _id = fields.Str(description="Section id")
     name = fields.Str(description="Name of section", example="A la carte")
     menu_items = fields.List(fields.Nested(ItemSchema))
     description = fields.Str(description="Name of section", example="Piece by piece")

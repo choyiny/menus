@@ -3,6 +3,8 @@ import { MenuInterface } from '../../interfaces/menu-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,18 +18,30 @@ import { style, animate, transition, trigger } from '@angular/animations';
   ],
 })
 export class MenuComponent implements OnInit {
-  menu: MenuInterface;
+  @Input() menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
   @Input() selectedImage: string;
+  editMode: boolean;
+  slug: string;
+  hasPermission: boolean;
 
-  constructor(private menuservice: MenuService, private route: ActivatedRoute) {}
+  constructor(
+    private menuservice: MenuService,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params.slug;
-    console.log(id);
-    if (id) {
-      this.getMenu(id);
+    this.slug = this.route.snapshot.params.slug;
+    if (this.slug != null) {
+      this.getMenu(this.slug);
+    }
+    const user = this.authService.currentUserValue;
+    if (user) {
+      this.hasPermission = user.is_admin || this.slug in user.menus;
+    } else {
+      this.hasPermission = false;
     }
   }
 
@@ -60,5 +74,14 @@ export class MenuComponent implements OnInit {
     const offsetPosition = elementPosition - headerOffset;
     document.documentElement.scrollTop = offsetPosition;
     document.body.scrollTop = offsetPosition;
+  }
+
+  sendRequest(): void {
+    this.menuservice.editMenu(this.slug, this.menu).subscribe((menu) => (this.menu = menu));
+    this.editMode = false;
+  }
+
+  edit(): void {
+    this.editMode = true;
   }
 }
