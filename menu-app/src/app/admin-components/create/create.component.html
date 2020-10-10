@@ -1,0 +1,26 @@
+<div class="col-md-6 offset-md-3 mt-5">
+  <div class="card">
+    <h4 class="card-header">Create New Restaurant</h4>
+    <div class="card-body">
+      <form [formGroup]="restaurantBody" (submit)="submit()">
+        <div class="form-group">
+          <label>Restaurant name</label>
+          <input type="text" formControlName="name" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Restaurant Description</label>
+          <input type="text" formControlName="description" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Restaurant Image</label>
+          <input type="text" formControlName="image" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label>Restaurant Slug</label>
+          <input type="text" formControlName="slug" class="form-control" />
+        </div>
+        <button class="btn btn-primary">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
