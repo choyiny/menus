@@ -5,6 +5,7 @@ import { MenuInterface } from '../interfaces/menu-interface';
 import { SectionInterface } from '../interfaces/section-interface';
 import { MenuItemInterface } from '../interfaces/menu-item-interface';
 import { environment } from '../../environments/environment';
+import { MenuCreateInterface } from '../interfaces/menu-create';
 
 @Injectable({
   providedIn: 'root',
@@ -46,5 +47,10 @@ export class MenuService {
     }
     const url = `${environment.settings.endpoint}/menus/${slug}/items/${item._id}/edit`;
     return this.http.patch<MenuItemInterface>(url, item);
+  }
+
+  createMenu(menuBody: MenuCreateInterface): Observable<MenuInterface> {
+    const url = `${environment.settings.endpoint}/menus/`;
+    return this.http.post<MenuInterface>(url, menuBody);
   }
 }
