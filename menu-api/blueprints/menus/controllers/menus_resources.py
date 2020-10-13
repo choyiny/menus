@@ -59,7 +59,7 @@ class AllMenuResource(MenusBaseResource):
         limit = args["limit"]
         page = args["page"]
         menus = [{'slug': menu.slug, 'name': menu.name} for menu in Menu.objects()]
-        print(menus)
+
         return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
