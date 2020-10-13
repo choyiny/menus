@@ -1,6 +1,8 @@
 <div *ngIf="menu">
   <h1>All Pickeasy Menus</h1>
   <div *ngFor="let menuInfo of menu.menus">
-    <p (click)="visit(menuInfo)">{{ menuInfo.name }}</p>
+    <p>
+      <a routerLink="/admin/menu" [state]="{ menu: menuInfo }">{{ menuInfo.name }}</a>
+    </p>
   </div>
 </div>

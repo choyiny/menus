@@ -5,11 +5,12 @@
       <form>
         <div class="form-group">
           <label for="csv-upload">Import menu csv</label>
-          <input type="file" class="form-control-file" id="csv-upload" />
+          <input type="file" class="form-control-file" id="csv-upload" (change)="onChange($event)" />
         </div>
+        <button (click)="importCsv()">SEND</button>
       </form>
       <div>
-        <button type="button" class="btn btn-primary">Generate QR</button>
+        <button type="button" class="btn btn-primary" (click)="generateQr()">Generate QR</button>
         <button type="button" class="btn btn-primary">Delete this menu</button>
         <p><a></a>Visit Menu</p>
       </div>

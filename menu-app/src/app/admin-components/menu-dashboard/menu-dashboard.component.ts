@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuAdminInterface as Menu } from '../../interfaces/menu-admin-interface';
 import { Router } from '@angular/router';
+import { MenuService } from '../../services/menu.service';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-menu-dashboard',
@@ -8,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu-dashboard.component.scss'],
 })
 export class MenuDashboardComponent implements OnInit {
-  constructor(private router: Router) {
+  constructor(private router: Router, private menuService: MenuService) {
     // does not work on ngOnInit
     const state = this.router.getCurrentNavigation().extras.state;
     if (state) {
@@ -17,6 +19,29 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   menuInfo: Menu;
+  file: File;
 
   ngOnInit(): void {}
+
+  onChange(event): void {
+    this.file = event.target.files[0];
+  }
+
+  importCsv(): void {
+    const formData = new FormData();
+    formData.append('file', this.file);
+    this.menuService.uploadCsv(this.menuInfo.slug, formData).subscribe((menu) => {});
+  }
+
+  generateQr(): void {
+    this.menuService
+      .generateQR({
+        url: `https://menu.pickeasy.ca/menu/${this.menuInfo.slug}`,
+        name: `https://menu.pickeasy.ca/menu/${this.menuInfo.name}`,
+      })
+      .subscribe((blob) => {
+        const fileName = `${this.menuInfo.name}.${blob.type}`;
+        FileSaver.saveAs(blob, fileName);
+      });
+  }
 }

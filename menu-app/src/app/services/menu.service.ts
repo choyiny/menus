@@ -59,4 +59,22 @@ export class MenuService {
     const url = `${environment.settings.endpoint}/menus/all`;
     return this.http.get<Menus>(url, { params: query });
   }
+
+  deleteMenu(slug): Observable<MenuInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}`;
+    return this.http.delete<MenuInterface>(url);
+  }
+
+  uploadCsv(slug, formData): Observable<MenuInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/import`;
+    console.log(formData);
+    return this.http.post<MenuInterface>(url, formData);
+  }
+  generateQR(query): Observable<Blob> {
+    const url = `${environment.settings.endpoint}/menus/generate`;
+    return this.http.get(url, {
+      params: query,
+      responseType: 'blob',
+    });
+  }
 }

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  limit: number = 5;
+  limit: number = 20;
   page: number = 1;
   menu: Menus;
   constructor(private menuService: MenuService, private router: Router) {}
