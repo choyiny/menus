@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { faPepperHot } from '@fortawesome/free-solid-svg-icons';
 import { faHatChef } from '@fortawesome/pro-light-svg-icons';
-import { faAcorn } from '@fortawesome/pro-light-svg-icons';
+import { faArrowToTop } from '@fortawesome/pro-solid-svg-icons';
 import { TagDisplay } from '../interfaces/tag-display';
 
 @Injectable({
@@ -36,6 +36,21 @@ export class TagService {
     },
     Peanut: {
       text: 'May Contain Peanuts',
+      icons: [],
+      backgroundColor: 'black',
+    },
+    "Chef's Choice": {
+      text: "Chef's Choice",
+      icons: [faHatChef],
+      backgroundColor: 'black',
+    },
+    'Top Pick': {
+      text: 'Top Pick',
+      icons: [faArrowToTop],
+      backgroundColor: 'black',
+    },
+    'Exquisite Flavor': {
+      text: 'Exquisite Flavor',
       icons: [],
       backgroundColor: 'black',
     },
