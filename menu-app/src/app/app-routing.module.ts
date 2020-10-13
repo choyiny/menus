@@ -6,13 +6,15 @@ import { DashboardComponent } from './auth-components/dashboard/dashboard.compon
 import { MenuDashboardComponent } from './admin-components/menu-dashboard/menu-dashboard.component';
 import { CreateComponent } from './admin-components/create/create.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { AdminDashboardComponent as Admin } from './admin-components/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   { path: 'menu/:slug', component: MenuComponent },
   { path: '', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'dashboard/menu', component: MenuDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'dashboard/create', component: CreateComponent, canActivate: [AuthGuard] },
+  { path: 'admin/menu', component: MenuDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'admin/create', component: CreateComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: Admin, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' },
 ];
 
