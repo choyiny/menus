@@ -228,6 +228,11 @@ class ImageMenuResource(MenusBaseResource):
             return {"description": "You do not have permission"}, 401
         image_bytes = args["file"].read()
         loaded_image = Image.open(BytesIO(image_bytes))
+        width, height = loaded_image.size
+        if width > 600:
+            width = 600
+            height = 600
+        loaded_image = loaded_image.resize((width, height))
         out_img = BytesIO()
         loaded_image.save(out_img, "PNG")
         out_img.seek(0)
