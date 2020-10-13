@@ -1,11 +1,11 @@
-<div class="col-md-6 offset-md-3 mt-5">
+<div *ngIf="menuInfo" class="col-md-6 offset-md-3 mt-5">
   <div class="card">
     <h4 class="card-header">Name of Restaurant</h4>
     <div class="card-body">
       <form>
         <div class="form-group">
-          <label for="exampleFormControlFile1">Import menu csv</label>
-          <input type="file" class="form-control-file" id="exampleFormControlFile1" />
+          <label for="csv-upload">Import menu csv</label>
+          <input type="file" class="form-control-file" id="csv-upload" />
         </div>
       </form>
       <div>
@@ -15,4 +15,8 @@
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="!menuInfo">
+  <!--  Add page not found component in future-->
+  <h1>Something went wrong!!</h1>
 </div>
