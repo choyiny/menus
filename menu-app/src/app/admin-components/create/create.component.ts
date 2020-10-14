@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MenuService } from '../../services/menu.service';
 import { CreateInterface } from '../../interfaces/menus-interface';
 
@@ -9,7 +9,7 @@ import { CreateInterface } from '../../interfaces/menus-interface';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent implements OnInit {
-  restaurantBody;
+  restaurantBody: FormGroup;
 
   constructor(private fb: FormBuilder, private menuService: MenuService) {}
 
