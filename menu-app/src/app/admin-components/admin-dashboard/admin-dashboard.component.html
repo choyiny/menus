@@ -12,6 +12,7 @@
       <button (click)="addLimit()">+</button>
     </div>
   </span>
+  <p><a routerLink="/admin/create">Create new Menu!</a></p>
   <div *ngFor="let menuInfo of menu.menus">
     <p>
       <a routerLink="/admin/menu" [state]="{ menu: menuInfo }">{{ menuInfo.name }}</a>
