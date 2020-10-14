@@ -10,12 +10,40 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  limit: number = 20;
-  page: number = 1;
+  limit = 5;
+  page = 1;
   menu: Menus;
   constructor(private menuService: MenuService, private router: Router) {}
 
   ngOnInit(): void {
+    this.getMenus();
+  }
+
+  visit(menu: Menu): void {
+    this.router.navigateByUrl('admin/menu', { state: { menu } });
+  }
+
+  nextPage(): void {
+    this.page += 1;
+    this.getMenus();
+  }
+
+  previousPage(): void {
+    this.page -= 1;
+    this.getMenus();
+  }
+
+  addLimit(): void {
+    this.limit += 5;
+    this.getMenus();
+  }
+
+  lowerLimit(): void {
+    this.limit -= 5;
+    this.getMenus();
+  }
+
+  getMenus(): void {
     this.menuService
       .getMenus({
         page: this.page,
@@ -24,9 +52,5 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe((menu) => {
         this.menu = menu;
       });
-  }
-
-  visit(menu: Menu): void {
-    this.router.navigateByUrl('admin/menu', { state: { menu } });
   }
 }
