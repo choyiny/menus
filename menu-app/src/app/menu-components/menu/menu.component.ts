@@ -1,5 +1,5 @@
-import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { MenuInterface } from '../../interfaces/menus-interface';
+import { Component, HostListener, Input, OnInit, AfterViewChecked, ViewChild } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
@@ -24,7 +24,6 @@ export class MenuComponent implements OnInit {
   editMode: boolean;
   slug: string;
   hasPermission: boolean;
-
   constructor(
     private menuservice: MenuService,
     private route: ActivatedRoute,
