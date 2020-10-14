@@ -7,7 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./covid-modal.component.scss'],
 })
 export class CovidModalComponent implements OnInit {
-  @ViewChild('content') input;
+  @ViewChild('modalContent') input;
 
   constructor(private modalService: NgbModal) {}
 

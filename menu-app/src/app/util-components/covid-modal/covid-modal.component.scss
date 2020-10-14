@@ -1,6 +1,7 @@
 .modal-container {
   background: white;
   border-radius: 10px;
+  margin-top: 0;
 }
 
 .modal-header {
@@ -60,4 +61,9 @@
 
 .content {
   margin: 0px 20px 20px 20px;
+}
+
+.close-modal {
+  width: 40px;
+  height: 40px;
 }
