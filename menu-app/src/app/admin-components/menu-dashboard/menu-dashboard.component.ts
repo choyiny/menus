@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuAdminInterface as Menu } from '../../interfaces/menu-admin-interface';
+import { SlugInterface } from '../../interfaces/menus-interface';
 import { Router } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 import * as FileSaver from 'file-saver';
@@ -22,7 +22,7 @@ export class MenuDashboardComponent implements OnInit {
     }
   }
 
-  menuInfo: Menu;
+  menuInfo: SlugInterface;
   file: File;
   baseUrl;
 

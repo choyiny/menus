@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MenuService } from '../../services/menu.service';
-import { MenuCreateInterface } from '../../interfaces/menu-create';
+import { CreateInterface } from '../../interfaces/menus-interface';
 
 @Component({
   selector: 'app-create',
@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit {
   }
 
   submit(): void {
-    const menu: MenuCreateInterface = {};
+    const menu: CreateInterface = {};
     Object.keys(this.restaurantBody.value).forEach((key) => {
       if (this.restaurantBody.value[key] !== '') {
         menu[key] = this.restaurantBody.value[key];

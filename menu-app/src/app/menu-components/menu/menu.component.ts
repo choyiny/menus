@@ -1,9 +1,8 @@
 import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
-import { MenuInterface } from '../../interfaces/menu-interface';
+import { MenuInterface } from '../../interfaces/menus-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
-import { FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 
 @Component({

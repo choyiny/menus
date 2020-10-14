@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MenuInterface } from '../interfaces/menu-interface';
+import { MenuInterface, CreateInterface, PaginatedInterface } from '../interfaces/menus-interface';
 import { SectionInterface } from '../interfaces/section-interface';
 import { MenuItemInterface } from '../interfaces/menu-item-interface';
 import { environment } from '../../environments/environment';
-import { MenuCreateInterface } from '../interfaces/menu-create';
-import { MenusAdminInterface as Menus } from '../interfaces/menus-admin-interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,14 +48,14 @@ export class MenuService {
     return this.http.patch<MenuItemInterface>(url, item);
   }
 
-  createMenu(menuBody: MenuCreateInterface): Observable<MenuInterface> {
+  createMenu(menuBody: CreateInterface): Observable<MenuInterface> {
     const url = `${environment.settings.endpoint}/menus/`;
     return this.http.post<MenuInterface>(url, menuBody);
   }
 
-  getMenus(query): Observable<Menus> {
+  getMenus(query): Observable<PaginatedInterface> {
     const url = `${environment.settings.endpoint}/menus/all`;
-    return this.http.get<Menus>(url, { params: query });
+    return this.http.get<PaginatedInterface>(url, { params: query });
   }
 
   deleteMenu(slug): Observable<MenuInterface> {
