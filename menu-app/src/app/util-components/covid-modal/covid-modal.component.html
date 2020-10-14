@@ -1,1 +1,45 @@
-<ng-template let #content let-modal> </ng-template>
+<ng-template let #content let-modal>
+  <div class="modal-container">
+    <h1 class="modal-header text-center">Our Safety Promise</h1>
+    <form>
+      <div class="form-body form-check">
+        <input type="checkbox" class="form-check-input modal-check" id="exampleCheck1" />
+        <label class="form-check-label modal-check paragraph" for="exampleCheck1"
+          >Surfaces sanitized between seatings</label
+        >
+        <input type="checkbox" class="form-check-input modal-check" id="exampleCheck2" />
+        <label class="form-check-label modal-check paragraph" for="exampleCheck2"
+          >Common areas deep cleaned daily</label
+        >
+        <input type="checkbox" class="form-check-input modal-check" id="exampleCheck3" />
+        <label class="form-check-label modal-check paragraph" for="exampleCheck3">Wait staff wear masks</label>
+        <input type="checkbox" class="form-check-input modal-check" id="exampleCheck4" />
+        <label class="form-check-label modal-check paragraph" for="exampleCheck4"
+          >Limited number of seated diners</label
+        >
+        <input type="checkbox" class="form-check-input modal-check" id="exampleCheck5" />
+        <label class="form-check-label modal-check paragraph" for="exampleCheck5">Extra space between tables</label>
+        <input type="checkbox" class="form-check-input modal-check" id="exampleCheck6" />
+        <label class="form-check-label modal-check paragraph" for="exampleCheck6"
+          >Digital menus provided for every guest</label
+        >
+      </div>
+      <div class="form-body">
+        <p class="customer-paragraph">
+          Here's what to do to help keep fellow diners and our staff safe. Check all that apply
+        </p>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input modal-check" id="exampleCheck7" />
+          <label class="form-check-label modal-check paragraph" for="exampleCheck7"
+            >Wear masks unless eating or drinking</label
+          >
+          <input type="checkbox" class="form-check-input modal-check" id="exampleCheck8" />
+          <label class="form-check-label modal-check paragraph" for="exampleCheck8"
+            >Provide phone number for contact tracing only</label
+          >
+        </div>
+        <textarea class="form-control tracing" placeholder="Enter your phone number for contact tracing"></textarea>
+      </div>
+    </form>
+  </div>
+</ng-template>

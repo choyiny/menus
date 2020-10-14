@@ -4,6 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
+import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
     ]),
   ],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, AfterViewInit {
   @Input() menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
@@ -24,11 +25,17 @@ export class MenuComponent implements OnInit {
   editMode: boolean;
   slug: string;
   hasPermission: boolean;
+  @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   constructor(
     private menuservice: MenuService,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
+
+  ngAfterViewInit(): void {
+    console.log(this.menu);
+    this.covid.open();
+  }
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
