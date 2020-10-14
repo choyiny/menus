@@ -1,13 +1,5 @@
 import { MenuInterface } from '../../interfaces/menus-interface';
-import {
-  Component,
-  HostListener,
-  Input,
-  OnInit,
-  AfterViewChecked,
-  ViewChild,
-  AfterViewInit,
-} from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
