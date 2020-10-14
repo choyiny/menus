@@ -24,8 +24,11 @@ export class MenuDashboardComponent implements OnInit {
 
   menuInfo: Menu;
   file: File;
+  baseUrl;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.baseUrl = window.location.origin;
+  }
 
   onChange(event): void {
     this.file = event.target.files[0];
@@ -44,8 +47,8 @@ export class MenuDashboardComponent implements OnInit {
   generateQr(): void {
     this.menuService
       .generateQR({
-        url: `https://menu.pickeasy.ca/menu/${this.menuInfo.slug}`,
-        name: `https://menu.pickeasy.ca/menu/${this.menuInfo.name}`,
+        url: `${this.baseUrl}$/menu/${this.menuInfo.slug}`,
+        name: this.menuInfo.name,
       })
       .subscribe((blob) => {
         const fileName = `${this.menuInfo.name}.${blob.type}`;
