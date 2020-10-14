@@ -15,6 +15,10 @@ export class MenuDashboardComponent implements OnInit {
     const state = this.router.getCurrentNavigation().extras.state;
     if (state) {
       this.menuInfo = state.menu;
+      sessionStorage.setItem('currentMenu', JSON.stringify(this.menuInfo));
+    } else if (sessionStorage.getItem('currentMenu') !== null) {
+      // cache value in cookies
+      this.menuInfo = JSON.parse(sessionStorage.getItem('currentMenu'));
     }
   }
 
@@ -31,6 +35,10 @@ export class MenuDashboardComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.file);
     this.menuService.uploadCsv(this.menuInfo.slug, formData).subscribe((menu) => {});
+  }
+
+  deleteMenu(): void {
+    this.menuService.deleteMenu(this.menuInfo.slug).subscribe((menu) => {});
   }
 
   generateQr(): void {

@@ -11,8 +11,8 @@
       </form>
       <div>
         <button type="button" class="btn btn-primary" (click)="generateQr()">Generate QR</button>
-        <button type="button" class="btn btn-primary">Delete this menu</button>
-        <p><a></a>Visit Menu</p>
+        <button type="button" class="btn btn-primary" (click)="deleteMenu()">Delete this menu</button>
+        <p><a href="{{ 'http://menu.pickeasy.ca/menu/' + menuInfo.slug }}">Visit Menu</a></p>
       </div>
     </div>
   </div>

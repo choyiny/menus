@@ -1,5 +1,6 @@
 <div *ngIf="menu">
   <h1>All Pickeasy Menus</h1>
+  <mat-select></mat-select>
   <div *ngFor="let menuInfo of menu.menus">
     <p>
       <a routerLink="/admin/menu" [state]="{ menu: menuInfo }">{{ menuInfo.name }}</a>
