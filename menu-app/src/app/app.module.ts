@@ -22,6 +22,9 @@ import { ImageFormComponent } from './util-components/image-form/image-form.comp
 import { LoginComponent } from './auth-components/login/login.component';
 import { ImgViewModalComponent } from './util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from './util-components/img-form-modal/img-form-modal.component';
+import { CreateComponent } from './admin-components/create/create.component';
+import { AdminDashboardComponent } from './admin-components/admin-dashboard/admin-dashboard.component';
+import { MenuDashboardComponent } from './admin-components/menu-dashboard/menu-dashboard.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -46,6 +49,9 @@ import { DashboardComponent } from './auth-components/dashboard/dashboard.compon
     ImgViewModalComponent,
     ImgFormModalComponent,
     DashboardComponent,
+    CreateComponent,
+    AdminDashboardComponent,
+    MenuDashboardComponent,
   ],
   imports: [
     BrowserModule,

@@ -61,6 +61,11 @@ class GetMenuSchema(Schema):
     link_name = fields.Str(description="name of link")
 
 
+class PaginationMenuSchema(Schema):
+    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    slug = fields.Str()
+
+
 pagination_args = {
     "page": fields.Int(description="Page number of table", default=1),
     "limit": fields.Int(description="How many entries per page", default=5),

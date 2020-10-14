@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,7 +25,11 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.value.password;
     this.authService.login(email, password).subscribe(
       (user) => {
-        this.router.navigateByUrl('dashboard');
+        if (user.is_admin) {
+          this.router.navigateByUrl('admin');
+        } else {
+          this.router.navigateByUrl('dashboard');
+        }
       },
       (err) => {
         console.log(err);
