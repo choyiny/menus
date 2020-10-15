@@ -67,3 +67,7 @@
   width: 40px;
   height: 40px;
 }
+
+.custom-control-label:before {
+  background-color: red;
+}
