@@ -1,21 +1,21 @@
 <ng-template let #modalContent let-modal>
-  <img class="close-modal" src="assets/superlike.png" />
-  <div class="modal-container" (click)="modal.close(modalContent)">
+  <img class="close-modal" src="assets/superlike.png" (click)="modal.close(modalContent)" />
+  <div class="modal-container">
     <div class="content">
       <h1 class="modal-header text-center">Our Safety Promise</h1>
-      <form>
+      <form [formGroup]="tracingForm" (submit)="submit()">
         <div class="form-body form-check">
-          <input type="checkbox" class="form-check-input modal-check" id="Check1" />
+          <input type="checkbox" class="form-check-input modal-check" id="Check1" checked="checked" />
           <label class="form-check-label modal-check paragraph" for="Check1">Surfaces sanitized between seatings</label>
-          <input type="checkbox" class="form-check-input modal-check" id="Check2" />
+          <input type="checkbox" class="form-check-input modal-check" id="Check2" checked="checked" />
           <label class="form-check-label modal-check paragraph" for="Check2">Common areas deep cleaned daily</label>
-          <input type="checkbox" class="form-check-input modal-check" id="Check3" />
+          <input type="checkbox" class="form-check-input modal-check" id="Check3" checked="checked" />
           <label class="form-check-label modal-check paragraph" for="Check3">Wait staff wear masks</label>
-          <input type="checkbox" class="form-check-input modal-check" id="Check4" />
+          <input type="checkbox" class="form-check-input modal-check" id="Check4" checked="checked" />
           <label class="form-check-label modal-check paragraph" for="Check4">Limited number of seated diners</label>
-          <input type="checkbox" class="form-check-input modal-check" id="Check5" />
+          <input type="checkbox" class="form-check-input modal-check" id="Check5" checked="checked" />
           <label class="form-check-label modal-check paragraph" for="Check5">Extra space between tables</label>
-          <input type="checkbox" class="form-check-input modal-check" id="Check6" />
+          <input type="checkbox" class="form-check-input modal-check" id="Check6" checked="checked" />
           <label class="form-check-label modal-check paragraph" for="Check6"
             >Digital menus provided for every guest</label
           >
@@ -25,11 +25,11 @@
             Here's what to do to help keep fellow diners and our staff safe. Check all that apply
           </p>
           <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input modal-check" id="Check7" />
+            <input type="checkbox" class="form-check-input modal-check" id="Check7" checked="checked" />
             <label class="form-check-label modal-check paragraph" for="Check7"
               >Wear masks unless eating or drinking</label
             >
-            <input type="checkbox" class="form-check-input modal-check" id="Check8" />
+            <input type="checkbox" class="form-check-input modal-check" id="Check8" checked="checked" />
             <label class="form-check-label modal-check paragraph" for="Check8"
               >Provide phone number for contact tracing only</label
             >

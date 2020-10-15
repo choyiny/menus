@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-covid-modal',
@@ -8,12 +9,20 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CovidModalComponent implements OnInit {
   @ViewChild('modalContent') input;
+  tracingForm: FormGroup;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private fb: FormBuilder) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.tracingForm = this.fb.group({
+      name: [''],
+      phone_number: [''],
+    });
+  }
 
   open(): void {
     this.modalService.open(this.input);
   }
+
+  submit(): void {}
 }
