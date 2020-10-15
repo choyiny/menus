@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
+import { TimeInterface } from '../../interfaces/time-interface';
 
 @Component({
   selector: 'app-menu',
@@ -48,6 +49,9 @@ export class MenuComponent implements OnInit {
   getMenu(id: string): void {
     this.menuservice.getMenu(id).subscribe((menu) => {
       this.menu = menu;
+      if (this.sameDay()) {
+        return;
+      }
       if (this.menu.force_trace) {
         this.covid.open();
         return;
@@ -93,5 +97,22 @@ export class MenuComponent implements OnInit {
 
   edit(): void {
     this.editMode = true;
+  }
+
+  sameDay(): boolean {
+    if (localStorage.getItem('time_in')) {
+      const timeIn: TimeInterface = JSON.parse(localStorage.getItem('time_in'));
+      const date = new Date(timeIn.time_in);
+      const today = new Date();
+      if (
+        today.getDay() === date.getDay() &&
+        today.getMonth() === date.getMonth() &&
+        today.getFullYear() === date.getFullYear()
+      ) {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 }
