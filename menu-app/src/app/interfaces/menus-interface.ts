@@ -7,6 +7,9 @@ export interface MenuInterface {
   description: string;
   external_link: string;
   link_name: string;
+  tracing_key: string;
+  enable_trace: boolean;
+  force_trace: boolean;
 }
 
 export interface CreateInterface {

@@ -12,5 +12,6 @@ export interface EnvironmentInterface {
       appId: string;
       measurementId: string;
     };
+    tracing_api: string;
   };
 }

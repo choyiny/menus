@@ -14,5 +14,6 @@ export const environment: EnvironmentInterface = {
       appId: '1:331541131061:web:dde6e1cf8b621c660be67c',
       measurementId: 'G-EVH6ZBYNS4',
     },
+    tracing_api: 'https://tracing.pickeasy.ca',
   },
 };
