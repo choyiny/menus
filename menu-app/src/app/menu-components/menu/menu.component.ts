@@ -17,7 +17,7 @@ import { CovidModalComponent } from '../../util-components/covid-modal/covid-mod
     ]),
   ],
 })
-export class MenuComponent implements OnInit, AfterViewInit {
+export class MenuComponent implements OnInit {
   @Input() menu: MenuInterface;
   showImage = true;
   @Input() selectedSection: string;
@@ -31,11 +31,6 @@ export class MenuComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
-
-  ngAfterViewInit(): void {
-    console.log(this.menu);
-    this.covid.open();
-  }
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
@@ -53,6 +48,16 @@ export class MenuComponent implements OnInit, AfterViewInit {
   getMenu(id: string): void {
     this.menuservice.getMenu(id).subscribe((menu) => {
       this.menu = menu;
+      if (this.menu.force_trace) {
+        this.covid.open();
+        return;
+      }
+      this.route.queryParams.subscribe((params) => {
+        const trace = params.trace;
+        if (trace && this.menu.enable_trace) {
+          this.covid.open();
+        }
+      });
     });
   }
 
