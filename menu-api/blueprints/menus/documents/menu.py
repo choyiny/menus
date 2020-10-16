@@ -7,7 +7,7 @@ from mongoengine import (
     EmbeddedDocumentField,
     EmbeddedDocument,
     URLField,
-    BooleanField
+    BooleanField,
 )
 import uuid
 
@@ -130,7 +130,7 @@ class Menu(Document):
             "external_link": self.external_link,
             "tracing_key": self.tracing_key,
             "force_trace": self.force_trace,
-            "enable_trace": self.enable_trace
+            "enable_trace": self.enable_trace,
         }
 
     def rearrange_section(self, menu_items):

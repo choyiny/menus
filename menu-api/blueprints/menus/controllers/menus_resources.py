@@ -23,7 +23,7 @@ from ..schemas import (
     qr_args,
     SectionItemSchema,
     ItemSchema,
-    PaginationMenuSchema
+    PaginationMenuSchema,
 )
 
 
@@ -58,9 +58,9 @@ class AllMenuResource(MenusBaseResource):
 
         limit = args["limit"]
         page = args["page"]
-        menus = [{'slug': menu.slug, 'name': menu.name} for menu in Menu.objects()]
+        menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -121,7 +121,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
