@@ -57,7 +57,7 @@ export class MenuComponent implements OnInit {
         return;
       }
       this.route.queryParams.subscribe((params) => {
-        const trace = params.trace;
+        const trace: boolean = params.trace === 'true';
         if (trace && this.menu.enable_trace) {
           this.covid.open();
         }
