@@ -1,4 +1,4 @@
-name: Publish Menu API to GHCR
+name: Publish Menu App to GHCR
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
     branches:
       - master
     paths:
-      - menu-api/**
+      - menu-app/**
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -14,7 +14,7 @@ on:
 
 env:
   # TODO: Change variable to your image's name.
-  IMAGE_NAME: menus-api
+  IMAGE_NAME: menus-app
 
 jobs:
   # Push image to GitHub Packages.
@@ -24,7 +24,7 @@ jobs:
     if: github.event_name == 'push'
     defaults:
       run:
-        working-directory: menu-api
+        working-directory: menu-app
 
     steps:
       - uses: actions/checkout@v2
