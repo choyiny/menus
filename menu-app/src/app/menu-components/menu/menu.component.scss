@@ -28,6 +28,7 @@
 
 @media only screen and (min-width: 600px) {
   .scrolling-wrapper {
+    top: 0;
     background: #ffffff;
 
     &.menu-section {
@@ -125,7 +126,7 @@
 
 .desktop-description {
   background: white;
-  margin: 4em 3em 1em 3em;
+  margin: 0em 3em 1em 3em;
   border-radius: 40px;
   padding: 2em;
   width: 50%;
@@ -173,5 +174,9 @@
     background: white;
     margin: 3em 3em 1em 3em;
     border-radius: 40px;
+  }
+
+  .desktop-background {
+    padding-top: 3em;
   }
 }
