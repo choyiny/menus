@@ -47,7 +47,7 @@ export class MenuDashboardComponent implements OnInit {
   generateQr(): void {
     this.menuService
       .generateQR({
-        url: `${this.baseUrl}$/menu/${this.menuInfo.slug}`,
+        url: `${this.baseUrl}/menu/${this.menuInfo.slug}`,
         name: this.menuInfo.name,
       })
       .subscribe((blob) => {

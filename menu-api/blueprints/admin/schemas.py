@@ -3,7 +3,7 @@ from ..auth.schemas import UserSchema
 
 
 class PromoteUserSchema(Schema):
-    user_id = fields.Str(required=True)
+    firebase_id = fields.Str(required=True)
     slug = fields.Str(required=True)
 
 
