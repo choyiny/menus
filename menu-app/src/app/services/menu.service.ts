@@ -22,34 +22,31 @@ export class MenuService {
 
   editMenu(slug: string, menu: MenuInterface): Observable<MenuInterface> {
     const url = `${environment.settings.endpoint}/menus/${slug}`;
-    return this.http.patch<MenuInterface>(url, {
+    const body = this.cleanFields({
       name: menu.name,
       description: menu.description,
       external_link: menu.external_link,
       link_name: menu.link_name,
       image: menu.image,
     });
+    return this.http.patch<MenuInterface>(url, body);
   }
 
   editSection(slug: string, section: SectionInterface): Observable<SectionInterface> {
     // Must sanitize quill fields
-    if (section.description == null) {
-      section.description = '';
-    }
+    section = this.cleanFields(section);
     const url = `${environment.settings.endpoint}/menus/${slug}/sections/${section._id}/edit`;
     return this.http.patch<SectionInterface>(url, section);
   }
 
   editItem(slug: string, item: MenuItemInterface): Observable<MenuItemInterface> {
-    // Must sanitize quill fields
-    if (item.description == null) {
-      item.description = '';
-    }
+    item = this.cleanFields(item);
     const url = `${environment.settings.endpoint}/menus/${slug}/items/${item._id}/edit`;
     return this.http.patch<MenuItemInterface>(url, item);
   }
 
   createMenu(menuBody: CreateInterface): Observable<MenuInterface> {
+    menuBody = this.cleanFields(menuBody);
     const url = `${environment.settings.endpoint}/menus/`;
     return this.http.post<MenuInterface>(url, menuBody);
   }
@@ -75,5 +72,14 @@ export class MenuService {
       params: query,
       responseType: 'blob',
     });
+  }
+
+  cleanFields(body: object): any {
+    for (const key in body) {
+      if (body[key] === null) {
+        delete body[key];
+      }
+    }
+    return body;
   }
 }
