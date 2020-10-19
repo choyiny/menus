@@ -1,7 +1,7 @@
 <div class="section">
   <div>
     <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-    <button *ngIf="editMode" (click)="sendRequest()">Send</button>
+    <button *ngIf="editMode" (click)="sendRequest()">Save</button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
   <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
