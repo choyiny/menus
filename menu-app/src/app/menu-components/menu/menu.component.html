@@ -1,13 +1,5 @@
 <app-covid-modal [menu]="menu"></app-covid-modal>
-<div
-  *ngIf="menu"
-  [ngStyle]="{
-    background: 'url(' + menu.image + ')',
-    backgroundSize: '100%',
-    backgroundRepeat: 'no repeat'
-  }"
-  class="desktop-background"
->
+<div *ngIf="menu">
   <div class="desktop-background">
     <div class="header">
       <div
@@ -51,14 +43,25 @@
         <p class="section-description">{{ section.subtitle }}</p>
       </button>
     </div>
-    <div class="desktop-description">
-      <h1 class="desc">{{ menu.name }}</h1>
-      <p class="paragraph">{{ menu.description }}</p>
-    </div>
-    <div class="menu-items section-background">
-      <div *ngFor="let section of menu.sections">
-        <app-section [hasPermission]="hasPermission" [section]="section" [slug]="slug" id="{{ section.name }}">
-        </app-section>
+    <div
+      [ngStyle]="{
+        background: 'url(' + menu.image + ')',
+        backgroundSize: '100%',
+        backgroundRepeat: 'no repeat',
+        'padding-top': '2 em'
+      }"
+    >
+      <div class="desktop-background">
+        <div class="desktop-description">
+          <h1 class="desc">{{ menu.name }}</h1>
+          <p class="paragraph">{{ menu.description }}</p>
+        </div>
+        <div class="menu-items section-background">
+          <div *ngFor="let section of menu.sections">
+            <app-section [hasPermission]="hasPermission" [section]="section" [slug]="slug" id="{{ section.name }}">
+            </app-section>
+          </div>
+        </div>
       </div>
     </div>
     <app-footer></app-footer>
