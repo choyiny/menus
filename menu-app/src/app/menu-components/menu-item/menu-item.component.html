@@ -3,7 +3,7 @@
 <div class="menu-item">
   <div>
     <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-    <button *ngIf="editMode" (click)="sendRequest()">Send</button>
+    <button *ngIf="editMode" (click)="sendRequest()">Save</button>
   </div>
   <div class="img-description">
     <div *ngIf="item.image" class="logo" (click)="showImage()">
