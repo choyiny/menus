@@ -27,6 +27,7 @@ export class MenuService {
       description: menu.description,
       external_link: menu.external_link,
       link_name: menu.link_name,
+      image: menu.image,
     });
   }
 

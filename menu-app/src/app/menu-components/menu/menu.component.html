@@ -22,6 +22,7 @@
             <h1>{{ menu.name }}</h1>
           </div>
           <div *ngIf="editMode" class="overlay-container">
+            <input type="text" [(ngModel)]="menu.image" />
             <input type="text" [(ngModel)]="menu.name" />
           </div>
         </div>
