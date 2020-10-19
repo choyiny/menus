@@ -40,7 +40,7 @@ class MenuSchema(Schema):
     sections = fields.List(fields.Nested(SectionSchema))
     external_link = fields.Str(description="external link")
     link_name = fields.Str(description="name of link")
-    enable_trace = fields.Bool(description="Allow contact tracing")
+    enable_trace = fields.Bool(description="Enable contact tracing functionality for the restaurant")
     force_trace = fields.Bool(
         description="Force show the contact tracing popup when the user visits the menu app."
     )
@@ -64,7 +64,7 @@ class GetMenuSchema(Schema):
         description="external link", example="https://mydeliverysite.com"
     )
     link_name = fields.Str(description="name of link")
-    enable_trace = fields.Bool(description="Allow contact tracing")
+    enable_trace = fields.Bool(description="Enable contact tracing functionality for the restaurant")
     force_trace = fields.Bool(
         description="Force show the contact tracing popup when the user visits the menu app."
     )
