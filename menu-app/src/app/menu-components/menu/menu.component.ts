@@ -1,9 +1,11 @@
-import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { MenuInterface } from '../../interfaces/menus-interface';
+import { Component, HostListener, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
+import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
+import { TimeInterface } from '../../interfaces/time-interface';
 
 @Component({
   selector: 'app-menu',
@@ -24,7 +26,7 @@ export class MenuComponent implements OnInit {
   editMode: boolean;
   slug: string;
   hasPermission: boolean;
-
+  @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   constructor(
     private menuservice: MenuService,
     private route: ActivatedRoute,
@@ -47,6 +49,19 @@ export class MenuComponent implements OnInit {
   getMenu(id: string): void {
     this.menuservice.getMenu(id).subscribe((menu) => {
       this.menu = menu;
+      if (this.sameDay()) {
+        return;
+      }
+      if (this.menu.force_trace) {
+        this.covid.open();
+        return;
+      }
+      this.route.queryParams.subscribe((params) => {
+        const trace: boolean = params.trace === 'true';
+        if (trace && this.menu.enable_trace) {
+          this.covid.open();
+        }
+      });
     });
   }
 
@@ -82,5 +97,22 @@ export class MenuComponent implements OnInit {
 
   edit(): void {
     this.editMode = true;
+  }
+
+  sameDay(): boolean {
+    if (localStorage.getItem('time_in')) {
+      const timeIn: TimeInterface = JSON.parse(localStorage.getItem('time_in'));
+      const date = new Date(timeIn.time_in);
+      const today = new Date();
+      if (
+        today.getDay() === date.getDay() &&
+        today.getMonth() === date.getMonth() &&
+        today.getFullYear() === date.getFullYear()
+      ) {
+        return true;
+      }
+    } else {
+      return false;
+    }
   }
 }

@@ -1,0 +1,79 @@
+.modal-container {
+  background: white;
+  border-radius: 10px;
+  margin-top: 0;
+}
+
+.modal-header {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.form-body {
+  opacity: 0.75;
+  border-bottom: rgba(196, 208, 217, 0.5) solid 1px;
+  margin-bottom: 10px;
+}
+
+.customer-form-body {
+  margin-bottom: 20px;
+}
+
+.paragraph {
+  font-size: 14px;
+  color: #1a1824;
+  font-weight: normal;
+}
+
+.customer-paragraph {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.modal-check {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.tracing {
+  border-radius: 10px;
+  border: solid 1px #e2e2e2;
+  background-color: #f8f8f9;
+  margin-top: 15px;
+  width: 100%;
+  color: #000000;
+  height: 45px;
+}
+
+.disclaimer {
+  font-size: 10px;
+}
+
+.submit-button {
+  width: 100%;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  font-size: 21px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 15px;
+}
+
+.content {
+  margin: 0px 20px 20px 20px;
+}
+
+.close-modal {
+  width: 40px;
+  height: 40px;
+}
+
+.custom-control-label:before {
+  background-color: red;
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+}

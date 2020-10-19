@@ -35,6 +35,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { QuillModule } from 'ngx-quill';
 import { AngularFireModule } from '@angular/fire';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
+import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { DashboardComponent } from './auth-components/dashboard/dashboard.compon
     CreateComponent,
     AdminDashboardComponent,
     MenuDashboardComponent,
+    CovidModalComponent,
   ],
   imports: [
     BrowserModule,
