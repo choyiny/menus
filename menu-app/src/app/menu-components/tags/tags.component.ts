@@ -11,6 +11,7 @@ import { TagDisplay } from '../../interfaces/tag-display';
 })
 export class TagsComponent implements OnInit {
   @Input() tag: TagInterface;
+  @Input() hasPermission: boolean;
   tagDisplay: TagDisplay;
   editable = false;
   @Output() outputTagText = new EventEmitter<string>();
