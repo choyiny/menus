@@ -34,12 +34,7 @@
     </div>
   </div>
   <span>
-    <app-tags
-      *ngFor="let tag of item.tags; let i = index"
-      [tag]="tag"
-      [editable]="editable"
-      (outputTagText)="updateTags($event, i)"
-    >
+    <app-tags *ngFor="let tag of item.tags; let i = index" [tag]="tag" (outputTagText)="updateTags($event, i)">
     </app-tags>
     <button (click)="addTag()">Add tag</button>
   </span>

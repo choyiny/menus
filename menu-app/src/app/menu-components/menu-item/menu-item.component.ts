@@ -75,7 +75,11 @@ export class MenuItemComponent implements OnInit {
   }
 
   updateTags(newValue, index): void {
-    this.item.tags[index] = { text: newValue, icon: 'no-icon' };
-    this.editable = false;
+    if (newValue) {
+      this.item.tags[index] = { text: newValue, icon: 'no-icon' };
+      this.editable = false;
+    } else {
+      this.item.tags.splice(index);
+    }
   }
 }
