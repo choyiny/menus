@@ -308,6 +308,9 @@ class ItemMenuResource(MenusBaseResource):
                 if "description" in kwargs:
                     item.description = kwargs["description"]
 
+                if 'tags' in kwargs:
+                    item.tags = kwargs['tags']
+
                 menu.save()
                 return item
 
