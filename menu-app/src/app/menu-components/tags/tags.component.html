@@ -1,6 +1,11 @@
 <div class="tag" *ngIf="tagDisplay" [style.background-color]="tagDisplay.backgroundColor">
-  <span *ngFor="let icon of tagDisplay.icons">
-    <fa-icon [icon]="icon"></fa-icon>
-  </span>
-  {{ tagDisplay.text }}
+  <div *ngIf="!editable">
+    <span *ngFor="let icon of tagDisplay.icons">
+      <fa-icon [icon]="icon"></fa-icon>
+    </span>
+    {{ tag.text }}
+  </div>
+  <button *ngIf="!editable">Edit</button>
+  <input [(ngModel)]="tag.text" *ngIf="editable" (change)="(tag.text)" />
+  <button *ngIf="editable" (click)="onClick()">Save</button>
 </div>
