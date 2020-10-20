@@ -4,7 +4,6 @@
 * {
   margin: 0;
   font-family: Poppins;
-  font-weight: 500;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
@@ -13,7 +12,18 @@
 
 .ql-editor {
   padding: 0 0 0 0;
-  font-weight: 300;
+
+  & p {
+    font-weight: 100;
+  }
+
+  & em {
+    font-style: italic;
+  }
+
+  & strong {
+    font-weight: 700;
+  }
 }
 
 .modal-content {
