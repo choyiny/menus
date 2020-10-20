@@ -6,6 +6,6 @@
     {{ tag.text }}
   </div>
   <button *ngIf="!editable" (click)="edit()">Edit</button>
-  <input [(ngModel)]="tag.text" *ngIf="editable" (change)="(tag.text)" />
+  <input class="edit" [(ngModel)]="tag.text" *ngIf="editable" (change)="(tag.text)" />
   <button *ngIf="editable" (click)="onClick()">Save</button>
 </div>
