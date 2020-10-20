@@ -22,11 +22,10 @@
         <div class="bio">
           <quill-view-html
             *ngIf="!editMode"
-            [style]="descriptionStyle"
             [content]="injectHeaderStyle(menu.description)"
             theme="snow"
           ></quill-view-html>
-          <quill-editor *ngIf="editMode" [styles]="descriptionStyle" [(ngModel)]="menu.description"></quill-editor>
+          <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>
         </div>
       </div>
     </div>
@@ -53,7 +52,14 @@
       <div class="desktop-background">
         <div class="desktop-description">
           <h1 class="desc">{{ menu.name }}</h1>
-          <p class="paragraph">{{ menu.description }}</p>
+          <div>
+            <quill-view-html
+              *ngIf="!editMode"
+              [content]="injectHeaderStyle(menu.description)"
+              theme="snow"
+            ></quill-view-html>
+            <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>
+          </div>
         </div>
         <div class="menu-items section-background">
           <div *ngFor="let section of menu.sections">
