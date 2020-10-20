@@ -20,14 +20,12 @@
           </div>
         </div>
         <div class="bio">
-          <div *ngIf="!editMode">
-            <p class="description">{{ menu.description }}</p>
-            <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
-          </div>
-          <div *ngIf="editMode">
-            <input type="text" [(ngModel)]="menu.description" />
-            <input *ngIf="this.menu.external_link" type="text" [(ngModel)]="menu.link_name" />
-          </div>
+          <quill-view-html
+            *ngIf="!editMode"
+            [content]="injectHeaderStyle(menu.description)"
+            theme="snow"
+          ></quill-view-html>
+          <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>
         </div>
       </div>
     </div>
@@ -54,7 +52,14 @@
       <div class="desktop-background">
         <div class="desktop-description">
           <h1 class="desc">{{ menu.name }}</h1>
-          <p class="paragraph">{{ menu.description }}</p>
+          <div>
+            <quill-view-html
+              *ngIf="!editMode"
+              [content]="injectHeaderStyle(menu.description)"
+              theme="snow"
+            ></quill-view-html>
+            <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>
+          </div>
         </div>
         <div class="menu-items section-background">
           <div *ngFor="let section of menu.sections">

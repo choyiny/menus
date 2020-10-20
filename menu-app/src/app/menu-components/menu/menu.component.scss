@@ -17,7 +17,7 @@
   .bio {
     border-radius: 20px 20px 0 0;
     background: #ffffff;
-    padding: 20px 0;
+    padding: 20px 0px 0px 20px;
     .description {
       margin-left: 20px;
       font-weight: 300;
@@ -137,11 +137,6 @@
     font-weight: 500;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
-  }
-  .paragraph {
-    font-size: 14px;
-    color: #8c8b91;
-    font-weight: 300;
   }
 }
 
