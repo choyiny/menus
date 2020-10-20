@@ -59,6 +59,14 @@ export class TagService {
   constructor() {}
 
   getTag(tag: string): TagDisplay {
-    return this.tags[tag];
+    if (this.tags[tag] === undefined) {
+      return {
+        text: tag,
+        icons: [],
+        backgroundColor: 'black',
+      };
+    } else {
+      return this.tags[tag];
+    }
   }
 }
