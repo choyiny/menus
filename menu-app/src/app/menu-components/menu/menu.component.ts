@@ -26,6 +26,7 @@ export class MenuComponent implements OnInit {
   editMode: boolean;
   slug: string;
   hasPermission: boolean;
+
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   constructor(
     private menuservice: MenuService,
@@ -97,6 +98,10 @@ export class MenuComponent implements OnInit {
 
   edit(): void {
     this.editMode = true;
+  }
+
+  injectHeaderStyle(header: string): string {
+    return `<h1>${header}</h1>`;
   }
 
   sameDay(): boolean {

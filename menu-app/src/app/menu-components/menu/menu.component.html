@@ -20,14 +20,13 @@
           </div>
         </div>
         <div class="bio">
-          <div *ngIf="!editMode">
-            <p class="description">{{ menu.description }}</p>
-            <a class="link" href="{{ menu.external_link }}" target="_blank">{{ menu.link_name }}</a>
-          </div>
-          <div *ngIf="editMode">
-            <input type="text" [(ngModel)]="menu.description" />
-            <input *ngIf="this.menu.external_link" type="text" [(ngModel)]="menu.link_name" />
-          </div>
+          <quill-view-html
+            *ngIf="!editMode"
+            [style]="descriptionStyle"
+            [content]="injectHeaderStyle(menu.description)"
+            theme="snow"
+          ></quill-view-html>
+          <quill-editor *ngIf="editMode" [styles]="descriptionStyle" [(ngModel)]="menu.description"></quill-editor>
         </div>
       </div>
     </div>
