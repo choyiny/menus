@@ -3,7 +3,7 @@
     <span *ngFor="let icon of tagDisplay.icons">
       <fa-icon [icon]="icon"></fa-icon>
     </span>
-    {{ tag.text }}
+    {{ tagDisplay.text }}
   </div>
   <button *ngIf="!editable" (click)="edit()">Edit</button>
   <input class="edit" [(ngModel)]="tag.text" *ngIf="editable" (change)="(tag.text)" />
