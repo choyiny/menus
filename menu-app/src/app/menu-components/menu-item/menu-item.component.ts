@@ -70,7 +70,7 @@ export class MenuItemComponent implements OnInit {
     if (newValue) {
       this.item.tags[index] = { text: newValue, icon: 'no-icon' };
     } else {
-      this.item.tags.splice(index);
+      this.item.tags.splice(index, 1);
     }
     this.sendRequest();
   }
