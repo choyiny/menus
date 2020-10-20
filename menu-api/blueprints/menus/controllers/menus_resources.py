@@ -134,7 +134,7 @@ class MenuResource(MenusBaseResource):
 
         return menu.sectionized_menu()
 
-    @marshal_with(MenuSchema)
+    @marshal_with(GetMenuSchema)
     @use_kwargs(MenuSchema)
     @firebase_login_required
     def patch(self, **kwargs):
