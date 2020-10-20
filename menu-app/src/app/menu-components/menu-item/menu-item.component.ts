@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
-import { AuthService } from '../../services/auth.service';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
@@ -18,14 +17,10 @@ export class MenuItemComponent implements OnInit {
   editMode: boolean;
   @Input() slug: string;
   @Input() hasPermission: boolean;
-  editableTags: TagInterface[];
-  editable = false;
 
-  constructor(private menuService: MenuService, private auth: AuthService) {}
+  constructor(private menuService: MenuService) {}
 
-  ngOnInit(): void {
-    this.editableTags = this.item.tags;
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     const dataUrl = this.imgForm.file;
@@ -68,18 +63,15 @@ export class MenuItemComponent implements OnInit {
       icon: 'no-icon',
     };
     this.item.tags.push(newTag);
-  }
-
-  editTag(): void {
-    this.editable = true;
+    this.sendRequest();
   }
 
   updateTags(newValue, index): void {
     if (newValue) {
       this.item.tags[index] = { text: newValue, icon: 'no-icon' };
-      this.editable = false;
     } else {
       this.item.tags.splice(index);
     }
+    this.sendRequest();
   }
 }
