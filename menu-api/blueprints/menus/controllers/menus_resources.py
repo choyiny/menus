@@ -14,7 +14,7 @@ from helpers import ErrorResponseSchema, upload_image
 from ..helpers import csv_helper
 from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
-from ..documents import Menu, Item, Section
+from ..documents import Menu, Item, Section, Tag
 from ..schemas import (
     MenuSchema,
     GetMenuSchema,
@@ -309,7 +309,7 @@ class ItemMenuResource(MenusBaseResource):
                     item.description = kwargs["description"]
 
                 if 'tags' in kwargs:
-                    item.tags = kwargs['tags']
+                    item.tags = [Tag(**tag) for tag in kwargs['tags']]
 
                 menu.save()
                 return item
