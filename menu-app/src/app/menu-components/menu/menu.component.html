@@ -65,7 +65,13 @@
         </div>
         <div class="menu-items section-background">
           <div *ngFor="let section of menu.sections">
-            <app-section [hasPermission]="hasPermission" [section]="section" [slug]="slug" id="{{ section.name }}">
+            <app-section
+              [rearrangeMode]="true"
+              [hasPermission]="hasPermission"
+              [section]="section"
+              [slug]="slug"
+              id="{{ section.name }}"
+            >
             </app-section>
           </div>
         </div>
