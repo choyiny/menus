@@ -18,16 +18,14 @@
     [cdkDropListData]="section.menu_items"
     (cdkDropListDropped)="drop($event)"
   >
-    <div>
-      <app-menu-item
-        cdkDrag
-        *ngFor="let item of section.menu_items"
-        [item]="item"
-        class="col-md-4 col-sm-6 col-12"
-        [slug]="slug"
-        [hasPermission]="hasPermission"
-      ></app-menu-item>
-    </div>
+    <app-menu-item
+      cdkDrag
+      *ngFor="let item of section.menu_items"
+      [item]="item"
+      class="col-md-4 col-sm-6 col-12"
+      [slug]="slug"
+      [hasPermission]="hasPermission"
+    ></app-menu-item>
   </div>
 </div>
 <div *ngIf="rearrangeMode" class="rearrange">

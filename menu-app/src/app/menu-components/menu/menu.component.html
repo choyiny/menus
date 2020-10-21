@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="menu-items section-background">
-          <div class="row" cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
+          <div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
             <div class="section-box">
               <app-section
                 cdkDrag
