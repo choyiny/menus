@@ -33,8 +33,15 @@
       </div>
     </div>
   </div>
-  <span *ngFor="let tag of item.tags">
-    <app-tags [tag]="tag"></app-tags>
+  <span>
+    <app-tags
+      *ngFor="let tag of item.tags; let i = index"
+      [tag]="tag"
+      [hasPermission]="hasPermission"
+      (outputTagText)="updateTags($event, i)"
+    >
+    </app-tags>
+    <button (click)="addTag()" *ngIf="hasPermission">Add tag</button>
   </span>
   <div *ngIf="editMode" class="form">
     <button (click)="cropImage()">Add image</button>

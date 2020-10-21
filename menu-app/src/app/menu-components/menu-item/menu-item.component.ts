@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
-import { AuthService } from '../../services/auth.service';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
+import { TagInterface } from '../../interfaces/tag-interface';
 
 @Component({
   selector: 'app-menu-item',
@@ -18,7 +18,7 @@ export class MenuItemComponent implements OnInit {
   @Input() slug: string;
   @Input() hasPermission: boolean;
 
-  constructor(private menuService: MenuService, private auth: AuthService) {}
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {}
 
@@ -55,5 +55,23 @@ export class MenuItemComponent implements OnInit {
 
   edit(): void {
     this.editMode = true;
+  }
+
+  addTag(): void {
+    const newTag: TagInterface = {
+      text: 'New tag',
+      icon: 'no-icon',
+    };
+    this.item.tags.push(newTag);
+    this.sendRequest();
+  }
+
+  updateTags(newValue, index): void {
+    if (newValue) {
+      this.item.tags[index] = { text: newValue, icon: 'no-icon' };
+    } else {
+      this.item.tags.splice(index, 1);
+    }
+    this.sendRequest();
   }
 }
