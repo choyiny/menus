@@ -10,7 +10,7 @@ from PIL import Image
 from marshmallow import Schema, fields
 
 from auth.decorators import firebase_login_required
-from helpers import ErrorResponseSchema, upload_image
+from helpers import ErrorResponseSchema, upload_image, delete_file
 from ..helpers import csv_helper
 from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
@@ -270,6 +270,15 @@ class ImageMenuResource(MenusBaseResource):
                 item.image = upload_image(out_img)
                 menu.save()
                 return item.image
+        return {'description': 'item not found'}, 404
+
+    @firebase_login_required
+    def delete(self, slug, item_id):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        menu = Menu.objects(slug=slug)
 
 
 class SectionMenuResource(MenusBaseResource):
