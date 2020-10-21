@@ -92,7 +92,9 @@ export class MenuComponent implements OnInit {
   }
 
   sendRequest(): void {
-    this.menuservice.editMenu(this.slug, this.menu).subscribe((menu) => (this.menu = menu));
+    this.menuservice.editMenu(this.slug, this.menu).subscribe((menu) => {
+      this.menu = menu;
+    });
     this.editMode = false;
   }
 

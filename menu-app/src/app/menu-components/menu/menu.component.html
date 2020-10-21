@@ -51,8 +51,10 @@
     >
       <div class="desktop-background">
         <div class="desktop-description">
+          <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
+          <button *ngIf="editMode" (click)="sendRequest()">Save</button>
           <h1 class="desc">{{ menu.name }}</h1>
-          <div>
+          <div class="quill-view">
             <quill-view-html
               *ngIf="!editMode"
               [content]="injectHeaderStyle(menu.description)"
