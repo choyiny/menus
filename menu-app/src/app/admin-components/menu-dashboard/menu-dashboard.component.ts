@@ -40,6 +40,12 @@ export class MenuDashboardComponent implements OnInit {
     this.menuService.uploadCsv(this.menuInfo.slug, formData).subscribe((menu) => {});
   }
 
+  appendCsv(): void {
+    const formData = new FormData();
+    formData.append('file', this.file);
+    this.menuService.appendCsv(this.menuInfo.slug, formData).subscribe((menu) => {});
+  }
+
   deleteMenu(): void {
     this.menuService.deleteMenu(this.menuInfo.slug).subscribe((menu) => {});
   }

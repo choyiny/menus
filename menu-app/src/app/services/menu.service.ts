@@ -66,6 +66,12 @@ export class MenuService {
     console.log(formData);
     return this.http.post<MenuInterface>(url, formData);
   }
+
+  appendCsv(slug, formData): Observable<MenuInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/import`;
+    console.log(formData);
+    return this.http.patch<MenuInterface>(url, formData);
+  }
   generateQR(query): Observable<Blob> {
     const url = `${environment.settings.endpoint}/menus/generate`;
     return this.http.get(url, {
