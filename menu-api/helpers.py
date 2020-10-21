@@ -25,3 +25,7 @@ def upload_image(file):
         ContentType="image/png",
     )
     return f"https://{config.S3_BUCKET_NAME}.s3.{config.AWS_REGION}.amazonaws.com/{filename}"
+
+
+def delete_file(file_name):
+    s3.delete_object(Bucket=config.S3_BUCKET_NAME, Key=f"media/{file_name}")
