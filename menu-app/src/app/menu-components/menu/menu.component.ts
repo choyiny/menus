@@ -6,6 +6,8 @@ import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { TimeInterface } from '../../interfaces/time-interface';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { SectionInterface } from '../../interfaces/section-interface';
 
 @Component({
   selector: 'app-menu',
@@ -104,6 +106,19 @@ export class MenuComponent implements OnInit {
 
   injectHeaderStyle(header: string): string {
     return `<h1>${header}</h1>`;
+  }
+
+  drop(event: CdkDragDrop<SectionInterface[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 
   sameDay(): boolean {

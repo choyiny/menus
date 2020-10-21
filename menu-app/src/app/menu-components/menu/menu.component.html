@@ -64,15 +64,19 @@
           </div>
         </div>
         <div class="menu-items section-background">
-          <div *ngFor="let section of menu.sections">
-            <app-section
-              [rearrangeMode]="true"
-              [hasPermission]="hasPermission"
-              [section]="section"
-              [slug]="slug"
-              id="{{ section.name }}"
-            >
-            </app-section>
+          <div class="row" cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
+            <div class="section-box">
+              <app-section
+                cdkDrag
+                *ngFor="let section of menu.sections"
+                [rearrangeMode]="true"
+                [hasPermission]="hasPermission"
+                [section]="section"
+                [slug]="slug"
+                id="{{ section.name }}"
+              >
+              </app-section>
+            </div>
           </div>
         </div>
       </div>
