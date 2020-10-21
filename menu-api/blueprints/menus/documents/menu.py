@@ -114,7 +114,7 @@ class Menu(Document):
         for section in self.sections:
             sectionized.append(
                 {
-                    "_id": section_to_items[section._id],
+                    "_id": section._id,
                     "name": id_to_section[section._id].name,
                     "menu_items": section_to_items[section._id],
                     "description": id_to_section[section._id].description,
