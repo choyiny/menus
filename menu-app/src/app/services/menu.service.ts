@@ -85,6 +85,11 @@ export class MenuService {
     });
   }
 
+  deleteImage(slug: string, itemId: string): Observable<MenuItemInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${itemId}/pictures/upload`;
+    return this.http.delete<MenuItemInterface>(url);
+  }
+
   cleanFields(body: object): any {
     for (const key in body) {
       if (body[key] === null) {
