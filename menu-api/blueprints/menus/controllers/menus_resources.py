@@ -273,6 +273,7 @@ class ImageMenuResource(MenusBaseResource):
         return {'description': 'item not found'}, 404
 
     @firebase_login_required
+    @marshal_with(ItemSchema)
     def delete(self, slug, item_id):
 
         if g.user is None or not g.user.has_permission(slug):
@@ -284,6 +285,7 @@ class ImageMenuResource(MenusBaseResource):
             if item._id == item_id:
                 delete_file(item.image)
                 item.image = None
+                menu.save()
                 return item
 
         return {'description': 'Item not found'}
