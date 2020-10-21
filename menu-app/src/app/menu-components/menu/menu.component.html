@@ -10,6 +10,8 @@
       >
         <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
         <button *ngIf="editMode" (click)="sendRequest()">Save</button>
+        <button *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">Rearrange Sections</button>
+        <button *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
         <div class="card-overlay">
           <div *ngIf="!editMode" class="overlay-container">
             <h1>{{ menu.name }}</h1>
@@ -69,7 +71,8 @@
               <app-section
                 cdkDrag
                 *ngFor="let section of menu.sections"
-                [rearrangeMode]="true"
+                [rearrangeMode]="rearrangeMode"
+                [cdkDragDisabled]="!rearrangeMode"
                 [hasPermission]="hasPermission"
                 [section]="section"
                 [slug]="slug"
