@@ -60,7 +60,7 @@ class AllMenuResource(MenusBaseResource):
         page = args["page"]
         menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit : page * limit]}
+        return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -78,6 +78,13 @@ class ImportMenuResource(MenusBaseResource):
             return {"description": "Menu not found."}, 404
 
         file_str = args["file"].read()
+        menu_items = self.read(file_str)
+        menu.menu_items = menu_items
+        menu.sections = [self.all_sections[section] for section in self.all_sections]
+        menu.save()
+        return menu.sectionized_menu()
+
+    def read(self, file_str):
         reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
         menu_items = []
         for row in reader:
@@ -94,10 +101,7 @@ class ImportMenuResource(MenusBaseResource):
                     image=None,
                 )
             )
-        menu.menu_items = menu_items
-        menu.sections = [self.all_sections[section] for section in self.all_sections]
-        menu.save()
-        return menu.sectionized_menu()
+        return menu_items
 
     def get_sections(self, row):
         section_list = csv_helper.parse(row["Sections"])
@@ -117,11 +121,31 @@ class ImportMenuResource(MenusBaseResource):
             if self.all_sections[section_list[i]].image == "":
                 self.all_sections[section_list[i]].image = None
 
+    @marshal_with(GetMenuSchema)
+    @use_args(file_args, location="files")
+    @firebase_login_required
+    def patch(self, args, slug):
+        """Append new section items """
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+
+        file_str = args["file"].read()
+        menu_items = self.read(file_str)
+        menu.menu_items = menu.menu_items + menu_items
+        menu.sections = menu.sections + [self.all_sections[section] for section in self.all_sections]
+        menu.save()
+        return menu.sectionized_menu()
+
     def __init__(self):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
