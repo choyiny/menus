@@ -24,7 +24,7 @@ resources = [
         ImageMenuResource,
         "menus/<string:slug>/items/<string:item_id>/pictures/upload",
         "Image",
-        ["POST"],
+        ["POST", "DELETE"],
     ),
     (
         SectionMenuResource,

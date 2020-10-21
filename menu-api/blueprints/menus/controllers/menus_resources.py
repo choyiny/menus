@@ -278,7 +278,15 @@ class ImageMenuResource(MenusBaseResource):
         if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
 
-        menu = Menu.objects(slug=slug)
+        menu = Menu.objects(slug=slug).first()
+
+        for item in menu.menu_items:
+            if item._id == item_id:
+                delete_file(item.image)
+                item.image = None
+                return item
+
+        return {'description': 'Item not found'}
 
 
 class SectionMenuResource(MenusBaseResource):
