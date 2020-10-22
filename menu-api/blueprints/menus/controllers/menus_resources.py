@@ -362,6 +362,7 @@ class ItemMenuResource(MenusBaseResource):
         return {"description": "Item not found"}, 404
 
     @firebase_login_required
+    @marshal_with(ItemSchema)
     def post(self, slug, section_id):
         """Create new menu-item"""
 
@@ -381,7 +382,8 @@ class ItemMenuResource(MenusBaseResource):
             name="",
             price="",
             tags=[],
-            sections=[section_id]
+            sections=[section_id],
+            description=""
         )
         menu.menu_items.append(item)
         menu.save()

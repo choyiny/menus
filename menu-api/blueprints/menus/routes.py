@@ -46,7 +46,7 @@ resources = [
     ),
     (
         ItemMenuResource,
-        "menus/<string:slug>/sections/<string:section_id/add_item",
+        "menus/<string:slug>/sections/<string:section_id>/add_item",
         "add_item",
         ["POST"]
     )
