@@ -379,11 +379,11 @@ class ItemMenuResource(MenusBaseResource):
 
         item = Item(
             _id=str(uuid.uuid4()),
-            name="",
-            price="",
+            name="New Menu Item",
+            price="Unknown",
             tags=[],
             sections=[section_id],
-            description=""
+            description="No description"
         )
         menu.menu_items.append(item)
         menu.save()
