@@ -346,9 +346,6 @@ class SectionMenuResource(MenusBaseResource):
 
         section = Section(
             _id=str(uuid.uuid4()),
-            name="New Section",
-            description="No description",
-            subtitle="No subtitle",
         )
         menu.sections.insert(index + 1, section)
         menu.save()
