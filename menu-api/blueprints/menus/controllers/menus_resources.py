@@ -60,7 +60,7 @@ class AllMenuResource(MenusBaseResource):
         page = args["page"]
         menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -147,7 +147,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -270,7 +270,7 @@ class ImageMenuResource(MenusBaseResource):
             item.image = upload_image(out_img)
             menu.save()
             return item.image
-        return {'description': 'item not found'}, 404
+        return {"description": "item not found"}, 404
 
     @firebase_login_required
     @marshal_with(ItemSchema)
@@ -288,7 +288,7 @@ class ImageMenuResource(MenusBaseResource):
             menu.save()
             return item
 
-        return {'description': 'Item not found'}
+        return {"description": "Item not found"}
 
 
 class SectionMenuResource(MenusBaseResource):
@@ -375,7 +375,7 @@ class ItemMenuResource(MenusBaseResource):
 
         section_ids = {section._id for section in menu.sections}
         if section_id not in section_ids:
-            return {'description': 'Invalid section'}, 404
+            return {"description": "Invalid section"}, 404
 
         item = Item(
             _id=str(uuid.uuid4()),
@@ -383,7 +383,7 @@ class ItemMenuResource(MenusBaseResource):
             price="Unknown",
             tags=[],
             sections=[section_id],
-            description="No description"
+            description="No description",
         )
         menu.menu_items.append(item)
         menu.save()
