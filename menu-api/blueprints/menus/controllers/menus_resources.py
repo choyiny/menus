@@ -60,7 +60,7 @@ class AllMenuResource(MenusBaseResource):
         page = args["page"]
         menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit : page * limit]}
+        return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -147,7 +147,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -292,6 +292,9 @@ class ImageMenuResource(MenusBaseResource):
 
 
 class SectionMenuResource(MenusBaseResource):
+    class NewSectionSchema(Schema):
+        index = fields.Int()
+
     @marshal_with(SectionItemSchema)
     @use_kwargs(SectionItemSchema)
     @firebase_login_required
@@ -325,6 +328,31 @@ class SectionMenuResource(MenusBaseResource):
                     if section._id == get_section["_id"]:
                         return get_section
         return {"description": "Section not found."}, 404
+
+    @firebase_login_required
+    @marshal_with(GetMenuSchema)
+    @use_kwargs(NewSectionSchema)
+    def post(self, slug, **kwargs):
+        """Create new menu-item"""
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        index = kwargs.get('index')
+
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+
+        section = Section(
+            _id=str(uuid.uuid4()),
+            name="New Section",
+            description="No description",
+            subtitle="No subtitle"
+        )
+        menu.sections.insert(index + 1, section)
+        menu.save()
+        return menu.sectionized_menu()
 
 
 class ItemMenuResource(MenusBaseResource):

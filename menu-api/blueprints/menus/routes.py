@@ -39,6 +39,12 @@ resources = [
         ["PATCH"],
     ),
     (
+      SectionMenuResource,
+      "menus/<string:slug>/sections/add_section",
+      "add_section",
+      ["POST"]
+    ),
+    (
         ItemMenuResource,
         "menus/<string:slug>/items/<string:item_id>/edit",
         "edit_item",
