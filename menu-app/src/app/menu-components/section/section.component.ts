@@ -3,6 +3,7 @@ import { SectionInterface } from '../../interfaces/section-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
+import { ScrollService } from '../../services/scroll.service';
 
 @Component({
   selector: 'app-section',
@@ -16,7 +17,7 @@ export class SectionComponent implements OnInit {
   @Input() hasPermission: boolean;
   @Input() rearrangeMode: boolean;
 
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService, private scrollService: ScrollService) {}
 
   ngOnInit(): void {}
 
@@ -48,6 +49,19 @@ export class SectionComponent implements OnInit {
   addMenuItem(): void {
     this.menuService.addMenuItem(this.slug, this.section._id).subscribe((item) => {
       this.section.menu_items.push(item);
+      const observer = new MutationObserver((mutations, self) => {
+        const newItem = document.getElementById(item._id);
+        if (newItem) {
+          this.scrollService.scrollToSection(item._id);
+          console.log(newItem.getAttribute('item'));
+          self.disconnect();
+          return;
+        }
+      });
+      observer.observe(document, {
+        childList: true,
+        subtree: true,
+      });
     });
   }
 }
