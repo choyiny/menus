@@ -60,7 +60,7 @@ class AllMenuResource(MenusBaseResource):
         page = args["page"]
         menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit : page * limit]}
+        return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -147,7 +147,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -360,3 +360,29 @@ class ItemMenuResource(MenusBaseResource):
                 return item
 
         return {"description": "Item not found"}, 404
+
+    @firebase_login_required
+    def post(self, slug, section_id):
+        """Create new menu-item"""
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+
+        section_ids = {section._id for section in menu.sections}
+        if section_id not in section_ids:
+            return {'description': 'Invalid section'}, 404
+
+        item = Item(
+            _id=str(uuid.uuid4()),
+            name="",
+            price="",
+            tags=[],
+            sections=[section_id]
+        )
+        menu.menu_items.append(item)
+        menu.save()
+        return item
