@@ -11,7 +11,6 @@ export class ScrollService {
     const headerOffset = document.getElementById('wrapper').offsetHeight;
     const elementPosition = element.offsetTop;
     const offsetPosition = elementPosition - headerOffset;
-    document.documentElement.scrollTop = offsetPosition;
-    document.body.scrollTop = offsetPosition;
+    window.scrollTo({ top: offsetPosition, left: 0, behavior: 'smooth' });
   }
 }
