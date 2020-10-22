@@ -12,7 +12,12 @@ from .controllers import (
 resources = [
     (MenusResource, "/menus/", "users", ["POST"]),
     (MenuResource, "/menus/<string:slug>", "user", ["GET", "PATCH", "DELETE"]),
-    (ImportMenuResource, "/menus/<string:slug>/items/import", "import", ["POST"]),
+    (
+        ImportMenuResource,
+        "/menus/<string:slug>/items/import",
+        "import",
+        ["POST", "PATCH"],
+    ),
     (AllMenuResource, "menus/all", "all", ["GET"]),
     (QRMenuResource, "menus/generate", "QR", ["GET"]),
     (
