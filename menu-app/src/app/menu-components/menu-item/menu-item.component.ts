@@ -74,4 +74,10 @@ export class MenuItemComponent implements OnInit {
     }
     this.sendRequest();
   }
+
+  delete(): void {
+    this.menuService.deleteImage(this.slug, this.item._id).subscribe((item) => {
+      this.item = item;
+    });
+  }
 }

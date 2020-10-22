@@ -10,7 +10,7 @@ from PIL import Image
 from marshmallow import Schema, fields
 
 from auth.decorators import firebase_login_required
-from helpers import ErrorResponseSchema, upload_image
+from helpers import ErrorResponseSchema, upload_image, delete_file
 from ..helpers import csv_helper
 from ..helpers import qr_helper
 from .menus_base_resource import MenusBaseResource
@@ -250,7 +250,7 @@ class QRMenuResource(MenusBaseResource):
 class ImageMenuResource(MenusBaseResource):
     @use_args(file_args, location="files")
     @firebase_login_required
-    def post(self, args, slug, item_id):
+    def patch(self, args, slug, item_id):
         """Upload image to server"""
         if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
@@ -265,11 +265,30 @@ class ImageMenuResource(MenusBaseResource):
         loaded_image.save(out_img, "PNG")
         out_img.seek(0)
         menu = Menu.objects(slug=slug).first()
-        for item in menu.menu_items:
-            if item._id == item_id:
-                item.image = upload_image(out_img)
-                menu.save()
-                return item.image
+        item = menu.get_item(item_id)
+        if item:
+            item.image = upload_image(out_img)
+            menu.save()
+            return item.image
+        return {'description': 'item not found'}, 404
+
+    @firebase_login_required
+    @marshal_with(ItemSchema)
+    def delete(self, slug, item_id):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        menu = Menu.objects(slug=slug).first()
+
+        item = menu.get_item(item_id)
+        if item:
+            delete_file(item.image)
+            item.image = None
+            menu.save()
+            return item
+
+        return {'description': 'Item not found'}
 
 
 class SectionMenuResource(MenusBaseResource):
