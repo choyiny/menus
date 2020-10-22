@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Optional
 
 from mongoengine import (
     Document,
@@ -151,3 +152,9 @@ class Menu(Document):
             self.menu_items[ordered_list[index]] = menu_copy[
                 menu_dict[menu_items[index]]
             ]
+
+    def get_item(self, item_id) -> Optional[Item]:
+        for item in self.menu_items:
+            if item._id == item_id:
+                return item
+        return None

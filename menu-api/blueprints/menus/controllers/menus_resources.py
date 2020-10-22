@@ -265,11 +265,11 @@ class ImageMenuResource(MenusBaseResource):
         loaded_image.save(out_img, "PNG")
         out_img.seek(0)
         menu = Menu.objects(slug=slug).first()
-        for item in menu.menu_items:
-            if item._id == item_id:
-                item.image = upload_image(out_img)
-                menu.save()
-                return item.image
+        item = menu.get_item(item_id)
+        if item:
+            item.image = upload_image(out_img)
+            menu.save()
+            return item.image
         return {'description': 'item not found'}, 404
 
     @firebase_login_required
@@ -281,12 +281,12 @@ class ImageMenuResource(MenusBaseResource):
 
         menu = Menu.objects(slug=slug).first()
 
-        for item in menu.menu_items:
-            if item._id == item_id:
-                delete_file(item.image)
-                item.image = None
-                menu.save()
-                return item
+        item = menu.get_item(item_id)
+        if item:
+            delete_file(item.image)
+            item.image = None
+            menu.save()
+            return item
 
         return {'description': 'Item not found'}
 
