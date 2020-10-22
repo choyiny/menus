@@ -67,11 +67,14 @@
         </div>
         <div class="menu-items section-background">
           <div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
-            <div class="section-box" *ngFor="let section of menu.sections; let i = index">
+            <div
+              class="section-box"
+              *ngFor="let section of menu.sections; let i = index"
+              cdkDrag
+              [cdkDragDisabled]="!rearrangeMode"
+            >
               <app-section
-                cdkDrag
                 [rearrangeMode]="rearrangeMode"
-                [cdkDragDisabled]="!rearrangeMode"
                 [hasPermission]="hasPermission"
                 [section]="section"
                 [slug]="slug"
