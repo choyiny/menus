@@ -81,7 +81,7 @@
                 id="{{ section.name }}"
               >
               </app-section>
-              <button (click)="newSection(i)">Add new Section</button>
+              <button *ngIf="!rearrangeMode" (click)="newSection(i)">Add new Section</button>
             </div>
           </div>
         </div>
