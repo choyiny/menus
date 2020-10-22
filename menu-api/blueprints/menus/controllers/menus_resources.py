@@ -379,12 +379,9 @@ class ItemMenuResource(MenusBaseResource):
 
         item = Item(
             _id=str(uuid.uuid4()),
-            name="New Menu Item",
-            price="Unknown",
-            tags=[],
             sections=[section_id],
-            description="No description",
         )
+
         menu.menu_items.append(item)
-        menu.save()
+        # menu.save()
         return item
