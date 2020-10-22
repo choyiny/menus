@@ -53,7 +53,6 @@ export class SectionComponent implements OnInit {
         const newItem = document.getElementById(item._id);
         if (newItem) {
           this.scrollService.scrollToSection(item._id);
-          console.log(newItem.getAttribute('item'));
           self.disconnect();
           return;
         }
