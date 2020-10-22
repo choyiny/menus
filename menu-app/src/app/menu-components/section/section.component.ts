@@ -44,4 +44,8 @@ export class SectionComponent implements OnInit {
   edit(): void {
     this.editMode = true;
   }
+
+  // addMenuItem(): void {
+  //
+  // }
 }
