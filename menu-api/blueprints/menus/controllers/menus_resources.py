@@ -47,7 +47,7 @@ class MenusResource(MenusBaseResource):
 @doc(description="""get all the menus from the database""")
 class AllMenuResource(MenusBaseResource):
     class GetAllMenusSchema(Schema):
-        menus = fields.List(fields.Nested(PaginationMenuSchema))
+        menus = fields.Str()
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
@@ -58,7 +58,7 @@ class AllMenuResource(MenusBaseResource):
 
         limit = args["limit"]
         page = args["page"]
-        menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
+        menus = [{"slug": menu.slug} for menu in Menu.objects()]
 
         return {"menus": menus[(page - 1) * limit : page * limit]}
 
