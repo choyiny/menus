@@ -2,7 +2,7 @@
   <div>
     <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
     <button *ngIf="editMode" (click)="sendRequest()">Save</button>
-    <button *ngIf="editMode">Add Menu Item</button>
+    <button *ngIf="editMode" (click)="addMenuItem()">Add Menu Item</button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
   <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />

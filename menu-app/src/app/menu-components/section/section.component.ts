@@ -45,7 +45,9 @@ export class SectionComponent implements OnInit {
     this.editMode = true;
   }
 
-  // addMenuItem(): void {
-  //
-  // }
+  addMenuItem(): void {
+    this.menuService.addMenuItem(this.slug, this.section._id).subscribe((item) => {
+      this.section.menu_items.push(item);
+    });
+  }
 }
