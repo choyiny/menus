@@ -14,6 +14,7 @@ export class SectionComponent implements OnInit {
   @Input() slug: string;
   editMode;
   @Input() hasPermission: boolean;
+  @Input() rearrangeMode: boolean;
 
   constructor(private menuService: MenuService) {}
 

@@ -111,14 +111,14 @@ class Menu(Document):
 
         # combine it with section data
         sectionized = []
-        for section_id, list_of_items in section_to_items.items():
+        for section in self.sections:
             sectionized.append(
                 {
-                    "_id": section_id,
-                    "name": id_to_section[section_id].name,
-                    "menu_items": list_of_items,
-                    "description": id_to_section[section_id].description,
-                    "subtitle": id_to_section[section_id].subtitle,
+                    "_id": section._id,
+                    "name": id_to_section[section._id].name,
+                    "menu_items": section_to_items[section._id],
+                    "description": id_to_section[section._id].description,
+                    "subtitle": id_to_section[section._id].subtitle,
                 }
             )
         return {

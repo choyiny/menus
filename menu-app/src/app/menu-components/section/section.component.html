@@ -1,4 +1,4 @@
-<div class="section">
+<div *ngIf="!rearrangeMode" class="section">
   <div>
     <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
     <button *ngIf="editMode" (click)="sendRequest()">Save</button>
@@ -27,4 +27,8 @@
       [hasPermission]="hasPermission"
     ></app-menu-item>
   </div>
+</div>
+<div *ngIf="rearrangeMode" class="rearrange">
+  <h1>{{ section.name }}</h1>
+  <quill-view-html [content]="section.description" theme="snow"></quill-view-html>
 </div>

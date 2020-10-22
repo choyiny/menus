@@ -10,6 +10,8 @@
       >
         <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
         <button *ngIf="editMode" (click)="sendRequest()">Save</button>
+        <button *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">Rearrange Sections</button>
+        <button *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
         <div class="card-overlay">
           <div *ngIf="!editMode" class="overlay-container">
             <h1>{{ menu.name }}</h1>
@@ -64,9 +66,20 @@
           </div>
         </div>
         <div class="menu-items section-background">
-          <div *ngFor="let section of menu.sections">
-            <app-section [hasPermission]="hasPermission" [section]="section" [slug]="slug" id="{{ section.name }}">
-            </app-section>
+          <div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
+            <div class="section-box">
+              <app-section
+                cdkDrag
+                *ngFor="let section of menu.sections"
+                [rearrangeMode]="rearrangeMode"
+                [cdkDragDisabled]="!rearrangeMode"
+                [hasPermission]="hasPermission"
+                [section]="section"
+                [slug]="slug"
+                id="{{ section.name }}"
+              >
+              </app-section>
+            </div>
           </div>
         </div>
       </div>

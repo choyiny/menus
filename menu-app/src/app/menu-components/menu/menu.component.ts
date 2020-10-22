@@ -6,6 +6,8 @@ import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { TimeInterface } from '../../interfaces/time-interface';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { SectionInterface } from '../../interfaces/section-interface';
 
 @Component({
   selector: 'app-menu',
@@ -23,13 +25,14 @@ export class MenuComponent implements OnInit {
   showImage = true;
   @Input() selectedSection: string;
   @Input() selectedImage: string;
+  rearrangeMode = false;
   editMode: boolean;
   slug: string;
   hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   constructor(
-    private menuservice: MenuService,
+    private menuService: MenuService,
     private route: ActivatedRoute,
     private authService: AuthService
   ) {}
@@ -48,7 +51,7 @@ export class MenuComponent implements OnInit {
   }
 
   getMenu(id: string): void {
-    this.menuservice.getMenu(id).subscribe((menu) => {
+    this.menuService.getMenu(id).subscribe((menu) => {
       this.menu = menu;
       if (this.sameDay()) {
         return;
@@ -92,7 +95,7 @@ export class MenuComponent implements OnInit {
   }
 
   sendRequest(): void {
-    this.menuservice.editMenu(this.slug, this.menu).subscribe((menu) => {
+    this.menuService.editMenu(this.slug, this.menu).subscribe((menu) => {
       this.menu = menu;
     });
     this.editMode = false;
@@ -104,6 +107,38 @@ export class MenuComponent implements OnInit {
 
   injectHeaderStyle(header: string): string {
     return `<h1>${header}</h1>`;
+  }
+
+  drop(event: CdkDragDrop<SectionInterface[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
+  rearrange(): void {
+    this.rearrangeMode = true;
+  }
+
+  saveSections(): void {
+    const sections = this.menu.sections.map((section) => {
+      return {
+        _id: section._id,
+        description: section.description,
+        name: section.name,
+        subtitle: section.subtitle,
+      };
+    });
+    this.menuService.rearrangeSections(this.slug, sections).subscribe((menu) => {
+      this.menu = menu;
+      this.rearrangeMode = false;
+    });
   }
 
   sameDay(): boolean {

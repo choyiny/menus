@@ -32,6 +32,11 @@ export class MenuService {
     return this.http.patch<MenuInterface>(url, body);
   }
 
+  rearrangeSections(slug, sections: SectionInterface[]): any {
+    const url = `${environment.settings.endpoint}/menus/${slug}`;
+    return this.http.patch<MenuInterface>(url, { sections });
+  }
+
   editSection(slug: string, section: SectionInterface): Observable<SectionInterface> {
     // Must sanitize quill fields
     section = this.cleanFields(section);
