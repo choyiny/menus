@@ -250,7 +250,7 @@ class QRMenuResource(MenusBaseResource):
 class ImageMenuResource(MenusBaseResource):
     @use_args(file_args, location="files")
     @firebase_login_required
-    def post(self, args, slug, item_id):
+    def patch(self, args, slug, item_id):
         """Upload image to server"""
         if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
