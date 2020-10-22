@@ -383,5 +383,5 @@ class ItemMenuResource(MenusBaseResource):
         )
 
         menu.menu_items.append(item)
-        # menu.save()
+        menu.save()
         return item
