@@ -16,7 +16,7 @@ export class MenuService {
   }
 
   uploadPhoto(slug: string, item: string, uploadForm): Observable<string> {
-    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item}/pictures/upload`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item}`;
     return this.http.post<string>(url, uploadForm);
   }
 
@@ -86,7 +86,7 @@ export class MenuService {
   }
 
   deleteImage(slug: string, itemId: string): Observable<MenuItemInterface> {
-    const url = `${environment.settings.endpoint}/menus/${slug}/items/${itemId}/pictures/upload`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${itemId}/pictures`;
     return this.http.delete<MenuItemInterface>(url);
   }
 

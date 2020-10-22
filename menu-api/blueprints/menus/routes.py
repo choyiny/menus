@@ -22,9 +22,15 @@ resources = [
     (QRMenuResource, "menus/generate", "QR", ["GET"]),
     (
         ImageMenuResource,
-        "menus/<string:slug>/items/<string:item_id>/pictures/upload",
+        "menus/<string:slug>/items/<string:item_id>",
         "Image",
-        ["POST", "DELETE"],
+        ["PATCH"],
+    ),
+    (
+        ImageMenuResource,
+        "menus/<string:slug>/items/<string:item_id>/picture",
+        "Delete",
+        ["DELETE"],
     ),
     (
         SectionMenuResource,
