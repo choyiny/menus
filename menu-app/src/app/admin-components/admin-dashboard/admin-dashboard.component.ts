@@ -21,8 +21,8 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRouter.queryParams.subscribe((params) => {
       if (params.limit && params.page) {
-        this.limit = Number(params.limit);
-        this.page = Number(params.page);
+        this.limit = +params.limit;
+        this.page = +params.page;
         this.getMenus();
       } else {
         this.visit({ limit: 5, page: 1 });
