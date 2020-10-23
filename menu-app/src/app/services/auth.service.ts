@@ -36,9 +36,7 @@ export class AuthService {
           map((user) => {
             localStorage.setItem('currentUser', JSON.stringify(user));
             // update subject
-            this.currentUserSubject = new BehaviorSubject<UserInterface>(
-              JSON.parse(localStorage.getItem('currentUser'))
-            );
+            this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
             return user;
           })
         );
