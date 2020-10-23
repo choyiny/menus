@@ -24,3 +24,14 @@ S3_BUCKET_NAME = "pickeasy-restaurant-images"
 
 # Firebase
 FIREBASE_CERT_NAME = "pickeasy-app-firebase-adminsdk-94cx4-03192a4733.json"
+
+CSV_FIELDS = {
+    'Name',
+    'Description',
+    'Price',
+    'Sections',
+    'Section Subtitle',
+    'Section Description',
+    'Tags',
+    'Section Image'
+}
