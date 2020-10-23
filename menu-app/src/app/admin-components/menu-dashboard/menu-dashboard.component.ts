@@ -63,15 +63,22 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   generateQr(): void {
-    this.menuService
-      .generateQR({
+    let body;
+    if (this.menu.enable_trace) {
+      body = {
+        url: `${this.baseUrl}/menu/${this.slug}?trace=true`,
+        name: this.menu.name,
+      };
+    } else {
+      body = {
         url: `${this.baseUrl}/menu/${this.slug}`,
         name: this.menu.name,
-      })
-      .subscribe((blob) => {
-        const fileName = `${this.menu.name}.${blob.type}`;
-        FileSaver.saveAs(blob, fileName);
-      });
+      };
+    }
+    this.menuService.generateQR(body).subscribe((blob) => {
+      const fileName = `${this.menu.name}.${blob.type}`;
+      FileSaver.saveAs(blob, fileName);
+    });
   }
 
   toggleContactTracing(): void {
@@ -80,7 +87,9 @@ export class MenuDashboardComponent implements OnInit {
 
   submitContactTracing(): void {
     const tracingForm = this.contactTracingForm.value;
-    this.tracingService.configureTracing(this.slug, tracingForm).subscribe((menu) => {});
+    this.tracingService.configureTracing(this.slug, tracingForm).subscribe((menu) => {
+      this.menu = menu;
+    });
     this.configureContactTracing = false;
   }
 }
