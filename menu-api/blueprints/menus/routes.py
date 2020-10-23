@@ -28,7 +28,7 @@ resources = [
     ),
     (
         SectionMenuResource,
-        "menus/<string:slug>/sections/<string:section_id>/edit",
+        "menus/<string:slug>/sections/<string:section_id>",
         "edit_section",
         ["PATCH"],
     ),
