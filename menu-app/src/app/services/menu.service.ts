@@ -98,4 +98,9 @@ export class MenuService {
     }
     return body;
   }
+
+  addMenuItem(slug: string, sectionId: string): Observable<MenuItemInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/sections/${sectionId}/add_item`;
+    return this.http.post<MenuItemInterface>(url, {});
+  }
 }

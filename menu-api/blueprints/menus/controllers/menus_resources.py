@@ -270,7 +270,7 @@ class ImageMenuResource(MenusBaseResource):
             item.image = upload_image(out_img)
             menu.save()
             return item.image
-        return {'description': 'item not found'}, 404
+        return {"description": "item not found"}, 404
 
     @firebase_login_required
     @marshal_with(ItemSchema)
@@ -288,7 +288,7 @@ class ImageMenuResource(MenusBaseResource):
             menu.save()
             return item
 
-        return {'description': 'Item not found'}
+        return {"description": "Item not found"}
 
 
 class SectionMenuResource(MenusBaseResource):
@@ -360,3 +360,28 @@ class ItemMenuResource(MenusBaseResource):
                 return item
 
         return {"description": "Item not found"}, 404
+
+    @firebase_login_required
+    @marshal_with(ItemSchema)
+    def post(self, slug, section_id):
+        """Create new menu-item"""
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {"description": "Menu not found."}, 404
+
+        section_ids = {section._id for section in menu.sections}
+        if section_id not in section_ids:
+            return {"description": "Invalid section"}, 404
+
+        item = Item(
+            _id=str(uuid.uuid4()),
+            sections=[section_id],
+        )
+
+        menu.menu_items.append(item)
+        menu.save()
+        return item

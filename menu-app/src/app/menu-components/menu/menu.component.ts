@@ -8,6 +8,7 @@ import { CovidModalComponent } from '../../util-components/covid-modal/covid-mod
 import { TimeInterface } from '../../interfaces/time-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SectionInterface } from '../../interfaces/section-interface';
+import { ScrollService } from '../../services/scroll.service';
 
 @Component({
   selector: 'app-menu',
@@ -34,7 +35,8 @@ export class MenuComponent implements OnInit {
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private scrollService: ScrollService
   ) {}
 
   ngOnInit(): void {
@@ -86,12 +88,7 @@ export class MenuComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-    const element = document.getElementById(id);
-    const headerOffset = document.getElementById('wrapper').offsetHeight;
-    const elementPosition = element.offsetTop;
-    const offsetPosition = elementPosition - headerOffset;
-    document.documentElement.scrollTop = offsetPosition;
-    document.body.scrollTop = offsetPosition;
+    this.scrollService.scrollToSection(id);
   }
 
   sendRequest(): void {

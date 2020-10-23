@@ -38,22 +38,22 @@ class Item(EmbeddedDocument):
     image = URLField()
     # image to this menu items
 
-    name = StringField(required=True)
+    name = StringField(required=True, default="No name")
     # the name of the item
 
-    price = StringField()
+    price = StringField(default="")
     # price of the item
 
-    tags = ListField(EmbeddedDocumentField(Tag))
+    tags = ListField(EmbeddedDocumentField(Tag), default=[])
     # a list of tags
 
     sections = ListField(StringField(required=True))
     # a list of sections this item is part of
 
-    description = StringField()
+    description = StringField(default="No description")
     # description of menu item
 
-    _id = StringField()
+    _id = StringField(default_factory=uuid.uuid4)
     # unique id of menu-item
 
 

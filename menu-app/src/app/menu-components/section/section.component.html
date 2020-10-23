@@ -2,6 +2,7 @@
   <div>
     <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
     <button *ngIf="editMode" (click)="sendRequest()">Save</button>
+    <button *ngIf="hasPermission" (click)="addMenuItem()">Add Menu Item</button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
   <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
@@ -21,6 +22,7 @@
     <app-menu-item
       cdkDrag
       *ngFor="let item of section.menu_items"
+      id="{{ item._id }}"
       [item]="item"
       class="col-md-4 col-sm-6 col-12"
       [slug]="slug"
