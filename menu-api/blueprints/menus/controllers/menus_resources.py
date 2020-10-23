@@ -23,7 +23,6 @@ from ..schemas import (
     qr_args,
     SectionItemSchema,
     ItemSchema,
-    PaginationMenuSchema,
 )
 
 
@@ -47,7 +46,7 @@ class MenusResource(MenusBaseResource):
 @doc(description="""get all the menus from the database""")
 class AllMenuResource(MenusBaseResource):
     class GetAllMenusSchema(Schema):
-        menus = fields.Str()
+        menus = fields.List(fields.Str())
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
@@ -58,7 +57,7 @@ class AllMenuResource(MenusBaseResource):
 
         limit = args["limit"]
         page = args["page"]
-        menus = [{"slug": menu.slug} for menu in Menu.objects()]
+        menus = [menu.slug for menu in Menu.objects()]
 
         return {"menus": menus[(page - 1) * limit : page * limit]}
 
