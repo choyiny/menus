@@ -401,10 +401,7 @@ class ItemMenuResource(MenusBaseResource):
         if section_id not in section_ids:
             return {"description": "Invalid section"}, 404
 
-        item = Item(
-            _id=str(uuid.uuid4()),
-            sections=[section_id],
-        )
+        item = Item(_id=str(uuid.uuid4()), sections=[section_id],)
 
         menu.menu_items.append(item)
         menu.save()

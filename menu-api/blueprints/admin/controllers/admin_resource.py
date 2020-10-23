@@ -9,7 +9,7 @@ from ..schemas import (
     PromoteUserSchema,
     UserSchema,
     CreateUserSchema,
-    ContactTracingSchema
+    ContactTracingSchema,
 )
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
@@ -68,7 +68,6 @@ class AdminUserResource(AdminBaseResource):
 
 
 class AdminTracingResource(AdminBaseResource):
-
     @marshal_with(GetMenuSchema)
     @use_kwargs(ContactTracingSchema)
     # @firebase_login_required
@@ -78,14 +77,14 @@ class AdminTracingResource(AdminBaseResource):
         #     return {"description": "You do not have permission"}, 401
         menu = Menu.objects(slug=slug).first()
         if menu is None:
-            return {'description': 'Menu not found'}
+            return {"description": "Menu not found"}
 
-        if 'enable_trace' in kwargs:
-            menu.enable_trace = kwargs.get('enable_trace')
-        if 'force_trace' in kwargs:
-            menu.force_trace = kwargs.get('force_trace')
-        if 'tracing_key' in kwargs:
-            menu.tracing_key = kwargs.get('tracing_key')
+        if "enable_trace" in kwargs:
+            menu.enable_trace = kwargs.get("enable_trace")
+        if "force_trace" in kwargs:
+            menu.force_trace = kwargs.get("force_trace")
+        if "tracing_key" in kwargs:
+            menu.tracing_key = kwargs.get("tracing_key")
 
         menu.save()
         return menu.sectionized_menu()
