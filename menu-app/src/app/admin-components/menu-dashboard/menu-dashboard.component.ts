@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 import * as FileSaver from 'file-saver';
 import { MenuInterface } from '../../interfaces/menus-interface';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-menu-dashboard',
@@ -13,19 +14,27 @@ export class MenuDashboardComponent implements OnInit {
   constructor(
     private router: Router,
     private menuService: MenuService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fb: FormBuilder
   ) {}
 
   menu: MenuInterface;
   file: File;
   baseUrl;
   slug: string;
+  configureContactTracing = false;
+  contactTracingForm: FormGroup;
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
     if (this.slug != null) {
       this.menuService.getMenu(this.slug).subscribe((menu) => {
         this.menu = menu;
+        this.contactTracingForm = this.fb.group({
+          enable_trace: [this.menu.enable_trace],
+          force_trace: [this.menu.force_trace],
+          tracing_key: [this.menu.tracing_key],
+        });
       });
     }
     this.baseUrl = window.location.origin;
@@ -61,5 +70,13 @@ export class MenuDashboardComponent implements OnInit {
         const fileName = `${this.menu.name}.${blob.type}`;
         FileSaver.saveAs(blob, fileName);
       });
+  }
+
+  toggleContactTracing(): void {
+    this.configureContactTracing = !this.configureContactTracing;
+  }
+
+  submitContactTracing(): void {
+    console.log(this.contactTracingForm.value);
   }
 }
