@@ -90,6 +90,12 @@ export class MenuService {
     return this.http.delete<MenuItemInterface>(url);
   }
 
+  newSection(slug: string, index: number): Observable<MenuInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/sections/add_section`;
+    console.log({ index });
+    return this.http.post<MenuInterface>(url, { index });
+  }
+
   cleanFields(body: object): any {
     for (const key in body) {
       if (body[key] === null) {

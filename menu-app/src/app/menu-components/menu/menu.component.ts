@@ -138,6 +138,12 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  newSection(index): void {
+    this.menuService.newSection(this.slug, index).subscribe((menu) => {
+      this.menu = menu;
+    });
+  }
+
   sameDay(): boolean {
     if (localStorage.getItem('time_in')) {
       const timeIn: TimeInterface = JSON.parse(localStorage.getItem('time_in'));
