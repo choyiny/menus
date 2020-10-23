@@ -21,6 +21,6 @@ class CreateUserSchema(Schema):
 
 
 class ContactTracingSchema(Schema):
-    enable_trace: fields.Bool()
-    force_trace: fields.Bool()
-    tracing_key: fields.Str()
+    enable_trace = fields.Bool()
+    force_trace = fields.Bool()
+    tracing_key = fields.Str()
