@@ -59,7 +59,7 @@ export class TagService {
     Vegetarian: {
       text: 'Vegetarian',
       icons: [faLeaf],
-      backgroundColor: 'black',
+      backgroundColor: '#18be18',
     },
   };
 
