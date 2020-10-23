@@ -2,14 +2,14 @@
   <h1>All Pickeasy Menus</h1>
   <span>
     <div>
-      <button [disabled]="page == 1" (click)="previousPage()">previous</button>
+      <button [disabled]="page == 1" (click)="visit({ limit: limit, page: page - 1 })">previous</button>
       <label>{{ page }}</label>
-      <button (click)="nextPage()">next</button>
+      <button (click)="visit({ limit: limit, page: page + 1 })">next</button>
     </div>
     <div>
-      <button [disabled]="limit == 5" (click)="lowerLimit()">-</button>
+      <button [disabled]="limit <= 5" (click)="visit({ limit: limit - 5, page: page })">-</button>
       <label>{{ limit }}</label>
-      <button (click)="addLimit()">+</button>
+      <button (click)="visit({ limit: limit + 5, page: page })">+</button>
     </div>
   </span>
   <p><a routerLink="/admin/create">Create new Menu!</a></p>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenusInterface } from '../../interfaces/menus-interface';
 import { MenuService } from '../../services/menu.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -9,33 +9,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  limit = 5;
-  page = 1;
+  limit: number;
+  page: number;
   menu: MenusInterface;
-  constructor(private menuService: MenuService, private router: Router) {}
+  constructor(
+    private menuService: MenuService,
+    private router: Router,
+    private activatedRouter: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.getMenus();
+    this.activatedRouter.queryParams.subscribe((params) => {
+      if (params.limit && params.page) {
+        this.limit = Number(params.limit);
+        this.page = Number(params.page);
+        this.getMenus();
+      } else {
+        this.visit({ limit: 5, page: 1 });
+      }
+    });
   }
 
-  nextPage(): void {
-    this.page += 1;
-    this.getMenus();
-  }
-
-  previousPage(): void {
-    this.page -= 1;
-    this.getMenus();
-  }
-
-  addLimit(): void {
-    this.limit += 5;
-    this.getMenus();
-  }
-
-  lowerLimit(): void {
-    this.limit -= 5;
-    this.getMenus();
+  visit(query): void {
+    this.router.navigate(['admin/menus'], { queryParams: query });
   }
 
   getMenus(): void {
