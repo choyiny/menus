@@ -23,13 +23,13 @@ resources = [
     (
         ImageMenuResource,
         "menus/<string:slug>/items/<string:item_id>/picture",
-        "Delete",
+        "picture",
         ["DELETE", "PATCH"],
     ),
     (
         SectionMenuResource,
         "menus/<string:slug>/sections/<string:section_id>",
-        "edit_section",
+        "section",
         ["PATCH"],
     ),
     (
@@ -41,7 +41,7 @@ resources = [
     (
         ItemMenuResource,
         "menus/<string:slug>/items/<string:item_id>",
-        "edit_item",
+        "menu_items",
         ["PATCH", "DELETE"],
     ),
     (

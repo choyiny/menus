@@ -423,9 +423,9 @@ class ItemMenuResource(MenusBaseResource):
         if item is None:
             return {'description': 'Item not found'}, 401
 
-        menu.menu_items.pop(item)
+        menu.menu_items.remove(item)
         menu.save()
-        for section in menu.sectionized_menu()['section']:
+        for section in menu.sectionized_menu()['sections']:
             if section['_id'] in item.sections:
                 return section
         return {'description': 'Section not found'}, 401
