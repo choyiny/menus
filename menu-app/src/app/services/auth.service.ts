@@ -24,10 +24,6 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public getCurrentUser(): Observable<UserInterface> {
-    return this.currentUser;
-  }
-
   public getUserIdToken(): any {
     return this.authFireBase.idToken;
   }
