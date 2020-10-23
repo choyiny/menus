@@ -23,9 +23,9 @@ class Tag(EmbeddedDocument):
 
 
 class Section(EmbeddedDocument):
-    name = StringField(required=True)
+    name = StringField(required=True, default="New Section")
     image = URLField()
-    description = StringField()
+    description = StringField(default="No description")
     subtitle = StringField()
     _id = StringField(required=True)
 
