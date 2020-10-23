@@ -70,11 +70,11 @@ class AdminUserResource(AdminBaseResource):
 class AdminTracingResource(AdminBaseResource):
     @marshal_with(GetMenuSchema)
     @use_kwargs(ContactTracingSchema)
-    # @firebase_login_required
+    @firebase_login_required
     def patch(self, slug, **kwargs):
         """Enable/disable contact tracing on menu"""
-        # if g.user is None or not g.user.is_admin:
-        #     return {"description": "You do not have permission"}, 401
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
         menu = Menu.objects(slug=slug).first()
         if menu is None:
             return {"description": "Menu not found"}
