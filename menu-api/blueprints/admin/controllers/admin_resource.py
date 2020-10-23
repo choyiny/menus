@@ -9,12 +9,15 @@ from ..schemas import (
     PromoteUserSchema,
     UserSchema,
     CreateUserSchema,
+    ContactTracingSchema
 )
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
     PhoneNumberAlreadyExistsError,
     EmailAlreadyExistsError,
 )
+from ...menus.documents import Menu
+from ...menus.schemas import GetMenuSchema
 
 
 class AdminUserResource(AdminBaseResource):
@@ -62,3 +65,26 @@ class AdminUserResource(AdminBaseResource):
         if slug not in user.menus:
             user.menus.append(slug)
         return user.save()
+
+
+class AdminTracingResource(AdminBaseResource):
+
+    @marshal_with()
+    @use_kwargs()
+    @firebase_login_required
+    def patch(self, slug, **kwargs):
+        """Enable/disable contact tracing on menu"""
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {'description': 'Menu not found'}
+
+        if 'enable_trace' in kwargs:
+            menu.enable_trace = kwargs.get('enable_trace')
+        if 'force_trace' in kwargs:
+            menu.force_trace = kwargs.get('force_trace')
+        if 'tracing_key' in menu:
+            menu.tracing_key = kwargs.get('tracing_key')
+
+        return menu.sectionized_menu()

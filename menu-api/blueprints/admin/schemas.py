@@ -18,3 +18,9 @@ class CreateUserSchema(Schema):
     password = fields.Str()
     display_name = fields.Str()
     photo_url = fields.Str()
+
+
+class ContactTracingSchema(Schema):
+    enable_trace: fields.Bool()
+    force_trace: fields.Bool()
+    tracing_key: fields.Str()
