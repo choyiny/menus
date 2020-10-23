@@ -29,6 +29,11 @@ class Section(EmbeddedDocument):
     subtitle = StringField()
     _id = StringField(required=True)
 
+    def __eq__(self, other):
+        if type(self) == type(other):
+            return self._id == other._id
+        return False
+
 
 class Item(EmbeddedDocument):
     """
@@ -55,6 +60,11 @@ class Item(EmbeddedDocument):
 
     _id = StringField(default_factory=uuid.uuid4)
     # unique id of menu-item
+
+    def __eq__(self, other):
+        if type(self) == type(other):
+            return self._id == other._id
+        return False
 
 
 class Menu(Document):
@@ -158,3 +168,8 @@ class Menu(Document):
             if item._id == item_id:
                 return item
         return None
+
+    def __eq__(self, other):
+        if type(self) == type(other):
+            return self._id == other._id
+        return False

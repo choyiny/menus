@@ -59,7 +59,7 @@ class AllMenuResource(MenusBaseResource):
         page = args["page"]
         menus = [menu.slug for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit : page * limit]}
+        return {"menus": menus[(page - 1) * limit: page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -146,7 +146,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(description="""Menu element related operations""", )
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -406,3 +406,26 @@ class ItemMenuResource(MenusBaseResource):
         menu.menu_items.append(item)
         menu.save()
         return item
+
+    @firebase_login_required
+    @marshal_with(SectionItemSchema)
+    def delete(self, slug, item_id):
+        """Delete menu item from menu"""
+
+        if g.user is None or not g.user.has_permission(slug):
+            return {"description": "You do not have permission"}, 401
+
+        menu = Menu.objects(slug=slug).first()
+        if menu is None:
+            return {'description': 'Menu not found'}, 401
+
+        item = menu.get_item(item_id)
+        if item is None:
+            return {'description': 'Item not found'}, 401
+
+        menu.menu_items.pop(item)
+        menu.save()
+        for section in menu.sectionized_menu()['section']:
+            if section['_id'] in item.sections:
+                return section
+        return {'description': 'Section not found'}, 401
