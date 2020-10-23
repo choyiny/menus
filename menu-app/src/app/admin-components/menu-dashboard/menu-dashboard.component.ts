@@ -4,6 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import * as FileSaver from 'file-saver';
 import { MenuInterface } from '../../interfaces/menus-interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TracingService } from '../../services/tracing.service';
 
 @Component({
   selector: 'app-menu-dashboard',
@@ -15,7 +16,8 @@ export class MenuDashboardComponent implements OnInit {
     private router: Router,
     private menuService: MenuService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tracingService: TracingService
   ) {}
 
   menu: MenuInterface;
@@ -77,6 +79,8 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   submitContactTracing(): void {
-    console.log(this.contactTracingForm.value);
+    const tracingForm = this.contactTracingForm.value;
+    this.tracingService.configureTracing(this.slug, tracingForm).subscribe((menu) => {});
+    this.configureContactTracing = false;
   }
 }
