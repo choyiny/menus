@@ -12,9 +12,9 @@ const routes: Routes = [
   { path: 'menu/:slug', component: MenuComponent },
   { path: '', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'admin/menu', component: MenuDashboardComponent, canActivate: [AdminGuard] },
+  { path: 'admin/menus/:slug', component: MenuDashboardComponent, canActivate: [AdminGuard] },
   { path: 'admin/create', component: CreateComponent, canActivate: [AdminGuard] },
-  { path: 'admin', component: Admin, canActivate: [AdminGuard] },
+  { path: 'admin/menus', component: Admin, canActivate: [AdminGuard] },
   { path: '**', redirectTo: '' },
 ];
 

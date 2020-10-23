@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MenuInterface, CreateInterface, PaginatedInterface } from '../interfaces/menus-interface';
+import { MenuInterface, CreateInterface, MenusInterface } from '../interfaces/menus-interface';
 import { SectionInterface } from '../interfaces/section-interface';
 import { MenuItemInterface } from '../interfaces/menu-item-interface';
 import { environment } from '../../environments/environment';
@@ -56,9 +56,9 @@ export class MenuService {
     return this.http.post<MenuInterface>(url, menuBody);
   }
 
-  getMenus(query): Observable<PaginatedInterface> {
+  getMenus(query): Observable<MenusInterface> {
     const url = `${environment.settings.endpoint}/menus/all`;
-    return this.http.get<PaginatedInterface>(url, { params: query });
+    return this.http.get<MenusInterface>(url, { params: query });
   }
 
   deleteMenu(slug): Observable<MenuInterface> {

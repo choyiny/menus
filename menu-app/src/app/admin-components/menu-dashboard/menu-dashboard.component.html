@@ -1,6 +1,6 @@
-<div *ngIf="menuInfo" class="col-md-6 offset-md-3 mt-5">
+<div *ngIf="menu" class="col-md-6 offset-md-3 mt-5">
   <div class="card">
-    <h4 class="card-header">{{ menuInfo.name + ' [' + menuInfo.slug + ']' }}</h4>
+    <h4 class="card-header">{{ menu.name + ' [' + slug + ']' }}</h4>
     <div class="card-body">
       <form>
         <div class="form-group">
@@ -13,12 +13,12 @@
       <div>
         <button type="button" class="btn btn-primary" (click)="generateQr()">Generate QR</button>
         <button type="button" class="btn btn-primary" (click)="deleteMenu()">Delete this menu</button>
-        <p><a [routerLink]="'/menu/' + menuInfo.slug">Visit Menu</a></p>
+        <p><a [routerLink]="'/menu/' + slug">Visit Menu</a></p>
       </div>
     </div>
   </div>
 </div>
-<div *ngIf="!menuInfo">
+<div *ngIf="!menu">
   <!--  Add page not found component in future-->
   <h1>Something went wrong!!</h1>
 </div>

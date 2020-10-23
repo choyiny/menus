@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(
       (user) => {
         if (user.is_admin) {
-          this.router.navigateByUrl('admin');
+          this.router.navigateByUrl('admin/menus');
         } else {
           this.router.navigateByUrl('dashboard');
         }

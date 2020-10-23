@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 import * as FileSaver from 'file-saver';
 import { MenuInterface } from '../../interfaces/menus-interface';
@@ -10,7 +10,11 @@ import { MenuInterface } from '../../interfaces/menus-interface';
   styleUrls: ['./menu-dashboard.component.scss'],
 })
 export class MenuDashboardComponent implements OnInit {
-  constructor(private router: Router, private menuService: MenuService) {}
+  constructor(
+    private router: Router,
+    private menuService: MenuService,
+    private route: ActivatedRoute
+  ) {}
 
   menu: MenuInterface;
   file: File;
@@ -18,6 +22,12 @@ export class MenuDashboardComponent implements OnInit {
   slug: string;
 
   ngOnInit(): void {
+    this.slug = this.route.snapshot.params.slug;
+    if (this.slug != null) {
+      this.menuService.getMenu(this.slug).subscribe((menu) => {
+        this.menu = menu;
+      });
+    }
     this.baseUrl = window.location.origin;
   }
 
