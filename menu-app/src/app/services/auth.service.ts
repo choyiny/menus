@@ -24,6 +24,10 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  public getCurrentUser(): Observable<UserInterface> {
+    return this.currentUser;
+  }
+
   public getUserIdToken(): any {
     return this.authFireBase.idToken;
   }
@@ -35,6 +39,10 @@ export class AuthService {
         return this.http.post<any>(`${environment.settings.endpoint}/auth/`, {}).pipe(
           map((user) => {
             localStorage.setItem('currentUser', JSON.stringify(user));
+            // update subject
+            this.currentUserSubject = new BehaviorSubject<UserInterface>(
+              JSON.parse(localStorage.getItem('currentUser'))
+            );
             return user;
           })
         );
