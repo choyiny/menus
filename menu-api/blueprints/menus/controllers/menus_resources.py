@@ -23,7 +23,6 @@ from ..schemas import (
     qr_args,
     SectionItemSchema,
     ItemSchema,
-    PaginationMenuSchema,
 )
 
 
@@ -47,7 +46,7 @@ class MenusResource(MenusBaseResource):
 @doc(description="""get all the menus from the database""")
 class AllMenuResource(MenusBaseResource):
     class GetAllMenusSchema(Schema):
-        menus = fields.List(fields.Nested(PaginationMenuSchema))
+        menus = fields.List(fields.Str())
 
     @marshal_with(GetAllMenusSchema)
     @use_args(pagination_args, location="querystring")
@@ -58,7 +57,7 @@ class AllMenuResource(MenusBaseResource):
 
         limit = args["limit"]
         page = args["page"]
-        menus = [{"slug": menu.slug, "name": menu.name} for menu in Menu.objects()]
+        menus = [menu.slug for menu in Menu.objects()]
 
         return {"menus": menus[(page - 1) * limit : page * limit]}
 
@@ -402,10 +401,7 @@ class ItemMenuResource(MenusBaseResource):
         if section_id not in section_ids:
             return {"description": "Invalid section"}, 404
 
-        item = Item(
-            _id=str(uuid.uuid4()),
-            sections=[section_id],
-        )
+        item = Item(_id=str(uuid.uuid4()), sections=[section_id],)
 
         menu.menu_items.append(item)
         menu.save()

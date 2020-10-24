@@ -21,11 +21,6 @@ export interface CreateInterface {
   slug?: string;
 }
 
-export interface SlugInterface {
-  name: string;
-  slug: string;
-}
-
-export interface PaginatedInterface {
-  menus: SlugInterface;
+export interface MenusInterface {
+  menus: string[];
 }

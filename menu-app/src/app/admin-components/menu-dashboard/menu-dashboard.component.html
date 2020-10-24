@@ -1,6 +1,6 @@
-<div *ngIf="menuInfo" class="col-md-6 offset-md-3 mt-5">
+<div *ngIf="menu" class="col-md-6 offset-md-3 mt-5">
   <div class="card">
-    <h4 class="card-header">{{ menuInfo.name + ' [' + menuInfo.slug + ']' }}</h4>
+    <h4 class="card-header">{{ menu.name + ' [' + slug + ']' }}</h4>
     <div class="card-body">
       <form>
         <div class="form-group">
@@ -11,14 +11,23 @@
         <button (click)="appendCsv()">Append</button>
       </form>
       <div>
-        <button type="button" class="btn btn-primary" (click)="generateQr()">Generate QR</button>
-        <button type="button" class="btn btn-primary" (click)="deleteMenu()">Delete this menu</button>
-        <p><a [routerLink]="'/menu/' + menuInfo.slug">Visit Menu</a></p>
+        <button type="button" (click)="generateQr()">Generate QR</button>
+        <button type="button" (click)="deleteMenu()">Delete this menu</button>
+        <p><a [routerLink]="'/menu/' + slug">Visit Menu</a></p>
       </div>
+      <form *ngIf="configureContactTracing" [formGroup]="contactTracingForm" (ngSubmit)="submitContactTracing()">
+        <div class="form-group">
+          <input type="checkbox" id="enable-trace" formControlName="enable_trace" />
+          <label for="enable-trace">Enable Contact tracing</label>
+          <input type="checkbox" id="force-trace" formControlName="force_trace" />
+          <label for="force-trace">Force Contact Tracing</label>
+          <input type="text" placeholder="Enter the tracing key" class="form-control" formControlName="tracing_key" />
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+      <button (click)="toggleContactTracing()">
+        {{ configureContactTracing ? 'cancel' : 'Configure Contact Tracing' }}
+      </button>
     </div>
   </div>
-</div>
-<div *ngIf="!menuInfo">
-  <!--  Add page not found component in future-->
-  <h1>Something went wrong!!</h1>
 </div>

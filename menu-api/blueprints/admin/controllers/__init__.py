@@ -1,1 +1,1 @@
-from .admin_resource import AdminUserResource
+from .admin_resource import AdminUserResource, AdminTracingResource
