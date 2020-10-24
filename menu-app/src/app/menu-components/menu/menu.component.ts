@@ -29,6 +29,8 @@ export class MenuComponent implements OnInit {
   rearrangeMode = false;
   editMode: boolean;
   slug: string;
+
+  // true if user has permission to edit this menu
   hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
