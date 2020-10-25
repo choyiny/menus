@@ -4,6 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
+import { faPlus, faPen } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-menu-item',
@@ -11,6 +12,8 @@ import { TagInterface } from '../../interfaces/tag-interface';
   styleUrls: ['./menu-item.component.scss'],
 })
 export class MenuItemComponent implements OnInit {
+  faPlus = faPlus;
+  faPen = faPen;
   @Input() item: MenuItemInterface;
   itemOriginal: MenuItemInterface;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;

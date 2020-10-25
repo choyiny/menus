@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+$tint-color: #ee3353;
+
 * {
   margin: 0;
   font-family: Poppins;
@@ -43,4 +45,32 @@
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
     0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+
+button {
+  display: inline-block;
+  color: white;
+  background: none;
+  background-color: black;
+  font-family: inherit;
+  font-size: 100%;
+  border: 0;
+  padding: 5px;
+  border-radius: 8px;
+  margin: 2px;
+
+  &.bg-tint {
+    background-color: $tint-color;
+  }
+
+  &.round {
+    width: 26px;
+    height: 26px;
+    border-radius: 50px;
+  }
+
+  fa-icon {
+    margin: 3px;
+  }
 }
