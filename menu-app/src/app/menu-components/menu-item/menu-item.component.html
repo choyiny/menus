@@ -2,8 +2,9 @@
 <app-img-form-modal></app-img-form-modal>
 <div class="menu-item">
   <div>
-    <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-    <button *ngIf="editMode" (click)="sendRequest()">Save</button>
+    <button *ngIf="!editMode && hasPermission" class="edit-button" (click)="edit()"><fa-icon [icon]="faPen"></fa-icon> Edit</button>
+    <button *ngIf="editMode" class="discard-button" (click)="discard()">Discard</button>
+    <button *ngIf="editMode" class="save-button" (click)="sendRequest()">Save</button>
   </div>
   <div class="img-description">
     <div *ngIf="item.image" class="logo" (click)="showImage()">
@@ -41,7 +42,7 @@
       (outputTagText)="updateTags($event, i)"
     >
     </app-tags>
-    <button (click)="addTag()" *ngIf="hasPermission">Add tag</button>
+    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission"><fa-icon [icon]="faPlus"></fa-icon></button>
   </span>
   <div *ngIf="editMode" class="form">
     <button (click)="cropImage()">Add image</button>

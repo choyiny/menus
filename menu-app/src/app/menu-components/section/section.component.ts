@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
 import { ScrollService } from '../../services/scroll.service';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-section',
@@ -11,6 +12,7 @@ import { ScrollService } from '../../services/scroll.service';
   styleUrls: ['./section.component.scss'],
 })
 export class SectionComponent implements OnInit {
+  faPlus = faPlus;
   @Input() section: SectionInterface;
   @Input() slug: string;
   editMode;

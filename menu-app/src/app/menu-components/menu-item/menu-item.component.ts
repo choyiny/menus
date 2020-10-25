@@ -4,6 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
+import { faPlus, faPen } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-menu-item',
@@ -11,16 +12,21 @@ import { TagInterface } from '../../interfaces/tag-interface';
   styleUrls: ['./menu-item.component.scss'],
 })
 export class MenuItemComponent implements OnInit {
+  faPlus = faPlus;
+  faPen = faPen;
   @Input() item: MenuItemInterface;
+  itemOriginal: MenuItemInterface;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   editMode: boolean;
   @Input() slug: string;
   @Input() hasPermission: boolean;
 
-  constructor(private menuService: MenuService) {}
+  constructor(private menuService: MenuService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.itemOriginal = { ...this.item };
+  }
 
   onSubmit(): void {
     const dataUrl = this.imgForm.file;
@@ -33,6 +39,7 @@ export class MenuItemComponent implements OnInit {
           formData.append('file', file);
           this.menuService.uploadPhoto(this.slug, this.item._id, formData).subscribe((url) => {
             this.item.image = url;
+            this.itemOriginal.image = url;
           });
         });
     }
@@ -49,6 +56,7 @@ export class MenuItemComponent implements OnInit {
   sendRequest(): void {
     this.menuService.editItem(this.slug, this.item).subscribe((item) => {
       this.item = item;
+      this.itemOriginal = { ...item };
     });
     this.editMode = false;
   }
@@ -79,5 +87,10 @@ export class MenuItemComponent implements OnInit {
     this.menuService.deleteImage(this.slug, this.item._id).subscribe((item) => {
       this.item = item;
     });
+  }
+
+  discard(): void {
+    this.editMode = false;
+    this.item = { ...this.itemOriginal };
   }
 }
