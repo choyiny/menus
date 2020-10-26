@@ -37,6 +37,7 @@ import { AngularFireModule } from '@angular/fire';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
 import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
 import { ScrollingComponentComponent } from './util-components/scrolling-component/scrolling-component.component';
+import { MenuDetailsComponent } from './util-components/menu-util/menu-details/menu-details.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { ScrollingComponentComponent } from './util-components/scrolling-compone
     MenuDashboardComponent,
     CovidModalComponent,
     ScrollingComponentComponent,
+    MenuDetailsComponent,
   ],
   imports: [
     BrowserModule,
