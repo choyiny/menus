@@ -22,20 +22,14 @@ resources = [
     (QRMenuResource, "menus/generate", "QR", ["GET"]),
     (
         ImageMenuResource,
-        "menus/<string:slug>/items/<string:item_id>",
-        "Image",
-        ["PATCH"],
-    ),
-    (
-        ImageMenuResource,
         "menus/<string:slug>/items/<string:item_id>/picture",
-        "Delete",
-        ["DELETE"],
+        "picture",
+        ["DELETE", "PATCH"],
     ),
     (
         SectionMenuResource,
-        "menus/<string:slug>/sections/<string:section_id>/edit",
-        "edit_section",
+        "menus/<string:slug>/sections/<string:section_id>",
+        "section",
         ["PATCH"],
     ),
     (
@@ -46,9 +40,9 @@ resources = [
     ),
     (
         ItemMenuResource,
-        "menus/<string:slug>/items/<string:item_id>/edit",
-        "edit_item",
-        ["PATCH"],
+        "menus/<string:slug>/items/<string:item_id>",
+        "menu_items",
+        ["PATCH", "DELETE"],
     ),
     (
         ItemMenuResource,

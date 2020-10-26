@@ -16,7 +16,7 @@ export class MenuService {
   }
 
   uploadPhoto(slug: string, item: string, uploadForm): Observable<string> {
-    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item}`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item}/picture`;
     return this.http.patch<string>(url, uploadForm);
   }
 
@@ -40,13 +40,13 @@ export class MenuService {
   editSection(slug: string, section: SectionInterface): Observable<SectionInterface> {
     // Must sanitize quill fields
     section = this.cleanFields(section);
-    const url = `${environment.settings.endpoint}/menus/${slug}/sections/${section._id}/edit`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/sections/${section._id}`;
     return this.http.patch<SectionInterface>(url, section);
   }
 
   editItem(slug: string, item: MenuItemInterface): Observable<MenuItemInterface> {
     item = this.cleanFields(item);
-    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item._id}/edit`;
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${item._id}`;
     return this.http.patch<MenuItemInterface>(url, item);
   }
 
@@ -103,6 +103,11 @@ export class MenuService {
       }
     }
     return body;
+  }
+
+  removeMenuItem(slug: string, itemId: string): Observable<SectionInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${itemId}`;
+    return this.http.delete<SectionInterface>(url);
   }
 
   addMenuItem(slug: string, sectionId: string): Observable<MenuItemInterface> {

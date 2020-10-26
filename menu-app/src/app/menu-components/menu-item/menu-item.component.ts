@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
 import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
-import { faPlus, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
+import { SectionInterface } from '../../interfaces/section-interface';
 
 @Component({
   selector: 'app-menu-item',
@@ -18,11 +19,13 @@ export class MenuItemComponent implements OnInit {
   itemOriginal: MenuItemInterface;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
-  editMode: boolean;
   @Input() slug: string;
   @Input() hasPermission: boolean;
+  @Input() deleteMode: boolean;
+  @Output() sectionEmitter = new EventEmitter<SectionInterface>();
+  editMode: boolean;
 
-  constructor(private menuService: MenuService) { }
+  constructor(private menuService: MenuService) {}
 
   ngOnInit(): void {
     this.itemOriginal = { ...this.item };
@@ -81,6 +84,12 @@ export class MenuItemComponent implements OnInit {
       this.item.tags.splice(index, 1);
     }
     this.sendRequest();
+  }
+
+  remove(): void {
+    this.menuService.removeMenuItem(this.slug, this.item._id).subscribe((section) => {
+      this.sectionEmitter.emit(section);
+    });
   }
 
   delete(): void {
