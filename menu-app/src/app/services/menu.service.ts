@@ -105,6 +105,11 @@ export class MenuService {
     return body;
   }
 
+  removeMenuItem(slug: string, itemId: string): Observable<SectionInterface> {
+    const url = `${environment.settings.endpoint}/menus/${slug}/items/${itemId}`;
+    return this.http.delete<SectionInterface>(url);
+  }
+
   addMenuItem(slug: string, sectionId: string): Observable<MenuItemInterface> {
     const url = `${environment.settings.endpoint}/menus/${slug}/sections/${sectionId}/add_item`;
     return this.http.post<MenuItemInterface>(url, {});
