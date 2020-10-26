@@ -5,7 +5,10 @@
     </span>
     {{ tagDisplay.text }}
   </div>
-  <button *ngIf="!editable && hasPermission" (click)="edit()">Edit</button>
+  <div (click)="edit()">
+    <i class="fas fa-heart"></i>
+  </div>
+  <fa-icon *ngIf="!editable && hasPermission" [icon]="editIcon" (click)="edit()"></fa-icon>
   <input class="edit" [(ngModel)]="tag.text" *ngIf="editable" (change)="(tag.text)" />
-  <button *ngIf="editable && hasPermission" (click)="onClick()">Save</button>
+  <fa-icon *ngIf="editable && hasPermission" [icon]="saveIcon" (click)="onClick()"></fa-icon>
 </div>
