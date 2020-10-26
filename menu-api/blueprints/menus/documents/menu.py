@@ -62,9 +62,7 @@ class Item(EmbeddedDocument):
     # unique id of menu-item
 
     def __eq__(self, other):
-        if type(self) == type(other):
-            return self._id == other._id
-        return False
+        return type(self) == type(other) and self._id == other._id
 
 
 class Menu(Document):
@@ -170,6 +168,4 @@ class Menu(Document):
         return None
 
     def __eq__(self, other):
-        if type(self) == type(other):
-            return self._id == other._id
-        return False
+        return type(self) == type(other) and self._id == other._id
