@@ -17,8 +17,8 @@
             <h1>{{ menu.name }}</h1>
           </div>
           <div *ngIf="editMode" class="overlay-container">
-            <input type="text" [(ngModel)]="menu.image" />
-            <input type="text" [(ngModel)]="menu.name" />
+            <input class="name-input" [style.width.ch]="menu.name.length" type="text" [(ngModel)]="menu.name" />
+            <!--            <input type="text" [(ngModel)]="menu.image" />-->
           </div>
         </div>
         <div class="bio">
@@ -31,7 +31,11 @@
         </div>
       </div>
     </div>
-    <app-scrolling-component [sections]="menu.sections" [miniScroll]="miniScroll"></app-scrolling-component>
+    <app-scrolling-component
+      class="mobile-scroll"
+      [sections]="menu.sections"
+      [miniScroll]="miniScroll"
+    ></app-scrolling-component>
     <div
       [ngStyle]="{
         background: 'url(' + menu.image + ')',
@@ -40,7 +44,8 @@
         'padding-top': '2 em'
       }"
     >
-      <div class="desktop-background">
+      <!--      for some reason adding padding to class does not work-->
+      <div class="desktop-background" [style]="{ 'padding-top': '4em' }">
         <div class="desktop-description">
           <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
           <button *ngIf="editMode" (click)="sendRequest()">Save</button>
