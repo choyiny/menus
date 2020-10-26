@@ -16,12 +16,7 @@
           </div>
         </div>
         <div class="bio">
-          <quill-view-html
-            *ngIf="!editMode"
-            [content]="injectHeaderStyle(menu.description)"
-            theme="snow"
-          ></quill-view-html>
-          <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>
+          <quill-view-html [content]="injectHeaderStyle(menu.description)" theme="snow"></quill-view-html>
         </div>
       </div>
     </div>
