@@ -138,11 +138,3 @@
   width: 100%;
   overflow: hidden;
 }
-
-input[type='text'] {
-  border: none;
-  background: transparent;
-  &:focus {
-    outline: none;
-  }
-}

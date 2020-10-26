@@ -8,8 +8,6 @@
         "
         class="background-image"
       >
-        <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-        <button *ngIf="editMode" (click)="sendRequest()">Save</button>
         <button *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">Rearrange Sections</button>
         <button *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
         <div class="card-overlay">
@@ -59,7 +57,16 @@
         <!--          </div>-->
         <!--        </div>-->
         <div class="desktop-description desktop">
-          <h1 class="desc">{{ menu.name }}</h1>
+          <h1 *ngIf="!editMode" class="desc">{{ menu.name }}</h1>
+          <input
+            *ngIf="editMode"
+            class="desc"
+            [style.width.ch]="menu.name.length"
+            type="text"
+            [(ngModel)]="menu.name"
+          />
+          <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
+          <button *ngIf="editMode" (click)="sendRequest()">Save</button>
         </div>
         <div class="menu-items section-background">
           <div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
