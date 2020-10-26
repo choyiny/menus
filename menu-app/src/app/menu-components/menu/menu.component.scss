@@ -87,6 +87,7 @@
   width: 50%;
 
   .desc {
+    margin-top: 3em;
     color: white;
     font-size: 36px;
     font-weight: 500;
@@ -97,17 +98,14 @@
 @media only screen and (max-width: 600px) {
   .desktop-background {
     background: white;
-  }
-
-  .desktop-header {
-    display: none;
-  }
-
-  .desktop-description {
-    display: none;
+    padding-top: 0px;
   }
 
   .desktop-scroll {
+    display: none;
+  }
+
+  .desktop {
     display: none;
   }
 }
@@ -124,6 +122,10 @@
   }
 
   .mobile-scroll {
+    display: none;
+  }
+
+  .mobile {
     display: none;
   }
 }

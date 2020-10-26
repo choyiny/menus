@@ -32,7 +32,7 @@
       </div>
     </div>
     <app-scrolling-component
-      class="mobile-scroll"
+      class="mobile"
       [sections]="menu.sections"
       [miniScroll]="miniScroll"
     ></app-scrolling-component>
@@ -40,12 +40,11 @@
       [ngStyle]="{
         background: 'url(' + menu.image + ')',
         backgroundSize: '100%',
-        backgroundRepeat: 'no repeat',
-        'padding-top': '2 em'
+        backgroundRepeat: 'no repeat'
       }"
+      class="desktop-image"
     >
-      <!--      for some reason adding padding to class does not work-->
-      <div class="desktop-background" [style]="{ 'padding-top': '4em' }">
+      <div class="desktop-background">
         <!--        <div class="desktop-description">-->
         <!--          <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>-->
         <!--          <button *ngIf="editMode" (click)="sendRequest()">Save</button>-->
@@ -59,7 +58,7 @@
         <!--            <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>-->
         <!--          </div>-->
         <!--        </div>-->
-        <div class="desktop-description">
+        <div class="desktop-description desktop">
           <h1 class="desc">{{ menu.name }}</h1>
         </div>
         <div class="menu-items section-background">
