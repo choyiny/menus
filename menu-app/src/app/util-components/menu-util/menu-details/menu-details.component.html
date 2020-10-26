@@ -1,6 +1,8 @@
 <div class="menu-view">
-  <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-  <button *ngIf="editMode" (click)="save()">Save</button>
+  <button *ngIf="!editMode && hasPermission" (click)="edit()">
+    <fa-icon [icon]="editIcon"></fa-icon> Edit Menu details
+  </button>
+  <button *ngIf="editMode" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon> Save</button>
   <quill-view-html *ngIf="!editMode" [content]="description" theme="snow"></quill-view-html>
   <quill-editor *ngIf="editMode" [(ngModel)]="description"></quill-editor>
 </div>
