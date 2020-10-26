@@ -4,7 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
-import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
+import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SectionInterface } from '../../interfaces/section-interface';

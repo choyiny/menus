@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MenuService } from '../../services/menu.service';
-import { ImageFormComponent } from '../image-form/image-form.component';
+import { MenuService } from '../../../services/menu.service';
+import { ImageFormComponent } from '../../image-form/image-form.component';
 
 @Component({
   selector: 'app-img-form-modal',
