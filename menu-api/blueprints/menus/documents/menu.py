@@ -30,9 +30,7 @@ class Section(EmbeddedDocument):
     _id = StringField(required=True)
 
     def __eq__(self, other):
-        if type(self) == type(other):
-            return self._id == other._id
-        return False
+        return type(self) == type(other) and self._id == other._id
 
 
 class Item(EmbeddedDocument):
