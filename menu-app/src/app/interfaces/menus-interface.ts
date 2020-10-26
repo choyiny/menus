@@ -24,3 +24,8 @@ export interface CreateInterface {
 export interface MenusInterface {
   menus: string[];
 }
+
+export interface MenuEditable {
+  name?: string;
+  description?: string;
+}

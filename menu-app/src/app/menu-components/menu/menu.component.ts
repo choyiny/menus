@@ -1,4 +1,4 @@
-import { MenuInterface } from '../../interfaces/menus-interface';
+import { MenuEditable, MenuInterface } from '../../interfaces/menus-interface';
 import { Component, HostListener, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
@@ -57,6 +57,8 @@ export class MenuComponent implements OnInit {
   getMenu(id: string): void {
     this.menuService.getMenu(id).subscribe((menu) => {
       this.menu = menu;
+      // force <h1>
+      this.menu.description = this.injectHeaderStyle(this.menu.description);
       if (this.sameDay()) {
         return;
       }
@@ -144,6 +146,14 @@ export class MenuComponent implements OnInit {
     this.menuService.newSection(this.slug, index).subscribe((menu) => {
       this.menu = menu;
     });
+  }
+
+  setValue(editable: MenuEditable): void {
+    // tslint:disable-next-line:forin
+    for (const field in editable) {
+      this.menu[field] = editable[field];
+      this.sendRequest();
+    }
   }
 
   sameDay(): boolean {
