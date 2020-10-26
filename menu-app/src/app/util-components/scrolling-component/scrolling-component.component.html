@@ -1,0 +1,6 @@
+<div class="scrolling-wrapper sticky-top" [ngClass]="{ 'mini-scroll': miniScroll }" id="wrapper">
+  <button class="menu-section" *ngFor="let section of sections" (click)="scrollService.scrollToSection(section._id)">
+    {{ section.name }}
+    <p class="section-description">{{ section.subtitle }}</p>
+  </button>
+</div>

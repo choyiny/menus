@@ -1,0 +1,40 @@
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  background: #ffffff;
+
+  &.mini-scroll {
+    .menu-section {
+      font-size: 18px;
+      margin: 0 2px 0 0;
+      padding: 9px 17px;
+    }
+
+    .menu-description {
+      font-size: 12px;
+    }
+  }
+
+  .menu-section {
+    padding: 14px 20px;
+    margin: 20px 6px 20px 0;
+    border: none;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1a1824;
+    transition: all 0.3s;
+    background-color: white;
+    cursor: pointer;
+
+    .section-description {
+      font-size: 14px;
+      font-weight: 300;
+      margin-bottom: 0;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
+}

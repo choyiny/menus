@@ -36,6 +36,7 @@ import { QuillModule } from 'ngx-quill';
 import { AngularFireModule } from '@angular/fire';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
 import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
+import { ScrollingComponentComponent } from './util-components/scrolling-component/scrolling-component.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { CovidModalComponent } from './util-components/covid-modal/covid-modal.c
     AdminDashboardComponent,
     MenuDashboardComponent,
     CovidModalComponent,
+    ScrollingComponentComponent,
   ],
   imports: [
     BrowserModule,
