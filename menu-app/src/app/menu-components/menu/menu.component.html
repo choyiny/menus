@@ -46,18 +46,21 @@
     >
       <!--      for some reason adding padding to class does not work-->
       <div class="desktop-background" [style]="{ 'padding-top': '4em' }">
+        <!--        <div class="desktop-description">-->
+        <!--          <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>-->
+        <!--          <button *ngIf="editMode" (click)="sendRequest()">Save</button>-->
+        <!--          <h1 class="desc">{{ menu.name }}</h1>-->
+        <!--          <div class="quill-view">-->
+        <!--            <quill-view-html-->
+        <!--              *ngIf="!editMode"-->
+        <!--              [content]="injectHeaderStyle(menu.description)"-->
+        <!--              theme="snow"-->
+        <!--            ></quill-view-html>-->
+        <!--            <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div class="desktop-description">
-          <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-          <button *ngIf="editMode" (click)="sendRequest()">Save</button>
           <h1 class="desc">{{ menu.name }}</h1>
-          <div class="quill-view">
-            <quill-view-html
-              *ngIf="!editMode"
-              [content]="injectHeaderStyle(menu.description)"
-              theme="snow"
-            ></quill-view-html>
-            <quill-editor *ngIf="editMode" [(ngModel)]="menu.description"></quill-editor>
-          </div>
         </div>
         <div class="menu-items section-background">
           <div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">

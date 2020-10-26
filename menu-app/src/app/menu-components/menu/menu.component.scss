@@ -80,18 +80,16 @@
 }
 
 .desktop-description {
-  background: white;
+  background: transparent;
   margin: 0em 3em 1em 3em;
   border-radius: 40px;
   padding: 1em;
   width: 50%;
 
   .desc {
-    color: #1a1824;
+    color: white;
     font-size: 36px;
     font-weight: 500;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
   }
 }
 
@@ -116,10 +114,6 @@
 
 // desktop view
 @media only screen and (min-width: 600px) {
-  //.desktop-background {
-  //  padding-top: 3em;
-  //}
-
   .header {
     display: none;
   }
