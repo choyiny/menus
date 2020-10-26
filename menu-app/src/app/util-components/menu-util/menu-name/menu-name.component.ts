@@ -21,7 +21,7 @@ export class MenuNameComponent implements OnInit {
   }
 
   save(): void {
-    this.menuEmitter.emit({ name });
+    this.menuEmitter.emit({ name: this.name });
     this.editMode = false;
   }
 }
