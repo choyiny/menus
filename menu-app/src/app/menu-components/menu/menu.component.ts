@@ -23,7 +23,7 @@ import { ScrollService } from '../../services/scroll.service';
 })
 export class MenuComponent implements OnInit {
   @Input() menu: MenuInterface;
-  showImage = true;
+  miniScroll = false;
   @Input() selectedSection: string;
   @Input() selectedImage: string;
   rearrangeMode = false;
@@ -83,9 +83,9 @@ export class MenuComponent implements OnInit {
       transitionConstant = 300;
     }
     if (scrollPosition > transitionConstant) {
-      this.showImage = false;
+      this.miniScroll = true;
     } else {
-      this.showImage = true;
+      this.miniScroll = false;
     }
   }
 

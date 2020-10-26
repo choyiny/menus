@@ -31,18 +31,7 @@
         </div>
       </div>
     </div>
-    <div class="scrolling-wrapper sticky-top" [ngClass]="{ sticky: !showImage }" id="wrapper">
-      <!--      <div class="desktop-header">-->
-      <!--        <h1><img class="logo" src="assets/group-2.png" /></h1>-->
-      <!--      </div>-->
-      <!--      <div class="desktop-header">-->
-      <!--        <h1 class="desktop-name">{{ menu.name }}</h1>-->
-      <!--      </div>-->
-      <button class="menu-section" *ngFor="let section of menu.sections" (click)="scrollToSection(section.name)">
-        {{ section.name }}
-        <p class="section-description">{{ section.subtitle }}</p>
-      </button>
-    </div>
+    <app-scrolling-component [sections]="menu.sections" [miniScroll]="miniScroll"></app-scrolling-component>
     <div
       [ngStyle]="{
         background: 'url(' + menu.image + ')',
@@ -78,7 +67,7 @@
                 [hasPermission]="hasPermission"
                 [section]="section"
                 [slug]="slug"
-                id="{{ section.name }}"
+                id="{{ section._id }}"
               >
               </app-section>
               <button *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">Add new Section</button>
