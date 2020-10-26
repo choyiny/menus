@@ -11,12 +11,8 @@
         <button *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">Rearrange Sections</button>
         <button *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
         <div class="card-overlay">
-          <div *ngIf="!editMode" class="overlay-container">
+          <div class="overlay-container">
             <h1>{{ menu.name }}</h1>
-          </div>
-          <div *ngIf="editMode" class="overlay-container">
-            <input class="name-input" [style.width.ch]="menu.name.length" type="text" [(ngModel)]="menu.name" />
-            <!--            <input type="text" [(ngModel)]="menu.image" />-->
           </div>
         </div>
         <div class="bio">
@@ -43,18 +39,12 @@
       class="desktop-image"
     >
       <div class="desktop-background">
-        <div class="desktop-description desktop">
-          <h1 *ngIf="!editMode" class="desc">{{ menu.name }}</h1>
-          <input
-            *ngIf="editMode"
-            class="desc"
-            [style.width.ch]="menu.name.length"
-            type="text"
-            [(ngModel)]="menu.name"
-          />
-          <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-          <button *ngIf="editMode" (click)="sendRequest()">Save</button>
-        </div>
+        <app-menu-name
+          class="desktop"
+          (menuEmitter)="setValue($event)"
+          [hasPermission]="hasPermission"
+          [name]="menu.name"
+        ></app-menu-name>
         <div class="menu-items section-background">
           <app-menu-details
             [description]="menu.description"

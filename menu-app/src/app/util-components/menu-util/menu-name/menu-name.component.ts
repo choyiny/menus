@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { MenuEditable } from '../../../interfaces/menus-interface';
 
 @Component({
   selector: 'app-menu-name',
@@ -8,5 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class MenuNameComponent implements OnInit {
   constructor() {}
 
+  @Input() name: string;
+  @Input() hasPermission: boolean;
+  @Output() menuEmitter = new EventEmitter<MenuEditable>();
+  editMode = false;
+
   ngOnInit(): void {}
+
+  edit(): void {
+    this.editMode = true;
+  }
+
+  save(): void {
+    this.menuEmitter.emit({ name });
+    this.editMode = false;
+  }
 }

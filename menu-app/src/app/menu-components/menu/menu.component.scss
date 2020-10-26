@@ -79,21 +79,6 @@
   }
 }
 
-.desktop-description {
-  background: transparent;
-  margin: 0em 3em 1em 3em;
-  border-radius: 40px;
-  padding: 1em;
-  width: 50%;
-
-  .desc {
-    margin-top: 3em;
-    color: white;
-    font-size: 36px;
-    font-weight: 500;
-  }
-}
-
 // mobile view
 @media only screen and (max-width: 600px) {
   .desktop-background {
