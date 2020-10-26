@@ -68,13 +68,11 @@ export class MenuService {
 
   uploadCsv(slug, formData): Observable<MenuInterface> {
     const url = `${environment.settings.endpoint}/menus/${slug}/items/import`;
-    console.log(formData);
     return this.http.post<MenuInterface>(url, formData);
   }
 
   appendCsv(slug, formData): Observable<MenuInterface> {
     const url = `${environment.settings.endpoint}/menus/${slug}/items/import`;
-    console.log(formData);
     return this.http.patch<MenuInterface>(url, formData);
   }
   generateQR(query): Observable<Blob> {
@@ -92,7 +90,6 @@ export class MenuService {
 
   newSection(slug: string, index: number): Observable<MenuInterface> {
     const url = `${environment.settings.endpoint}/menus/${slug}/sections/add_section`;
-    console.log({ index });
     return this.http.post<MenuInterface>(url, { index });
   }
 
