@@ -69,7 +69,20 @@ import { ScrollingComponentComponent } from './util-components/scrolling-compone
     ImageCropperModule,
     FormsModule,
     DragDropModule,
-    QuillModule.forRoot(),
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ color: [] }, { background: [] }],
+          [{ font: [] }],
+          [{ align: [] }],
+          ['link'],
+          ['clean'],
+        ],
+      },
+    }),
     AngularFireModule.initializeApp(environment.settings.firebase),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
