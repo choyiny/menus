@@ -3,9 +3,13 @@
   border-radius: 0px 0px 30px 30px;
 }
 
-.background-image {
-  background-size: 100%;
-  background-repeat: no-repeat;
+.left {
+  margin-left: 20px;
+}
+
+.section-box {
+  width: 100%;
+  overflow: hidden;
 }
 
 // mobile view
@@ -35,13 +39,4 @@
   .mobile {
     display: none;
   }
-}
-
-.menu-view {
-  padding-left: 20px;
-}
-
-.section-box {
-  width: 100%;
-  overflow: hidden;
 }

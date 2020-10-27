@@ -34,8 +34,8 @@
             [hasPermission]="hasPermission"
             (menuEmitter)="setValue($event)"
           ></app-menu-details>
-          <button *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">Rearrange Sections</button>
-          <button *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
+          <button class="left" *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">Rearrange Sections</button>
+          <button class="left" *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
           <app-scrolling-component
             class="desktop"
             [sections]="menu.sections"
@@ -56,7 +56,9 @@
                 id="{{ section._id }}"
               >
               </app-section>
-              <button *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">Add new Section</button>
+              <button class="left" *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">
+                Add new Section
+              </button>
             </div>
           </div>
         </div>
