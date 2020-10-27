@@ -39,7 +39,7 @@ import { CovidModalComponent } from './util-components/modals/covid-modal/covid-
 import { ScrollingComponentComponent } from './util-components/scrolling-component/scrolling-component.component';
 import { MenuDetailsComponent } from './util-components/menu-util/menu-details/menu-details.component';
 import { MenuNameComponent } from './util-components/menu-util/menu-name/menu-name.component';
-import { ButtonComponent } from './util-components/buttons/button/button.component';
+import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { ButtonComponent } from './util-components/buttons/button/button.compone
     ScrollingComponentComponent,
     MenuDetailsComponent,
     MenuNameComponent,
-    ButtonComponent,
+    MobileImageComponent,
   ],
   imports: [
     BrowserModule,

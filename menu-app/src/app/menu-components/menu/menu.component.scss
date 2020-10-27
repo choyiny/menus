@@ -8,43 +8,6 @@
   background-repeat: no-repeat;
 }
 
-.header {
-  background: #ffffff;
-  border-width: thin;
-  border-radius: 31px;
-  transition: all 0.3s;
-
-  .bio {
-    border-radius: 20px 20px 0 0;
-    background: #ffffff;
-    padding: 20px 0px 0px 20px;
-  }
-}
-
-.card-overlay {
-  height: 250px;
-  width: 100%;
-  display: flex;
-
-  .overlay-container {
-    align-self: flex-end;
-    color: white;
-    margin-left: 18px;
-    margin-bottom: 10px;
-    overflow: hidden;
-
-    .name {
-      font-weight: 600;
-    }
-
-    .name-input {
-      font-weight: 600;
-      font-size: 36px;
-      color: white;
-    }
-  }
-}
-
 // mobile view
 @media only screen and (max-width: 600px) {
   .desktop-background {
