@@ -420,6 +420,8 @@ class ItemMenuResource(MenusBaseResource):
             return {"description": "Menu not found"}, 401
 
         item = menu.get_item(item_id)
+        if item.image:
+            delete_file(item.image)
         if item is None:
             return {"description": "Item not found"}, 401
 
