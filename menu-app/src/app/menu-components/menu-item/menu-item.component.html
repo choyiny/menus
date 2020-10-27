@@ -1,5 +1,5 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
-<app-img-form-modal></app-img-form-modal>
+<app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 <div class="menu-item">
   <div>
     <button *ngIf="!editMode && hasPermission" class="edit-button" (click)="edit()">
@@ -10,14 +10,9 @@
     <button *ngIf="hasPermission" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
   </div>
   <div class="img-description">
-    <div *ngIf="item.image" class="logo" (click)="showImage()">
-      <img class="img-fluid icon" src="{{ item.image }}" />
-      <fa-icon class="icon-overlay" [icon]="imageIcon"></fa-icon>
-      <img />
-    </div>
-    <div *ngIf="!item.image" class="logo">
-      <img class="img-fluid icon" src="assets/blank.png" />
-      <fa-icon class="icon-overlay" [icon]="imageIcon"></fa-icon>
+    <div class="logo" (click)="logEvent($event)">
+      <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
+      <fa-icon class="icon-overlay" [icon]="imageIcon" size="lg" (click)="logEvent($event)"></fa-icon>
       <img />
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
@@ -55,10 +50,5 @@
         <fa-icon [icon]="faPlus"></fa-icon>
       </button>
     </span>
-  </div>
-  <div *ngIf="editMode" class="form">
-    <button (click)="cropImage()">Add image</button>
-    <button (click)="onSubmit()">Upload!</button>
-    <button (click)="delete()">Delete Image</button>
   </div>
 </div>

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuService } from '../../../services/menu.service';
-import { ImageFormComponent } from '../../image-form/image-form.component';
 
 @Component({
   selector: 'app-img-form-modal',
@@ -11,6 +10,9 @@ import { ImageFormComponent } from '../../image-form/image-form.component';
 export class ImgFormModalComponent implements OnInit {
   @ViewChild('template') input;
   file;
+  @Input() itemId: string;
+  @Input() slug: string;
+  @Output() itemEmitter = new EventEmitter<string>();
 
   constructor(private modalService: NgbModal, private menuService: MenuService) {}
 
@@ -20,9 +22,21 @@ export class ImgFormModalComponent implements OnInit {
     this.modalService.open(this.input);
   }
 
-  setImage(modal, image): void {
+  onSubmit(modal, image): void {
     modal.close();
-    console.log(image);
     this.file = image;
+    const dataUrl = this.file;
+    if (dataUrl) {
+      fetch(dataUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = new File([blob], 'image', { type: 'image/png' });
+          const formData = new FormData();
+          formData.append('file', file);
+          this.menuService.uploadPhoto(this.slug, this.itemId, formData).subscribe((url) => {
+            this.itemEmitter.emit(url);
+          });
+        });
+    }
   }
 }

@@ -1,7 +1,7 @@
 <ng-template #template let-modal>
   <div class="crop-container">
     <app-image-form #crop></app-image-form>
-    <button (click)="setImage(modal, crop.croppedImage)">OK</button>
+    <button (click)="onSubmit(modal, crop.croppedImage)">OK</button>
     <button (click)="modal.close()">Cancel</button>
   </div>
 </ng-template>
