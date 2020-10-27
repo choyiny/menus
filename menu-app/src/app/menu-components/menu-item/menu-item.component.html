@@ -10,14 +10,14 @@
     <button *ngIf="hasPermission" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
   </div>
   <div class="img-description">
-    <div class="logo" (click)="logEvent($event)">
+    <div class="logo" (click)="showImage()">
       <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
       <fa-icon
         *ngIf="item.image !== 'assets/loading.gif'"
         class="icon-overlay"
         [icon]="imageIcon"
         size="lg"
-        (click)="cropImage()"
+        (click)="cropImage($event)"
       ></fa-icon>
       <img />
     </div>

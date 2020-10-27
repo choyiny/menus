@@ -47,8 +47,9 @@ export class MenuItemComponent implements OnInit {
     this.imgView.open();
   }
 
-  cropImage(): void {
+  cropImage($event): void {
     this.imgForm.open();
+    event.stopPropagation();
   }
 
   sendRequest(): void {
@@ -96,10 +97,6 @@ export class MenuItemComponent implements OnInit {
   discard(): void {
     this.editMode = false;
     this.item = { ...this.itemOriginal };
-  }
-
-  logEvent($event): void {
-    console.log(event);
   }
 
   setImage(url: string): void {
