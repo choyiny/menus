@@ -33,7 +33,7 @@
           theme="snow"
         >
         </quill-view-html>
-        <quill-editor *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
+        <quill-editor [modules]="modules" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
       </div>
     </div>
   </div>

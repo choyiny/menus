@@ -13,8 +13,6 @@ import { SectionInterface } from '../../interfaces/section-interface';
   styleUrls: ['./menu-item.component.scss'],
 })
 export class MenuItemComponent implements OnInit {
-  faPlus = faPlus;
-  faPen = faPen;
   @Input() item: MenuItemInterface;
   itemOriginal: MenuItemInterface;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
@@ -24,6 +22,18 @@ export class MenuItemComponent implements OnInit {
   @Input() deleteMode: boolean;
   @Output() sectionEmitter = new EventEmitter<SectionInterface>();
   editMode: boolean;
+  // icons
+  faPlus = faPlus;
+  faPen = faPen;
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }],
+      [{ font: [] }],
+      [{ align: [] }],
+      ['link']
+    ];
+  };
 
   constructor(private menuService: MenuService) {}
 

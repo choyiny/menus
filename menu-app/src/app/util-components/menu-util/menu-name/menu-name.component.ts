@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { MenuEditable } from '../../../interfaces/menus-interface';
+import { faSave, faPen } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-menu-name',
@@ -13,6 +14,10 @@ export class MenuNameComponent implements OnInit {
   @Input() hasPermission: boolean;
   @Output() menuEmitter = new EventEmitter<MenuEditable>();
   editMode = false;
+
+  // icons
+  editIcon = faPen;
+  saveIcon = faSave;
 
   ngOnInit(): void {}
 
