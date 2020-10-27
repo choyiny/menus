@@ -3,11 +3,11 @@
 <div class="menu-item">
   <div>
     <button *ngIf="!editMode && hasPermission" class="edit-button" (click)="edit()">
-      <fa-icon [icon]="faPen"></fa-icon> Edit
+      <fa-icon [icon]="faPen"></fa-icon>
     </button>
     <button *ngIf="editMode" class="discard-button" (click)="discard()">Discard</button>
-    <button *ngIf="editMode" class="save-button" (click)="sendRequest()">Save</button>
-    <button *ngIf="hasPermission && deleteMode" (click)="remove()">Delete item</button>
+    <button *ngIf="editMode" class="save-button" (click)="sendRequest()"><fa-icon [icon]="saveIcon"></fa-icon></button>
+    <button *ngIf="hasPermission" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
   </div>
   <div class="img-description">
     <div *ngIf="item.image" class="logo" (click)="showImage()">
