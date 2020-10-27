@@ -13,6 +13,7 @@ $tint-color: #ee3353;
 
 .ql-editor {
   padding: 0 0 0 0;
+  position: relative;
 
   & p {
     font-weight: 100;
@@ -50,7 +51,6 @@ $tint-color: #ee3353;
 button {
   display: inline-block;
   color: white;
-  background: none;
   background-color: black;
   font-family: inherit;
   font-size: 100%;
@@ -61,6 +61,8 @@ button {
 
   &.bg-tint {
     background-color: $tint-color;
+    position: absolute;
+    bottom: 0px;
   }
 
   &.round {
