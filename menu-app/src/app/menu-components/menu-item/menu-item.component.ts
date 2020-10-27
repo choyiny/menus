@@ -4,7 +4,7 @@ import { MenuService } from '../../services/menu.service';
 import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
-import { faPlus, faPen, faTrash, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
 import { SectionInterface } from '../../interfaces/section-interface';
 
 @Component({
@@ -26,6 +26,7 @@ export class MenuItemComponent implements OnInit {
   faPen = faPen;
   deleteIcon = faTrash;
   saveIcon = faSave;
+  imageIcon = faImage;
   modules: {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],

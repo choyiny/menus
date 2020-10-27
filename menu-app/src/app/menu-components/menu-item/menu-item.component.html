@@ -12,6 +12,13 @@
   <div class="img-description">
     <div *ngIf="item.image" class="logo" (click)="showImage()">
       <img class="img-fluid icon" src="{{ item.image }}" />
+      <fa-icon class="icon-overlay" [icon]="imageIcon"></fa-icon>
+      <img />
+    </div>
+    <div *ngIf="!item.image" class="logo">
+      <img class="img-fluid icon" src="assets/blank.png" />
+      <fa-icon class="icon-overlay" [icon]="imageIcon"></fa-icon>
+      <img />
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
@@ -36,19 +43,19 @@
         <quill-editor [modules]="modules" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
       </div>
     </div>
+    <span class="tag-container">
+      <app-tags
+        *ngFor="let tag of item.tags; let i = index"
+        [tag]="tag"
+        [hasPermission]="hasPermission"
+        (outputTagText)="updateTags($event, i)"
+      >
+      </app-tags>
+      <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission">
+        <fa-icon [icon]="faPlus"></fa-icon>
+      </button>
+    </span>
   </div>
-  <span class="tag-container">
-    <app-tags
-      *ngFor="let tag of item.tags; let i = index"
-      [tag]="tag"
-      [hasPermission]="hasPermission"
-      (outputTagText)="updateTags($event, i)"
-    >
-    </app-tags>
-    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission">
-      <fa-icon [icon]="faPlus"></fa-icon>
-    </button>
-  </span>
   <div *ngIf="editMode" class="form">
     <button (click)="cropImage()">Add image</button>
     <button (click)="onSubmit()">Upload!</button>
