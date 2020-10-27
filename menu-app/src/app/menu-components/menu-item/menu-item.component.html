@@ -37,7 +37,7 @@
       </div>
     </div>
   </div>
-  <span>
+  <span class="tag-container">
     <app-tags
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
@@ -45,7 +45,9 @@
       (outputTagText)="updateTags($event, i)"
     >
     </app-tags>
-    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission"><fa-icon [icon]="faPlus"></fa-icon></button>
+    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
   </span>
   <div *ngIf="editMode" class="form">
     <button (click)="cropImage()">Add image</button>

@@ -10,7 +10,7 @@
   <input
     class="edit"
     [(ngModel)]="tag.text"
-    [style.width.ch]="tag.text.length"
+    [style.width.ch]="tag.text.length + 1"
     *ngIf="editable"
     (change)="(tag.text)"
   />
