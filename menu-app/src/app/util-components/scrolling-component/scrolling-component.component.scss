@@ -11,10 +11,10 @@
   border: none;
   font-size: 24px;
   font-weight: 600;
-  color: #1a1824;
   transition: all 0.3s;
   background-color: white;
   cursor: pointer;
+  color: black;
 
   .section-description {
     font-size: 14px;
@@ -36,6 +36,14 @@
     border-bottom: 1px solid;
     border-color: rgba(196, 208, 217, 0.5);
   }
+
+  .menu-section {
+    color: #626168;
+  }
+
+  .sticky-top {
+    position: relative;
+  }
 }
 
 //mobile
@@ -46,6 +54,7 @@
         font-size: 18px;
         margin: 0 2px 0 0;
         padding: 9px 17px;
+        color: #1a1824;
       }
 
       .menu-description {
