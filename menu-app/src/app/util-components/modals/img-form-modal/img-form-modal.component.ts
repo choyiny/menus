@@ -26,6 +26,7 @@ export class ImgFormModalComponent implements OnInit {
     modal.close();
     this.file = image;
     const dataUrl = this.file;
+    this.itemEmitter.emit('assets/loading.gif');
     if (dataUrl) {
       fetch(dataUrl)
         .then((res) => res.blob())

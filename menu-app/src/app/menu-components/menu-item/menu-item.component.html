@@ -12,7 +12,13 @@
   <div class="img-description">
     <div class="logo" (click)="logEvent($event)">
       <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
-      <fa-icon class="icon-overlay" [icon]="imageIcon" size="lg" (click)="logEvent($event)"></fa-icon>
+      <fa-icon
+        *ngIf="item.image !== 'assets/loading.gif'"
+        class="icon-overlay"
+        [icon]="imageIcon"
+        size="lg"
+        (click)="cropImage()"
+      ></fa-icon>
       <img />
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">

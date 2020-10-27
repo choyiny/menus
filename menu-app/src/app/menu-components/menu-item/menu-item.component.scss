@@ -34,13 +34,14 @@ h1 {
 }
 
 .logo {
+  position: relative;
   width: 18%;
   display: flex;
-  position: relative;
   margin-bottom: 1em;
   margin-right: 10px;
 
   .icon {
+    position: relative;
     object-fit: cover;
     float: left;
     border-radius: 10px;
@@ -87,7 +88,7 @@ h1 {
 
 .icon-overlay {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 10%;
+  left: 40%;
   z-index: 10;
 }
