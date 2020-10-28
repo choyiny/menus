@@ -27,7 +27,6 @@ export class MenuComponent implements OnInit {
   @Input() selectedSection: string;
   @Input() selectedImage: string;
   rearrangeMode = false;
-  editMode: boolean;
   slug: string;
 
   // true if user has permission to edit this menu
@@ -99,11 +98,6 @@ export class MenuComponent implements OnInit {
     this.menuService.editMenu(this.slug, this.menu).subscribe((menu) => {
       this.menu = menu;
     });
-    this.editMode = false;
-  }
-
-  edit(): void {
-    this.editMode = true;
   }
 
   injectHeaderStyle(header: string): string {
