@@ -88,10 +88,11 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
-  delete(): void {
+  delete($event): void {
     this.menuService.deleteImage(this.slug, this.item._id).subscribe((item) => {
       this.item = item;
     });
+    event.stopPropagation();
   }
 
   discard(): void {

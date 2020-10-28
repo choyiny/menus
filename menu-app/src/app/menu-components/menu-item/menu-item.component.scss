@@ -30,10 +30,22 @@
   .editor-margin {
     position: relative;
   }
-}
 
-.form {
-  margin-bottom: 0.5em;
+  .icon-overlay {
+    display: inline-block;
+    position: absolute;
+    z-index: 10;
+  }
+
+  .image-icon {
+    top: 22px;
+    left: 22px;
+  }
+
+  .trash-icon {
+    left: 40px;
+    top: 5px;
+  }
 }
 
 h1 {
@@ -79,25 +91,4 @@ h1 {
       float: left;
     }
   }
-
-  .item-description {
-    font-weight: 300;
-    color: rgba(26, 24, 36, 0.5);
-    margin: 2.5px 0px 2.5px 0px;
-  }
-}
-
-.logo-description {
-  width: 80%;
-}
-.no-logo-description {
-  width: 100%;
-}
-
-.logo .icon-overlay {
-  display: inline-block;
-  position: absolute;
-  top: 22px;
-  left: 22px;
-  z-index: 10;
 }

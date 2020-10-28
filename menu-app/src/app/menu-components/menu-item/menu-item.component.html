@@ -14,14 +14,21 @@
       <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
       <fa-icon
         *ngIf="item.image !== 'assets/loading.gif'"
-        class="icon-overlay"
+        class="icon-overlay image-icon"
         [icon]="imageIcon"
         size="lg"
         (click)="cropImage($event)"
       ></fa-icon>
+      <fa-icon
+        *ngIf="item.image"
+        [icon]="deleteIcon"
+        size="lg"
+        class="icon-overlay trash-icon"
+        (click)="delete($event)"
+      ></fa-icon>
       <img />
     </div>
-    <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
+    <div class="description">
       <div class="menu-price">
         <h1 *ngIf="!editMode" class="item">{{ item.name }}</h1>
         <h1 *ngIf="!editMode" class="price">{{ item.price }}</h1>
