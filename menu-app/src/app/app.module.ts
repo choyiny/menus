@@ -40,6 +40,7 @@ import { ScrollingComponentComponent } from './util-components/scrolling-compone
 import { MenuDetailsComponent } from './util-components/menu-util/menu-details/menu-details.component';
 import { MenuNameComponent } from './util-components/menu-util/menu-name/menu-name.component';
 import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
+import { ChangeBackgroundComponent } from './util-components/menu-util/change-background/change-background.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { MobileImageComponent } from './util-components/menu-util/mobile-image/m
     MenuDetailsComponent,
     MenuNameComponent,
     MobileImageComponent,
+    ChangeBackgroundComponent,
   ],
   imports: [
     BrowserModule,

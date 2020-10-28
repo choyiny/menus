@@ -1,0 +1,5 @@
+<div>
+  <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
+  <button *ngIf="editMode" (click)="save()">Save</button>
+  <input type="text" [(ngModel)]="image" />
+</div>

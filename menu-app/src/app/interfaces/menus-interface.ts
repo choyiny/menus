@@ -28,4 +28,5 @@ export interface MenusInterface {
 export interface MenuEditable {
   name?: string;
   description?: string;
+  image?: string;
 }
