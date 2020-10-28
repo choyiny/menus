@@ -42,13 +42,13 @@ h1 {
 
 .logo {
   position: relative;
-  width: 18%;
   display: flex;
+  max-width: 60px;
+  max-height: 60px;
   margin-bottom: 1em;
   margin-right: 10px;
 
   .icon {
-    position: relative;
     object-fit: cover;
     float: left;
     border-radius: 10px;
@@ -93,9 +93,10 @@ h1 {
   width: 100%;
 }
 
-.icon-overlay {
+.logo .icon-overlay {
+  display: inline-block;
   position: absolute;
-  top: 10%;
-  left: 40%;
+  top: 22px;
+  left: 22px;
   z-index: 10;
 }
