@@ -14,7 +14,7 @@
       <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
       <fa-icon
         *ngIf="item.image !== 'assets/loading.gif'"
-        class="icon-overlay image-icon"
+        class="icon-overlay image-icon desktop"
         [icon]="imageIcon"
         size="lg"
         (click)="cropImage($event)"
@@ -23,7 +23,7 @@
         *ngIf="item.image"
         [icon]="deleteIcon"
         size="lg"
-        class="icon-overlay trash-icon"
+        class="icon-overlay trash-icon desktop"
         (click)="delete($event)"
       ></fa-icon>
       <img />
