@@ -13,6 +13,7 @@
     </div>
   </span>
   <p><a routerLink="/admin/create">Create new Menu!</a></p>
+  <p><a routerLink="/admin/users">User Management</a></p>
   <div *ngFor="let slug of menu.menus">
     <p>
       <a routerLink="/admin/menus/{{ slug }}">{{ slug }}</a>

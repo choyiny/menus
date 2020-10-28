@@ -1,0 +1,59 @@
+<h1>Create new user</h1>
+
+<p><a routerLink="/admin/users">&lt; Back to User Management</a></p>
+
+<form [formGroup]="selectPermissionForm">
+  <h3>Select menus</h3>
+  <div formGroupName='menus'>
+
+  <li *ngFor="let menu of selectPermissionForm.get('menus').value | keyvalue">
+    <label>
+      <input type="checkbox" [formControlName]="menu.key" [value]="menu.value" /> {{ menu.key }}
+    </label>
+  </li>
+</div>
+
+</form>
+
+<hr>
+
+<form [formGroup]="linkFirebaseUserForm" (submit)="submitLink()">
+  <h3>Link with existing firebase user</h3>
+  <div class="form-group">
+    <label>Firebase Id</label>
+    <input type="text" formControlName="firebase_id" class="form-control">
+  </div>
+  <button class="btn btn-primary">Link</button>
+</form>
+
+<hr>
+
+<form [formGroup]="createUserForm" (submit)="submitCreate()">
+  <h3>Create new user</h3>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="text" formControlName="email" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Email Verified</label>
+    <input type="checkbox" formControlName="email_verified" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Phone number</label>
+    <input type="text" formControlName="phone_number" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" formControlName="password" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Display name</label>
+    <input type="text" formControlName="display_name" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Photo Url</label>
+    <input type="text" formControlName="photo_url" class="form-control" />
+  </div>
+  <button class="btn btn-primary">Create</button>
+</form>

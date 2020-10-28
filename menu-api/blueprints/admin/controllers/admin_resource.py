@@ -1,11 +1,5 @@
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
-from ...auth.schemas import UserSchema, UsersSchema
-from ..schemas import (
-    PromoteUserSchema,
-    CreateUserSchema,
-    ContactTracingSchema,
-)
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
     EmailAlreadyExistsError,
@@ -14,15 +8,10 @@ from firebase_admin._auth_utils import (
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 
+from ...auth.schemas import UserSchema, UsersSchema
 from ...menus.documents import Menu
 from ...menus.schemas import GetMenuSchema
-from ..schemas import (
-    ContactTracingSchema,
-    CreateUserSchema,
-    PromoteUserSchema,
-    UserSchema,
-    UsersSchema,
-)
+from ..schemas import ContactTracingSchema, CreateUserSchema, PromoteUserSchema
 from .admin_base_resource import AdminBaseResource
 
 

@@ -8,6 +8,10 @@ import { CreateComponent } from './admin-components/create/create.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AdminDashboardComponent as Admin } from './admin-components/admin-dashboard/admin-dashboard.component';
 
+import { CreateUserComponent } from './admin-components/create-user/create-user.component';
+import { EditUserComponent } from './admin-components/edit-user/edit-user.component';
+import { ViewUsersComponent } from './admin-components/view-users/view-users.component';
+
 const routes: Routes = [
   { path: 'menu/:slug', component: MenuComponent },
   { path: '', component: LoginComponent },
@@ -15,6 +19,9 @@ const routes: Routes = [
   { path: 'admin/menus/:slug', component: MenuDashboardComponent, canActivate: [AdminGuard] },
   { path: 'admin/create', component: CreateComponent, canActivate: [AdminGuard] },
   { path: 'admin/menus', component: Admin, canActivate: [AdminGuard] },
+  { path: 'admin/users', component: ViewUsersComponent, canActivate: [AdminGuard] },
+  { path: 'admin/users/create', component: CreateUserComponent, canActivate: [AdminGuard] },
+  { path: 'admin/users/:id', component: EditUserComponent, canActivate: [AdminGuard] },
   { path: '**', redirectTo: '' },
 ];
 
@@ -22,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

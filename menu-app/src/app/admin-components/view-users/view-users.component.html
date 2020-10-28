@@ -1,0 +1,26 @@
+<h1>User Management</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">email</th>
+      <th scope="col">phone number</th>
+      <th scope="col">firebase id</th>
+      <th scope="col">menus</th>
+      <th scope="col">is admin</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let user of users.users">
+    <tr>
+      <td>{{user.email}}</td>
+      <td>{{user.phone_number}}</td>
+      <td>{{user.firebase_id}}</td>
+      <td>{{user.menus.join(', ')}}</td>
+      <td>{{user.is_admin}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div>
+  <button (click)="goToCreateUser()">Create New User</button>
+</div>
