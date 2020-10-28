@@ -1,8 +1,10 @@
 <div *ngIf="!rearrangeMode" class="section">
   <div>
-    <button *ngIf="!editMode && hasPermission" (click)="edit()"><fa-icon [icon]="editIcon"></fa-icon></button>
-    <button *ngIf="editMode" (click)="sendRequest()">Save</button>
-    <button *ngIf="hasPermission" class="bg-tint" (click)="addMenuItem()">
+    <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
+      <fa-icon [icon]="editIcon"></fa-icon>
+    </button>
+    <button class="desktop" *ngIf="editMode" (click)="sendRequest()">Save</button>
+    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">
       <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item
     </button>
   </div>

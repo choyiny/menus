@@ -2,15 +2,17 @@
 <app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 <div class="menu-item">
   <div>
-    <button *ngIf="!editMode && hasPermission" class="edit-button" (click)="edit()">
+    <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
       <fa-icon [icon]="faPen"></fa-icon>
     </button>
-    <button *ngIf="editMode" class="discard-button" (click)="discard()">Discard</button>
-    <button *ngIf="editMode" class="save-button" (click)="sendRequest()"><fa-icon [icon]="saveIcon"></fa-icon></button>
-    <button *ngIf="hasPermission" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
+    <button *ngIf="editMode" class="discard-button desktop" (click)="discard()">Discard</button>
+    <button *ngIf="editMode" class="save-button desktop" (click)="sendRequest()">
+      <fa-icon [icon]="saveIcon"></fa-icon>
+    </button>
+    <button *ngIf="hasPermission" class="desktop" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
   </div>
   <div class="img-description">
-    <div class="logo" (click)="showImage()">
+    <div *ngIf="item.image" class="logo" (click)="showImage()">
       <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
       <fa-icon
         *ngIf="item.image !== 'assets/loading.gif'"
@@ -28,7 +30,7 @@
       ></fa-icon>
       <img />
     </div>
-    <div class="description">
+    <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
         <h1 *ngIf="!editMode" class="item">{{ item.name }}</h1>
         <h1 *ngIf="!editMode" class="price">{{ item.price }}</h1>
@@ -52,7 +54,7 @@
       </div>
     </div>
   </div>
-  <span class="tag-container">
+  <span class="tag-container desktop">
     <app-tags
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
