@@ -1,11 +1,10 @@
 .header {
   background: #ffffff;
-  border-width: thin;
-  border-radius: 31px;
   transition: all 0.3s;
 
   .bio {
     border-radius: 20px 20px 0 0;
+    outline: none;
     background: #ffffff;
     padding: 20px 0px 0px 20px;
   }

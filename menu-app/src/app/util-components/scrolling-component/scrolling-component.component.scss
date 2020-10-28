@@ -3,6 +3,8 @@
   overflow-y: hidden;
   white-space: nowrap;
   background: #ffffff;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .menu-section {
@@ -30,8 +32,6 @@
 // desktop
 @media only screen and (min-width: 600px) {
   .scrolling-wrapper {
-    margin-left: 20px;
-    margin-right: 20px;
     border-top: 1px solid;
     border-bottom: 1px solid;
     border-color: rgba(196, 208, 217, 0.5);
@@ -49,9 +49,16 @@
 //mobile
 @media only screen and (max-width: 600px) {
   .scrolling-wrapper {
-    //box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
-    box-shadow: 0 20px 60px 0 rgba(101, 30, 27, 0.22);
+    border-top: 1px solid;
+    border-color: rgba(196, 208, 217, 0.5);
+
+    .menu-section {
+      opacity: 0.2;
+    }
+
     &.mini-scroll {
+      box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
+      margin: 0;
       .menu-section {
         font-size: 18px;
         margin: 0 2px 0 0;
@@ -60,6 +67,7 @@
       }
 
       .menu-description {
+        opacity: 0.2;
         font-size: 12px;
       }
     }
