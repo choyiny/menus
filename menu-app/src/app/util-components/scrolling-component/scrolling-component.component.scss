@@ -37,10 +37,6 @@
     border-color: rgba(196, 208, 217, 0.5);
   }
 
-  .sticky-top {
-    position: relative;
-  }
-
   .selected {
     color: #ee3353;
   }
@@ -78,6 +74,19 @@
 
     .not-selected {
       opacity: 0.2;
+    }
+  }
+}
+
+//band-aid
+@supports (-webkit-hyphens: none) {
+  @media only screen and (max-width: 600px) {
+    .scrolling-wrapper {
+      &.mini-scroll {
+        position: fixed;
+        width: 100%;
+        overflow-x: scroll;
+      }
     }
   }
 }

@@ -102,7 +102,7 @@ export class MenuComponent implements OnInit {
     } else {
       for (let i = this.menu.sections.length - 1; i >= 0; i--) {
         const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
-        if (scrollPosition > sectionPosition) {
+        if (sectionPosition < scrollPosition) {
           this.selectedSection = i;
           break;
         }
