@@ -8,16 +8,17 @@
 //desktop
 @media only screen and (min-width: 600px) {
   .menu-item {
-    padding: 12px 12px 60px 12px;
+    padding: 12px;
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
     height: 80%;
+    overflow: scroll;
   }
 
   .tag-container {
     margin-left: 20px;
-    bottom: 40px;
+    bottom: 0px;
     position: absolute;
 
     &.bg-tint {

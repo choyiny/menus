@@ -49,6 +49,8 @@
 //mobile
 @media only screen and (max-width: 600px) {
   .scrolling-wrapper {
+    //box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
+    box-shadow: 0 20px 60px 0 rgba(101, 30, 27, 0.22);
     &.mini-scroll {
       .menu-section {
         font-size: 18px;
