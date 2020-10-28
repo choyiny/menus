@@ -24,7 +24,7 @@ import { ScrollService } from '../../services/scroll.service';
 export class MenuComponent implements OnInit {
   @Input() menu: MenuInterface;
   miniScroll = false;
-  @Input() selectedSection: string;
+  selectedSection = 0;
   @Input() selectedImage: string;
   rearrangeMode = false;
   slug: string;
@@ -88,6 +88,22 @@ export class MenuComponent implements OnInit {
     } else {
       this.miniScroll = false;
     }
+
+    // linear time solution, if performance is an issue, should switch to using pointers
+    for (let i = 0; i < this.menu.sections.length; i++) {
+      const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
+      if (scrollPosition < sectionPosition) {
+        this.selectedSection = i;
+        break;
+      }
+    }
+    const buttonLocation = document.getElementById(
+      `${this.menu.sections[this.selectedSection]._id} button`
+    ).offsetLeft;
+    document.getElementById('wrapper').scrollTo({
+      behavior: 'smooth',
+      left: buttonLocation,
+    });
   }
 
   scrollToSection(id: string): void {

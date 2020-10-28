@@ -4,6 +4,7 @@
     *ngFor="let section of sections; let i = index"
     (click)="scrollService.scrollToSection(section._id)"
     [ngClass]="{ selected: i === currentSection, 'not-selected': i !== currentSection }"
+    id="{{ section._id + ' button' }}"
   >
     {{ section.name }}
     <p class="section-description">{{ section.subtitle }}</p>
