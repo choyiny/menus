@@ -59,7 +59,7 @@ class AllMenuResource(MenusBaseResource):
         page = args["page"]
         menus = [menu.slug for menu in Menu.objects()]
 
-        return {"menus": menus[(page - 1) * limit: page * limit]}
+        return {"menus": menus[(page - 1) * limit : page * limit]}
 
 
 @doc(description="""Upload menu to server""")
@@ -146,7 +146,9 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""", )
+@doc(
+    description="""Menu element related operations""",
+)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -288,7 +290,7 @@ class ImageMenuResource(MenusBaseResource):
                 menu.save()
                 return item
             else:
-                return {'description': 'image not found'}
+                return {"description": "image not found"}
 
         return {"description": "Item not found"}
 
@@ -404,7 +406,10 @@ class ItemMenuResource(MenusBaseResource):
         if section_id not in section_ids:
             return {"description": "Invalid section"}, 404
 
-        item = Item(_id=str(uuid.uuid4()), sections=[section_id], )
+        item = Item(
+            _id=str(uuid.uuid4()),
+            sections=[section_id],
+        )
 
         menu.menu_items.append(item)
         menu.save()
