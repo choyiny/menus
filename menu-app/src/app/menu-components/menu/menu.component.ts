@@ -28,6 +28,7 @@ export class MenuComponent implements OnInit {
   @Input() selectedImage: string;
   rearrangeMode = false;
   slug: string;
+  previousScroll = 0;
 
   // true if user has permission to edit this menu
   hasPermission: boolean;
@@ -90,11 +91,21 @@ export class MenuComponent implements OnInit {
     }
 
     // linear time solution, if performance is an issue, should switch to using pointers
-    for (let i = 0; i < this.menu.sections.length; i++) {
-      const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
-      if (scrollPosition < sectionPosition) {
-        this.selectedSection = i;
-        break;
+    if (scrollPosition > this.previousScroll) {
+      for (let i = 0; i < this.menu.sections.length; i++) {
+        const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
+        if (scrollPosition < sectionPosition) {
+          this.selectedSection = i;
+          break;
+        }
+      }
+    } else {
+      for (let i = this.menu.sections.length - 1; i >= 0; i--) {
+        const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
+        if (scrollPosition > sectionPosition) {
+          this.selectedSection = i;
+          break;
+        }
       }
     }
     const buttonLocation = document.getElementById(
@@ -104,6 +115,8 @@ export class MenuComponent implements OnInit {
       behavior: 'smooth',
       left: buttonLocation,
     });
+
+    this.previousScroll = scrollPosition;
   }
 
   scrollToSection(id: string): void {
