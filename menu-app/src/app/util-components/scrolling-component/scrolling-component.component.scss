@@ -37,12 +37,16 @@
     border-color: rgba(196, 208, 217, 0.5);
   }
 
-  .menu-section {
-    color: #626168;
-  }
-
   .sticky-top {
     position: relative;
+  }
+
+  .selected {
+    color: #ee3353;
+  }
+
+  .not-selected {
+    color: #626168;
   }
 }
 
@@ -51,10 +55,6 @@
   .scrolling-wrapper {
     border-top: 1px solid;
     border-color: rgba(196, 208, 217, 0.5);
-
-    .menu-section {
-      opacity: 0.2;
-    }
 
     &.mini-scroll {
       box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
@@ -70,6 +70,14 @@
         opacity: 0.2;
         font-size: 12px;
       }
+    }
+
+    .selected {
+      opacity: 1;
+    }
+
+    .not-selected {
+      opacity: 0.2;
     }
   }
 }

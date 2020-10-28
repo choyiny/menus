@@ -10,6 +10,7 @@ import { ScrollService } from '../../services/scroll.service';
 export class ScrollingComponentComponent implements OnInit {
   @Input() sections: SectionInterface[];
   @Input() miniScroll: boolean;
+  @Input() currentSection: number;
 
   constructor(public scrollService: ScrollService) {}
 
