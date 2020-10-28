@@ -1,15 +1,10 @@
-from marshmallow import INCLUDE, Schema, fields
-
 from ..auth.schemas import UserSchema
+from marshmallow import fields, Schema, INCLUDE
 
 
 class PromoteUserSchema(Schema):
     firebase_id = fields.Str(required=True)
     slug = fields.Str(required=True)
-
-
-class UsersSchema(Schema):
-    users = fields.List(fields.Nested(UserSchema))
 
 
 class CreateUserSchema(Schema):

@@ -1,5 +1,11 @@
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
+from ...auth.schemas import UserSchema, UsersSchema
+from ..schemas import (
+    PromoteUserSchema,
+    CreateUserSchema,
+    ContactTracingSchema,
+)
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
     EmailAlreadyExistsError,
