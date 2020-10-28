@@ -21,6 +21,11 @@
       class="desktop-image"
     >
       <div class="desktop-background">
+        <app-change-background
+          [hasPermission]="hasPermission"
+          [image]="menu.image"
+          (imageEmitter)="setValue($event)"
+        ></app-change-background>
         <app-menu-name
           class="desktop"
           (menuEmitter)="setValue($event)"

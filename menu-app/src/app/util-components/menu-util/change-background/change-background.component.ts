@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faPen, faSave } from '@fortawesome/pro-solid-svg-icons';
+import { faImage, faSave } from '@fortawesome/pro-solid-svg-icons';
+import { MenuEditable } from '../../../interfaces/menus-interface';
 
 @Component({
   selector: 'app-change-background',
@@ -9,8 +10,12 @@ import { faPen, faSave } from '@fortawesome/pro-solid-svg-icons';
 export class ChangeBackgroundComponent implements OnInit {
   @Input() hasPermission: boolean;
   @Input() image: any;
-  @Output() imageEmitter = new EventEmitter<string>();
+  @Output() imageEmitter = new EventEmitter<MenuEditable>();
   editMode: boolean;
+
+  // icons
+  imageIcon = faImage;
+  saveIcon = faSave;
 
   constructor() {}
 
@@ -21,7 +26,7 @@ export class ChangeBackgroundComponent implements OnInit {
   }
 
   save(): void {
-    this.imageEmitter.emit(this.image);
+    this.imageEmitter.emit({ image: this.image });
     this.editMode = false;
   }
 }
