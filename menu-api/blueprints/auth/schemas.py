@@ -9,3 +9,7 @@ class UserSchema(Schema):
     phone_number = fields.Str()
     display_name = fields.Str()
     photo_url = fields.Str()
+
+
+class UsersSchema(Schema):
+    users = fields.List(fields.Nested(UserSchema))

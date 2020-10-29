@@ -8,10 +8,6 @@ class PromoteUserSchema(Schema):
     slug = fields.Str(required=True)
 
 
-class UsersSchema(Schema):
-    users = fields.List(fields.Nested(UserSchema))
-
-
 class CreateUserSchema(Schema):
     email = fields.Email()
     email_verified = fields.Bool()

@@ -41,6 +41,9 @@ import { MenuDetailsComponent } from './util-components/menu-util/menu-details/m
 import { MenuNameComponent } from './util-components/menu-util/menu-name/menu-name.component';
 import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
 import { ChangeBackgroundComponent } from './util-components/menu-util/change-background/change-background.component';
+import { CreateUserComponent } from './admin-components/create-user/create-user.component';
+import { EditUserComponent } from './admin-components/edit-user/edit-user.component';
+import { ViewUsersComponent } from './admin-components/view-users/view-users.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,9 @@ import { ChangeBackgroundComponent } from './util-components/menu-util/change-ba
     MenuNameComponent,
     MobileImageComponent,
     ChangeBackgroundComponent,
+    CreateUserComponent,
+    EditUserComponent,
+    ViewUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,4 +101,4 @@ import { ChangeBackgroundComponent } from './util-components/menu-util/change-ba
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

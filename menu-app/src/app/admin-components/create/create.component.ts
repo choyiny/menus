@@ -11,7 +11,7 @@ import { CreateInterface } from '../../interfaces/menus-interface';
 export class CreateComponent implements OnInit {
   restaurantBody: FormGroup;
 
-  constructor(private fb: FormBuilder, private menuService: MenuService) {}
+  constructor(private fb: FormBuilder, private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.restaurantBody = this.fb.group({
@@ -35,6 +35,6 @@ export class CreateComponent implements OnInit {
         menu[key] = this.restaurantBody.value[key];
       }
     });
-    this.menuService.createMenu(menu).subscribe((menuObj) => {});
+    this.menuService.createMenu(menu).subscribe((menuObj) => { });
   }
 }
