@@ -1,5 +1,6 @@
+from marshmallow import INCLUDE, Schema, fields
+
 from ..auth.schemas import UserSchema
-from marshmallow import fields, Schema, INCLUDE
 
 
 class PromoteUserSchema(Schema):

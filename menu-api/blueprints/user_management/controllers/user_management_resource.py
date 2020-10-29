@@ -1,20 +1,19 @@
 from contextlib import closing
-from .user_management_base_resource import UserManagementBaseResource
-from flask import g
-from flask_apispec import marshal_with, use_kwargs, doc
 
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
-from ...auth.schemas import UsersSchema, UserSchema
-
-from ..schemas import NewOrUpdateUserSchema
-
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
-    PhoneNumberAlreadyExistsError,
     EmailAlreadyExistsError,
+    PhoneNumberAlreadyExistsError,
     UserNotFoundError,
 )
+from flask import g
+from flask_apispec import doc, marshal_with, use_kwargs
+
+from ...auth.schemas import UserSchema, UsersSchema
+from ..schemas import NewOrUpdateUserSchema
+from .user_management_base_resource import UserManagementBaseResource
 
 
 class UserResource(UserManagementBaseResource):
@@ -61,9 +60,10 @@ class UserResource(UserManagementBaseResource):
                     )
 
                 except (ValueError, UserNotFoundError):
-                    return {
-                        "description": "Cannot find user with specified firebase id"
-                    }, 404
+                    return (
+                        {"description": "Cannot find user with specified firebase id"},
+                        404,
+                    )
 
         # Creating user
         else:
@@ -73,9 +73,10 @@ class UserResource(UserManagementBaseResource):
             except EmailAlreadyExistsError:
                 return {"description": "User already exists with that email"}, 400
             except PhoneNumberAlreadyExistsError:
-                return {
-                    "description": "User already exists with that phone-number"
-                }, 400
+                return (
+                    {"description": "User already exists with that phone-number"},
+                    400,
+                )
             user = User.create(
                 firebase_id=firebase_user.uid,
                 email=firebase_user.email,
