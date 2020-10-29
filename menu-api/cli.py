@@ -1,7 +1,6 @@
+from auth.documents.user import User
 from click import argument
 from flask.cli import AppGroup
-
-from auth.documents.user import User
 
 
 def register_commands(app):

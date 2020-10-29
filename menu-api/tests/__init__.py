@@ -1,8 +1,7 @@
-import pytest
-from mongoengine.connection import connect, get_db
-
 import config
+import pytest
 from app import create_app
+from mongoengine.connection import connect, get_db
 
 
 @pytest.fixture

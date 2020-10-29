@@ -1,10 +1,9 @@
 import uuid
 
-from flask_apispec.views import MethodResource
-from marshmallow import Schema, fields
-
 import config
 from extensions import s3
+from flask_apispec.views import MethodResource
+from marshmallow import Schema, fields
 
 
 class ErrorResponseSchema(Schema):

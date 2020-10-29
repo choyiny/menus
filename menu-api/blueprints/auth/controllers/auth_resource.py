@@ -1,7 +1,6 @@
+from auth.decorators import firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with
-
-from auth.decorators import firebase_login_required
 
 from ..schemas import UserSchema
 from .auth_base_resource import AuthBaseResource

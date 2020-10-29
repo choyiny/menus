@@ -1,18 +1,17 @@
 import os
 
+import config as c
+import loggers
 import mongoengine
 import sentry_sdk
+from cli import register_commands
+from extensions import logger
 from flask import Blueprint, Flask, jsonify
 from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
-
-import config as c
-import loggers
-from cli import register_commands
-from extensions import logger
 from spec import APISPEC_SPEC
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
