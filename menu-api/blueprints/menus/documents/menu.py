@@ -86,7 +86,7 @@ class Menu(Document):
     sections = ListField(EmbeddedDocumentField(Section))
     # a list of sections in order
 
-    external_link = URLField(a)
+    external_link = URLField()
 
     # optional external link provided by user
     link_name = StringField()
