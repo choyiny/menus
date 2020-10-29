@@ -12,8 +12,8 @@
     <button *ngIf="hasPermission" class="desktop" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
   </div>
   <div class="img-description">
-    <div *ngIf="item.image" class="logo" (click)="showImage()">
-      <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
+    <div class="logo" (click)="showImage()">
+      <img class="img-fluid icon desktop" src="{{ item.image ? item.image : 'assets/add_photos.png' }}" />
       <fa-icon
         *ngIf="item.image !== 'assets/loading.gif'"
         class="icon-overlay image-icon desktop"
@@ -29,6 +29,7 @@
         (click)="delete($event)"
       ></fa-icon>
       <img />
+      <img class="mobile img-fluid icon" src="{{item.image}}">
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
@@ -42,10 +43,8 @@
           *ngIf="!editMode"
           [content]="item.description"
           [style]="{
-            fontWeight: 300,
             color: 'rgba(26, 24, 36, 0.5)',
-            margin: '2.5px 0px 2.5px 0px',
-            'margin-left': '0px'
+            margin: '2.5px 0px 2.5px 0px'
           }"
           theme="snow"
         >

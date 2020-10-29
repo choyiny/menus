@@ -3,12 +3,13 @@
   font-size: 12px;
   margin-top: 5px;
   margin-left: 0px;
+  position: relative;
 }
 
 //desktop
 @media only screen and (min-width: 600px) {
   .menu-item {
-    padding: 12px;
+    padding: 12px 12px 25px 12px;
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
@@ -17,7 +18,7 @@
 
   .tag-container {
     margin-left: 20px;
-    bottom: 0px;
+    bottom: 5px;
     position: absolute;
 
     &.bg-tint {
