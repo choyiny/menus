@@ -20,8 +20,8 @@ import { MenuItemComponent } from './menu-components/menu-item/menu-item.compone
 import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
 import { ImageFormComponent } from './util-components/image-form/image-form.component';
 import { LoginComponent } from './auth-components/login/login.component';
-import { ImgViewModalComponent } from './util-components/img-view-modal/img-view-modal.component';
-import { ImgFormModalComponent } from './util-components/img-form-modal/img-form-modal.component';
+import { ImgViewModalComponent } from './util-components/modals/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from './util-components/modals/img-form-modal/img-form-modal.component';
 import { CreateComponent } from './admin-components/create/create.component';
 import { AdminDashboardComponent } from './admin-components/admin-dashboard/admin-dashboard.component';
 import { MenuDashboardComponent } from './admin-components/menu-dashboard/menu-dashboard.component';
@@ -35,7 +35,12 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { QuillModule } from 'ngx-quill';
 import { AngularFireModule } from '@angular/fire';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
-import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
+import { CovidModalComponent } from './util-components/modals/covid-modal/covid-modal.component';
+import { ScrollingComponentComponent } from './util-components/scrolling-component/scrolling-component.component';
+import { MenuDetailsComponent } from './util-components/menu-util/menu-details/menu-details.component';
+import { MenuNameComponent } from './util-components/menu-util/menu-name/menu-name.component';
+import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
+import { ChangeBackgroundComponent } from './util-components/menu-util/change-background/change-background.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +59,11 @@ import { CovidModalComponent } from './util-components/covid-modal/covid-modal.c
     AdminDashboardComponent,
     MenuDashboardComponent,
     CovidModalComponent,
+    ScrollingComponentComponent,
+    MenuDetailsComponent,
+    MenuNameComponent,
+    MobileImageComponent,
+    ChangeBackgroundComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +77,19 @@ import { CovidModalComponent } from './util-components/covid-modal/covid-modal.c
     ImageCropperModule,
     FormsModule,
     DragDropModule,
-    QuillModule.forRoot(),
+    QuillModule.forRoot({
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ color: [] }],
+          [{ font: [] }],
+          [{ align: [] }],
+          ['link'],
+        ],
+      },
+    }),
     AngularFireModule.initializeApp(environment.settings.firebase),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],

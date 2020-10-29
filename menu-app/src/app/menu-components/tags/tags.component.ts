@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TagInterface } from '../../interfaces/tag-interface';
 import { TagService } from '../../services/tag.service';
-import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { TagDisplay } from '../../interfaces/tag-display';
+import { faPen } from '@fortawesome/pro-solid-svg-icons';
+import { faSave } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-tags',
@@ -12,6 +13,8 @@ import { TagDisplay } from '../../interfaces/tag-display';
 export class TagsComponent implements OnInit {
   @Input() tag: TagInterface;
   @Input() hasPermission: boolean;
+  editIcon = faPen;
+  saveIcon = faSave;
   tagDisplay: TagDisplay;
   editable = false;
   @Output() outputTagText = new EventEmitter<string>();

@@ -1,0 +1,7 @@
+.button-container {
+  padding-top: 3em;
+  margin-left: 3em;
+  & input {
+    width: 90%;
+  }
+}

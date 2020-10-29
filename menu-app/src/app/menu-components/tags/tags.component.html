@@ -3,9 +3,16 @@
     <span *ngFor="let icon of tagDisplay.icons">
       <fa-icon [icon]="icon"></fa-icon>
     </span>
+    <fa-icon *ngIf="!editable && hasPermission" [icon]="editIcon" (click)="edit()"></fa-icon>
     {{ tagDisplay.text }}
   </div>
-  <button *ngIf="!editable && hasPermission" (click)="edit()">Edit</button>
-  <input class="edit" [(ngModel)]="tag.text" *ngIf="editable" (change)="(tag.text)" />
-  <button *ngIf="editable && hasPermission" (click)="onClick()">Save</button>
+  <div (click)="edit()"></div>
+  <input
+    class="edit"
+    [(ngModel)]="tag.text"
+    [style.width.ch]="tag.text.length + 1"
+    *ngIf="editable"
+    (change)="(tag.text)"
+  />
+  <fa-icon *ngIf="editable && hasPermission" [icon]="saveIcon" (click)="onClick()"></fa-icon>
 </div>

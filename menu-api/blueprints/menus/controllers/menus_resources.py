@@ -146,7 +146,9 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(description="""Menu element related operations""",)
+@doc(
+    description="""Menu element related operations""",
+)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -282,10 +284,13 @@ class ImageMenuResource(MenusBaseResource):
 
         item = menu.get_item(item_id)
         if item:
-            delete_file(item.image)
-            item.image = None
-            menu.save()
-            return item
+            if item.image:
+                delete_file(item.image)
+                item.image = None
+                menu.save()
+                return item
+            else:
+                return {"description": "image not found"}
 
         return {"description": "Item not found"}
 
@@ -401,7 +406,10 @@ class ItemMenuResource(MenusBaseResource):
         if section_id not in section_ids:
             return {"description": "Invalid section"}, 404
 
-        item = Item(_id=str(uuid.uuid4()), sections=[section_id],)
+        item = Item(
+            _id=str(uuid.uuid4()),
+            sections=[section_id],
+        )
 
         menu.menu_items.append(item)
         menu.save()
@@ -420,6 +428,8 @@ class ItemMenuResource(MenusBaseResource):
             return {"description": "Menu not found"}, 401
 
         item = menu.get_item(item_id)
+        if item.image:
+            delete_file(item.image)
         if item is None:
             return {"description": "Item not found"}, 401
 

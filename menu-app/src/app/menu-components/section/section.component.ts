@@ -4,7 +4,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
 import { ScrollService } from '../../services/scroll.service';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-section',
@@ -13,12 +13,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 })
 export class SectionComponent implements OnInit {
   faPlus = faPlus;
+  editIcon = faPen;
   @Input() section: SectionInterface;
   @Input() slug: string;
   @Input() hasPermission: boolean;
   @Input() rearrangeMode: boolean;
   editMode: boolean;
-  deleteMode = false;
 
   constructor(private menuService: MenuService, private scrollService: ScrollService) {}
 
@@ -51,10 +51,6 @@ export class SectionComponent implements OnInit {
 
   updateSection(section: SectionInterface): void {
     this.section = section;
-  }
-
-  toggleDeleteMode(): void {
-    this.deleteMode = !this.deleteMode;
   }
 
   addMenuItem(): void {

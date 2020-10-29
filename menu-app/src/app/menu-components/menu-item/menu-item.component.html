@@ -1,17 +1,34 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
-<app-img-form-modal></app-img-form-modal>
+<app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 <div class="menu-item">
   <div>
-    <button *ngIf="!editMode && hasPermission" class="edit-button" (click)="edit()">
-      <fa-icon [icon]="faPen"></fa-icon> Edit
+    <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
+      <fa-icon [icon]="faPen"></fa-icon>
     </button>
-    <button *ngIf="editMode" class="discard-button" (click)="discard()">Discard</button>
-    <button *ngIf="editMode" class="save-button" (click)="sendRequest()">Save</button>
-    <button *ngIf="hasPermission && deleteMode" (click)="remove()">Delete item</button>
+    <button *ngIf="editMode" class="discard-button desktop" (click)="discard()">Discard</button>
+    <button *ngIf="editMode" class="save-button desktop" (click)="sendRequest()">
+      <fa-icon [icon]="saveIcon"></fa-icon>
+    </button>
+    <button *ngIf="hasPermission" class="desktop" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
   </div>
   <div class="img-description">
     <div *ngIf="item.image" class="logo" (click)="showImage()">
-      <img class="img-fluid icon" src="{{ item.image }}" />
+      <img class="img-fluid icon" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
+      <fa-icon
+        *ngIf="item.image !== 'assets/loading.gif'"
+        class="icon-overlay image-icon desktop"
+        [icon]="imageIcon"
+        size="lg"
+        (click)="cropImage($event)"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="item.image"
+        [icon]="deleteIcon"
+        size="lg"
+        class="icon-overlay trash-icon desktop"
+        (click)="delete($event)"
+      ></fa-icon>
+      <img />
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
@@ -33,11 +50,11 @@
           theme="snow"
         >
         </quill-view-html>
-        <quill-editor *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
+        <quill-editor [modules]="modules" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
       </div>
     </div>
   </div>
-  <span>
+  <span class="tag-container desktop">
     <app-tags
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
@@ -45,11 +62,8 @@
       (outputTagText)="updateTags($event, i)"
     >
     </app-tags>
-    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission"><fa-icon [icon]="faPlus"></fa-icon></button>
+    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
   </span>
-  <div *ngIf="editMode" class="form">
-    <button (click)="cropImage()">Add image</button>
-    <button (click)="onSubmit()">Upload!</button>
-    <button (click)="delete()">Delete Image</button>
-  </div>
 </div>

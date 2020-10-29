@@ -1,12 +1,11 @@
 <div *ngIf="!rearrangeMode" class="section">
   <div>
-    <button *ngIf="!editMode && hasPermission" (click)="edit()">Edit</button>
-    <button *ngIf="editMode" (click)="sendRequest()">Save</button>
-    <button *ngIf="hasPermission" class="bg-tint" (click)="addMenuItem()">
-      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item
+    <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
+      <fa-icon [icon]="editIcon"></fa-icon>
     </button>
-    <button *ngIf="hasPermission" class="bg-tint" (click)="toggleDeleteMode()">
-      {{ deleteMode ? 'OK' : 'Delete Menu Items' }}
+    <button class="desktop" *ngIf="editMode" (click)="sendRequest()">Save</button>
+    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">
+      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item
     </button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
@@ -27,7 +26,6 @@
     <app-menu-item
       cdkDrag
       *ngFor="let item of section.menu_items"
-      [deleteMode]="deleteMode"
       id="{{ item._id }}"
       (sectionEmitter)="updateSection($event)"
       [item]="item"

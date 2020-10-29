@@ -3,180 +3,32 @@
   border-radius: 0px 0px 30px 30px;
 }
 
-.background-image {
-  background-size: 100%;
-  background-repeat: no-repeat;
-}
-
-.header {
-  background: #ffffff;
-  border-width: thin;
-  border-radius: 31px;
-  transition: all 0.3s;
-
-  .bio {
-    border-radius: 20px 20px 0 0;
-    background: #ffffff;
-    padding: 20px 0px 0px 20px;
-    .description {
-      margin-left: 20px;
-      font-weight: 300;
-      color: #8c8b91;
-    }
-  }
-}
-
-@media only screen and (min-width: 600px) {
-  .scrolling-wrapper {
-    top: 0;
-    background: #ffffff;
-
-    &.menu-section {
-      padding: 14px 20px;
-      margin: 20px 6px 20px 0;
-      border: none;
-      font-size: 20px;
-      font-weight: 600;
-      color: #1a1824;
-      transition: all 0.3s;
-      background-color: white;
-      cursor: pointer;
-    }
-
-    .desktop-header {
-      display: inline-block;
-      margin-right: 10em;
-      transition: all 0.3s;
-
-      .desktop-name {
-        font-size: 24px;
-        font-weight: 600;
-      }
-
-      .logo {
-        display: inline;
-      }
-    }
-  }
-}
-
-.scrolling-wrapper {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  background: #ffffff;
-
-  &.sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    overflow-y: hidden;
-
-    .menu-section {
-      font-size: 18px;
-      margin: 0 2px 0 0;
-      padding: 9px 17px;
-    }
-
-    .menu-description {
-      font-size: 12px;
-    }
-  }
-
-  .menu-section {
-    padding: 14px 20px;
-    margin: 20px 6px 20px 0;
-    border: none;
-    font-size: 24px;
-    font-weight: 600;
-    color: #1a1824;
-    transition: all 0.3s;
-    background-color: white;
-    cursor: pointer;
-
-    .section-description {
-      font-size: 14px;
-      font-weight: 300;
-      margin-bottom: 0;
-    }
-
-    &:focus {
-      outline: 0;
-    }
-  }
-}
-
-.card-overlay {
-  height: 250px;
-  width: 100%;
-  display: flex;
-
-  .overlay-container {
-    align-self: flex-end;
-    color: white;
-    margin-left: 18px;
-    margin-bottom: 10px;
-    overflow: hidden;
-
-    .name {
-      font-weight: 600;
-    }
-  }
-}
-
-.desktop-description {
-  background: white;
-  margin: 0em 3em 1em 3em;
-  border-radius: 40px;
-  padding: 2em;
-  width: 50%;
-
-  .desc {
-    color: #1a1824;
-    font-size: 36px;
-    font-weight: 500;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
-}
-
-.link {
-  margin-top: 0;
+.left {
   margin-left: 20px;
+}
+
+.section-box {
+  width: 100%;
+  overflow: hidden;
 }
 
 // mobile view
 @media only screen and (max-width: 600px) {
   .desktop-background {
     background: white;
+    padding-top: 0px;
   }
 
-  .desktop-header {
-    display: none;
-  }
-
-  .desktop-description {
+  .desktop-scroll {
     display: none;
   }
 }
 
 // desktop view
 @media only screen and (min-width: 600px) {
-  .header {
-    display: none;
-  }
   .section-background {
     background: white;
     margin: 3em 3em 1em 3em;
     border-radius: 40px;
   }
-}
-
-.quill-view {
-  padding-bottom: 2em;
-}
-
-.section-box {
-  width: 100%;
-  overflow: hidden;
 }

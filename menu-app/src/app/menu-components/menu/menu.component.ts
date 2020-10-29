@@ -1,10 +1,10 @@
-import { MenuInterface } from '../../interfaces/menus-interface';
+import { MenuEditable, MenuInterface } from '../../interfaces/menus-interface';
 import { Component, HostListener, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
-import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
+import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SectionInterface } from '../../interfaces/section-interface';
@@ -23,12 +23,12 @@ import { ScrollService } from '../../services/scroll.service';
 })
 export class MenuComponent implements OnInit {
   @Input() menu: MenuInterface;
-  showImage = true;
-  @Input() selectedSection: string;
+  miniScroll = false;
+  selectedSection = 0;
   @Input() selectedImage: string;
   rearrangeMode = false;
-  editMode: boolean;
   slug: string;
+  previousScroll = 0;
 
   // true if user has permission to edit this menu
   hasPermission: boolean;
@@ -57,6 +57,8 @@ export class MenuComponent implements OnInit {
   getMenu(id: string): void {
     this.menuService.getMenu(id).subscribe((menu) => {
       this.menu = menu;
+      // force <h1>
+      this.menu.description = this.injectHeaderStyle(this.menu.description);
       if (this.sameDay()) {
         return;
       }
@@ -83,10 +85,38 @@ export class MenuComponent implements OnInit {
       transitionConstant = 300;
     }
     if (scrollPosition > transitionConstant) {
-      this.showImage = false;
+      this.miniScroll = true;
     } else {
-      this.showImage = true;
+      this.miniScroll = false;
     }
+
+    // linear time solution, if performance is an issue, should switch to using pointers
+    if (scrollPosition > this.previousScroll) {
+      for (let i = 0; i < this.menu.sections.length; i++) {
+        const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
+        if (scrollPosition < sectionPosition) {
+          this.selectedSection = i;
+          break;
+        }
+      }
+    } else {
+      for (let i = this.menu.sections.length - 1; i >= 0; i--) {
+        const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
+        if (sectionPosition < scrollPosition) {
+          this.selectedSection = i;
+          break;
+        }
+      }
+    }
+    const buttonLocation = document.getElementById(
+      `${this.menu.sections[this.selectedSection]._id} button`
+    ).offsetLeft;
+    document.getElementById('wrapper').scrollTo({
+      behavior: 'smooth',
+      left: buttonLocation,
+    });
+
+    this.previousScroll = scrollPosition;
   }
 
   scrollToSection(id: string): void {
@@ -97,11 +127,6 @@ export class MenuComponent implements OnInit {
     this.menuService.editMenu(this.slug, this.menu).subscribe((menu) => {
       this.menu = menu;
     });
-    this.editMode = false;
-  }
-
-  edit(): void {
-    this.editMode = true;
   }
 
   injectHeaderStyle(header: string): string {
@@ -144,6 +169,14 @@ export class MenuComponent implements OnInit {
     this.menuService.newSection(this.slug, index).subscribe((menu) => {
       this.menu = menu;
     });
+  }
+
+  setValue(editable: MenuEditable): void {
+    // tslint:disable-next-line:forin
+    for (const field in editable) {
+      this.menu[field] = editable[field];
+      this.sendRequest();
+    }
   }
 
   sameDay(): boolean {

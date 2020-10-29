@@ -13,6 +13,7 @@ $tint-color: #ee3353;
 
 .ql-editor {
   padding: 0 0 0 0;
+  position: relative;
 
   & p {
     font-weight: 100;
@@ -47,11 +48,9 @@ $tint-color: #ee3353;
     0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 
-
 button {
   display: inline-block;
   color: white;
-  background: none;
   background-color: black;
   font-family: inherit;
   font-size: 100%;
@@ -72,5 +71,27 @@ button {
 
   fa-icon {
     margin: 3px;
+  }
+}
+
+input[type='text'] {
+  border: none;
+  background: transparent;
+  &:focus {
+    outline: none;
+  }
+}
+
+//mobile
+@media only screen and (max-width: 600px) {
+  .desktop {
+    display: none;
+  }
+}
+
+//desktop
+@media only screen and (min-width: 600px) {
+  .mobile {
+    display: none;
   }
 }

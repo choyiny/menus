@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
-import { ImgViewModalComponent } from '../../util-components/img-view-modal/img-view-modal.component';
-import { ImgFormModalComponent } from '../../util-components/img-form-modal/img-form-modal.component';
+import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
-import { faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
 import { SectionInterface } from '../../interfaces/section-interface';
 
 @Component({
@@ -13,17 +13,29 @@ import { SectionInterface } from '../../interfaces/section-interface';
   styleUrls: ['./menu-item.component.scss'],
 })
 export class MenuItemComponent implements OnInit {
-  faPlus = faPlus;
-  faPen = faPen;
   @Input() item: MenuItemInterface;
   itemOriginal: MenuItemInterface;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   @Input() slug: string;
   @Input() hasPermission: boolean;
-  @Input() deleteMode: boolean;
   @Output() sectionEmitter = new EventEmitter<SectionInterface>();
   editMode: boolean;
+  // icons
+  faPlus = faPlus;
+  faPen = faPen;
+  deleteIcon = faTrash;
+  saveIcon = faSave;
+  imageIcon = faImage;
+  modules: {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }],
+      [{ font: [] }],
+      [{ align: [] }],
+      ['link']
+    ];
+  };
 
   constructor(private menuService: MenuService) {}
 
@@ -31,29 +43,13 @@ export class MenuItemComponent implements OnInit {
     this.itemOriginal = { ...this.item };
   }
 
-  onSubmit(): void {
-    const dataUrl = this.imgForm.file;
-    if (dataUrl) {
-      fetch(dataUrl)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const file = new File([blob], 'image', { type: 'image/png' });
-          const formData = new FormData();
-          formData.append('file', file);
-          this.menuService.uploadPhoto(this.slug, this.item._id, formData).subscribe((url) => {
-            this.item.image = url;
-            this.itemOriginal.image = url;
-          });
-        });
-    }
-  }
-
   showImage(): void {
     this.imgView.open();
   }
 
-  cropImage(): void {
+  cropImage($event): void {
     this.imgForm.open();
+    event.stopPropagation();
   }
 
   sendRequest(): void {
@@ -92,14 +88,19 @@ export class MenuItemComponent implements OnInit {
     });
   }
 
-  delete(): void {
+  delete($event): void {
     this.menuService.deleteImage(this.slug, this.item._id).subscribe((item) => {
       this.item = item;
     });
+    event.stopPropagation();
   }
 
   discard(): void {
     this.editMode = false;
     this.item = { ...this.itemOriginal };
+  }
+
+  setImage(url: string): void {
+    this.item.image = url;
   }
 }

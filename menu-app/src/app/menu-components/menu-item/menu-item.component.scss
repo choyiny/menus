@@ -5,18 +5,47 @@
   margin-left: 0px;
 }
 
+//desktop
 @media only screen and (min-width: 600px) {
   .menu-item {
-    padding: 1em;
+    padding: 12px;
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
     height: 80%;
+    overflow: scroll;
   }
-}
 
-.form {
-  margin-bottom: 0.5em;
+  .tag-container {
+    margin-left: 20px;
+    bottom: 0px;
+    position: absolute;
+
+    &.bg-tint {
+      position: absolute;
+      bottom: 0px;
+    }
+  }
+
+  .editor-margin {
+    position: relative;
+  }
+
+  .icon-overlay {
+    display: inline-block;
+    position: absolute;
+    z-index: 10;
+  }
+
+  .image-icon {
+    top: 22px;
+    left: 22px;
+  }
+
+  .trash-icon {
+    left: 40px;
+    top: 5px;
+  }
 }
 
 h1 {
@@ -25,8 +54,10 @@ h1 {
 }
 
 .logo {
-  width: 18%;
+  position: relative;
   display: flex;
+  max-width: 60px;
+  max-height: 60px;
   margin-bottom: 1em;
   margin-right: 10px;
 
@@ -59,12 +90,6 @@ h1 {
     .item {
       float: left;
     }
-  }
-
-  .item-description {
-    font-weight: 300;
-    color: rgba(26, 24, 36, 0.5);
-    margin: 2.5px 0px 2.5px 0px;
   }
 }
 
