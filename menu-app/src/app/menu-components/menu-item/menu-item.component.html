@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <span class="tag-container desktop">
+  <span class="tag-container">
     <app-tags
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
@@ -62,7 +62,7 @@
       (outputTagText)="updateTags($event, i)"
     >
     </app-tags>
-    <button class="bg-tint round" (click)="addTag()" *ngIf="hasPermission">
+    <button class="bg-tint round desktop" (click)="addTag()" *ngIf="hasPermission">
       <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </span>
