@@ -1,8 +1,8 @@
 from functools import wraps
+
 from firebase_admin import auth
 from firebase_admin.auth import InvalidIdTokenError
-
-from flask import request, g
+from flask import g, request
 
 from .documents.user import User
 

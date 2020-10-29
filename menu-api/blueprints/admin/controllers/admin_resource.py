@@ -1,23 +1,23 @@
-from .admin_base_resource import AdminBaseResource
-from flask import g
-from flask_apispec import marshal_with, use_kwargs, doc
-
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
-from ..schemas import (
-    UsersSchema,
-    PromoteUserSchema,
-    UserSchema,
-    CreateUserSchema,
-    ContactTracingSchema,
-)
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
-    PhoneNumberAlreadyExistsError,
     EmailAlreadyExistsError,
+    PhoneNumberAlreadyExistsError,
 )
+from flask import g
+from flask_apispec import doc, marshal_with, use_kwargs
+
 from ...menus.documents import Menu
 from ...menus.schemas import GetMenuSchema
+from ..schemas import (
+    ContactTracingSchema,
+    CreateUserSchema,
+    PromoteUserSchema,
+    UserSchema,
+    UsersSchema,
+)
+from .admin_base_resource import AdminBaseResource
 
 
 class AdminUserResource(AdminBaseResource):

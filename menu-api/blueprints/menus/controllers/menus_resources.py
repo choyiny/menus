@@ -1,29 +1,28 @@
-from flask import g
-from flask_apispec import marshal_with, use_kwargs, doc
-from webargs.flaskparser import use_args
 import csv
-from io import BytesIO
 import uuid
+from io import BytesIO
 
 import qrcode
-from PIL import Image
-from marshmallow import Schema, fields
-
 from auth.decorators import firebase_login_required
-from helpers import ErrorResponseSchema, upload_image, delete_file
-from ..helpers import csv_helper
-from ..helpers import qr_helper
-from .menus_base_resource import MenusBaseResource
-from ..documents import Menu, Item, Section, Tag
+from flask import g
+from flask_apispec import doc, marshal_with, use_kwargs
+from helpers import ErrorResponseSchema, delete_file, upload_image
+from marshmallow import Schema, fields
+from PIL import Image
+from webargs.flaskparser import use_args
+
+from ..documents import Item, Menu, Section, Tag
+from ..helpers import csv_helper, qr_helper
 from ..schemas import (
-    MenuSchema,
     GetMenuSchema,
-    pagination_args,
-    file_args,
-    qr_args,
-    SectionItemSchema,
     ItemSchema,
+    MenuSchema,
+    SectionItemSchema,
+    file_args,
+    pagination_args,
+    qr_args,
 )
+from .menus_base_resource import MenusBaseResource
 
 
 @doc(description="""Menu collection related operations""")
@@ -146,9 +145,7 @@ class ImportMenuResource(MenusBaseResource):
         self.all_sections = {}
 
 
-@doc(
-    description="""Menu element related operations""",
-)
+@doc(description="""Menu element related operations""",)
 class MenuResource(MenusBaseResource):
     @marshal_with(GetMenuSchema)
     def get(self, slug):
@@ -348,9 +345,7 @@ class SectionMenuResource(MenusBaseResource):
         if menu is None:
             return {"description": "Menu not found."}, 404
 
-        section = Section(
-            _id=str(uuid.uuid4()),
-        )
+        section = Section(_id=str(uuid.uuid4()),)
         menu.sections.insert(index + 1, section)
         menu.save()
         return menu.sectionized_menu()
@@ -406,10 +401,7 @@ class ItemMenuResource(MenusBaseResource):
         if section_id not in section_ids:
             return {"description": "Invalid section"}, 404
 
-        item = Item(
-            _id=str(uuid.uuid4()),
-            sections=[section_id],
-        )
+        item = Item(_id=str(uuid.uuid4()), sections=[section_id],)
 
         menu.menu_items.append(item)
         menu.save()

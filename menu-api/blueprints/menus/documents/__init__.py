@@ -1,1 +1,1 @@
-from .menu import Menu, Item, Section, Tag
+from .menu import Item, Menu, Section, Tag

@@ -1,9 +1,9 @@
-from .auth_base_resource import AuthBaseResource
-from flask import g
-from flask_apispec import marshal_with, doc
-
 from auth.decorators import firebase_login_required
+from flask import g
+from flask_apispec import doc, marshal_with
+
 from ..schemas import UserSchema
+from .auth_base_resource import AuthBaseResource
 
 
 class AuthResource(AuthBaseResource):

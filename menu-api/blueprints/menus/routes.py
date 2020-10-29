@@ -1,12 +1,12 @@
 from .controllers import (
-    MenusResource,
-    MenuResource,
-    ImportMenuResource,
     AllMenuResource,
-    QRMenuResource,
     ImageMenuResource,
-    SectionMenuResource,
+    ImportMenuResource,
     ItemMenuResource,
+    MenuResource,
+    MenusResource,
+    QRMenuResource,
+    SectionMenuResource,
 )
 
 resources = [
