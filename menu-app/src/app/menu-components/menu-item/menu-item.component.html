@@ -13,7 +13,7 @@
   </div>
   <div class="img-description">
     <div class="logo" (click)="showImage()">
-      <img class="img-fluid icon desktop" src="{{ item.image ? item.image : 'assets/blank.png' }}" />
+      <img class="img-fluid icon desktop" src="{{ item.image ? item.image : 'assets/add_photos.png' }}" />
       <fa-icon
         *ngIf="item.image !== 'assets/loading.gif'"
         class="icon-overlay image-icon desktop"
@@ -43,10 +43,8 @@
           *ngIf="!editMode"
           [content]="item.description"
           [style]="{
-            fontWeight: 300,
             color: 'rgba(26, 24, 36, 0.5)',
-            margin: '2.5px 0px 2.5px 0px',
-            'margin-left': '0px'
+            margin: '2.5px 0px 2.5px 0px'
           }"
           theme="snow"
         >
