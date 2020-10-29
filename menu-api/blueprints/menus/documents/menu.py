@@ -25,7 +25,7 @@ class Tag(EmbeddedDocument):
 class Section(EmbeddedDocument):
     name = StringField(required=True, default="New Section")
     image = URLField()
-    description = StringField(default="No description")
+    description = StringField(default="No description", null=True)
     subtitle = StringField()
     _id = StringField(required=True)
 
@@ -53,7 +53,7 @@ class Item(EmbeddedDocument):
     sections = ListField(StringField(required=True))
     # a list of sections this item is part of
 
-    description = StringField(default="No description")
+    description = StringField(default="No description", null=True)
     # description of menu item
 
     _id = StringField(default_factory=uuid.uuid4)
@@ -77,7 +77,7 @@ class Menu(Document):
     name = StringField(required=True)
     # name of this menu, usually the restaurant name
 
-    description = StringField()
+    description = StringField(null=True)
     # Description of menu
 
     menu_items = ListField(EmbeddedDocumentField(Item))
@@ -86,7 +86,7 @@ class Menu(Document):
     sections = ListField(EmbeddedDocumentField(Section))
     # a list of sections in order
 
-    external_link = URLField()
+    external_link = URLField(a)
 
     # optional external link provided by user
     link_name = StringField()
