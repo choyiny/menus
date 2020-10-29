@@ -1,10 +1,10 @@
 from .menus_resources import (
+    AllMenuResource,
+    ImageMenuResource,
+    ImportMenuResource,
+    ItemMenuResource,
     MenuResource,
     MenusResource,
-    ImportMenuResource,
-    AllMenuResource,
     QRMenuResource,
-    ImageMenuResource,
     SectionMenuResource,
-    ItemMenuResource,
 )

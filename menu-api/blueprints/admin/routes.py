@@ -1,4 +1,4 @@
-from .controllers import AdminUserResource, AdminTracingResource
+from .controllers import AdminTracingResource, AdminUserResource
 
 # a list of resources
 resources = [

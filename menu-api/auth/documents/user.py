@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from mongoengine import Document, StringField, ListField, BooleanField, EmailField
+from mongoengine import BooleanField, Document, EmailField, ListField, StringField
 
 
 class User(Document):

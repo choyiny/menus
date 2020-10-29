@@ -1,16 +1,16 @@
+import uuid
 from collections import defaultdict
 from typing import Optional
 
 from mongoengine import (
-    Document,
-    StringField,
-    ListField,
-    EmbeddedDocumentField,
-    EmbeddedDocument,
-    URLField,
     BooleanField,
+    Document,
+    EmbeddedDocument,
+    EmbeddedDocumentField,
+    ListField,
+    StringField,
+    URLField,
 )
-import uuid
 
 
 class Tag(EmbeddedDocument):

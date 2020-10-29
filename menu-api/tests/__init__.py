@@ -1,5 +1,5 @@
 import pytest
-from mongoengine.connection import get_db, connect
+from mongoengine.connection import connect, get_db
 
 import config
 from app import create_app

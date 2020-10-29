@@ -2,7 +2,7 @@ import os
 
 import mongoengine
 import sentry_sdk
-from flask import Flask, jsonify, Blueprint
+from flask import Blueprint, Flask, jsonify
 from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
 from sentry_sdk.integrations.flask import FlaskIntegration
@@ -78,19 +78,18 @@ def register_blueprints(app: Flask):
     docs = FlaskApiSpec(app)
 
     # menus blueprint
-    from blueprints.menus import menus_bp
-    from blueprints.menus.routes import resources as menu_resources
-    from blueprints.menus import bp_name as menu_bp_name
+    # admin blueprint
+    from blueprints.admin import admin_bp
+    from blueprints.admin import bp_name as admin_bp_name
+    from blueprints.admin.routes import resources as admin_resources
 
     # auth blueprint
     from blueprints.auth import auth_bp
-    from blueprints.auth.routes import resources as auth_resources
     from blueprints.auth import bp_name as auth_bp_name
-
-    # admin blueprint
-    from blueprints.admin import admin_bp
-    from blueprints.admin.routes import resources as admin_resources
-    from blueprints.admin import bp_name as admin_bp_name
+    from blueprints.auth.routes import resources as auth_resources
+    from blueprints.menus import bp_name as menu_bp_name
+    from blueprints.menus import menus_bp
+    from blueprints.menus.routes import resources as menu_resources
 
     set_routes(menu_resources, app, menus_bp, docs, menu_bp_name)
     set_routes(auth_resources, app, auth_bp, docs, auth_bp_name)

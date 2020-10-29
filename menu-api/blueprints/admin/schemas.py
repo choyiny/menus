@@ -1,4 +1,5 @@
-from marshmallow import fields, Schema, INCLUDE
+from marshmallow import INCLUDE, Schema, fields
+
 from ..auth.schemas import UserSchema
 
 
