@@ -3,8 +3,8 @@ from webargs import fields
 
 
 class TagSchema(Schema):
-    icon = fields.Str(example="fas-star")
-    text = fields.Str(example="Chef Featured")
+    icon = fields.Str(example="fas-star", allow_none=True)
+    text = fields.Str(example="Chef Featured", allow_none=True)
 
 
 class ItemSchema(Schema):
@@ -12,23 +12,29 @@ class ItemSchema(Schema):
     image = fields.Url(
         example="https://via.placeholder.com/150", allow_none=True, missing=None
     )
-    name = fields.Str(example="Meatball Pasta")
-    price = fields.Str(example="$6.99")
+    name = fields.Str(example="Meatball Pasta", allow_none=True)
+    price = fields.Str(example="$6.99", allow_none=True)
     tags = fields.List(fields.Nested(TagSchema))
     sections = fields.List(fields.Str(), example=["A la carte", "Chef's Featured"])
-    description = fields.Str(example="A Pasta with Meatballs")
+    description = fields.Str(example="A Pasta with Meatballs", allow_none=True)
 
 
 class SectionSchema(Schema):
     _id = fields.Str(required=True, example="da95f757-603a-41a8-aa62-dede4484a601")
-    name = fields.Str(description="Name of section", example="A la carte")
+    name = fields.Str(
+        description="Name of section", example="A la carte", allow_none=True
+    )
     menu_items = fields.List(fields.Nested(ItemSchema))
-    description = fields.Str(description="Name of section", example="Piece by piece")
-    subtitle = fields.Str(description="Headers for section anchors")
+    description = fields.Str(
+        description="Name of section", example="Piece by piece", allow_none=True
+    )
+    subtitle = fields.Str(description="Headers for section anchors", allow_none=True)
 
 
 class MenuSchema(Schema):
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(
+        description="Name of the restaurant", example="Hollywood Cafe", allow_none=True
+    )
     sections = fields.List(fields.Nested(SectionSchema, required=True))
 
 
