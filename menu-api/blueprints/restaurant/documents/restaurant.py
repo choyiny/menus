@@ -92,6 +92,7 @@ class Restaurant(Document):
 
     menus = ListField(ReferenceField("Menu"))
 
+    # name of restaurant
     name = StringField()
 
     # force covid19 tracing modal

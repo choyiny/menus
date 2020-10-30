@@ -1,17 +1,25 @@
 from flask_apispec import doc, marshal_with, use_kwargs
 
 from ..documents.restaurant import Restaurant
-from ..schemas import GetRestaurant, MenuSchema
+from ..schemas import GetRestaurantSchema, MenuSchema, RestaurantSchema
 from .restaurant_base_resource import RestaurantBaseResource
 
 
 class RestaurantResource(RestaurantBaseResource):
-    @marshal_with(GetRestaurant)
+    @marshal_with(GetRestaurantSchema)
     def get(self, slug):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return {"description": "Restaurant not found"}
         return restaurant.to_dict()
+
+
+class CreateRestaurantResource(RestaurantBaseResource):
+    @use_kwargs(RestaurantSchema)
+    @marshal_with(GetRestaurantSchema)
+    def post(self, **kwargs):
+        restaurant = Restaurant(**kwargs).save()
+        return restaurant
 
 
 class MenuResource(RestaurantBaseResource):
