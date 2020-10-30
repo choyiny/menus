@@ -22,17 +22,6 @@ class Tag(EmbeddedDocument):
     text = StringField(required=True)
 
 
-class Section(EmbeddedDocument):
-    name = StringField(required=True, default="New Section")
-    description = StringField(default="No description")
-    subtitle = StringField()
-    _id = StringField(required=True)
-    menu_items = []
-
-    def __eq__(self, other):
-        return type(self) == type(other) and self._id == other._id
-
-
 class Item(EmbeddedDocument):
     """
     A menu item, contained in a menu.
@@ -50,15 +39,22 @@ class Item(EmbeddedDocument):
     tags = ListField(EmbeddedDocumentField(Tag), default=[])
     # a list of tags
 
-    section_id = StringField()
-    # a list of sections this item is part of
-
     description = StringField(default="No description")
     # description of menu item
 
-    _id = StringField(default_factory=uuid.uuid4)
-
+    _id = StringField()
     # unique id of menu-item
+
+    def __eq__(self, other):
+        return type(self) == type(other) and self._id == other._id
+
+
+class Section(EmbeddedDocument):
+    _id = StringField(required=True)
+    name = StringField(required=True, default="New Section")
+    description = StringField(default="No description")
+    subtitle = StringField()
+    menu_items = ListField(EmbeddedDocumentField(Item))
 
     def __eq__(self, other):
         return type(self) == type(other) and self._id == other._id
@@ -73,6 +69,7 @@ class Menu(Document):
     # name of this menu, usually the restaurant name
 
     sections = ListField(EmbeddedDocumentField(Section))
+
     # a list of sections in order
 
     def get_item(self, item_id) -> Optional[Item]:
@@ -90,7 +87,7 @@ class Restaurant(Document):
 
     description = StringField()
 
-    Image = URLField()
+    image = URLField()
 
     menus = ListField(ReferenceField(Menu))
 

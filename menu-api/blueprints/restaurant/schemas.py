@@ -37,8 +37,6 @@ class Restaurant(Schema):
     name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
-    menu_items = fields.List(fields.Nested(ItemSchema))
-    link_name = fields.Str(description="name of link")
     enable_trace = fields.Bool(
         description="Enable contact tracing functionality for the restaurant"
     )
