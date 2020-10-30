@@ -73,10 +73,18 @@ class Menu(Document):
 
     # a list of sections in order
 
-    def get_item(self, item_id) -> Optional[Item]:
-        for item in self.menu_items:
-            if item._id == item_id:
-                return item
+    def get_section(self, section_id) -> Optional[Section]:
+        for section in self.sections:
+            if section._id == section_id:
+                return section
+        return None
+
+    def get_item(self, section_id, item_id) -> Optional[Item]:
+        for section in self.sections:
+            if section._id == section_id:
+                for item in section.menu_items:
+                    if item._id == item_id:
+                        return item
         return None
 
     def __eq__(self, other):

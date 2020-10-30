@@ -1,7 +1,13 @@
 from flask_apispec import doc, marshal_with, use_kwargs
 
 from ..documents.restaurant import Restaurant
-from ..schemas import GetRestaurantSchema, MenuSchema, RestaurantSchema
+from ..schemas import (
+    GetRestaurantSchema,
+    ItemSchema,
+    MenuSchema,
+    RestaurantSchema,
+    SectionSchema,
+)
 from .restaurant_base_resource import RestaurantBaseResource
 
 
@@ -74,3 +80,49 @@ class MenuResource(RestaurantBaseResource):
         if menu is None:
             return {"description": "Menu not found"}
         return menu
+
+
+class SectionResource(RestaurantBaseResource):
+    @use_kwargs(SectionSchema)
+    @marshal_with(SectionSchema)
+    def patch(self, slug, menu_name, section_id, **kwargs):
+        """Edit section details"""
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return {"description": "Restaurant not found"}
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return {"description": "Menu not found"}
+        section = menu.get_section(section_id)
+        if section is None:
+            return {"description": "Section not found"}
+
+        if "name" in kwargs:
+            section.name = kwargs.get("name")
+
+        if "subtitle" in kwargs:
+            section.subtitle = kwargs.get("subtitle")
+
+        if "menu_items" in kwargs:
+            section.menu_items = kwargs.get("menu_items")
+
+        if "description" in kwargs:
+            section.description = kwargs.get("description")
+
+        menu.save()
+        return section
+
+    def delete(self, slug, menu_name, section_id):
+        """Delete section"""
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return {"description": "Restaurant not found"}
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return {"description": "Menu not found"}
+        section = menu.get_section(section_id)
+        if section is None:
+            return {"description": "Section not found"}
+
+        menu.sections.remove(section)
+        return section

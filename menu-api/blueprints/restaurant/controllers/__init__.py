@@ -1,1 +1,6 @@
-from .restaurant_resource import MenuResource, RestaurantResource, RestaurantsResource
+from .restaurant_resource import (
+    MenuResource,
+    RestaurantResource,
+    RestaurantsResource,
+    SectionResource,
+)
