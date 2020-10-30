@@ -86,9 +86,14 @@ def register_blueprints(app: Flask):
     from blueprints.auth import auth_bp
     from blueprints.auth import bp_name as auth_bp_name
     from blueprints.auth.routes import resources as auth_resources
+
+    # menu [legacy] blueprints
     from blueprints.menus import bp_name as menu_bp_name
     from blueprints.menus import menus_bp
     from blueprints.menus.routes import resources as menu_resources
+    from blueprints.restaurant import bp_name as restaurant_bp_name
+    from blueprints.restaurant import restaurant_bp
+    from blueprints.restaurant.routes import resources as restaurant_resources
 
     # user management blueprint
     from blueprints.user_management import bp_name as user_management_bp_name
@@ -105,6 +110,7 @@ def register_blueprints(app: Flask):
         docs,
         user_management_bp_name,
     )
+    set_routes(restaurant_resources, app, restaurant_bp, docs, restaurant_bp_name)
 
 
 def register_external(skip_sentry=False):
