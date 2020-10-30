@@ -30,7 +30,7 @@ def register_commands(app):
     @migration_cli.command("menus")
     def migrate():
         """
-        Migrates exisiting menus in apiv1 to restaurants in apiv2
+        Migrates existing menus from apiv1 to restaurants in apiv2
         """
         for menu in Menu.objects():
             sectionized = menu.sectionized_menu()
@@ -68,7 +68,6 @@ def register_commands(app):
                 menus=[new_menu],
             )
             restaurant.save()
-            menu.delete()
 
     app.cli.add_command(auth_cli)
     app.cli.add_command(migration_cli)

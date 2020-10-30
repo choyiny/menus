@@ -89,7 +89,7 @@ class Restaurant(Document):
 
     image = URLField()
 
-    menus = ListField(ReferenceField(Menu))
+    menus = ListField(ReferenceField("Menu"))
 
     name = StringField()
 
