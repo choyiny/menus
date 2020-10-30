@@ -1,0 +1,1 @@
+from .restaurant_base_resource import RestaurantBaseResource

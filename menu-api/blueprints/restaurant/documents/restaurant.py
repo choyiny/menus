@@ -85,7 +85,7 @@ class Menu(Document):
         return type(self) == type(other) and self._id == other._id
 
 
-class Restaurant:
+class Restaurant(Document):
     slug = StringField(primary_key=True, required=True)
 
     description = StringField()
