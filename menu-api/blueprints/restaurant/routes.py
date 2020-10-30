@@ -1,4 +1,4 @@
-from .controllers import CreateRestaurantResource, MenuResource, RestaurantResource
+from .controllers import MenuResource, RestaurantResource, RestaurantsResource
 
 resources = [
     (RestaurantResource, "restaurants/<string:slug>", "restaurant", ["GET"]),
@@ -8,5 +8,10 @@ resources = [
         "menus",
         ["GET"],
     ),
-    (CreateRestaurantResource, "restaurants", "create_restaurant", ["POST"]),
+    (
+        RestaurantsResource,
+        "restaurants",
+        "create_restaurant",
+        ["POST", "DELETE", "PATCH"],
+    ),
 ]
