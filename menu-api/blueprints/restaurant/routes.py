@@ -1,3 +1,11 @@
-from .controllers.restaurant_resource import RestaurantResource
+from .controllers import MenuResource, RestaurantResource
 
-resources = [(RestaurantResource, "restaurants/<string:slug>", "restaurant", ["GET"])]
+resources = [
+    (RestaurantResource, "restaurants/<string:slug>", "restaurant", ["GET"]),
+    (
+        MenuResource,
+        "restaurants/<string:slug>/menus/<string:menu_name>",
+        "menus",
+        ["GET"],
+    ),
+]
