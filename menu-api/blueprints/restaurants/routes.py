@@ -37,7 +37,7 @@ resources = [
     (GenerateItemResource, "items/new", "new item", ["POST"]),
     (
         ImageResource,
-        "restaurants/<string:slug>/menus/<string:slug>/items/<string:item_id>/picture",
+        "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>/picture",
         "picture",
         ["DELETE", "PATCH"],
     ),
