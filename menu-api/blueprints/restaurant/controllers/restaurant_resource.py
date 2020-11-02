@@ -1,10 +1,13 @@
 import uuid
+from io import BytesIO
 
 import qrcode
 from flask_apispec import doc, marshal_with, use_kwargs
+from helpers import delete_file, upload_image
 from PIL import Image
 from utils.errors import (
     FORBIDDEN,
+    IMAGE_NOT_FOUND,
     ITEM_NOT_FOUND,
     MENU_NOT_FOUND,
     RESTAURANT_NOT_FOUND,
@@ -21,6 +24,7 @@ from ..schemas import (
     MenuSchema,
     RestaurantSchema,
     SectionSchema,
+    file_args,
     qr_args,
 )
 from .restaurant_base_resource import RestaurantBaseResource
@@ -29,7 +33,7 @@ from .restaurant_base_resource import RestaurantBaseResource
 class RestaurantResource(RestaurantBaseResource):
     @doc("Get restaurant details")
     @marshal_with(GetRestaurantSchema)
-    def get(self, slug):
+    def get(self, slug: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -81,7 +85,7 @@ class RestaurantsResource(RestaurantBaseResource):
 class MenuResource(RestaurantBaseResource):
     @doc("Get menu details")
     @marshal_with(MenuSchema)
-    def get(self, slug, menu_name):
+    def get(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -123,7 +127,7 @@ class SectionResource(RestaurantBaseResource):
         return section
 
     @doc("Delete section from menu")
-    def delete(self, slug, menu_name, section_id):
+    def delete(self, slug: str, menu_name: str, section_id: str):
         """Delete section"""
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -174,3 +178,46 @@ class GenerateItemResource(RestaurantBaseResource):
     def post(self):
         item = Item(_id=uuid.uuid4())
         return item
+
+
+class ImageResource(RestaurantBaseResource):
+    @doc("Upload image to s3 bucket")
+    @use_args(file_args, location="files")
+    def patch(self, args, slug, menu_name, item_id):
+        image_bytes = args["file"].read()
+        loaded_image = Image.open(BytesIO(image_bytes))
+        width, height = loaded_image.size
+        if width > 600:
+            width = 600
+            height = 600
+        loaded_image = loaded_image.resize((width, height))
+        out_img = BytesIO()
+        loaded_image.save(out_img, "PNG")
+        out_img.seek(0)
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        item = menu.get_item(item_id)
+        if item:
+            item.image = upload_image(out_img)
+            menu.save()
+            return item.image
+        return ITEM_NOT_FOUND
+
+    @doc("Delete image form s3 bucket")
+    @marshal_with(ItemSchema)
+    def delete(self, slug, item_id):
+        menu = Menu.objects(slug=slug).first()
+
+        item = menu.get_item(item_id)
+        if item:
+            if item.image:
+                delete_file(item.image)
+                item.image = None
+                menu.save()
+                return item
+            else:
+                return IMAGE_NOT_FOUND
+
+        return ITEM_NOT_FOUND

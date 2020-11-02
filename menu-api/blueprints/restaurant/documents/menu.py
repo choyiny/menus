@@ -121,13 +121,12 @@ class Menu(Document):
                 return section
         return None
 
-    def get_item(self, section_id: str, item_id: str) -> Optional[Item]:
+    def get_item(self, item_id: str) -> Optional[Item]:
         """ get menu-item from this menu """
         for section in self.sections:
-            if section._id == section_id:
-                for item in section.menu_items:
-                    if item._id == item_id:
-                        return item
+            for item in section.menu_items:
+                if item._id == item_id:
+                    return item
         return None
 
     def __eq__(self, other):
