@@ -13,9 +13,9 @@
   </div>
   <div class="img-description">
     <div class="logo" (click)="showImage()">
-      <img class="img-fluid icon desktop" src="{{ item.image ? item.image : 'assets/add_photos.png' }}" />
+      <img class="img-fluid icon desktop" *ngIf="imageUrl" src="{{ imageUrl }}" />
       <fa-icon
-        *ngIf="item.image !== 'assets/loading.gif'"
+        *ngIf="hasPermission && item.image !== 'assets/loading.gif'"
         class="icon-overlay image-icon desktop"
         [icon]="imageIcon"
         size="lg"
@@ -29,7 +29,7 @@
         (click)="delete($event)"
       ></fa-icon>
       <img />
-      <img class="mobile img-fluid icon" src="{{item.image}}">
+      <img class="mobile img-fluid icon" src="{{ item.image }}" />
     </div>
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
