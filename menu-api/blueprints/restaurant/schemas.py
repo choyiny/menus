@@ -53,7 +53,9 @@ class GetRestaurantSchema(Schema):
 
 
 class RestaurantSchema(Schema):
-    slug = fields.Str(description="Slug of the menu", example="hollywood")
+    slug = fields.Str(
+        description="Slug of the menu", example="hollywood", required=True
+    )
     name = fields.Str(
         description="Name of the restaurant", example="Hollywood Cafe", allow_none=True
     )

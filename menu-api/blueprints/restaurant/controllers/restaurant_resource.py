@@ -24,52 +24,43 @@ class RestaurantResource(RestaurantBaseResource):
 class RestaurantsResource(RestaurantBaseResource):
     @doc("Create a new restaurant")
     @use_kwargs(RestaurantSchema)
-    @marshal_with(RestaurantSchema)
+    @marshal_with(GetRestaurantSchema)
     def post(self, **kwargs):
-        if kwargs.get("slug"):
-            restaurant = Restaurant(**kwargs).save()
-            return restaurant.to_dict()
-        else:
-            return {"description": "slug required but missing"}
+        restaurant = Restaurant(**kwargs).save()
+        return restaurant.to_dict()
 
     @doc("Edit restaurant details")
     @marshal_with(RestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def patch(self, **kwargs):
-        if kwargs.get("slug"):
-            slug = kwargs.get("slug")
-            restaurant = Restaurant.objects(slug=slug).first()
-            if restaurant is None:
-                return {"description": "Restaurant not found"}, 404
+        slug = kwargs.get("slug")
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return {"description": "Restaurant not found"}, 404
 
-            if "description" in kwargs:
-                restaurant.description = kwargs.get("description")
+        if "description" in kwargs:
+            restaurant.description = kwargs.get("description")
 
-            if "name" in kwargs:
-                restaurant.name = kwargs.get("name")
+        if "name" in kwargs:
+            restaurant.name = kwargs.get("name")
 
-            if "image" in kwargs:
-                restaurant.image = kwargs.get("image")
+        if "image" in kwargs:
+            restaurant.image = kwargs.get("image")
 
-            restaurant.save()
-            return restaurant
-        else:
-            return {"description": "slug missing but required"}, 422
+        restaurant.save()
+        return restaurant
 
     @doc("Delete restaurant")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def delete(self, **kwargs):
-        if kwargs.get("slug"):
-            slug = kwargs.get("slug")
-            restaurant = Restaurant.objects(slug=slug)
-            if restaurant is None:
-                return {"description": "restaurant not found"}
-            else:
-                restaurant.delete()
-                return restaurant
+        slug = kwargs.get("slug")
+        restaurant = Restaurant.objects(slug=slug)
+        if restaurant is None:
+            return {"description": "restaurant not found"}
         else:
-            return {"description": "slug missing but required"}, 422
+            restaurant.delete()
+            return restaurant
 
 
 class MenuResource(RestaurantBaseResource):
