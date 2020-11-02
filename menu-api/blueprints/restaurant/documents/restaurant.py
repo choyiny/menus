@@ -59,7 +59,7 @@ class Restaurant(Document):
         serialized_restaurant["menus"] = menus
         return serialized_restaurant
 
-    def get_menu(self, name) -> Optional[Menu]:
+    def get_menu(self, name: str) -> Optional[Menu]:
         """ get menu from restaurant """
         for menu in self.menus:
             if menu.name == name:

@@ -80,7 +80,7 @@ class SectionResource(RestaurantBaseResource):
     @doc("Edit section details")
     @use_kwargs(SectionSchema)
     @marshal_with(SectionSchema)
-    def patch(self, slug, menu_name, section_id, **kwargs):
+    def patch(self, slug: str, menu_name: str, section_id: str, **kwargs):
         """Edit section details"""
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:

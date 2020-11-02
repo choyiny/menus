@@ -91,14 +91,14 @@ class Menu(Document):
     List of ordered sections
     """
 
-    def get_section(self, section_id) -> Optional[Section]:
+    def get_section(self, section_id: str) -> Optional[Section]:
         """ get section of this menu """
         for section in self.sections:
             if section._id == section_id:
                 return section
         return None
 
-    def get_item(self, section_id, item_id) -> Optional[Item]:
+    def get_item(self, section_id: str, item_id: str) -> Optional[Item]:
         """ get menu-item from this menu """
         for section in self.sections:
             if section._id == section_id:
