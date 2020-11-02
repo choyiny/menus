@@ -3,8 +3,9 @@ from webargs import fields
 
 
 class TagV2Schema(Schema):
-    icon = fields.Str(example="fas-star", allow_none=True)
-    text = fields.Str(example="Chef Featured", allow_none=True)
+    icon = fields.Str(example="fas-star")
+    text = fields.Str(example="Chef Featured")
+    color = fields.Str(exampl="black")
 
 
 class ItemV2Schema(Schema):

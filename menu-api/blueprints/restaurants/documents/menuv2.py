@@ -15,14 +15,19 @@ class Tag(EmbeddedDocument):
     A tag for an item.
     """
 
-    icon = StringField(required=True)
+    icon = StringField()
     """
     icon code for this tag
     """
 
-    text = StringField(required=True)
+    text = StringField()
     """
     text for this tag
+    """
+
+    background_color = StringField()
+    """
+    color for tag
     """
 
 
