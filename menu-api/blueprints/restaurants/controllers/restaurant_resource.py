@@ -1,3 +1,4 @@
+import csv
 import uuid
 from io import BytesIO
 
@@ -18,7 +19,7 @@ from webargs.flaskparser import use_args
 
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
-from ..helpers import qr_helper
+from ..helpers import csv_helper, qr_helper
 from ..schemas import (
     GetRestaurantSchema,
     ItemV2Schema,
@@ -317,3 +318,59 @@ class ImageResource(RestaurantBaseResource):
                 return IMAGE_NOT_FOUND
 
         return ITEM_NOT_FOUND
+
+
+class ImportMenuResource(MenuV2Schema):
+    @marshal_with(MenuV2Schema)
+    @use_args(file_args, location="files")
+    def post(self, args, slug, menu_name):
+
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+        file_str = args["file"].read()
+        menu_items = self.read(file_str)
+        menu.menu_items = menu_items
+        menu.sections = [self.all_sections[section] for section in self.all_sections]
+        menu.save()
+        return menu.sectionized_menu()
+
+    def read(self, file_str):
+        reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
+        menu_items = []
+        for row in reader:
+            sections = [section.strip() for section in row["Sections"].split("|")]
+            self.get_sections(row)
+            menu_items.append(
+                Item(
+                    _id=str(uuid.uuid4()),
+                    description=row["Description"],
+                    name=row["Name"],
+                    price=row["Price"],
+                    tags=csv_helper.get_tags(row["Tags"]),
+                    sections=[self.all_sections[section]._id for section in sections],
+                    image=None,
+                )
+            )
+        return menu_items
+
+    def get_sections(self, row):
+        section_list = csv_helper.parse(row["Sections"])
+        section_subtitle = csv_helper.parse(row["Section Subtitle"])
+        descriptions = csv_helper.parse(row["Section Description"])
+
+        for i in range(len(section_list)):
+            if section_list[i] not in self.all_sections:
+                self.all_sections[section_list[i]] = Section(
+                    name=section_list[i],
+                    subtitle=section_subtitle[i],
+                    image=row["Section Image"],
+                    description=descriptions[i],
+                    _id=str(uuid.uuid4()),
+                )
+
+            if self.all_sections[section_list[i]].image == "":
+                self.all_sections[section_list[i]].image = None
