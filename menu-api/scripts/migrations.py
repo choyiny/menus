@@ -1,8 +1,8 @@
 from blueprints.menus.documents.menu import Menu
-from blueprints.restaurant.documents.menu import Item
-from blueprints.restaurant.documents.menu import Menu as NewMenu
-from blueprints.restaurant.documents.menu import Section
-from blueprints.restaurant.documents.restaurant import Restaurant
+from blueprints.restaurants.documents.menu import Item
+from blueprints.restaurants.documents.menu import Menu as NewMenu
+from blueprints.restaurants.documents.menu import Section
+from blueprints.restaurants.documents.restaurant import Restaurant
 
 
 def migrate():

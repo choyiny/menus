@@ -32,16 +32,16 @@ class SectionSchema(Schema):
 
 
 class MenuSchema(Schema):
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     sections = fields.List(fields.Nested(SectionSchema, required=True))
 
 
 class GetRestaurantSchema(Schema):
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     enable_trace = fields.Bool(
-        description="Enable contact tracing functionality for the restaurant"
+        description="Enable contact tracing functionality for the restaurants"
     )
     force_trace = fields.Bool(
         description="Force show the contact tracing popup when the user visits the menu app."
@@ -55,14 +55,14 @@ class RestaurantSchema(Schema):
         description="Slug of the menu", example="hollywood", required=True
     )
     name = fields.Str(
-        description="Name of the restaurant", example="Hollywood Cafe", allow_none=True
+        description="Name of the restaurants", example="Hollywood Cafe", allow_none=True
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
 
 
 class PaginationMenuSchema(Schema):
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     slug = fields.Str()
 
 

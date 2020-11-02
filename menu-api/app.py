@@ -91,9 +91,9 @@ def register_blueprints(app: Flask):
     from blueprints.menus import bp_name as menu_bp_name
     from blueprints.menus import menus_bp
     from blueprints.menus.routes import resources as menu_resources
-    from blueprints.restaurant import bp_name as restaurant_bp_name
-    from blueprints.restaurant import restaurant_bp
-    from blueprints.restaurant.routes import resources as restaurant_resources
+    from blueprints.restaurants import bp_name as restaurant_bp_name
+    from blueprints.restaurants import restaurant_bp
+    from blueprints.restaurants.routes import resources as restaurant_resources
 
     # user management blueprint
     from blueprints.user_management import bp_name as user_management_bp_name

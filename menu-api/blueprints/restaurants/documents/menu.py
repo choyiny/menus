@@ -46,7 +46,7 @@ class Item(EmbeddedDocument):
     price of this menu item
     """
 
-    tags = ListField(EmbeddedDocumentField(Tag), default=[])
+    tags = ListField(EmbeddedDocumentField(Tag), default=list)
     """
     list of tags for this menu item
     """
@@ -90,7 +90,7 @@ class Section(EmbeddedDocument):
     subtitle of this section
     """
 
-    menu_items = ListField(EmbeddedDocumentField(Item), default=[])
+    menu_items = ListField(EmbeddedDocumentField(Item), default=list)
     """
     menu_items of this section
     """
@@ -109,7 +109,7 @@ class Menu(Document):
     name of current menu
     """
 
-    sections = ListField(EmbeddedDocumentField(Section), default=[])
+    sections = ListField(EmbeddedDocumentField(Section), default=list)
     """
     List of ordered sections
     """

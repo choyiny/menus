@@ -32,7 +32,7 @@ from .restaurant_base_resource import RestaurantBaseResource
 
 
 class RestaurantResource(RestaurantBaseResource):
-    @doc("Get restaurant details")
+    @doc("Get restaurants details")
     @marshal_with(GetRestaurantSchema)
     def get(self, slug: str):
         restaurant = Restaurant.objects(slug=slug).first()
@@ -42,14 +42,14 @@ class RestaurantResource(RestaurantBaseResource):
 
 
 class RestaurantsResource(RestaurantBaseResource):
-    @doc("Create a new restaurant")
+    @doc("Create a new restaurants")
     @use_kwargs(RestaurantSchema)
     @marshal_with(GetRestaurantSchema)
     def post(self, **kwargs):
         restaurant = Restaurant(**kwargs).save()
         return restaurant.to_dict()
 
-    @doc("Edit restaurant details")
+    @doc("Edit restaurants details")
     @marshal_with(RestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def patch(self, **kwargs):
@@ -70,14 +70,14 @@ class RestaurantsResource(RestaurantBaseResource):
         restaurant.save()
         return restaurant
 
-    @doc("Delete restaurant")
+    @doc("Delete restaurants")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def delete(self, **kwargs):
         slug = kwargs.get("slug")
         restaurant = Restaurant.objects(slug=slug)
         if restaurant is None:
-            return {"description": "restaurant not found"}
+            return {"description": "restaurants not found"}
         else:
             restaurant.delete()
             return restaurant

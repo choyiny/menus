@@ -1,6 +1,6 @@
 from typing import Optional
 
-from blueprints.restaurant.documents.menu import Menu
+from blueprints.restaurants.documents.menu import Menu
 from mongoengine import (
     BooleanField,
     Document,
@@ -14,27 +14,27 @@ from mongoengine import (
 class Restaurant(Document):
     slug = StringField(primary_key=True, required=True)
     """
-    url key for this restaurant
+    url key for this restaurants
     """
 
     description = StringField()
     """
-    description of this restaurant
+    description of this restaurants
     """
 
     image = URLField()
     """
-    image url for this restaurant
+    image url for this restaurants
     """
 
-    menus = ListField(ReferenceField("Menu"), default=[])
+    menus = ListField(ReferenceField("Menu"), default=list)
     """
-    list of menus for this restaurant
+    list of menus for this restaurants
     """
 
     name = StringField()
     """
-    name of the restaurant
+    name of the restaurants
     """
 
     force_trace = BooleanField(default=False)
@@ -44,7 +44,7 @@ class Restaurant(Document):
 
     enable_trace = BooleanField(default=False)
     """
-    field to enable contact tracing on restaurant
+    field to enable contact tracing on restaurants
     """
 
     tracing_key = StringField()
@@ -53,14 +53,14 @@ class Restaurant(Document):
     """
 
     def to_dict(self):
-        """ serialize restaurant to json"""
+        """ serialize restaurants to json"""
         menus = [menu.name for menu in self.menus]
         serialized_restaurant = self.to_mongo().to_dict()
         serialized_restaurant["menus"] = menus
         return serialized_restaurant
 
     def get_menu(self, name: str) -> Optional[Menu]:
-        """ get menu from restaurant """
+        """ get menu from restaurants """
         for menu in self.menus:
             if menu.name == name:
                 return menu

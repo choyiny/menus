@@ -33,7 +33,7 @@ class ItemSchema(Schema):
 
 class MenuSchema(Schema):
     slug = fields.Str(description="Slug of the menu", example="hollywood")
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     menu_items = fields.List(fields.Nested(ItemSchema))
@@ -41,7 +41,7 @@ class MenuSchema(Schema):
     external_link = fields.Str(description="external link")
     link_name = fields.Str(description="name of link")
     enable_trace = fields.Bool(
-        description="Enable contact tracing functionality for the restaurant"
+        description="Enable contact tracing functionality for the restaurants"
     )
     force_trace = fields.Bool(
         description="Force show the contact tracing popup when the user visits the menu app."
@@ -58,7 +58,7 @@ class SectionItemSchema(Schema):
 
 
 class GetMenuSchema(Schema):
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     sections = fields.List(fields.Nested(SectionItemSchema, required=True))
@@ -67,7 +67,7 @@ class GetMenuSchema(Schema):
     )
     link_name = fields.Str(description="name of link")
     enable_trace = fields.Bool(
-        description="Enable contact tracing functionality for the restaurant"
+        description="Enable contact tracing functionality for the restaurants"
     )
     force_trace = fields.Bool(
         description="Force show the contact tracing popup when the user visits the menu app."
@@ -76,7 +76,7 @@ class GetMenuSchema(Schema):
 
 
 class PaginationMenuSchema(Schema):
-    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     slug = fields.Str()
 
 

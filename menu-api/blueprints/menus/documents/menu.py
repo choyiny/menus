@@ -69,13 +69,13 @@ class Menu(Document):
     """
 
     slug = StringField(required=True, primary_key=True)
-    # Unique identifier for the menu, which corresponds to the restaurant identifier.
+    # Unique identifier for the menu, which corresponds to the restaurants identifier.
 
     image = URLField()
     # a cover image for the menu
 
     name = StringField(required=True)
-    # name of this menu, usually the restaurant name
+    # name of this menu, usually the restaurants name
 
     description = StringField()
     # Description of menu

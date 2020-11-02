@@ -300,7 +300,7 @@ class SectionMenuResource(MenusBaseResource):
     @use_kwargs(SectionItemSchema)
     @firebase_login_required
     def patch(self, slug, section_id, **kwargs):
-        """Edit restaurant section"""
+        """Edit restaurants section"""
 
         if g.user is None or not g.user.has_permission(slug):
             return {"description": "You do not have permission"}, 401
