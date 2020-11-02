@@ -80,6 +80,8 @@ class RestaurantsResource(RestaurantBaseResource):
         if restaurant is None:
             return {"description": "restaurants not found"}
         else:
+            for menu in restaurant.menus:
+                menu.delete()
             restaurant.delete()
             return restaurant
 
@@ -264,7 +266,7 @@ class QrRestaurantResource(RestaurantBaseResource):
 class GenerateSectionResource(RestaurantBaseResource):
     @doc("Server generated section with an id")
     @marshal_with(SectionV2Schema)
-    def post(self):
+    def get(self):
         section = Section(_id=uuid.uuid4())
         return section
 
@@ -272,7 +274,7 @@ class GenerateSectionResource(RestaurantBaseResource):
 class GenerateItemResource(RestaurantBaseResource):
     @doc("Server generates item with an id")
     @marshal_with(ItemV2Schema)
-    def post(self):
+    def get(self):
         item = Item(_id=uuid.uuid4())
         return item
 

@@ -27,14 +27,14 @@ resources = [
         "sections",
         ["PATCH", "DELETE"],
     ),
-    (GenerateSectionResource, "section/new", "new section", ["POST"]),
+    (GenerateSectionResource, "section/new", "new section", ["GET"]),
     (
         ItemResource,
         "restaurants/<string:slug>/menus/<string:menu_name>/items/",
         "items",
         ["PATCH", "DELETE"],
     ),
-    (GenerateItemResource, "items/new", "new item", ["POST"]),
+    (GenerateItemResource, "items/new", "new item", ["GET"]),
     (
         ImageResource,
         "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>/picture",
