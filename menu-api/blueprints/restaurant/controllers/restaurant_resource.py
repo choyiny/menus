@@ -1,12 +1,16 @@
+import qrcode
 from flask_apispec import doc, marshal_with, use_kwargs
+from PIL import Image
 
 from ..documents.restaurant import Restaurant
+from ..helpers import qr_helper
 from ..schemas import (
     GetRestaurantSchema,
     ItemSchema,
     MenuSchema,
     RestaurantSchema,
     SectionSchema,
+    qr_args,
 )
 from .restaurant_base_resource import RestaurantBaseResource
 
@@ -122,3 +126,26 @@ class SectionResource(RestaurantBaseResource):
 
         menu.sections.remove(section)
         return section
+
+
+@doc(description="""Generate QR code of url on template""")
+class QRestaurantResource(RestaurantBaseResource):
+    @use_args(qr_args, location="query")
+    def get(self, args):
+        """Generate QR code in template"""
+        url = args["url"]
+        name = args["name"]
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        qr.add_data(url)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="white", back_color="black")
+        img = img.resize((950, 950))
+        template = Image.open("assets/print_template_huge.png")
+        for coord in qr_helper.generate_tuples():
+            template.paste(img, coord)
+        return qr_helper.serve_pil_image(template, name + ".png")
