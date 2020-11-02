@@ -43,6 +43,14 @@ export class MenuItemComponent implements OnInit {
     this.itemOriginal = { ...this.item };
   }
 
+  get imageUrl(): string {
+    if (this.hasPermission) {
+      return this.item.image ? this.item.image : 'assets/add_photos.png';
+    } else {
+      return this.item.image;
+    }
+  }
+
   showImage(): void {
     this.imgView.open();
   }
