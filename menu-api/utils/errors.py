@@ -6,4 +6,6 @@ ITEM_NOT_FOUND = {"description": "Item not found."}, 404
 
 RESTAURANT_NOT_FOUND = {"description": "Restaurant not found."}, 404
 
+IMAGE_NOT_FOUND = {"description": "Image not found"}, 404
+
 FORBIDDEN = {"description": "You do not have permission"}, 401
