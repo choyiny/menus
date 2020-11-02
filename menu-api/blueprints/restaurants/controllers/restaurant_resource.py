@@ -320,7 +320,8 @@ class ImageResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
-class ImportMenuResource(MenuV2Schema):
+class ImportMenuResource(RestaurantBaseResource):
+    @doc("Populate empty menu with sections and menu-items")
     @marshal_with(MenuV2Schema)
     @use_args(file_args, location="files")
     def post(self, args, slug, menu_name):
@@ -328,49 +329,69 @@ class ImportMenuResource(MenuV2Schema):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
+
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
+
         file_str = args["file"].read()
-        menu_items = self.read(file_str)
-        menu.menu_items = menu_items
-        menu.sections = [self.all_sections[section] for section in self.all_sections]
+        menu.sections = self.read(file_str)
         menu.save()
         return menu.sectionized_menu()
 
-    def read(self, file_str):
+    @staticmethod
+    def read(file_str):
         reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
-        menu_items = []
+        sections = {}
         for row in reader:
-            sections = [section.strip() for section in row["Sections"].split("|")]
-            self.get_sections(row)
-            menu_items.append(
+            section = ImportMenuResource.get_sections(row, sections)
+            section.menu_items.append(
                 Item(
                     _id=str(uuid.uuid4()),
                     description=row["Description"],
                     name=row["Name"],
                     price=row["Price"],
                     tags=csv_helper.get_tags(row["Tags"]),
-                    sections=[self.all_sections[section]._id for section in sections],
-                    image=None,
+                    sections=row["Sections"],
                 )
             )
-        return menu_items
+        return sections
 
-    def get_sections(self, row):
-        section_list = csv_helper.parse(row["Sections"])
-        section_subtitle = csv_helper.parse(row["Section Subtitle"])
-        descriptions = csv_helper.parse(row["Section Description"])
+    @staticmethod
+    def get_sections(row, sections) -> Section:
+        section = row["Sections"]
+        section_subtitle = row["Section Subtitle"]
+        description = row["Section Description"]
 
-        for i in range(len(section_list)):
-            if section_list[i] not in self.all_sections:
-                self.all_sections[section_list[i]] = Section(
-                    name=section_list[i],
-                    subtitle=section_subtitle[i],
-                    image=row["Section Image"],
-                    description=descriptions[i],
-                    _id=str(uuid.uuid4()),
-                )
+        if section not in sections:
+            new_section = Section(
+                name=section,
+                subtitle=section_subtitle,
+                description=description,
+                _id=str(uuid.uuid4()),
+            )
+            sections[section] = new_section
+            return new_section
+        else:
+            return sections[section]
 
-            if self.all_sections[section_list[i]].image == "":
-                self.all_sections[section_list[i]].image = None
+    @marshal_with(MenuV2Schema)
+    @use_args(file_args, location="files")
+    @doc(
+        "Quickly populate existing menu with new section WARNING SECTIONS ALL MUST BE NEW"
+    )
+    def patch(self, args, slug, menu_name):
+        """Append new section items """
+
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+
+        file_str = args["file"].read()
+        menu.sections = menu.sections + self.read(file_str)
+        menu.save()
+        return menu
