@@ -27,7 +27,7 @@ class Restaurant(Document):
     image url for this restaurant
     """
 
-    menus = ListField(ReferenceField("Menu"))
+    menus = ListField(ReferenceField("Menu"), default=[])
     """
     list of menus for this restaurant
     """

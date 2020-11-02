@@ -9,3 +9,5 @@ RESTAURANT_NOT_FOUND = {"description": "Restaurant not found."}, 404
 IMAGE_NOT_FOUND = {"description": "Image not found"}, 404
 
 FORBIDDEN = {"description": "You do not have permission"}, 401
+
+MENU_ALREADY_EXISTS = {"description": "Menu already exists"}, 412

@@ -9,6 +9,7 @@ from utils.errors import (
     FORBIDDEN,
     IMAGE_NOT_FOUND,
     ITEM_NOT_FOUND,
+    MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
@@ -93,6 +94,50 @@ class MenuResource(RestaurantBaseResource):
         if menu is None:
             return MENU_NOT_FOUND
         return menu
+
+    @doc("Edit menu details, checks for duplicate menus")
+    @marshal_with(MenuSchema)
+    @use_kwargs(MenuSchema)
+    def patch(self, slug: str, menu_name: str, **kwargs):
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+        name = kwargs.get("name")
+        if name in restaurant.menus:
+            return MENU_ALREADY_EXISTS
+        menu.name = name
+        menu.save()
+        return menu
+
+    @doc("Delete menu")
+    @marshal_with(MenuSchema)
+    def delete(self, slug: str, menu_name: str):
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+        restaurant.menus.remove(menu)
+        restaurant.save()
+        return restaurant
+
+    @doc("Add new menu, check for duplicates")
+    @marshal_with(MenuSchema)
+    @use_kwargs(MenuSchema)
+    def post(self, slug: str, **kwargs):
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        name = kwargs.get("name")
+        if name in restaurant.menus:
+            return MENU_ALREADY_EXISTS
+        menu = Menu(name=name)
+        restaurant.menus.append(menu)
+        restaurant.save()
 
 
 class SectionResource(RestaurantBaseResource):
@@ -192,7 +237,6 @@ class ItemResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
-@doc(description="""Generate QR code of url on template""")
 class QRestaurantResource(RestaurantBaseResource):
     @doc("Generate qr code for url and paste qr code to template")
     @use_args(qr_args, location="query")

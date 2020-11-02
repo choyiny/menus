@@ -90,7 +90,7 @@ class Section(EmbeddedDocument):
     subtitle of this section
     """
 
-    menu_items = ListField(EmbeddedDocumentField(Item))
+    menu_items = ListField(EmbeddedDocumentField(Item), default=[])
     """
     menu_items of this section
     """
