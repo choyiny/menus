@@ -1,7 +1,7 @@
 from blueprints.menus.documents.menu import Menu
-from blueprints.restaurants.documents.menu import Item
-from blueprints.restaurants.documents.menu import Menu as NewMenu
-from blueprints.restaurants.documents.menu import Section
+from blueprints.restaurants.documents.menuv2 import Item
+from blueprints.restaurants.documents.menuv2 import MenuV2 as NewMenu
+from blueprints.restaurants.documents.menuv2 import Section
 from blueprints.restaurants.documents.restaurant import Restaurant
 
 

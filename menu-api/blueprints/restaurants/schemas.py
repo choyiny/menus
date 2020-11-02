@@ -2,38 +2,38 @@ from marshmallow import Schema
 from webargs import fields
 
 
-class TagSchema(Schema):
+class TagV2Schema(Schema):
     icon = fields.Str(example="fas-star", allow_none=True)
     text = fields.Str(example="Chef Featured", allow_none=True)
 
 
-class ItemSchema(Schema):
+class ItemV2Schema(Schema):
     _id = fields.Str(required=True, example="da95f757-603a-41a8-aa62-dede4484a601")
     image = fields.Url(
         example="https://via.placeholder.com/150", allow_none=True, missing=None
     )
     name = fields.Str(example="Meatball Pasta", allow_none=True)
     price = fields.Str(example="$6.99", allow_none=True)
-    tags = fields.List(fields.Nested(TagSchema))
+    tags = fields.List(fields.Nested(TagV2Schema))
     sections = fields.List(fields.Str(), example=["A la carte", "Chef's Featured"])
     description = fields.Str(example="A Pasta with Meatballs", allow_none=True)
 
 
-class SectionSchema(Schema):
+class SectionV2Schema(Schema):
     _id = fields.Str(required=True, example="da95f757-603a-41a8-aa62-dede4484a601")
     name = fields.Str(
         description="Name of section", example="A la carte", allow_none=True
     )
-    menu_items = fields.List(fields.Nested(ItemSchema))
+    menu_items = fields.List(fields.Nested(ItemV2Schema))
     description = fields.Str(
         description="Name of section", example="Piece by piece", allow_none=True
     )
     subtitle = fields.Str(description="Headers for section anchors", allow_none=True)
 
 
-class MenuSchema(Schema):
+class MenuV2Schema(Schema):
     name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
-    sections = fields.List(fields.Nested(SectionSchema, required=True))
+    sections = fields.List(fields.Nested(SectionV2Schema, required=True))
 
 
 class GetRestaurantSchema(Schema):

@@ -99,7 +99,7 @@ class Section(EmbeddedDocument):
         return type(self) == type(other) and self._id == other._id
 
 
-class Menu(Document):
+class MenuV2(Document):
     """
     A menu object.
     """

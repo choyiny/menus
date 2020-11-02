@@ -1,6 +1,6 @@
 from typing import Optional
 
-from blueprints.restaurants.documents.menu import Menu
+from blueprints.restaurants.documents.menuv2 import MenuV2
 from mongoengine import (
     BooleanField,
     Document,
@@ -59,7 +59,7 @@ class Restaurant(Document):
         serialized_restaurant["menus"] = menus
         return serialized_restaurant
 
-    def get_menu(self, name: str) -> Optional[Menu]:
+    def get_menu(self, name: str) -> Optional[MenuV2]:
         """ get menu from restaurants """
         for menu in self.menus:
             if menu.name == name:

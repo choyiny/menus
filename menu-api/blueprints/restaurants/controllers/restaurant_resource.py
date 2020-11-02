@@ -16,15 +16,15 @@ from utils.errors import (
 )
 from webargs.flaskparser import use_args
 
-from ..documents.menu import Item, Menu, Section, Tag
+from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
 from ..helpers import qr_helper
 from ..schemas import (
     GetRestaurantSchema,
-    ItemSchema,
-    MenuSchema,
+    ItemV2Schema,
+    MenuV2Schema,
     RestaurantSchema,
-    SectionSchema,
+    SectionV2Schema,
     file_args,
     qr_args,
 )
@@ -85,7 +85,7 @@ class RestaurantsResource(RestaurantBaseResource):
 
 class MenuResource(RestaurantBaseResource):
     @doc("Get menu details")
-    @marshal_with(MenuSchema)
+    @marshal_with(MenuV2Schema)
     def get(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -96,8 +96,8 @@ class MenuResource(RestaurantBaseResource):
         return menu
 
     @doc("Edit menu details, checks for duplicate menus")
-    @marshal_with(MenuSchema)
-    @use_kwargs(MenuSchema)
+    @marshal_with(MenuV2Schema)
+    @use_kwargs(MenuV2Schema)
     def patch(self, slug: str, menu_name: str, **kwargs):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -113,7 +113,7 @@ class MenuResource(RestaurantBaseResource):
         return menu
 
     @doc("Delete menu")
-    @marshal_with(MenuSchema)
+    @marshal_with(MenuV2Schema)
     def delete(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -126,8 +126,8 @@ class MenuResource(RestaurantBaseResource):
         return restaurant
 
     @doc("Add new menu, check for duplicates")
-    @marshal_with(MenuSchema)
-    @use_kwargs(MenuSchema)
+    @marshal_with(MenuV2Schema)
+    @use_kwargs(MenuV2Schema)
     def post(self, slug: str, **kwargs):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -135,15 +135,15 @@ class MenuResource(RestaurantBaseResource):
         name = kwargs.get("name")
         if name in restaurant.menus:
             return MENU_ALREADY_EXISTS
-        menu = Menu(name=name)
+        menu = MenuV2(name=name)
         restaurant.menus.append(menu)
         restaurant.save()
 
 
 class SectionResource(RestaurantBaseResource):
     @doc("Edit section details")
-    @use_kwargs(SectionSchema)
-    @marshal_with(SectionSchema)
+    @use_kwargs(SectionV2Schema)
+    @marshal_with(SectionV2Schema)
     def patch(self, slug: str, menu_name: str, section_id: str, **kwargs):
         """Edit section details"""
         restaurant = Restaurant.objects(slug=slug).first()
@@ -190,8 +190,8 @@ class SectionResource(RestaurantBaseResource):
 
 class ItemResource(RestaurantBaseResource):
     @doc("Edit Item details")
-    @use_kwargs(ItemSchema)
-    @marshal_with(ItemSchema)
+    @use_kwargs(ItemV2Schema)
+    @marshal_with(ItemV2Schema)
     def patch(self, slug: str, menu_name: str, item_id: str, **kwargs):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -262,7 +262,7 @@ class QrRestaurantResource(RestaurantBaseResource):
 
 class GenerateSectionResource(RestaurantBaseResource):
     @doc("Server generated section with an id")
-    @marshal_with(SectionSchema)
+    @marshal_with(SectionV2Schema)
     def post(self):
         section = Section(_id=uuid.uuid4())
         return section
@@ -270,7 +270,7 @@ class GenerateSectionResource(RestaurantBaseResource):
 
 class GenerateItemResource(RestaurantBaseResource):
     @doc("Server generates item with an id")
-    @marshal_with(ItemSchema)
+    @marshal_with(ItemV2Schema)
     def post(self):
         item = Item(_id=uuid.uuid4())
         return item
@@ -302,9 +302,9 @@ class ImageResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
     @doc("Delete image form s3 bucket")
-    @marshal_with(ItemSchema)
+    @marshal_with(ItemV2Schema)
     def delete(self, slug, item_id):
-        menu = Menu.objects(slug=slug).first()
+        menu = MenuV2.objects(slug=slug).first()
 
         item = menu.get_item(item_id)
         if item:
