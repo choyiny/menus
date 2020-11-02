@@ -1,7 +1,11 @@
+import uuid
+
 import qrcode
 from flask_apispec import doc, marshal_with, use_kwargs
 from PIL import Image
+from webargs.flaskparser import use_args
 
+from ..documents.menu import Item, Menu, Section
 from ..documents.restaurant import Restaurant
 from ..helpers import qr_helper
 from ..schemas import (
@@ -149,3 +153,17 @@ class QRestaurantResource(RestaurantBaseResource):
         for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
         return qr_helper.serve_pil_image(template, name + ".png")
+
+
+class GenerateSectionResource(RestaurantBaseResource):
+    @marshal_with(SectionSchema)
+    def post(self):
+        section = Section(_id=uuid.uuid4())
+        return section
+
+
+class GenerateItemResource(RestaurantBaseResource):
+    @marshal_with(ItemSchema)
+    def post(self):
+        item = Item(_id=uuid.uuid4())
+        return item

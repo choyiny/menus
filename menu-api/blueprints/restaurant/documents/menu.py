@@ -66,11 +66,34 @@ class Item(EmbeddedDocument):
 
 
 class Section(EmbeddedDocument):
+    """
+    A section object
+    """
+
     _id = StringField(required=True)
+    """
+    unique id of section object
+    """
+
     name = StringField(required=True, default="New Section")
+    """
+    name of this section
+    """
+
     description = StringField(default="No description")
+    """
+    description of this section
+    """
+
     subtitle = StringField()
+    """
+    subtitle of this section
+    """
+
     menu_items = ListField(EmbeddedDocumentField(Item))
+    """
+    menu_items of this section
+    """
 
     def __eq__(self, other):
         return type(self) == type(other) and self._id == other._id
@@ -81,12 +104,12 @@ class Menu(Document):
     A menu object.
     """
 
-    name = StringField()
+    name = StringField(default="No Menu")
     """
     name of current menu
     """
 
-    sections = ListField(EmbeddedDocumentField(Section))
+    sections = ListField(EmbeddedDocumentField(Section), default=[])
     """
     List of ordered sections
     """
