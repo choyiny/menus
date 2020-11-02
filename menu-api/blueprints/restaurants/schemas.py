@@ -33,7 +33,9 @@ class SectionV2Schema(Schema):
 
 
 class MenuV2Schema(Schema):
-    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
+    name = fields.Str(
+        description="Name of the restaurants", example="Hollywood Cafe", required=True
+    )
     sections = fields.List(fields.Nested(SectionV2Schema, required=True))
 
 

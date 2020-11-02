@@ -51,7 +51,7 @@ class RestaurantsResource(RestaurantBaseResource):
         return restaurant.to_dict()
 
     @doc("Edit restaurants details")
-    @marshal_with(RestaurantSchema)
+    @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def patch(self, **kwargs):
         slug = kwargs.get("slug")
@@ -69,21 +69,21 @@ class RestaurantsResource(RestaurantBaseResource):
             restaurant.image = kwargs.get("image")
 
         restaurant.save()
-        return restaurant
+        return restaurant.to_dict()
 
     @doc("Delete restaurants")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def delete(self, **kwargs):
         slug = kwargs.get("slug")
-        restaurant = Restaurant.objects(slug=slug)
+        restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return {"description": "restaurants not found"}
         else:
             for menu in restaurant.menus:
                 menu.delete()
             restaurant.delete()
-            return restaurant
+            return restaurant.to_dict()
 
 
 class MenuResource(RestaurantBaseResource):
@@ -125,8 +125,9 @@ class MenuResource(RestaurantBaseResource):
         if menu is None:
             return MENU_NOT_FOUND
         restaurant.menus.remove(menu)
+        menu.delete()
         restaurant.save()
-        return restaurant
+        return restaurant.to_dict()
 
     @doc("Add new menu, check for duplicates")
     @marshal_with(MenuV2Schema)
@@ -136,11 +137,14 @@ class MenuResource(RestaurantBaseResource):
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
         name = kwargs.get("name")
-        if name in restaurant.menus:
+        # serialize restaurant menus to string
+        if name in restaurant.to_dict()["menus"]:
             return MENU_ALREADY_EXISTS
         menu = MenuV2(name=name)
+        menu.save()
         restaurant.menus.append(menu)
         restaurant.save()
+        return menu
 
 
 class SectionResource(RestaurantBaseResource):

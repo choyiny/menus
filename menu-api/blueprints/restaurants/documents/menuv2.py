@@ -135,4 +135,4 @@ class MenuV2(Document):
         return None
 
     def __eq__(self, other):
-        return type(self) == type(other) and self._id == other._id
+        return type(self) == type(other) and self.name == other.name
