@@ -1,7 +1,5 @@
 from blueprints.menus.documents.menu import Menu
-from blueprints.restaurants.documents.menuv2 import Item
-from blueprints.restaurants.documents.menuv2 import MenuV2 as NewMenu
-from blueprints.restaurants.documents.menuv2 import Section
+from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
 
 
@@ -32,7 +30,7 @@ def migrate():
             new_section.menu_items = new_items
             new_sections.append(new_section)
 
-        new_menu = NewMenu(name=menu.slug, sections=new_sections)
+        new_menu = MenuV2(name=menu.slug, sections=new_sections)
         new_menu.save()
         restaurant = Restaurant(
             name=sectionized["name"],
