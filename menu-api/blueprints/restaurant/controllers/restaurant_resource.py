@@ -12,9 +12,9 @@ from .restaurant_base_resource import RestaurantBaseResource
 
 
 class RestaurantResource(RestaurantBaseResource):
+    @doc("Get restaurant details")
     @marshal_with(GetRestaurantSchema)
     def get(self, slug):
-        """Get restaurant details"""
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return {"description": "Restaurant not found"}
@@ -22,6 +22,7 @@ class RestaurantResource(RestaurantBaseResource):
 
 
 class RestaurantsResource(RestaurantBaseResource):
+    @doc("Create a new restaurant")
     @use_kwargs(RestaurantSchema)
     @marshal_with(RestaurantSchema)
     def post(self, **kwargs):
@@ -31,10 +32,10 @@ class RestaurantsResource(RestaurantBaseResource):
         else:
             return {"description": "slug required but missing"}
 
+    @doc("Edit restaurant details")
     @marshal_with(RestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def patch(self, **kwargs):
-        """edit restaurant details"""
         if kwargs.get("slug"):
             slug = kwargs.get("slug")
             restaurant = Restaurant.objects(slug=slug).first()
@@ -55,6 +56,7 @@ class RestaurantsResource(RestaurantBaseResource):
         else:
             return {"description": "slug missing but required"}, 422
 
+    @doc("Delete restaurant")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def delete(self, **kwargs):
@@ -71,6 +73,7 @@ class RestaurantsResource(RestaurantBaseResource):
 
 
 class MenuResource(RestaurantBaseResource):
+    @doc("Get menu details")
     @marshal_with(MenuSchema)
     def get(self, slug, menu_name):
         restaurant = Restaurant.objects(slug=slug).first()
@@ -83,6 +86,7 @@ class MenuResource(RestaurantBaseResource):
 
 
 class SectionResource(RestaurantBaseResource):
+    @doc("Edit section details")
     @use_kwargs(SectionSchema)
     @marshal_with(SectionSchema)
     def patch(self, slug, menu_name, section_id, **kwargs):
@@ -112,6 +116,7 @@ class SectionResource(RestaurantBaseResource):
         menu.save()
         return section
 
+    @doc("Delete section from menu")
     def delete(self, slug, menu_name, section_id):
         """Delete section"""
         restaurant = Restaurant.objects(slug=slug).first()
