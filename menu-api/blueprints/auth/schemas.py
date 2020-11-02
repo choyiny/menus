@@ -13,3 +13,7 @@ class UserSchema(Schema):
 
 class UsersSchema(Schema):
     users = fields.List(fields.Nested(UserSchema))
+
+
+class UsersWithPaginationSchema(UsersSchema):
+    total_page = fields.Int()

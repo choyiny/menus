@@ -1,3 +1,4 @@
+import math
 from contextlib import closing
 
 from auth.decorators import firebase_login_required
@@ -11,20 +12,27 @@ from firebase_admin._auth_utils import (
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 
-from ...auth.schemas import UserSchema, UsersSchema
-from ..schemas import NewOrUpdateUserSchema
+from ...auth.schemas import UserSchema, UsersWithPaginationSchema
+from ..schemas import NewOrUpdateUserSchema, PaginationSchema
 from .user_management_base_resource import UserManagementBaseResource
 
 
 class UserResource(UserManagementBaseResource):
     @doc(description="""Get a list of all users""")
-    @marshal_with(UsersSchema)
+    @marshal_with(UsersWithPaginationSchema)
+    @use_kwargs(PaginationSchema, location="querystring")
     @firebase_login_required
-    def get(self):
+    def get(self, **kwargs):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
 
-        return {"users": [user for user in User.objects()]}
+        users = [user for user in User.objects()]
+        page = kwargs.get("page", 1)
+        limit = kwargs.get("limit", 20)
+        return {
+            "total_page": math.ceil(len(users) / limit),
+            "users": users[(page - 1) * limit : page * limit],
+        }
 
     @doc(description="""Create or link existing user""")
     @firebase_login_required
