@@ -12,7 +12,7 @@ from .controllers import (
 
 resources = [
     (RestaurantResource, "restaurants/<string:slug>", "restaurants", ["GET"]),
-    (RestaurantsResource, "restaurants", "restaurants", ["POST", "DELETE", "PATCH"],),
+    (RestaurantsResource, "restaurants", "restaurant", ["POST", "DELETE", "PATCH"],),
     (QrRestaurantResource, "restaurant/generate", "QR", ["GET"]),
     (
         MenuResource,
@@ -23,7 +23,7 @@ resources = [
     (MenuResource, "restaurants/<string:slug>/menus", "new menu", ["POST"]),
     (
         SectionResource,
-        "restaurants/<string:slug>/menus/<string:menu_name>/sections/<string: section_id>",
+        "restaurants/<string:slug>/menus/<string:menu_name>/sections/<string:section_id>",
         "sections",
         ["PATCH", "DELETE"],
     ),
