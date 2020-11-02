@@ -3,6 +3,13 @@ import uuid
 import qrcode
 from flask_apispec import doc, marshal_with, use_kwargs
 from PIL import Image
+from utils.errors import (
+    FORBIDDEN,
+    ITEM_NOT_FOUND,
+    MENU_NOT_FOUND,
+    RESTAURANT_NOT_FOUND,
+    SECTION_NOT_FOUND,
+)
 from webargs.flaskparser import use_args
 
 from ..documents.menu import Item, Menu, Section
@@ -25,7 +32,7 @@ class RestaurantResource(RestaurantBaseResource):
     def get(self, slug):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
-            return {"description": "Restaurant not found"}
+            return RESTAURANT_NOT_FOUND
         return restaurant.to_dict()
 
 
@@ -44,7 +51,7 @@ class RestaurantsResource(RestaurantBaseResource):
         slug = kwargs.get("slug")
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
-            return {"description": "Restaurant not found"}, 404
+            return RESTAURANT_NOT_FOUND
 
         if "description" in kwargs:
             restaurant.description = kwargs.get("description")
@@ -77,10 +84,10 @@ class MenuResource(RestaurantBaseResource):
     def get(self, slug, menu_name):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
-            return {"description": "Restaurant not found"}
+            return RESTAURANT_NOT_FOUND
         menu = restaurant.get_menu(menu_name)
         if menu is None:
-            return {"description": "Menu not found"}
+            return MENU_NOT_FOUND
         return menu
 
 
@@ -92,13 +99,13 @@ class SectionResource(RestaurantBaseResource):
         """Edit section details"""
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
-            return {"description": "Restaurant not found"}
+            return RESTAURANT_NOT_FOUND
         menu = restaurant.get_menu(menu_name)
         if menu is None:
-            return {"description": "Menu not found"}
+            return MENU_NOT_FOUND
         section = menu.get_section(section_id)
         if section is None:
-            return {"description": "Section not found"}
+            return SECTION_NOT_FOUND
 
         if "name" in kwargs:
             section.name = kwargs.get("name")
@@ -120,13 +127,13 @@ class SectionResource(RestaurantBaseResource):
         """Delete section"""
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
-            return {"description": "Restaurant not found"}
+            return RESTAURANT_NOT_FOUND
         menu = restaurant.get_menu(menu_name)
         if menu is None:
-            return {"description": "Menu not found"}
+            return MENU_NOT_FOUND
         section = menu.get_section(section_id)
         if section is None:
-            return {"description": "Section not found"}
+            return SECTION_NOT_FOUND
 
         menu.sections.remove(section)
         return section
