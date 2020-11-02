@@ -12,6 +12,10 @@ export interface UsersInterface {
   users: UserInterface[];
 }
 
+export interface UsersWithPaginationInterface extends UsersInterface {
+  total_page: number,
+}
+
 export interface NewUserInterface {
   email: string;
   email_verified: boolean;

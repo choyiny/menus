@@ -1,4 +1,23 @@
 <h1>User Management</h1>
+<p><a routerLink="/admin/menus">&lt; Back to admin</a></p>
+
+
+<div class="toolbar">
+  <button (click)="goToCreateUser()">+ Create New User</button>
+
+  <div class="spacer"></div>
+
+  <button [disabled]="current_page <= 1" (click)="reloadWithParams({ limit: per_page, page: current_page - 1 })">&lt; Previous Page</button>
+  <span>{{current_page}} / {{total_page}}</span>
+  <button [disabled]="current_page >= total_page" (click)="reloadWithParams({ limit: per_page, page: current_page + 1 })">Next Page &gt;</button>
+
+  <div class="spacer"></div>
+
+  <button [disabled]="this.per_page <= 5" (click)="reloadWithParams({ limit: per_page - 5, page: current_page })"> - </button>
+  <span>{{per_page}} per page</span>
+  <button (click)="reloadWithParams({ limit: per_page + 5, page: current_page })"> + </button>
+</div>
+
 
 <table class="table">
   <thead>
@@ -20,7 +39,3 @@
     </tr>
   </tbody>
 </table>
-
-<div>
-  <button (click)="goToCreateUser()">Create New User</button>
-</div>

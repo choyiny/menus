@@ -14,3 +14,8 @@ class NewOrUpdateUserSchema(Schema):
     firebase_id = fields.Str()
 
     menus = fields.List(fields.Str(required=True))
+
+
+class PaginationSchema(Schema):
+    limit = fields.Int()
+    page = fields.Int()
