@@ -237,7 +237,7 @@ class ItemResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
-class QRestaurantResource(RestaurantBaseResource):
+class QrRestaurantResource(RestaurantBaseResource):
     @doc("Generate qr code for url and paste qr code to template")
     @use_args(qr_args, location="query")
     def get(self, args):
