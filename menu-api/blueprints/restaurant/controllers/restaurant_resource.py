@@ -15,7 +15,7 @@ from utils.errors import (
 )
 from webargs.flaskparser import use_args
 
-from ..documents.menu import Item, Menu, Section
+from ..documents.menu import Item, Menu, Section, Tag
 from ..documents.restaurant import Restaurant
 from ..helpers import qr_helper
 from ..schemas import (
@@ -143,8 +143,58 @@ class SectionResource(RestaurantBaseResource):
         return section
 
 
+class ItemResource(RestaurantBaseResource):
+    @doc("Edit Item details")
+    @use_kwargs(ItemSchema)
+    @marshal_with(ItemSchema)
+    def patch(self, slug: str, menu_name: str, item_id: str, **kwargs):
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+
+        item = menu.get_item(item_id)
+        if item is None:
+            return ITEM_NOT_FOUND
+
+        if "name" in kwargs:
+            item.name = kwargs["name"]
+
+        if "price" in kwargs:
+            item.price = kwargs["price"]
+
+        if "description" in kwargs:
+            item.description = kwargs["description"]
+
+        if "tags" in kwargs:
+            item.tags = [Tag(**tag) for tag in kwargs["tags"]]
+
+        menu.save()
+        return item
+
+    @doc("Delete item from menu")
+    def delete(self, slug: str, menu_name: str, item_id: str):
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+
+        for section in menu.sections:
+            for item in section.menu_items:
+                if item._id == item_id:
+                    section.remove(item)
+                    menu.save()
+                    return item
+        return ITEM_NOT_FOUND
+
+
 @doc(description="""Generate QR code of url on template""")
 class QRestaurantResource(RestaurantBaseResource):
+    @doc("Generate qr code for url and paste qr code to template")
     @use_args(qr_args, location="query")
     def get(self, args):
         """Generate QR code in template"""
@@ -167,6 +217,7 @@ class QRestaurantResource(RestaurantBaseResource):
 
 
 class GenerateSectionResource(RestaurantBaseResource):
+    @doc("Server generated section with an id")
     @marshal_with(SectionSchema)
     def post(self):
         section = Section(_id=uuid.uuid4())
@@ -174,6 +225,7 @@ class GenerateSectionResource(RestaurantBaseResource):
 
 
 class GenerateItemResource(RestaurantBaseResource):
+    @doc("Server generates item with an id")
     @marshal_with(ItemSchema)
     def post(self):
         item = Item(_id=uuid.uuid4())
