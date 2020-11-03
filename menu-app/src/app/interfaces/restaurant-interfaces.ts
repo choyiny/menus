@@ -8,6 +8,13 @@ export interface Restaurant {
   force_trace: boolean;
 }
 
+export interface RestaurantEditable {
+  image ?: string;
+  name ?: string;
+  description ?: string;
+  menus ?: string[];
+}
+
 export interface Tag {
   text: string;
   icon: string;

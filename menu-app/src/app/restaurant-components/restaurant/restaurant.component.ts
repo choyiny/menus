@@ -1,7 +1,6 @@
 import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
-import {Menu, Restaurant} from '../../interfaces/restaurant-interfaces';
+import {Menu, Restaurant, RestaurantEditable} from '../../interfaces/restaurant-interfaces';
 import {CovidModalComponent} from '../../util-components/modals/covid-modal/covid-modal.component';
-import {MenuService} from '../../services/menu.service';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {ScrollService} from '../../services/scroll.service';
@@ -40,7 +39,7 @@ export class RestaurantComponent implements OnInit {
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
     if (this.slug != null) {
-      this.getMenu(this.slug);
+      this.getRestaurant();
     }
     const user = this.authService.currentUserValue;
     if (user) {
@@ -50,7 +49,7 @@ export class RestaurantComponent implements OnInit {
     }
   }
 
-  getMenu(id: string): void {
+  getRestaurant(): void {
     this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
       this.restaurant = restaurant;
       // force <h1>
@@ -164,13 +163,13 @@ export class RestaurantComponent implements OnInit {
   //   });
   // }
 
-  // setValue(editable: MenuEditable): void {
-  //   // tslint:disable-next-line:forin
-  //   for (const field in editable) {
-  //     this.menu[field] = editable[field];
-  //     this.sendRequest();
-  //   }
-  // }
+  setValue(editable: RestaurantEditable): void {
+    // tslint:disable-next-line:forin
+    for (const field in editable) {
+      this.restaurant[field] = editable[field];
+      this.restaurantService.editRestaurant(this.slug, editable);
+    }
+  }
 
   sameDay(): boolean {
     if (localStorage.getItem('time_in')) {

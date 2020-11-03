@@ -2,6 +2,7 @@ export interface EnvironmentInterface {
   production: boolean;
   settings: {
     endpoint: string;
+    apiv2: string;
     firebase: {
       apiKey: string;
       authDomain: string;
