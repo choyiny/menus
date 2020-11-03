@@ -17,6 +17,7 @@ from utils.errors import (
 )
 from webargs.flaskparser import use_args
 
+from ...admin.schemas import file_args
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
 from ..schemas import (
@@ -25,7 +26,6 @@ from ..schemas import (
     MenuV2Schema,
     RestaurantSchema,
     SectionV2Schema,
-    file_args,
 )
 from .restaurant_base_resource import RestaurantBaseResource
 
@@ -55,8 +55,7 @@ class RestaurantsResource(RestaurantBaseResource):
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     @firebase_login_required
-    def patch(self, **kwargs):
-        slug = kwargs.get("slug")
+    def patch(self, slug, **kwargs):
         if g.user is None or not g.user.has_permission(slug):
             return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
@@ -79,9 +78,8 @@ class RestaurantsResource(RestaurantBaseResource):
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     @firebase_login_required
-    def delete(self, **kwargs):
+    def delete(self, slug):
 
-        slug = kwargs.get("slug")
         if g.user is None or not g.user.has_permission(slug):
             return FORBIDDEN
 

@@ -3,6 +3,7 @@ from .controllers import (
     AdminUserResource,
     ImportMenuResource,
     QrRestaurantResource,
+    RestaurantResource,
 )
 
 # a list of resources
@@ -17,4 +18,5 @@ resources = [
         ["POST", "PATCH"],
     ),
     (QrRestaurantResource, "generate", "QR", ["GET"]),
+    (RestaurantResource, "restaurants", "restaurant", ["GET", "POST"]),
 ]

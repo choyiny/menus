@@ -3,4 +3,5 @@ from .admin_resource import (
     AdminUserResource,
     ImportMenuResource,
     QrRestaurantResource,
+    RestaurantResource,
 )

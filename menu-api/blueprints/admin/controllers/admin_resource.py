@@ -11,6 +11,8 @@ from firebase_admin._auth_utils import (
 )
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
+from flask_marshmallow import Schema
+from marshmallow import fields
 from PIL.Image import Image
 from utils.errors import (
     FORBIDDEN,
@@ -22,17 +24,17 @@ from utils.errors import (
 from webargs.flaskparser import use_args
 
 from ...auth.schemas import UserSchema, UsersSchema
-from ...menus.documents import Menu
-from ...menus.schemas import GetMenuSchema
 from ...restaurants.documents.menuv2 import Item, Section
 from ...restaurants.documents.restaurant import Restaurant
-from ...restaurants.schemas import MenuV2Schema
+from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema
 from ..helpers import qr_helper
 from ..schemas import (
     ContactTracingSchema,
+    CreateRestaurantSchema,
     CreateUserSchema,
     PromoteUserSchema,
     file_args,
+    pagination_args,
     qr_args,
 )
 from .admin_base_resource import AdminBaseResource
@@ -86,26 +88,26 @@ class AdminUserResource(AdminBaseResource):
 
 
 class AdminTracingResource(AdminBaseResource):
-    @marshal_with(GetMenuSchema)
+    @marshal_with(GetRestaurantSchema)
     @use_kwargs(ContactTracingSchema)
     @firebase_login_required
     def patch(self, slug, **kwargs):
         """Enable/disable contact tracing on menu"""
         if g.user is None or not g.user.is_admin:
             return FORBIDDEN
-        menu = Menu.objects(slug=slug).first()
-        if menu is None:
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
             return MENU_NOT_FOUND
 
         if "enable_trace" in kwargs:
-            menu.enable_trace = kwargs.get("enable_trace")
+            restaurant.enable_trace = kwargs.get("enable_trace")
         if "force_trace" in kwargs:
-            menu.force_trace = kwargs.get("force_trace")
+            restaurant.force_trace = kwargs.get("force_trace")
         if "tracing_key" in kwargs:
-            menu.tracing_key = kwargs.get("tracing_key")
+            restaurant.tracing_key = kwargs.get("tracing_key")
 
-        menu.save()
-        return menu.sectionized_menu()
+        restaurant.save()
+        return restaurant.to_dict()
 
 
 class ImportMenuResource(AdminBaseResource):
@@ -213,3 +215,30 @@ class QrRestaurantResource(AdminBaseResource):
             template.paste(img, coord)
         template.show()
         return qr_helper.serve_pil_image(template, "file.png")
+
+
+class RestaurantResource(AdminBaseResource):
+    class AllRestaurantSchema(Schema):
+        restaurants = fields.List(fields.Str())
+
+    @doc(description="Create a new restaurants")
+    @use_kwargs(CreateRestaurantSchema)
+    @marshal_with(GetRestaurantSchema)
+    # @firebase_login_required
+    def post(self, **kwargs):
+        # if g.user is None or not g.user.is_admin:
+        #     return FORBIDDEN
+        restaurant = Restaurant(**kwargs).save()
+        return restaurant.to_dict()
+
+    @doc(description="Get all restaurants")
+    @use_args(pagination_args, location="query")
+    @marshal_with(AllRestaurantSchema)
+    @firebase_login_required
+    def get(self, args):
+        if g.user is None or not g.user.is_admin:
+            return {"description": "You do not have permission"}, 401
+        limit = args["limit"]
+        page = args["page"]
+        restaurants = [restaurant.slug for restaurant in Restaurant.objects()]
+        return {"restaurants": restaurants[(page - 1) * limit : page * limit]}
