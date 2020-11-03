@@ -19,7 +19,7 @@ from webargs.flaskparser import use_args
 
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
-from ..helpers import csv_helper, qr_helper
+from ..helpers import qr_helper
 from ..schemas import (
     GetRestaurantSchema,
     ItemV2Schema,
@@ -367,7 +367,7 @@ class ImportMenuResource(RestaurantBaseResource):
                     description=row["Description"],
                     name=row["Name"],
                     price=row["Price"],
-                    tags=csv_helper.get_tags(row["Tags"]),
+                    tags=[],
                     sections=row["Sections"],
                 )
             )
