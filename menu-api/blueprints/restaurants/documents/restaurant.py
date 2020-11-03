@@ -54,7 +54,6 @@ class Restaurant(Document):
 
     def to_dict(self):
         """ serialize restaurants to json"""
-        print(self.menus)
         menus = [menu.name for menu in self.menus]
         serialized_restaurant = self.to_mongo().to_dict()
         serialized_restaurant["menus"] = menus

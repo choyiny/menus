@@ -253,7 +253,6 @@ class QrRestaurantResource(RestaurantBaseResource):
     def get(self, args):
         """Generate QR code in template"""
         url = args["url"]
-        name = args["name"]
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -267,7 +266,8 @@ class QrRestaurantResource(RestaurantBaseResource):
         template = Image.open("assets/print_template_huge.png")
         for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
-        return qr_helper.serve_pil_image(template, name + ".png")
+        template.show()
+        return qr_helper.serve_pil_image(template, "file.png")
 
 
 class GenerateSectionResource(RestaurantBaseResource):
