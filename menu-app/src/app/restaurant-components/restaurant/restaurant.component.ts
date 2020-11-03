@@ -49,9 +49,21 @@ export class RestaurantComponent implements OnInit {
     }
   }
 
+  loadMenus(): void {
+    for (let i = 0; i < this.restaurant.menus.length; i++){
+      const menuName = this.restaurant.menus[i];
+      this.restaurantService.getMenus(this.slug, menuName).subscribe(
+        menu => {
+          this.menus[i] = menu;
+        }
+      );
+    }
+  }
+
   getRestaurant(): void {
     this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
       this.restaurant = restaurant;
+      this.loadMenus();
       // force <h1>
       this.restaurant.description = this.injectHeaderStyle(this.restaurant.description);
       if (this.sameDay()) {
