@@ -313,8 +313,14 @@ class ImageResource(RestaurantBaseResource):
 
     @doc("Delete image form s3 bucket")
     @marshal_with(ItemV2Schema)
-    def delete(self, slug, item_id):
-        menu = MenuV2.objects(slug=slug).first()
+    def delete(self, slug, menu_name, item_id):
+
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
 
         item = menu.get_item(item_id)
         if item:
