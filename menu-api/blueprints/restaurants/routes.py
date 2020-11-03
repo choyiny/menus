@@ -4,7 +4,6 @@ from .controllers import (
     ImageResource,
     ItemResource,
     MenuResource,
-    QrRestaurantResource,
     RestaurantResource,
     RestaurantsResource,
     SectionResource,
@@ -13,7 +12,6 @@ from .controllers import (
 resources = [
     (RestaurantResource, "restaurants/<string:slug>", "restaurants", ["GET"]),
     (RestaurantsResource, "restaurants", "restaurant", ["POST", "DELETE", "PATCH"],),
-    (QrRestaurantResource, "generate", "QR", ["GET"]),
     (
         MenuResource,
         "restaurants/<string:slug>/menus/<string:menu_name>",

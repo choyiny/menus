@@ -10,4 +10,11 @@ IMAGE_NOT_FOUND = {"description": "Image not found"}, 404
 
 FORBIDDEN = {"description": "You do not have permission"}, 401
 
-MENU_ALREADY_EXISTS = {"description": "Menu already exists"}, 412
+MENU_ALREADY_EXISTS = {"description": "Menu already exists"}, 400
+
+USER_ALREADY_EXISTS = {"description": "User already exists with that email"}, 400
+
+NUMBER_ALREADY_EXISTS = (
+    {"description": "User already exists with that phone-number"},
+    400,
+)

@@ -1,6 +1,7 @@
 import csv
 import uuid
 
+import qrcode
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
 from firebase_admin import auth
@@ -10,7 +11,14 @@ from firebase_admin._auth_utils import (
 )
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
-from utils.errors import FORBIDDEN, MENU_NOT_FOUND, RESTAURANT_NOT_FOUND
+from PIL.Image import Image
+from utils.errors import (
+    FORBIDDEN,
+    MENU_NOT_FOUND,
+    NUMBER_ALREADY_EXISTS,
+    RESTAURANT_NOT_FOUND,
+    USER_ALREADY_EXISTS,
+)
 from webargs.flaskparser import use_args
 
 from ...auth.schemas import UserSchema, UsersSchema
@@ -18,8 +26,15 @@ from ...menus.documents import Menu
 from ...menus.schemas import GetMenuSchema
 from ...restaurants.documents.menuv2 import Item, Section
 from ...restaurants.documents.restaurant import Restaurant
-from ...restaurants.schemas import MenuV2Schema, file_args
-from ..schemas import ContactTracingSchema, CreateUserSchema, PromoteUserSchema
+from ...restaurants.schemas import MenuV2Schema
+from ..helpers import qr_helper
+from ..schemas import (
+    ContactTracingSchema,
+    CreateUserSchema,
+    PromoteUserSchema,
+    file_args,
+    qr_args,
+)
 from .admin_base_resource import AdminBaseResource
 
 
@@ -28,7 +43,7 @@ class AdminUserResource(AdminBaseResource):
     @firebase_login_required
     def get(self):
         if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+            return FORBIDDEN
         return {"users": [user for user in User.objects()]}
 
     @use_kwargs(CreateUserSchema)
@@ -37,13 +52,13 @@ class AdminUserResource(AdminBaseResource):
     def post(self, **user_info):
         """Create firebase user"""
         if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+            return FORBIDDEN
         try:
             firebase_user = auth.create_user(**user_info)
         except EmailAlreadyExistsError:
-            return {"description": "User already exists with that email"}, 400
+            return USER_ALREADY_EXISTS
         except PhoneNumberAlreadyExistsError:
-            return {"description": "User already exists with that phone-number"}, 400
+            return NUMBER_ALREADY_EXISTS
         user = User.create(
             firebase_id=firebase_user.uid,
             email=firebase_user.email,
@@ -61,7 +76,7 @@ class AdminUserResource(AdminBaseResource):
     @firebase_login_required
     def patch(self, **kwargs):
         if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+            return FORBIDDEN
         slug = kwargs["slug"]
         firebase_id = kwargs["firebase_id"]
         user = User.objects(firebase_id=firebase_id).first()
@@ -77,10 +92,10 @@ class AdminTracingResource(AdminBaseResource):
     def patch(self, slug, **kwargs):
         """Enable/disable contact tracing on menu"""
         if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+            return FORBIDDEN
         menu = Menu.objects(slug=slug).first()
         if menu is None:
-            return {"description": "Menu not found"}
+            return MENU_NOT_FOUND
 
         if "enable_trace" in kwargs:
             menu.enable_trace = kwargs.get("enable_trace")
@@ -172,3 +187,29 @@ class ImportMenuResource(AdminBaseResource):
         menu.sections = menu.sections + self.read(file_str)
         menu.save()
         return menu
+
+
+class QrRestaurantResource(AdminBaseResource):
+    @doc(description="Generate qr code for url and paste qr code to template")
+    @use_args(qr_args, location="query")
+    @firebase_login_required
+    def get(self, args):
+        """Generate QR code in template"""
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
+        url = args["url"]
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        qr.add_data(url)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="white", back_color="black")
+        img = img.resize((950, 950))
+        template = Image.open("assets/print_template_huge.png")
+        for coord in qr_helper.generate_tuples():
+            template.paste(img, coord)
+        template.show()
+        return qr_helper.serve_pil_image(template, "file.png")

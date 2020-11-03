@@ -1,7 +1,6 @@
 import uuid
 from io import BytesIO
 
-import qrcode
 from auth.decorators import firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
@@ -20,7 +19,6 @@ from webargs.flaskparser import use_args
 
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
-from ..helpers import qr_helper
 from ..schemas import (
     GetRestaurantSchema,
     ItemV2Schema,
@@ -28,7 +26,6 @@ from ..schemas import (
     RestaurantSchema,
     SectionV2Schema,
     file_args,
-    qr_args,
 )
 from .restaurant_base_resource import RestaurantBaseResource
 
@@ -286,32 +283,6 @@ class ItemResource(RestaurantBaseResource):
                     menu.save()
                     return item
         return ITEM_NOT_FOUND
-
-
-class QrRestaurantResource(RestaurantBaseResource):
-    @doc(description="Generate qr code for url and paste qr code to template")
-    @use_args(qr_args, location="query")
-    @firebase_login_required
-    def get(self, args):
-        """Generate QR code in template"""
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        url = args["url"]
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=1,
-        )
-        qr.add_data(url)
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="white", back_color="black")
-        img = img.resize((950, 950))
-        template = Image.open("assets/print_template_huge.png")
-        for coord in qr_helper.generate_tuples():
-            template.paste(img, coord)
-        template.show()
-        return qr_helper.serve_pil_image(template, "file.png")
 
 
 class GenerateSectionResource(RestaurantBaseResource):
