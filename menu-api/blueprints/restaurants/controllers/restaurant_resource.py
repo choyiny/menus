@@ -33,7 +33,7 @@ from .restaurant_base_resource import RestaurantBaseResource
 
 
 class RestaurantResource(RestaurantBaseResource):
-    @doc("Get restaurants details")
+    @doc(description="Get restaurants details")
     @marshal_with(GetRestaurantSchema)
     def get(self, slug: str):
         restaurant = Restaurant.objects(slug=slug).first()
@@ -43,14 +43,14 @@ class RestaurantResource(RestaurantBaseResource):
 
 
 class RestaurantsResource(RestaurantBaseResource):
-    @doc("Create a new restaurants")
+    @doc(description="Create a new restaurants")
     @use_kwargs(RestaurantSchema)
     @marshal_with(GetRestaurantSchema)
     def post(self, **kwargs):
         restaurant = Restaurant(**kwargs).save()
         return restaurant.to_dict()
 
-    @doc("Edit restaurants details")
+    @doc(description="Edit restaurants details")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def patch(self, **kwargs):
@@ -71,7 +71,7 @@ class RestaurantsResource(RestaurantBaseResource):
         restaurant.save()
         return restaurant.to_dict()
 
-    @doc("Delete restaurants")
+    @doc(description="Delete restaurants")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
     def delete(self, **kwargs):
@@ -87,7 +87,7 @@ class RestaurantsResource(RestaurantBaseResource):
 
 
 class MenuResource(RestaurantBaseResource):
-    @doc("Get menu details")
+    @doc(description="Get menu details")
     @marshal_with(MenuV2Schema)
     def get(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
@@ -98,7 +98,7 @@ class MenuResource(RestaurantBaseResource):
             return MENU_NOT_FOUND
         return menu
 
-    @doc("Edit menu details, checks for duplicate menus")
+    @doc(description="Edit menu details, checks for duplicate menus")
     @marshal_with(MenuV2Schema)
     @use_kwargs(MenuV2Schema)
     def patch(self, slug: str, menu_name: str, **kwargs):
@@ -115,7 +115,7 @@ class MenuResource(RestaurantBaseResource):
         menu.save()
         return menu
 
-    @doc("Delete menu")
+    @doc(description="Delete menu")
     @marshal_with(MenuV2Schema)
     def delete(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
@@ -129,7 +129,7 @@ class MenuResource(RestaurantBaseResource):
         restaurant.save()
         return restaurant.to_dict()
 
-    @doc("Add new menu, check for duplicates")
+    @doc(description="Add new menu, check for duplicates")
     @marshal_with(MenuV2Schema)
     @use_kwargs(MenuV2Schema)
     def post(self, slug: str, **kwargs):
@@ -148,7 +148,7 @@ class MenuResource(RestaurantBaseResource):
 
 
 class SectionResource(RestaurantBaseResource):
-    @doc("Edit section details")
+    @doc(description="Edit section details")
     @use_kwargs(SectionV2Schema)
     @marshal_with(SectionV2Schema)
     def patch(self, slug: str, menu_name: str, section_id: str, **kwargs):
@@ -178,7 +178,7 @@ class SectionResource(RestaurantBaseResource):
         menu.save()
         return section
 
-    @doc("Delete section from menu")
+    @doc(description="Delete section from menu")
     def delete(self, slug: str, menu_name: str, section_id: str):
         """Delete section"""
         restaurant = Restaurant.objects(slug=slug).first()
@@ -196,7 +196,7 @@ class SectionResource(RestaurantBaseResource):
 
 
 class ItemResource(RestaurantBaseResource):
-    @doc("Edit Item details")
+    @doc(description="Edit Item details")
     @use_kwargs(ItemV2Schema)
     @marshal_with(ItemV2Schema)
     def patch(self, slug: str, menu_name: str, item_id: str, **kwargs):
@@ -226,7 +226,7 @@ class ItemResource(RestaurantBaseResource):
         menu.save()
         return item
 
-    @doc("Delete item from menu")
+    @doc(description="Delete item from menu")
     @marshal_with(ItemV2Schema)
     def delete(self, slug: str, menu_name: str, item_id: str):
         restaurant = Restaurant.objects(slug=slug).first()
@@ -246,7 +246,7 @@ class ItemResource(RestaurantBaseResource):
 
 
 class QrRestaurantResource(RestaurantBaseResource):
-    @doc("Generate qr code for url and paste qr code to template")
+    @doc(description="Generate qr code for url and paste qr code to template")
     @use_args(qr_args, location="query")
     def get(self, args):
         """Generate QR code in template"""
@@ -269,7 +269,7 @@ class QrRestaurantResource(RestaurantBaseResource):
 
 
 class GenerateSectionResource(RestaurantBaseResource):
-    @doc("Server generated section with an id")
+    @doc(description="Server generated section with an id")
     @marshal_with(SectionV2Schema)
     def get(self):
         section = Section(_id=uuid.uuid4())
@@ -277,7 +277,7 @@ class GenerateSectionResource(RestaurantBaseResource):
 
 
 class GenerateItemResource(RestaurantBaseResource):
-    @doc("Server generates item with an id")
+    @doc(description="Server generates item with an id")
     @marshal_with(ItemV2Schema)
     def get(self):
         item = Item(_id=uuid.uuid4())
@@ -285,7 +285,7 @@ class GenerateItemResource(RestaurantBaseResource):
 
 
 class ImageResource(RestaurantBaseResource):
-    @doc("Upload image to s3 bucket")
+    @doc(description="Upload image to s3 bucket")
     @use_args(file_args, location="files")
     def patch(self, args, slug, menu_name, item_id):
         image_bytes = args["file"].read()
@@ -328,7 +328,7 @@ class ImageResource(RestaurantBaseResource):
 
 
 class ImportMenuResource(RestaurantBaseResource):
-    @doc("Populate empty menu with sections and menu-items")
+    @doc(description="Populate empty menu with sections and menu-items")
     @marshal_with(MenuV2Schema)
     @use_args(file_args, location="files")
     def post(self, args, slug, menu_name):
@@ -348,6 +348,7 @@ class ImportMenuResource(RestaurantBaseResource):
 
     @staticmethod
     def read(file_str):
+        """Read csv into menu-items"""
         reader = csv.DictReader(file_str.decode().splitlines(), skipinitialspace=True)
         sections = {}
         for row in reader:
@@ -366,6 +367,7 @@ class ImportMenuResource(RestaurantBaseResource):
 
     @staticmethod
     def get_sections(row, sections) -> Section:
+        """Get sections from csv"""
         section = row["Sections"]
         section_subtitle = row["Section Subtitle"]
         description = row["Section Description"]
@@ -385,7 +387,7 @@ class ImportMenuResource(RestaurantBaseResource):
     @marshal_with(MenuV2Schema)
     @use_args(file_args, location="files")
     @doc(
-        "Quickly populate existing menu with new section WARNING SECTIONS ALL MUST BE NEW"
+        description="Quickly populate existing menu with new section WARNING SECTIONS ALL MUST BE NEW"
     )
     def patch(self, args, slug, menu_name):
         """Append new section items """
