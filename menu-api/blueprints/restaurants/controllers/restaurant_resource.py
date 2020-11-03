@@ -352,7 +352,7 @@ class ImportMenuResource(RestaurantBaseResource):
         file_str = args["file"].read()
         menu.sections = self.read(file_str)
         menu.save()
-        return menu.sectionized_menu()
+        return menu
 
     @staticmethod
     def read(file_str):
@@ -368,10 +368,9 @@ class ImportMenuResource(RestaurantBaseResource):
                     name=row["Name"],
                     price=row["Price"],
                     tags=[],
-                    sections=row["Sections"],
                 )
             )
-        return sections
+        return [sections[section] for section in sections]
 
     @staticmethod
     def get_sections(row, sections) -> Section:
@@ -386,11 +385,10 @@ class ImportMenuResource(RestaurantBaseResource):
                 subtitle=section_subtitle,
                 description=description,
                 _id=str(uuid.uuid4()),
+                menu_items=[],
             )
             sections[section] = new_section
-            return new_section
-        else:
-            return sections[section]
+        return sections[section]
 
     @marshal_with(MenuV2Schema)
     @use_args(file_args, location="files")

@@ -109,7 +109,7 @@ class MenuV2(Document):
     A menu object.
     """
 
-    name = StringField(default="No Menu")
+    name = StringField(default="New Menu")
     """
     name of current menu
     """
