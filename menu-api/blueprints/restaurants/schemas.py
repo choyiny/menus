@@ -5,11 +5,11 @@ from webargs import fields
 class TagV2Schema(Schema):
     icon = fields.Str(example="fas-star")
     text = fields.Str(example="Chef Featured")
-    color = fields.Str(exampl="black")
+    background_color = fields.Str(example="black")
 
 
 class ItemV2Schema(Schema):
-    _id = fields.Str(required=True, example="da95f757-603a-41a8-aa62-dede4484a601")
+    _id = fields.Str(example="da95f757-603a-41a8-aa62-dede4484a601")
     image = fields.Url(
         example="https://via.placeholder.com/150", allow_none=True, missing=None
     )
@@ -21,7 +21,7 @@ class ItemV2Schema(Schema):
 
 
 class SectionV2Schema(Schema):
-    _id = fields.Str(required=True, example="da95f757-603a-41a8-aa62-dede4484a601")
+    _id = fields.Str(example="da95f757-603a-41a8-aa62-dede4484a601")
     name = fields.Str(
         description="Name of section", example="A la carte", allow_none=True
     )

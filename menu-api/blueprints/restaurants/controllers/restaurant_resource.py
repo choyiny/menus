@@ -109,7 +109,7 @@ class MenuResource(RestaurantBaseResource):
         if menu is None:
             return MENU_NOT_FOUND
         name = kwargs.get("name")
-        if name in restaurant.menus:
+        if name in restaurant.to_dict()["menus"]:
             return MENU_ALREADY_EXISTS
         menu.name = name
         menu.save()
@@ -227,6 +227,7 @@ class ItemResource(RestaurantBaseResource):
         return item
 
     @doc("Delete item from menu")
+    @marshal_with(ItemV2Schema)
     def delete(self, slug: str, menu_name: str, item_id: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -238,7 +239,7 @@ class ItemResource(RestaurantBaseResource):
         for section in menu.sections:
             for item in section.menu_items:
                 if item._id == item_id:
-                    section.remove(item)
+                    section.menu_items.remove(item)
                     menu.save()
                     return item
         return ITEM_NOT_FOUND

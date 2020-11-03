@@ -30,7 +30,7 @@ resources = [
     (GenerateSectionResource, "section/new", "new section", ["GET"]),
     (
         ItemResource,
-        "restaurants/<string:slug>/menus/<string:menu_name>/items/",
+        "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>",
         "items",
         ["PATCH", "DELETE"],
     ),
