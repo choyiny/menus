@@ -179,6 +179,7 @@ class SectionResource(RestaurantBaseResource):
         return section
 
     @doc(description="Delete section from menu")
+    @marshal_with(SectionV2Schema)
     def delete(self, slug: str, menu_name: str, section_id: str):
         """Delete section"""
         restaurant = Restaurant.objects(slug=slug).first()
@@ -192,6 +193,7 @@ class SectionResource(RestaurantBaseResource):
             return SECTION_NOT_FOUND
 
         menu.sections.remove(section)
+        menu.save()
         return section
 
 

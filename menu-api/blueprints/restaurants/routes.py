@@ -27,7 +27,7 @@ resources = [
         "sections",
         ["PATCH", "DELETE"],
     ),
-    (GenerateSectionResource, "section/new", "new section", ["GET"]),
+    (GenerateSectionResource, "sections/new", "new section", ["GET"]),
     (
         ItemResource,
         "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>",
