@@ -28,6 +28,9 @@ const routes: Routes = [
     path: '**',
     redirectTo: ''
   },
+  {
+    path: 'restaurant/:slug'
+  }
 ];
 
 @NgModule({
