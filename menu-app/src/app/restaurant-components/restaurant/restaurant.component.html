@@ -1,1 +1,78 @@
-<p>restaurant works!</p>
+<app-covid-modal [menu]="menu"></app-covid-modal>
+<div *ngIf="restaurant">
+  <div class="desktop-background">
+    <app-mobile-image
+      class="mobile"
+      [name]="restaurant.name"
+      [description]="restaurant.description"
+      [image]="restaurant.image"
+    ></app-mobile-image>
+    <app-scrolling-component
+      class="mobile"
+      [sections]="menu.sections"
+      [miniScroll]="miniScroll"
+      [currentSection]="selectedSection"
+    ></app-scrolling-component>
+    <div
+      [ngStyle]="{
+        background: 'url(' + restaurant.image + ')',
+        backgroundSize: '100%',
+        backgroundRepeat: 'no repeat'
+      }"
+      class="desktop-image"
+    >
+      <div class="desktop-background">
+        <app-change-background
+          class="desktop"
+          [hasPermission]="hasPermission"
+          [image]="restaurant.image"
+          (imageEmitter)="setValue($event)"
+        ></app-change-background>
+        <app-menu-name
+          class="desktop"
+          (menuEmitter)="setValue($event)"
+          [hasPermission]="hasPermission"
+          [name]="menu.name"
+        ></app-menu-name>
+        <div class="menu-items section-background">
+          <app-menu-details
+            class="desktop"
+            [description]="restaurant.description"
+            [hasPermission]="hasPermission"
+            (menuEmitter)="setValue($event)"
+          ></app-menu-details>
+          <button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">
+            Rearrange Sections
+          </button>
+          <button class="left desktop" *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
+          <app-scrolling-component
+            class="desktop"
+            [sections]="menu.sections"
+            [miniScroll]="miniScroll"
+          ></app-scrolling-component>
+          <div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
+            <div
+              class="section-box"
+              *ngFor="let section of menu.sections; let i = index"
+              cdkDrag
+              [cdkDragDisabled]="!rearrangeMode"
+            >
+              <app-section
+                [rearrangeMode]="rearrangeMode"
+                [hasPermission]="hasPermission"
+                [section]="section"
+                [slug]="slug"
+                id="{{ section._id }}"
+              >
+              </app-section>
+              <button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">
+                Add new Section
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>
