@@ -2,7 +2,6 @@ from .controllers import (
     GenerateItemResource,
     GenerateSectionResource,
     ImageResource,
-    ImportMenuResource,
     ItemResource,
     MenuResource,
     QrRestaurantResource,
@@ -41,11 +40,5 @@ resources = [
         "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>/picture",
         "picture",
         ["DELETE", "PATCH"],
-    ),
-    (
-        ImportMenuResource,
-        "restaurants/<string:slug>/menus/<string:menu_name>/import",
-        "import",
-        ["POST", "PATCH"],
     ),
 ]
