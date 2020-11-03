@@ -3,6 +3,8 @@ import uuid
 from io import BytesIO
 
 import qrcode
+from auth.decorators import firebase_login_required
+from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from helpers import delete_file, upload_image
 from PIL import Image
@@ -46,15 +48,21 @@ class RestaurantsResource(RestaurantBaseResource):
     @doc(description="Create a new restaurants")
     @use_kwargs(RestaurantSchema)
     @marshal_with(GetRestaurantSchema)
+    @firebase_login_required
     def post(self, **kwargs):
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
         restaurant = Restaurant(**kwargs).save()
         return restaurant.to_dict()
 
     @doc(description="Edit restaurants details")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
+    @firebase_login_required
     def patch(self, **kwargs):
         slug = kwargs.get("slug")
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -74,8 +82,13 @@ class RestaurantsResource(RestaurantBaseResource):
     @doc(description="Delete restaurants")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
+    @firebase_login_required
     def delete(self, **kwargs):
+
         slug = kwargs.get("slug")
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return {"description": "restaurants not found"}
@@ -101,7 +114,12 @@ class MenuResource(RestaurantBaseResource):
     @doc(description="Edit menu details, checks for duplicate menus")
     @marshal_with(MenuV2Schema)
     @use_kwargs(MenuV2Schema)
+    @firebase_login_required
     def patch(self, slug: str, menu_name: str, **kwargs):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -117,7 +135,12 @@ class MenuResource(RestaurantBaseResource):
 
     @doc(description="Delete menu")
     @marshal_with(MenuV2Schema)
+    @firebase_login_required
     def delete(self, slug: str, menu_name: str):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -132,7 +155,12 @@ class MenuResource(RestaurantBaseResource):
     @doc(description="Add new menu, check for duplicates")
     @marshal_with(MenuV2Schema)
     @use_kwargs(MenuV2Schema)
+    @firebase_login_required
     def post(self, slug: str, **kwargs):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -151,8 +179,11 @@ class SectionResource(RestaurantBaseResource):
     @doc(description="Edit section details")
     @use_kwargs(SectionV2Schema)
     @marshal_with(SectionV2Schema)
+    @firebase_login_required
     def patch(self, slug: str, menu_name: str, section_id: str, **kwargs):
         """Edit section details"""
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -180,8 +211,11 @@ class SectionResource(RestaurantBaseResource):
 
     @doc(description="Delete section from menu")
     @marshal_with(SectionV2Schema)
+    @firebase_login_required
     def delete(self, slug: str, menu_name: str, section_id: str):
         """Delete section"""
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -201,7 +235,10 @@ class ItemResource(RestaurantBaseResource):
     @doc(description="Edit Item details")
     @use_kwargs(ItemV2Schema)
     @marshal_with(ItemV2Schema)
+    @firebase_login_required
     def patch(self, slug: str, menu_name: str, item_id: str, **kwargs):
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -230,7 +267,12 @@ class ItemResource(RestaurantBaseResource):
 
     @doc(description="Delete item from menu")
     @marshal_with(ItemV2Schema)
+    @firebase_login_required
     def delete(self, slug: str, menu_name: str, item_id: str):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -250,8 +292,11 @@ class ItemResource(RestaurantBaseResource):
 class QrRestaurantResource(RestaurantBaseResource):
     @doc(description="Generate qr code for url and paste qr code to template")
     @use_args(qr_args, location="query")
+    @firebase_login_required
     def get(self, args):
         """Generate QR code in template"""
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
         url = args["url"]
         qr = qrcode.QRCode(
             version=1,
@@ -273,7 +318,10 @@ class QrRestaurantResource(RestaurantBaseResource):
 class GenerateSectionResource(RestaurantBaseResource):
     @doc(description="Server generated section with an id")
     @marshal_with(SectionV2Schema)
+    @firebase_login_required
     def get(self):
+        if g.user is None:
+            return FORBIDDEN
         section = Section(_id=uuid.uuid4())
         return section
 
@@ -281,7 +329,11 @@ class GenerateSectionResource(RestaurantBaseResource):
 class GenerateItemResource(RestaurantBaseResource):
     @doc(description="Server generates item with an id")
     @marshal_with(ItemV2Schema)
+    @firebase_login_required
     def get(self):
+        if g.user is None:
+            return FORBIDDEN
+
         item = Item(_id=uuid.uuid4())
         return item
 
@@ -289,7 +341,11 @@ class GenerateItemResource(RestaurantBaseResource):
 class ImageResource(RestaurantBaseResource):
     @doc(description="Upload image to s3 bucket")
     @use_args(file_args, location="files")
+    @firebase_login_required
     def patch(self, args, slug, menu_name, item_id):
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
         image_bytes = args["file"].read()
         loaded_image = Image.open(BytesIO(image_bytes))
         width, height = loaded_image.size
@@ -313,7 +369,11 @@ class ImageResource(RestaurantBaseResource):
 
     @doc("Delete image form s3 bucket")
     @marshal_with(ItemV2Schema)
+    @firebase_login_required
     def delete(self, slug, menu_name, item_id):
+
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -339,7 +399,11 @@ class ImportMenuResource(RestaurantBaseResource):
     @doc(description="Populate empty menu with sections and menu-items")
     @marshal_with(MenuV2Schema)
     @use_args(file_args, location="files")
+    @firebase_login_required
     def post(self, args, slug, menu_name):
+
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
