@@ -24,17 +24,17 @@ class Restaurant(Document):
 
     image = URLField()
     """
-    image url for this restaurants
+    image url for this restaurant
     """
 
     menus = ListField(ReferenceField("MenuV2"), default=list)
     """
-    list of menus for this restaurants
+    list of menus for this restaurant
     """
 
     name = StringField()
     """
-    name of the restaurants
+    name of the restaurant
     """
 
     force_trace = BooleanField(default=False)
@@ -44,7 +44,7 @@ class Restaurant(Document):
 
     enable_trace = BooleanField(default=False)
     """
-    field to enable contact tracing on restaurants
+    field to enable contact tracing on restaurant
     """
 
     tracing_key = StringField()

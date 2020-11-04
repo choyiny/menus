@@ -63,7 +63,7 @@ class Item(EmbeddedDocument):
 
     _id = StringField()
     """
-    unique if of current menu item
+    unique id of current menu item
     """
 
     def __eq__(self, other):

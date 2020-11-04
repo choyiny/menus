@@ -42,11 +42,11 @@ class EditMenuV2Schema(Schema):
 
 
 class GetRestaurantSchema(Schema):
-    name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
+    name = fields.Str(description="Name of the restaurant", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
     description = fields.Str(example="A cafe in Hollywood")
     enable_trace = fields.Bool(
-        description="Enable contact tracing functionality for the restaurants"
+        description="Enable contact tracing functionality for the restaurant"
     )
     force_trace = fields.Bool(
         description="Force show the contact tracing popup when the user visits the menu app."
@@ -60,7 +60,7 @@ class GetRestaurantSchema(Schema):
 class RestaurantSchema(Schema):
     slug = fields.Str(description="Slug of the menu", example="hollywood")
     name = fields.Str(
-        description="Name of the restaurants", example="Hollywood Cafe", allow_none=True
+        description="Name of the restaurant", example="Hollywood Cafe", allow_none=True
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
