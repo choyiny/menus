@@ -108,10 +108,17 @@ class MenuResource(RestaurantBaseResource):
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
-        name = kwargs.get("name")
-        if name in restaurant.to_dict()["menus"]:
-            return MENU_ALREADY_EXISTS
-        menu.name = name
+        if "name" in kwargs:
+            name = kwargs.get("name")
+            if name in restaurant.to_dict()["menus"]:
+                return MENU_ALREADY_EXISTS
+            menu.name = name
+
+        if "sections" in kwargs:
+            menu.sections = [
+                Section(**section_dict) for section_dict in kwargs.get("sections")
+            ]
+
         menu.save()
         return menu
 

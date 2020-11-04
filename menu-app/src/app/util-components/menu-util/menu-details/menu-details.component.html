@@ -3,6 +3,21 @@
     <fa-icon [icon]="editIcon"></fa-icon> Edit Menu details
   </button>
   <button *ngIf="editMode" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon> Save</button>
-  <quill-view-html *ngIf="!editMode" [content]="description" theme="snow"></quill-view-html>
-  <quill-editor *ngIf="editMode" [(ngModel)]="description"></quill-editor>
+  <div class="view">
+    <quill-view-html
+      *ngIf="!editMode && description"
+      [content]="description"
+      theme="snow"
+      [ngStyle]="{
+      'font-size': '30px'
+    }"
+    ></quill-view-html>
+  </div>
+  <quill-editor
+    *ngIf="editMode"
+    [(ngModel)]="description"
+    [styles]="{
+    'font-size': '30px'
+    }">
+  </quill-editor>
 </div>
