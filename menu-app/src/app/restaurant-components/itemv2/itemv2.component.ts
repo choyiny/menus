@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
-import { TagInterface } from '../../interfaces/tag-interface';
 import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
-import { SectionInterface } from '../../interfaces/section-interface';
 import { Item, Section } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 
@@ -82,18 +80,18 @@ export class Itemv2Component implements OnInit {
   //   this.sendRequest();
   // }
   //
-  // remove(): void {
-  //   this.restaurantService.removeMenuItem(this.slug, this.item._id).subscribe((section) => {
-  //     this.sectionEmitter.emit(section);
-  //   });
-  // }
-  //
-  // delete($event): void {
-  //   this.restaurantService.deleteImage(this.slug, this.item._id).subscribe((item) => {
-  //     this.item = item;
-  //   });
-  //   event.stopPropagation();
-  // }
+  remove(): void {
+    this.restaurantService.deleteItem(this.slug, this.menuName, this.item._id).subscribe((section) => {
+      this.sectionEmitter.emit(section);
+    });
+  }
+
+  deletePhoto($event): void {
+    this.restaurantService.deletePhoto(this.slug, this.menuName,this.item._id).subscribe((item) => {
+      this.item = item;
+    });
+    event.stopPropagation();
+  }
 
   discard(): void {
     this.editMode = false;

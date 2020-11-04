@@ -36,8 +36,28 @@ export class RestaurantService {
     return this.http.patch<Item>(url, item);
   }
 
+  deleteItem(slug: string, menuName: string, itemId): Observable<Section> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}`;
+    return this.http.delete<Section>(url);
+  }
+
   editSection(slug: string, menuName: string, section: Section): Observable<Section> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/sections/${section._id}`;
     return this.http.patch<Section>(url, section);
+  }
+
+  deleteSection(slug: string, menuName: string, sectionId: string): Observable<Menu>{
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/sections/${sectionId}`;
+    return this.http.patch<Menu>(url, sectionId);
+  }
+
+  uploadPhoto(slug: string, menuName: string, itemId: string, formData: FormData): Observable<string> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
+    return this.http.patch<string>(url, formData);
+  }
+
+  deletePhoto(slug: string, menuName: string, itemId: string): Observable<Item> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
+    return this.http.delete<Item>(url);
   }
 }

@@ -62,8 +62,6 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.loadMenus();
-      // force <h1>
-      this.restaurant.description = this.injectHeaderStyle(this.restaurant.description);
       if (this.sameDay()) {
         return;
       }
@@ -126,13 +124,6 @@ export class RestaurantComponent implements OnInit {
 
   scrollToSection(id: string): void {
     this.scrollService.scrollToSection(id);
-  }
-
-  injectHeaderStyle(header: string): string {
-    if (header.slice(0, 4) === '<h1>') {
-      return header;
-    }
-    return `<h1>${header}</h1>`;
   }
 
   rearrange(): void {

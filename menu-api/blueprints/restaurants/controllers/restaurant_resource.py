@@ -201,7 +201,7 @@ class SectionResource(RestaurantBaseResource):
         return section
 
     @doc(description="Delete section from menu")
-    @marshal_with(SectionV2Schema)
+    @marshal_with(MenuV2Schema)
     @firebase_login_required
     def delete(self, slug: str, menu_name: str, section_id: str):
         """Delete section"""
@@ -219,7 +219,7 @@ class SectionResource(RestaurantBaseResource):
 
         menu.sections.remove(section)
         menu.save()
-        return section
+        return menu
 
 
 class ItemResource(RestaurantBaseResource):
@@ -257,7 +257,7 @@ class ItemResource(RestaurantBaseResource):
         return item
 
     @doc(description="Delete item from menu")
-    @marshal_with(ItemV2Schema)
+    @marshal_with(SectionV2Schema)
     @firebase_login_required
     def delete(self, slug: str, menu_name: str, item_id: str):
 
@@ -276,7 +276,7 @@ class ItemResource(RestaurantBaseResource):
                 if item._id == item_id:
                     section.menu_items.remove(item)
                     menu.save()
-                    return item
+                    return section
         return ITEM_NOT_FOUND
 
 
