@@ -16,8 +16,10 @@ export class RestaurantComponent implements OnInit {
   @Input() restaurant: Restaurant;
   menus = [];
   currentMenu = 0;
+  miniScroll = false;
+  previousScroll = 0;
+  selectedSection = 0;
   @Input() selectedImage: string;
-  rearrangeMode = false;
   slug: string;
 
   // true if user has permission to edit this menuv2
@@ -75,10 +77,6 @@ export class RestaurantComponent implements OnInit {
 
   scrollToSection(id: string): void {
     this.scrollService.scrollToSection(id);
-  }
-
-  rearrange(): void {
-    this.rearrangeMode = true;
   }
 
   setValue(editable: RestaurantEditable): void {

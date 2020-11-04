@@ -15,6 +15,7 @@ export class Menuv2Component implements OnInit {
   miniScroll = false;
   previousScroll = 0;
   selectedSection = 0;
+  rearrangeMode = false;
 
   constructor(private restaurantService: RestaurantService) {}
 
@@ -94,5 +95,18 @@ export class Menuv2Component implements OnInit {
 
       this.previousScroll = scrollPosition;
     }
+  }
+
+  rearrange(): void {
+    this.rearrangeMode = true;
+  }
+
+  save(): void {
+    this.restaurantService.editMenu(this.slug, this.menu.name, { sections: this.menu.sections}).subscribe(
+      menu => {
+        this.menu = menu;
+      }
+    );
+    this.rearrangeMode = false;
   }
 }
