@@ -16,14 +16,15 @@
     cdkDrag
     [cdkDragDisabled]="!rearrangeMode"
   >
-    <app-section
+    <app-sectionv2
       [rearrangeMode]="rearrangeMode"
       [hasPermission]="hasPermission"
       [section]="section"
       [slug]="slug"
+      [menuName]="menu.name"
       id="{{ section._id }}"
     >
-    </app-section>
+    </app-sectionv2>
     <button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">
       Add new Section
     </button>

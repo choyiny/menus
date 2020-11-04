@@ -16,6 +16,5 @@ export class ScrollingComponentComponent implements OnInit {
   constructor(public scrollService: ScrollService) {}
 
   ngOnInit(): void {
-    console.log(this.sections);
   }
 }
