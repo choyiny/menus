@@ -41,15 +41,15 @@
             [hasPermission]="hasPermission"
             (menuEmitter)="setValue($event)"
           ></app-menu-details>
+          <app-menuv2
+            *ngIf="menus[currentMenu]"
+            [slug]="slug"
+            [hasPermission]="hasPermission"
+            [menuName]="menus[currentMenu].name"
+            [menu]="menus[currentMenu]"
+          >
+          </app-menuv2>
         </div>
-        <app-menuv2
-          *ngIf="menus[currentMenu]"
-          [slug]="slug"
-          [hasPermission]="hasPermission"
-          [menuName]="menus[currentMenu].name"
-          [menu]="menus[currentMenu]"
-        >
-        </app-menuv2>
       </div>
     </div>
     <app-footer></app-footer>
