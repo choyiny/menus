@@ -22,7 +22,6 @@ export class Tagv2Component implements OnInit {
   constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
-    console.log(this.tagService.getIcon(this.tag.icon));
   }
 
   onClick(): void {

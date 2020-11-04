@@ -1,11 +1,11 @@
-<div *ngFor="let section of menu.sections">
+<div *ngFor="let section of menu.sections; let i=index">
   <app-sectionv2
     [section]="section"
-    [menuName]="menuName"
+    [menuName]="menu.name"
     [hasPermission]="hasPermission"
     [slug]="slug"
   ></app-sectionv2>
-  <button class="left desktop" (click)="newSection()">
+  <button class="left desktop" (click)="newSection(i)">
     Add new Section
   </button>
 </div>

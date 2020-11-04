@@ -21,6 +21,7 @@ from ...admin.schemas import file_args
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
 from ..schemas import (
+    EditMenuV2Schema,
     GetRestaurantSchema,
     ItemV2Schema,
     MenuV2Schema,
@@ -95,7 +96,7 @@ class MenuResource(RestaurantBaseResource):
 
     @doc(description="Edit menu details, checks for duplicate menus")
     @marshal_with(MenuV2Schema)
-    @use_kwargs(MenuV2Schema)
+    @use_kwargs(EditMenuV2Schema)
     @firebase_login_required
     def patch(self, slug: str, menu_name: str, **kwargs):
 

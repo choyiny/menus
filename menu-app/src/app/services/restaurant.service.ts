@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   Item,
-  Menu,
+  Menu, MenuEditable,
   Restaurant,
   RestaurantEditable,
   Section,
@@ -51,6 +51,11 @@ export class RestaurantService {
     return this.http.patch<Menu>(url, sectionId);
   }
 
+  newSection(): Observable<Section> {
+    const url = `${environment.settings.apiv2}/sections/new`;
+    return this.http.get<Section>(url);
+  }
+
   uploadPhoto(slug: string, menuName: string, itemId: string, formData: FormData): Observable<string> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.patch<string>(url, formData);
@@ -59,5 +64,10 @@ export class RestaurantService {
   deletePhoto(slug: string, menuName: string, itemId: string): Observable<Item> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.delete<Item>(url);
+  }
+
+  editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu>{
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
+    return this.http.patch<Menu>(url, menuEditable);
   }
 }

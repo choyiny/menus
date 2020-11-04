@@ -42,3 +42,8 @@ export interface Menu {
   name: string;
   sections: Section[];
 }
+
+export interface MenuEditable {
+  name ?: string;
+  sections?: Section[];
+}

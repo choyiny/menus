@@ -36,6 +36,11 @@ class MenuV2Schema(Schema):
     sections = fields.List(fields.Nested(SectionV2Schema, required=True))
 
 
+class EditMenuV2Schema(Schema):
+    name = fields.Str(description="Name of the menu", example="lunch")
+    sections = fields.List(fields.Nested(SectionV2Schema, required=True))
+
+
 class GetRestaurantSchema(Schema):
     name = fields.Str(description="Name of the restaurants", example="Hollywood Cafe")
     image = fields.Url(example="https://via.placeholder.com/150")
