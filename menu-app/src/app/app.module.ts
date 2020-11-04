@@ -39,6 +39,8 @@ import { AngularFireModule } from '@angular/fire';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
+import {Itemv2Component} from './restaurant-components/itemv2/itemv2.component';
+import {Sectionv2Component} from './restaurant-components/sectionv2/sectionv2.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { RestaurantComponent } from './restaurant-components/restaurant/restaura
     ImgViewModalComponent,
     ImgFormModalComponent,
     RestaurantComponent,
+    Itemv2Component,
+    Sectionv2Component
   ],
   imports: [
     BrowserModule,
