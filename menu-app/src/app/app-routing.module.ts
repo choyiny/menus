@@ -4,6 +4,7 @@ import { LoginComponent } from './auth-components/login/login.component';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
 import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
+import {RestaurantComponent} from "./restaurant-components/restaurant/restaurant.component";
 
 const routes: Routes = [
   {
@@ -25,12 +26,13 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   {
+    path: 'restaurant/:slug',
+    component: RestaurantComponent
+  },
+  {
     path: '**',
     redirectTo: ''
   },
-  {
-    path: 'restaurant/:slug'
-  }
 ];
 
 @NgModule({
