@@ -3,13 +3,13 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { MenuService } from '../../services/menu.service';
 import { ScrollService } from '../../services/scroll.service';
 import { faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
-import {Item, Section} from '../../interfaces/restaurant-interfaces';
-import {RestaurantService} from '../../services/restaurant.service';
+import { Item, Section } from '../../interfaces/restaurant-interfaces';
+import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-sectionv2',
   templateUrl: './sectionv2.component.html',
-  styleUrls: ['./sectionv2.component.scss']
+  styleUrls: ['./sectionv2.component.scss'],
 })
 export class Sectionv2Component implements OnInit {
   faPlus = faPlus;
@@ -26,10 +26,12 @@ export class Sectionv2Component implements OnInit {
   ngOnInit(): void {}
 
   sendRequest(): void {
-    this.restaurantService.editSection(this.slug, this.menuName, this.section).subscribe((section) => {
-      console.log(section);
-      this.section = section;
-    });
+    this.restaurantService
+      .editSection(this.slug, this.menuName, this.section)
+      .subscribe((section) => {
+        console.log(section);
+        this.section = section;
+      });
     this.editMode = false;
   }
 
@@ -72,4 +74,3 @@ export class Sectionv2Component implements OnInit {
   //   });
   // }
 }
-

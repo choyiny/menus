@@ -4,13 +4,13 @@ import { ImgFormModalComponent } from '../../util-components/modals/img-form-mod
 import { TagInterface } from '../../interfaces/tag-interface';
 import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
 import { SectionInterface } from '../../interfaces/section-interface';
-import {Item, Section} from '../../interfaces/restaurant-interfaces';
-import {RestaurantService} from '../../services/restaurant.service';
+import { Item, Section } from '../../interfaces/restaurant-interfaces';
+import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-itemv2',
   templateUrl: './itemv2.component.html',
-  styleUrls: ['./itemv2.component.scss']
+  styleUrls: ['./itemv2.component.scss'],
 })
 export class Itemv2Component implements OnInit {
   @Input() item: Item;
@@ -104,6 +104,3 @@ export class Itemv2Component implements OnInit {
     this.item.image = url;
   }
 }
-
-
-

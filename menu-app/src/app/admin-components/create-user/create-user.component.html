@@ -4,29 +4,25 @@
 
 <form [formGroup]="selectPermissionForm">
   <h3>Select menus</h3>
-  <div formGroupName='menus'>
-
-  <li *ngFor="let menu of selectPermissionForm.get('menus').value | keyvalue">
-    <label>
-      <input type="checkbox" [formControlName]="menu.key" [value]="menu.value" /> {{ menu.key }}
-    </label>
-  </li>
-</div>
-
+  <div formGroupName="menus">
+    <li *ngFor="let menu of selectPermissionForm.get('menus').value | keyvalue">
+      <label> <input type="checkbox" [formControlName]="menu.key" [value]="menu.value" /> {{ menu.key }} </label>
+    </li>
+  </div>
 </form>
 
-<hr>
+<hr />
 
 <form [formGroup]="linkFirebaseUserForm" (submit)="submitLink()">
   <h3>Link with existing firebase user</h3>
   <div class="form-group">
     <label>Firebase Id</label>
-    <input type="text" formControlName="firebase_id" class="form-control">
+    <input type="text" formControlName="firebase_id" class="form-control" />
   </div>
   <button class="btn btn-primary">Link</button>
 </form>
 
-<hr>
+<hr />
 
 <form [formGroup]="createUserForm" (submit)="submitCreate()">
   <h3>Create new user</h3>

@@ -2,20 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MenuService } from '../../services/menu.service';
-import { MenusInterface } from '../../interfaces/menus-interface'
+import { MenusInterface } from '../../interfaces/menus-interface';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.scss']
+  styleUrls: ['./create-user.component.scss'],
 })
 export class CreateUserComponent implements OnInit {
-
   constructor(
     private userService: UserService,
     private menuService: MenuService,
-    private fb: FormBuilder,
-  ) { }
+    private fb: FormBuilder
+  ) {}
 
   createUserForm = this.fb.group({
     email: [''],
@@ -31,8 +30,8 @@ export class CreateUserComponent implements OnInit {
   });
 
   linkFirebaseUserForm = this.fb.group({
-    firebase_id: ['']
-  })
+    firebase_id: [''],
+  });
 
   menus: MenusInterface;
 
@@ -46,7 +45,9 @@ export class CreateUserComponent implements OnInit {
   }
 
   get menusFormData() {
-    return Object.entries(this.selectPermissionForm.get('menus').value).filter(([k, v]) => v).map(([k, v]) => k);
+    return Object.entries(this.selectPermissionForm.get('menus').value)
+      .filter(([k, v]) => v)
+      .map(([k, v]) => k);
   }
 
   submitLink(): void {
@@ -55,7 +56,7 @@ export class CreateUserComponent implements OnInit {
 
     this.userService.updateUser({ firebase_id, menus }).subscribe((result) => {
       alert('Success!');
-    })
+    });
   }
 
   submitCreate(): void {
@@ -64,6 +65,6 @@ export class CreateUserComponent implements OnInit {
 
     this.userService.createUser({ ...userInfo, menus }).subscribe((result) => {
       alert('Success!');
-    })
+    });
   }
 }

@@ -6,15 +6,14 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-view-users',
   templateUrl: './view-users.component.html',
-  styleUrls: ['./view-users.component.scss']
+  styleUrls: ['./view-users.component.scss'],
 })
 export class ViewUsersComponent implements OnInit {
-
   constructor(
     private userService: UserService,
     private router: Router,
-    private activatedRouter: ActivatedRoute,
-  ) { }
+    private activatedRouter: ActivatedRoute
+  ) {}
 
   users: UsersInterface = { users: [] };
   current_page: number;
@@ -36,10 +35,10 @@ export class ViewUsersComponent implements OnInit {
       } else {
         this.reloadWithParams({ limit: 20, page: 1 });
       }
-    })
+    });
   }
 
-  reloadWithParams(queryParams: { limit: number, page: number }) {
+  reloadWithParams(queryParams: { limit: number; page: number }) {
     this.router.navigate(['admin', 'users'], { queryParams });
   }
 
@@ -50,5 +49,4 @@ export class ViewUsersComponent implements OnInit {
   goToCreateUser(): void {
     this.router.navigate(['admin', 'users', 'create']);
   }
-
 }

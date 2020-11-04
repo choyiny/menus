@@ -1,0 +1,8 @@
+<div *ngFor="let section of menu.sections">
+  <app-sectionv2
+    [section]="section"
+    [menuName]="menuName"
+    [hasPermission]="hasPermission"
+    [slug]="slug"
+  ></app-sectionv2>
+</div>

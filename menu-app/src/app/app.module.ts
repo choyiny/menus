@@ -39,8 +39,9 @@ import { AngularFireModule } from '@angular/fire';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
-import {Itemv2Component} from './restaurant-components/itemv2/itemv2.component';
-import {Sectionv2Component} from './restaurant-components/sectionv2/sectionv2.component';
+import { Itemv2Component } from './restaurant-components/itemv2/itemv2.component';
+import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.component';
+import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import {Sectionv2Component} from './restaurant-components/sectionv2/sectionv2.co
     ImgFormModalComponent,
     RestaurantComponent,
     Itemv2Component,
-    Sectionv2Component
+    Sectionv2Component,
+    Menuv2Component,
   ],
   imports: [
     BrowserModule,
@@ -95,4 +97,4 @@ import {Sectionv2Component} from './restaurant-components/sectionv2/sectionv2.co
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

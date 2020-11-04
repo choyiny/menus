@@ -4,9 +4,9 @@
       <fa-icon [icon]="editIcon"></fa-icon>
     </button>
     <button class="desktop" *ngIf="editMode" (click)="sendRequest()">Save</button>
-<!--    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">-->
-<!--      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item-->
-<!--    </button>-->
+    <!--    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">-->
+    <!--      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item-->
+    <!--    </button>-->
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
   <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
@@ -40,4 +40,3 @@
   <h1>{{ section.name }}</h1>
   <quill-view-html [content]="section.description" theme="snow"></quill-view-html>
 </div>
-

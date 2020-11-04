@@ -1,24 +1,23 @@
-
-import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
-import {Menu, Restaurant, RestaurantEditable} from '../../interfaces/restaurant-interfaces';
-import {CovidModalComponent} from '../../util-components/modals/covid-modal/covid-modal.component';
-import {ActivatedRoute} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {ScrollService} from '../../services/scroll.service';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {SectionInterface} from '../../interfaces/section-interface';
-import {TimeInterface} from '../../interfaces/time-interface';
-import {RestaurantService} from '../../services/restaurant.service';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
+import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { ScrollService } from '../../services/scroll.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { SectionInterface } from '../../interfaces/section-interface';
+import { TimeInterface } from '../../interfaces/time-interface';
+import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
-  styleUrls: ['./restaurant.component.scss']
+  styleUrls: ['./restaurant.component.scss'],
 })
 export class RestaurantComponent implements OnInit {
-  @Input()restaurant: Restaurant;
+  @Input() restaurant: Restaurant;
   menus = [];
-  menu: Menu;
+  currentMenu = 0;
   miniScroll = false;
   selectedSection = 0;
   @Input() selectedImage: string;
@@ -51,13 +50,11 @@ export class RestaurantComponent implements OnInit {
   }
 
   loadMenus(): void {
-    for (let i = 0; i < this.restaurant.menus.length; i++){
+    for (let i = 0; i < this.restaurant.menus.length; i++) {
       const menuName = this.restaurant.menus[i];
-      this.restaurantService.getMenus(this.slug, menuName).subscribe(
-        menu => {
-          this.menus[i] = menu;
-        }
-      );
+      this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
+        this.menus[i] = menu;
+      });
     }
   }
 
@@ -132,23 +129,10 @@ export class RestaurantComponent implements OnInit {
   }
 
   injectHeaderStyle(header: string): string {
-    if (header.slice(0, 4) === '<h1>'){
+    if (header.slice(0, 4) === '<h1>') {
       return header;
     }
     return `<h1>${header}</h1>`;
-  }
-
-  drop(event: CdkDragDrop<SectionInterface[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   rearrange(): void {
@@ -201,6 +185,3 @@ export class RestaurantComponent implements OnInit {
     }
   }
 }
-
-
-

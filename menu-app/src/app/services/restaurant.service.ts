@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
-import {Item, Menu, Restaurant, RestaurantEditable, Section} from '../interfaces/restaurant-interfaces';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import {
+  Item,
+  Menu,
+  Restaurant,
+  RestaurantEditable,
+  Section,
+} from '../interfaces/restaurant-interfaces';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RestaurantService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getRestaurant(slug: string): Observable<Restaurant>{
+  getRestaurant(slug: string): Observable<Restaurant> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}`;
     return this.http.get<Restaurant>(url);
   }

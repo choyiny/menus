@@ -15,10 +15,10 @@
     <!--    ></app-scrolling-component>-->
     <div
       [ngStyle]="{
-       background: 'url(' + restaurant.image + ')',
-       backgroundSize: '100%',
-       backgroundRepeat: 'no repeat'
-     }"
+        background: 'url(' + restaurant.image + ')',
+        backgroundSize: '100%',
+        backgroundRepeat: 'no repeat'
+      }"
       class="desktop-image"
     >
       <div class="desktop-background">
@@ -42,6 +42,14 @@
             (menuEmitter)="setValue($event)"
           ></app-menu-details>
         </div>
+        <app-menuv2
+          *ngIf="menus[currentMenu]"
+          [slug]="slug"
+          [hasPermission]="hasPermission"
+          [menuName]="menus[currentMenu].name"
+          [menu]="menus[currentMenu]"
+        >
+        </app-menuv2>
       </div>
     </div>
     <app-footer></app-footer>

@@ -1,18 +1,18 @@
 export interface Restaurant {
-  image ?: string;
-  name ?: string;
-  menus: string [];
-  description ?: string;
+  image?: string;
+  name?: string;
+  menus: string[];
+  description?: string;
   tracing_key: string;
   enable_trace: boolean;
   force_trace: boolean;
 }
 
 export interface RestaurantEditable {
-  image ?: string;
-  name ?: string;
-  description ?: string;
-  menus ?: string[];
+  image?: string;
+  name?: string;
+  description?: string;
+  menus?: string[];
 }
 
 export interface Tag {
@@ -34,7 +34,7 @@ export interface Section {
   name?: string;
   description?: string;
   subtitle?: string;
-  menu_items: Item [];
+  menu_items: Item[];
   _id: string;
 }
 
