@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {Item, Menu, Restaurant, RestaurantEditable} from '../interfaces/restaurant-interfaces';
+import {Item, Menu, Restaurant, RestaurantEditable, Section} from '../interfaces/restaurant-interfaces';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 
@@ -26,8 +26,13 @@ export class RestaurantService {
     return this.http.patch<Restaurant>(url, restaurant);
   }
 
-  editItem(slug: string, menuName: string, item: Item) {
+  editItem(slug: string, menuName: string, item: Item): Observable<Item> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${item._id}`;
     return this.http.patch<Item>(url, item);
+  }
+
+  editSection(slug: string, menuName: string, section: Section): Observable<Section> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${section._id}`;
+    return this.http.patch<Section>(url, section);
   }
 }
