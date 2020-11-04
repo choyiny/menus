@@ -1,9 +1,9 @@
 <div class="tag" *ngIf="tag" [style.background-color]="tag.background_color">
   <div *ngIf="!editable">
-    <span *ngFor="let icon of tagService.getIcon(tag.icon)">
-      <fa-icon [icon]="icon"></fa-icon>
-    </span>
     <fa-icon *ngIf="!editable && hasPermission" [icon]="editIcon" (click)="edit()"></fa-icon>
+      <span *ngFor="let icon of tagService.getIcon(tag.icon)">
+        <fa-icon [icon]="icon"></fa-icon>
+      </span>
     {{ tag.text }}
   </div>
   <div (click)="edit()"></div>

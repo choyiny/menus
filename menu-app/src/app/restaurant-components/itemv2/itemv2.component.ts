@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
 import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
-import { Item, Section } from '../../interfaces/restaurant-interfaces';
+import {Item, Section, Tag} from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
+import {TagService} from '../../services/tag.service';
 
 @Component({
   selector: 'app-itemv2',
@@ -27,7 +28,7 @@ export class Itemv2Component implements OnInit {
   saveIcon = faSave;
   imageIcon = faImage;
 
-  constructor(private restaurantService: RestaurantService) {}
+  constructor(private restaurantService: RestaurantService, private tagService: TagService) {}
 
   ngOnInit(): void {
     this.itemOriginal = { ...this.item };
@@ -50,8 +51,9 @@ export class Itemv2Component implements OnInit {
     event.stopPropagation();
   }
 
-  sendRequest(): void {
+  editItem(): void {
     this.restaurantService.editItem(this.slug, this.menuName, this.item).subscribe((item) => {
+      console.log(this.item);
       this.item = item;
       this.itemOriginal = { ...item };
     });
@@ -62,24 +64,28 @@ export class Itemv2Component implements OnInit {
     this.editMode = true;
   }
 
-  // addTag(): void {
-  //   const newTag: TagInterface = {
-  //     text: 'New tag',
-  //     icon: 'no-icon',
-  //   };
-  //   this.item.tags.push(newTag);
-  //   this.sendRequest();
-  // }
-  //
-  // updateTags(newValue, index): void {
-  //   if (newValue) {
-  //     this.item.tags[index] = { text: newValue, icon: 'no-icon' };
-  //   } else {
-  //     this.item.tags.splice(index, 1);
-  //   }
-  //   this.sendRequest();
-  // }
-  //
+  addTag(): void {
+    const newTag: Tag = {
+      text: 'New tag',
+      icon: 'no-icon',
+      background_color: 'black'
+    };
+    this.item.tags.push(newTag);
+    this.editItem();
+  }
+
+  updateTags(newValue, index): void {
+    if (newValue) {
+      this.item.tags[index] = {
+        text: newValue,
+        icon: newValue,
+        background_color: 'black'
+      };
+    } else {
+      this.item.tags.splice(index, 1);
+    }
+    this.editItem();
+  }
   remove(): void {
     this.restaurantService.deleteItem(this.slug, this.menuName, this.item._id).subscribe((section) => {
       this.sectionEmitter.emit(section);

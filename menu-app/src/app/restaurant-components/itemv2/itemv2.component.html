@@ -6,7 +6,7 @@
       <fa-icon [icon]="faPen"></fa-icon>
     </button>
     <button *ngIf="editMode" class="discard-button desktop" (click)="discard()">Discard</button>
-    <button *ngIf="editMode" class="save-button desktop" (click)="sendRequest()">
+    <button *ngIf="editMode" class="save-button desktop" (click)="editItem()">
       <fa-icon [icon]="saveIcon"></fa-icon>
     </button>
     <button *ngIf="hasPermission" class="desktop" (click)="remove()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
@@ -49,18 +49,18 @@
           theme="snow"
         >
         </quill-view-html>
-        <quill-editor [modules]="modules" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
+        <quill-editor *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
       </div>
     </div>
   </div>
     <span class="tag-container">
-      <app-tags
+      <app-tagv2
         *ngFor="let tag of item.tags; let i = index"
         [tag]="tag"
         [hasPermission]="hasPermission"
         (outputTagText)="updateTags($event, i)"
       >
-      </app-tags>
+      </app-tagv2>
       <button class="bg-tint round desktop" (click)="addTag()" *ngIf="hasPermission">
         <fa-icon [icon]="faPlus"></fa-icon>
       </button>
