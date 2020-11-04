@@ -4,6 +4,7 @@
     [menuName]="menu.name"
     [hasPermission]="hasPermission"
     [slug]="slug"
+    (menuEmitter)="update($event)"
   ></app-sectionv2>
   <button class="left desktop" (click)="newSection(i)">
     Add new Section

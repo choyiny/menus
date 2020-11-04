@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ScrollService } from '../../services/scroll.service';
-import { faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
-import { Item, Section } from '../../interfaces/restaurant-interfaces';
+import { faPlus, faPen, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {Item, Menu, Section} from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
@@ -13,16 +13,27 @@ import { RestaurantService } from '../../services/restaurant.service';
 export class Sectionv2Component implements OnInit {
   faPlus = faPlus;
   editIcon = faPen;
+  deleteIcon = faTrash;
   @Input() section: Section;
   @Input() slug: string;
   @Input() menuName: string;
   @Input() hasPermission: boolean;
   @Input() rearrangeMode: boolean;
+  @Output() menuEmitter = new EventEmitter<Menu>();
   editMode: boolean;
 
   constructor(private restaurantService: RestaurantService, private scrollService: ScrollService) {}
 
   ngOnInit(): void {}
+
+  delete(): void {
+    this.restaurantService.deleteSection(this.slug, this.menuName, this.section._id).subscribe(
+      menu => {
+        console.log(menu);
+        this.menuEmitter.emit(menu);
+      }
+    );
+  }
 
   sendRequest(): void {
     this.restaurantService

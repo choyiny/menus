@@ -48,7 +48,7 @@ export class RestaurantService {
 
   deleteSection(slug: string, menuName: string, sectionId: string): Observable<Menu>{
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/sections/${sectionId}`;
-    return this.http.patch<Menu>(url, sectionId);
+    return this.http.delete<Menu>(url);
   }
 
   newSection(): Observable<Section> {

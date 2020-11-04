@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SectionInterface } from '../../interfaces/section-interface';
-import {RestaurantService} from "../../services/restaurant.service";
+import {RestaurantService} from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-menuv2',
@@ -21,16 +21,18 @@ export class Menuv2Component implements OnInit {
   newSection(i: number): void {
     this.restaurantService.newSection().subscribe(
       section => {
-        console.log(section);
         this.menu.sections.splice(i, 0, section);
         this.restaurantService.editMenu(this.slug, this.menu.name, {sections: this.menu.sections}).subscribe(
           menu => {
-            console.log(menu.sections);
             this.menu = menu;
           }
         );
       }
     );
+  }
+
+  update(menu: Menu): void {
+    this.menu = menu;
   }
 
   drop(event: CdkDragDrop<Section[]>): void {

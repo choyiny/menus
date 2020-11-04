@@ -3,6 +3,9 @@
     <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
       <fa-icon [icon]="editIcon"></fa-icon>
     </button>
+    <button class="desktop" *ngIf="!editMode && hasPermission" (click)="delete()">
+      <fa-icon [icon]="deleteIcon"></fa-icon>
+    </button>
     <button class="desktop" *ngIf="editMode" (click)="sendRequest()">Save</button>
     <!--    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">-->
     <!--      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item-->
