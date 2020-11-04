@@ -41,6 +41,11 @@ export class RestaurantService {
     return this.http.delete<Section>(url);
   }
 
+  newItem(): Observable<Item> {
+    const url = `${environment.settings.apiv2}/items/new`;
+    return this.http.get<Item>(url);
+  }
+
   editSection(slug: string, menuName: string, section: Section): Observable<Section> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/sections/${section._id}`;
     return this.http.patch<Section>(url, section);

@@ -69,21 +69,28 @@ export class Sectionv2Component implements OnInit {
     this.section = section;
   }
 
-  // addMenuItem(): void {
-  //   this.restaurantService.addMenuItem(this.slug, this.section._id).subscribe((item) => {
-  //     this.section.menu_items.push(item);
-  //     const observer = new MutationObserver((mutations, self) => {
-  //       const newItem = document.getElementById(item._id);
-  //       if (newItem) {
-  //         this.scrollService.scrollToSection(item._id);
-  //         self.disconnect();
-  //         return;
-  //       }
-  //     });
-  //     observer.observe(document, {
-  //       childList: true,
-  //       subtree: true,
-  //     });
-  //   });
-  // }
+  addMenuItem(): void {
+    this.restaurantService.newItem().subscribe(
+      item => {
+        this.section.menu_items.push(item);
+        this.restaurantService.editSection(this.slug, this.menuName, this.section).subscribe(
+          section => {
+            this.section = section;
+            const observer = new MutationObserver((mutations, self) => {
+              const newItem = document.getElementById(item._id);
+              if (newItem) {
+                this.scrollService.scrollToSection(item._id);
+                self.disconnect();
+                return;
+              }
+            });
+            observer.observe(document, {
+              childList: true,
+              subtree: true,
+            });
+          }
+        );
+      }
+    );
+  }
 }
