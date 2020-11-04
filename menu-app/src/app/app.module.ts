@@ -42,6 +42,7 @@ import { RestaurantComponent } from './restaurant-components/restaurant/restaura
 import { Itemv2Component } from './restaurant-components/itemv2/itemv2.component';
 import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.component';
 import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
+import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component
     Itemv2Component,
     Sectionv2Component,
     Menuv2Component,
+    Tagv2Component,
   ],
   imports: [
     BrowserModule,
