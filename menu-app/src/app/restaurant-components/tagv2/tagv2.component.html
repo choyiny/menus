@@ -1,10 +1,10 @@
-<div class="tag" *ngIf="tagDisplay" [style.background-color]="tagDisplay.backgroundColor">
+<div class="tag" *ngIf="tag" [style.background-color]="tag.background_color">
   <div *ngIf="!editable">
-    <span *ngFor="let icon of tagDisplay.icons">
+    <span *ngFor="let icon of tagService.getIcon(tag.icon)">
       <fa-icon [icon]="icon"></fa-icon>
     </span>
     <fa-icon *ngIf="!editable && hasPermission" [icon]="editIcon" (click)="edit()"></fa-icon>
-    {{ tagDisplay.text }}
+    {{ tag.text }}
   </div>
   <div (click)="edit()"></div>
   <input

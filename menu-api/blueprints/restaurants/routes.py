@@ -5,13 +5,16 @@ from .controllers import (
     ItemResource,
     MenuResource,
     RestaurantResource,
-    RestaurantsResource,
     SectionResource,
 )
 
 resources = [
-    (RestaurantResource, "restaurants/<string:slug>", "restaurants", ["GET"]),
-    (RestaurantsResource, "restaurants", "restaurant", ["POST", "DELETE", "PATCH"],),
+    (
+        RestaurantResource,
+        "restaurants/<string:slug>",
+        "restaurants",
+        ["GET", "DELETE", "PATCH"],
+    ),
     (
         MenuResource,
         "restaurants/<string:slug>/menus/<string:menu_name>",

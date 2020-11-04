@@ -5,6 +5,5 @@ from .restaurant_resource import (
     ItemResource,
     MenuResource,
     RestaurantResource,
-    RestaurantsResource,
     SectionResource,
 )

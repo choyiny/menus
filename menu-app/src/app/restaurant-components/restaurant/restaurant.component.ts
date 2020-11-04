@@ -162,10 +162,12 @@ export class RestaurantComponent implements OnInit {
 
   setValue(editable: RestaurantEditable): void {
     // tslint:disable-next-line:forin
-    for (const field in editable) {
-      this.restaurant[field] = editable[field];
-      this.restaurantService.editRestaurant(this.slug, editable);
-    }
+    this.restaurantService.editRestaurant(this.slug, editable).subscribe(
+      restaurant => {
+        this.restaurant = restaurant;
+        this.loadMenus();
+      }
+    );
   }
 
   sameDay(): boolean {

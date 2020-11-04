@@ -4,6 +4,7 @@ import { TagService } from '../../services/tag.service';
 import { TagDisplay } from '../../interfaces/tag-display';
 import { faPen } from '@fortawesome/pro-solid-svg-icons';
 import { faSave } from '@fortawesome/pro-solid-svg-icons';
+import {Tag} from "../../interfaces/restaurant-interfaces";
 
 @Component({
   selector: 'app-tagv2',
@@ -11,18 +12,16 @@ import { faSave } from '@fortawesome/pro-solid-svg-icons';
   styleUrls: ['./tagv2.component.scss']
 })
 export class Tagv2Component implements OnInit {
-  @Input() tag: TagInterface;
+  @Input() tag: Tag;
   @Input() hasPermission: boolean;
   editIcon = faPen;
   saveIcon = faSave;
-  tagDisplay: TagDisplay;
   editable = false;
   @Output() outputTagText = new EventEmitter<string>();
 
   constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
-    this.tagDisplay = this.tagService.getTag(this.tag.text);
   }
 
   onClick(): void {

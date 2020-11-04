@@ -39,18 +39,6 @@ class RestaurantResource(RestaurantBaseResource):
             return RESTAURANT_NOT_FOUND
         return restaurant.to_dict()
 
-
-class RestaurantsResource(RestaurantBaseResource):
-    @doc(description="Create a new restaurants")
-    @use_kwargs(RestaurantSchema)
-    @marshal_with(GetRestaurantSchema)
-    @firebase_login_required
-    def post(self, **kwargs):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        restaurant = Restaurant(**kwargs).save()
-        return restaurant.to_dict()
-
     @doc(description="Edit restaurants details")
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(RestaurantSchema)
@@ -195,7 +183,9 @@ class SectionResource(RestaurantBaseResource):
             section.subtitle = kwargs.get("subtitle")
 
         if "menu_items" in kwargs:
-            section.menu_items = kwargs.get("menu_items")
+            section.menu_items = [
+                Item(**item_dict) for item_dict in kwargs["menu_items"]
+            ]
 
         if "description" in kwargs:
             section.description = kwargs.get("description")

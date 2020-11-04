@@ -37,7 +37,7 @@ export class RestaurantService {
   }
 
   editSection(slug: string, menuName: string, section: Section): Observable<Section> {
-    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${section._id}`;
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/sections/${section._id}`;
     return this.http.patch<Section>(url, section);
   }
 }

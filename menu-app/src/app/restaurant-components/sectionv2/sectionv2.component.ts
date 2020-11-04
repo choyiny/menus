@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { MenuService } from '../../services/menu.service';
 import { ScrollService } from '../../services/scroll.service';
 import { faPlus, faPen } from '@fortawesome/free-solid-svg-icons';
 import { Item, Section } from '../../interfaces/restaurant-interfaces';
@@ -29,8 +28,10 @@ export class Sectionv2Component implements OnInit {
     this.restaurantService
       .editSection(this.slug, this.menuName, this.section)
       .subscribe((section) => {
-        console.log(section);
         this.section = section;
+      },
+      err => {
+        console.log(err);
       });
     this.editMode = false;
   }
