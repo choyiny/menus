@@ -56,7 +56,7 @@ class Item(EmbeddedDocument):
     list of tags for this menu item
     """
 
-    description = StringField(default="No description")
+    description = StringField(default="")
     """
     description of this menu item
     """
@@ -85,7 +85,7 @@ class Section(EmbeddedDocument):
     name of this section
     """
 
-    description = StringField(default="No description")
+    description = StringField(default="")
     """
     description of this section
     """

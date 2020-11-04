@@ -7,12 +7,13 @@
       [description]="restaurant.description"
       [image]="restaurant.image"
     ></app-mobile-image>
-    <!--    <app-scrolling-component-->
-    <!--      class="mobile"-->
-    <!--      [sections]="menuv2.sections"-->
-    <!--      [miniScroll]="miniScroll"-->
-    <!--      [currentSection]="selectedSection"-->
-    <!--    ></app-scrolling-component>-->
+        <app-scrolling-component
+          *ngIf="menus[currentMenu]"
+          class="mobile"
+          [sections]="menus[currentMenu].sections"
+          [miniScroll]="miniScroll"
+          [currentSection]="selectedSection"
+        ></app-scrolling-component>
     <div
       [ngStyle]="{
         background: 'url(' + restaurant.image + ')',

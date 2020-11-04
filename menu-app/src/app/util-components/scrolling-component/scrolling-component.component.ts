@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SectionInterface } from '../../interfaces/section-interface';
 import { ScrollService } from '../../services/scroll.service';
+import {Section} from "../../interfaces/restaurant-interfaces";
 
 @Component({
   selector: 'app-scrolling-component',
@@ -8,11 +9,13 @@ import { ScrollService } from '../../services/scroll.service';
   styleUrls: ['./scrolling-component.component.scss'],
 })
 export class ScrollingComponentComponent implements OnInit {
-  @Input() sections: SectionInterface[];
+  @Input() sections: Section [];
   @Input() miniScroll: boolean;
   @Input() currentSection: number;
 
   constructor(public scrollService: ScrollService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.sections);
+  }
 }

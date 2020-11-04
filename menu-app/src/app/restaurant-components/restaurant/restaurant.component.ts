@@ -94,32 +94,35 @@ export class RestaurantComponent implements OnInit {
     }
 
     // linear time solution, if performance is an issue, should switch to using pointers
-    // if (scrollPosition > this.previousScroll) {
-    //   for (let i = 0; i < this.menuv2.sections.length; i++) {
-    //     const sectionPosition = document.getElementById(this.menuv2.sections[i]._id).offsetTop;
-    //     if (scrollPosition < sectionPosition) {
-    //       this.selectedSection = i;
-    //       break;
-    //     }
-    //   }
-    // } else {
-    //   for (let i = this.menuv2.sections.length - 1; i >= 0; i--) {
-    //     const sectionPosition = document.getElementById(this.menuv2.sections[i]._id).offsetTop;
-    //     if (sectionPosition < scrollPosition) {
-    //       this.selectedSection = i;
-    //       break;
-    //     }
-    //   }
-    // }
-    // const buttonLocation = document.getElementById(
-    //   `${this.menuv2.sections[this.selectedSection]._id} button`
-    // ).offsetLeft;
-    // document.getElementById('wrapper').scrollTo({
-    //   behavior: 'smooth',
-    //   left: buttonLocation,
-    // });
-    //
-    // this.previousScroll = scrollPosition;
+    const currentMenu = this.menus[this.currentMenu];
+    if (currentMenu) {
+      if (scrollPosition > this.previousScroll) {
+        for (let i = 0; i < currentMenu.sections.length; i++) {
+          const sectionPosition = document.getElementById(currentMenu.sections[i]._id).offsetTop;
+          if (scrollPosition < sectionPosition) {
+            this.selectedSection = i;
+            break;
+          }
+        }
+      } else {
+        for (let i = currentMenu.sections.length - 1; i >= 0; i--) {
+          const sectionPosition = document.getElementById(currentMenu.sections[i]._id).offsetTop;
+          if (sectionPosition < scrollPosition) {
+            this.selectedSection = i;
+            break;
+          }
+        }
+      }
+      const buttonLocation = document.getElementById(
+        `${currentMenu.sections[this.selectedSection]._id} button`
+      ).offsetLeft;
+      document.getElementById('wrapper').scrollTo({
+        behavior: 'smooth',
+        left: buttonLocation,
+      });
+
+      this.previousScroll = scrollPosition;
+    }
   }
 
   scrollToSection(id: string): void {

@@ -24,7 +24,8 @@ export class Sectionv2Component implements OnInit {
 
   constructor(private restaurantService: RestaurantService, private scrollService: ScrollService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   delete(): void {
     this.restaurantService.deleteSection(this.slug, this.menuName, this.section._id).subscribe(

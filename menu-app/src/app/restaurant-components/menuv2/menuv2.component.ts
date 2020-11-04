@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { SectionInterface } from '../../interfaces/section-interface';
 import {RestaurantService} from '../../services/restaurant.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class Menuv2Component implements OnInit {
   newSection(i: number): void {
     this.restaurantService.newSection().subscribe(
       section => {
-        this.menu.sections.splice(i, 0, section);
+        this.menu.sections.splice(i + 1, 0, section);
         this.restaurantService.editMenu(this.slug, this.menu.name, {sections: this.menu.sections}).subscribe(
           menu => {
             this.menu = menu;
