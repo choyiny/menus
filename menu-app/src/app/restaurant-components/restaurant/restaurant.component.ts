@@ -139,20 +139,20 @@ export class RestaurantComponent implements OnInit {
     this.rearrangeMode = true;
   }
 
-  saveSections(): void {
-    const sections = this.menu.sections.map((section) => {
-      return {
-        _id: section._id,
-        description: section.description,
-        name: section.name,
-        subtitle: section.subtitle,
-      };
-    });
+  // saveSections(): void {
+  //   const sections = this.menu.sections.map((section) => {
+  //     return {
+  //       _id: section._id,
+  //       description: section.description,
+  //       name: section.name,
+  //       subtitle: section.subtitle,
+  //     };
+  //   });
     // this.restaurantService.rearrangeSections(this.slug, sections).subscribe((menuv2) => {
     //   this.menuv2 = menuv2;
     //   this.rearrangeMode = false;
     // });
-  }
+  // }
 
   // newSection(index): void {
   //   this.restaurantService.newSection(this.slug, index).subscribe((menuv2) => {
