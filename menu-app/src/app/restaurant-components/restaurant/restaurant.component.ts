@@ -1,3 +1,4 @@
+
 import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {Menu, Restaurant, RestaurantEditable} from '../../interfaces/restaurant-interfaces';
 import {CovidModalComponent} from '../../util-components/modals/covid-modal/covid-modal.component';
@@ -16,7 +17,7 @@ import {RestaurantService} from '../../services/restaurant.service';
 })
 export class RestaurantComponent implements OnInit {
   @Input()restaurant: Restaurant;
-  menus: Menu[];
+  menus = [];
   menu: Menu;
   miniScroll = false;
   selectedSection = 0;
@@ -25,7 +26,7 @@ export class RestaurantComponent implements OnInit {
   slug: string;
   previousScroll = 0;
 
-  // true if user has permission to edit this menu
+  // true if user has permission to edit this menuv2
   hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
@@ -98,32 +99,32 @@ export class RestaurantComponent implements OnInit {
     }
 
     // linear time solution, if performance is an issue, should switch to using pointers
-    if (scrollPosition > this.previousScroll) {
-      for (let i = 0; i < this.menu.sections.length; i++) {
-        const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
-        if (scrollPosition < sectionPosition) {
-          this.selectedSection = i;
-          break;
-        }
-      }
-    } else {
-      for (let i = this.menu.sections.length - 1; i >= 0; i--) {
-        const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
-        if (sectionPosition < scrollPosition) {
-          this.selectedSection = i;
-          break;
-        }
-      }
-    }
-    const buttonLocation = document.getElementById(
-      `${this.menu.sections[this.selectedSection]._id} button`
-    ).offsetLeft;
-    document.getElementById('wrapper').scrollTo({
-      behavior: 'smooth',
-      left: buttonLocation,
-    });
-
-    this.previousScroll = scrollPosition;
+    // if (scrollPosition > this.previousScroll) {
+    //   for (let i = 0; i < this.menuv2.sections.length; i++) {
+    //     const sectionPosition = document.getElementById(this.menuv2.sections[i]._id).offsetTop;
+    //     if (scrollPosition < sectionPosition) {
+    //       this.selectedSection = i;
+    //       break;
+    //     }
+    //   }
+    // } else {
+    //   for (let i = this.menuv2.sections.length - 1; i >= 0; i--) {
+    //     const sectionPosition = document.getElementById(this.menuv2.sections[i]._id).offsetTop;
+    //     if (sectionPosition < scrollPosition) {
+    //       this.selectedSection = i;
+    //       break;
+    //     }
+    //   }
+    // }
+    // const buttonLocation = document.getElementById(
+    //   `${this.menuv2.sections[this.selectedSection]._id} button`
+    // ).offsetLeft;
+    // document.getElementById('wrapper').scrollTo({
+    //   behavior: 'smooth',
+    //   left: buttonLocation,
+    // });
+    //
+    // this.previousScroll = scrollPosition;
   }
 
   scrollToSection(id: string): void {
@@ -163,15 +164,15 @@ export class RestaurantComponent implements OnInit {
         subtitle: section.subtitle,
       };
     });
-    // this.restaurantService.rearrangeSections(this.slug, sections).subscribe((menu) => {
-    //   this.menu = menu;
+    // this.restaurantService.rearrangeSections(this.slug, sections).subscribe((menuv2) => {
+    //   this.menuv2 = menuv2;
     //   this.rearrangeMode = false;
     // });
   }
 
   // newSection(index): void {
-  //   this.restaurantService.newSection(this.slug, index).subscribe((menu) => {
-  //     this.menu = menu;
+  //   this.restaurantService.newSection(this.slug, index).subscribe((menuv2) => {
+  //     this.menuv2 = menuv2;
   //   });
   // }
 
@@ -200,5 +201,6 @@ export class RestaurantComponent implements OnInit {
     }
   }
 }
+
 
 

@@ -12,17 +12,17 @@ export class RestaurantService {
   constructor(private http: HttpClient) { }
 
   getRestaurant(slug: string): Observable<Restaurant>{
-    const url = `${environment.settings.apiv2}/restaurant/${slug}`;
+    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
     return this.http.get<Restaurant>(url);
   }
 
   getMenus(slug: string, menuName: string): Observable<Menu> {
-    const url = `${environment.settings.apiv2}/restaurant/${slug}/${menuName}`;
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
     return this.http.get<Menu>(url);
   }
 
   editRestaurant(slug: string, restaurant: RestaurantEditable): Observable<Restaurant> {
-    const url = `${environment.settings.apiv2}/restaurant/${slug}`;
+    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
     return this.http.patch<Restaurant>(url, restaurant);
   }
 }

@@ -1,4 +1,4 @@
-<app-covid-modal [menu]="menu"></app-covid-modal>
+<!--<app-covid-modal [menuv2]="menuv2"></app-covid-modal>-->
 <div *ngIf="restaurant">
   <div class="desktop-background">
     <app-mobile-image
@@ -7,18 +7,18 @@
       [description]="restaurant.description"
       [image]="restaurant.image"
     ></app-mobile-image>
-    <app-scrolling-component
-      class="mobile"
-      [sections]="menu.sections"
-      [miniScroll]="miniScroll"
-      [currentSection]="selectedSection"
-    ></app-scrolling-component>
+    <!--    <app-scrolling-component-->
+    <!--      class="mobile"-->
+    <!--      [sections]="menuv2.sections"-->
+    <!--      [miniScroll]="miniScroll"-->
+    <!--      [currentSection]="selectedSection"-->
+    <!--    ></app-scrolling-component>-->
     <div
       [ngStyle]="{
-        background: 'url(' + restaurant.image + ')',
-        backgroundSize: '100%',
-        backgroundRepeat: 'no repeat'
-      }"
+       background: 'url(' + restaurant.image + ')',
+       backgroundSize: '100%',
+       backgroundRepeat: 'no repeat'
+     }"
       class="desktop-image"
     >
       <div class="desktop-background">
@@ -32,7 +32,7 @@
           class="desktop"
           (menuEmitter)="setValue($event)"
           [hasPermission]="hasPermission"
-          [name]="menu.name"
+          [name]="restaurant.name"
         ></app-menu-name>
         <div class="menu-items section-background">
           <app-menu-details
