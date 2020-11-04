@@ -11,6 +11,12 @@
   }
 }
 
+::ng-deep {
+  .bio  .ql-editor {
+    font-size: 20px;
+  }
+}
+
 .background-image {
   background-size: 100%;
   background-repeat: no-repeat;
