@@ -14,6 +14,7 @@ import {Tag} from "../../interfaces/restaurant-interfaces";
 export class Tagv2Component implements OnInit {
   @Input() tag: Tag;
   @Input() hasPermission: boolean;
+  tagDisplay: TagDisplay;
   editIcon = faPen;
   saveIcon = faSave;
   editable = false;
@@ -22,6 +23,7 @@ export class Tagv2Component implements OnInit {
   constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
+    this.tagDisplay = this.tagService.getTag(this.tag.text);
   }
 
   onClick(): void {
