@@ -16,6 +16,7 @@ from marshmallow import fields
 from PIL.Image import Image
 from utils.errors import (
     FORBIDDEN,
+    MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     NUMBER_ALREADY_EXISTS,
     RESTAURANT_NOT_FOUND,
@@ -24,7 +25,8 @@ from utils.errors import (
 from webargs.flaskparser import use_args
 
 from ...auth.schemas import UserSchema, UsersSchema
-from ...restaurants.documents.menuv2 import Item, Section
+from ...menus.documents import Menu
+from ...restaurants.documents.menuv2 import Item, MenuV2, Section
 from ...restaurants.documents.restaurant import Restaurant
 from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema
 from ..helpers import qr_helper
@@ -123,13 +125,13 @@ class ImportMenuResource(AdminBaseResource):
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
 
-        menu = restaurant.get_menu(menu_name)
-        if menu is None:
-            return MENU_NOT_FOUND
+        menu = MenuV2(name=menu_name)
 
         file_str = args["file"].read()
         menu.sections = self.read(file_str)
         menu.save()
+        restaurant.menus.append(menu)
+        restaurant.save()
         return menu
 
     @staticmethod

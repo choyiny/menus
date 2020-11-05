@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MenuService } from '../../services/menu.service';
 import { CreateInterface } from '../../interfaces/menus-interface';
+import {AdminService} from "../../services/admin.service";
+import {Restaurant, RestaurantTemplate} from "../../interfaces/restaurant-interfaces";
 
 @Component({
   selector: 'app-create',
@@ -10,8 +12,11 @@ import { CreateInterface } from '../../interfaces/menus-interface';
 })
 export class CreateComponent implements OnInit {
   restaurantBody: FormGroup;
+  menuBody: FormGroup;
+  file: File;
+  recentSlug: string;
 
-  constructor(private fb: FormBuilder, private menuService: MenuService) {}
+  constructor(private fb: FormBuilder, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.restaurantBody = this.fb.group({
@@ -19,9 +24,12 @@ export class CreateComponent implements OnInit {
       description: [''],
       image: [''],
       slug: [''],
-      external_link: [''],
-      link_name: [''],
     });
+    this.menuBody = this.fb.group(
+      {
+        name: ['']
+      }
+    );
   }
 
   isEmpty(element: string): boolean {
@@ -29,12 +37,29 @@ export class CreateComponent implements OnInit {
   }
 
   submit(): void {
-    const menu: CreateInterface = {};
-    Object.keys(this.restaurantBody.value).forEach((key) => {
-      if (this.restaurantBody.value[key] !== '') {
-        menu[key] = this.restaurantBody.value[key];
+    const restaurantTemplate: RestaurantTemplate = this.restaurantBody.value;
+    if (restaurantTemplate.slug) {
+      this.adminService.createRestaurant(restaurantTemplate).subscribe((restaurant) => {
+        window.alert('Success!');
+        this.recentSlug = restaurantTemplate.slug;
+      });
+    } else {
+      window.alert('Please create a restaurant first');
+    }
+  }
+
+  import(): void {
+    const menuName = this.menuBody.value.name;
+    const formData =  new FormData();
+    formData.append('file', this.file);
+    this.adminService.importMenu(this.recentSlug, menuName, formData).subscribe(
+      menu => {
+        window.alert('Success!');
       }
-    });
-    this.menuService.createMenu(menu).subscribe((menuObj) => {});
+    );
+  }
+
+  onChange(event): void {
+    this.file = event.target.files[0];
   }
 }
