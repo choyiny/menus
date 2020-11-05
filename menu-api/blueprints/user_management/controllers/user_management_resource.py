@@ -11,6 +11,7 @@ from firebase_admin._auth_utils import (
 )
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
+from utils.errors import FORBIDDEN
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
 from ..schemas import NewOrUpdateUserSchema, PaginationSchema
@@ -43,16 +44,14 @@ class UserResource(UserManagementBaseResource):
             return {"description": "You do not have permission"}, 401
 
         firebase_id = kwargs.pop("firebase_id", None)
-        menus = kwargs.pop("menus", None)
-
-        user = None
+        restaurant = kwargs.pop("restaurant", None)
 
         # Updating user
         if firebase_id is not None:
             user = User.objects(firebase_id=firebase_id).first()
 
             if user is not None:
-                user.menus = menus
+                user.restaurant = restaurant
                 user.save()
             else:
                 try:
@@ -63,7 +62,7 @@ class UserResource(UserManagementBaseResource):
                         phone_number=firebase_user.phone_number,
                         display_name=firebase_user.display_name,
                         photo_url=firebase_user.photo_url,
-                        menus=menus,
+                        restaurant=restaurant,
                         is_admin=False,
                     )
 
@@ -91,7 +90,7 @@ class UserResource(UserManagementBaseResource):
                 phone_number=firebase_user.phone_number,
                 display_name=firebase_user.display_name,
                 photo_url=firebase_user.photo_url,
-                menus=menus,
+                restaurant=restaurant,
                 is_admin=False,
             )
 
@@ -101,16 +100,40 @@ class UserResource(UserManagementBaseResource):
 class UsersResource(UserManagementBaseResource):
     @doc(description="""Get information about a user""")
     @firebase_login_required
+    @marshal_with(UserSchema)
     def get(self, firebase_id):
         if g.user is None or not g.user.is_admin:
             return {"description": "You do not have permission"}, 401
+        return User.objects(firebase_id=firebase_id).first()
 
-        return "hello"
-
-    @doc(description="""Update user permission""")
+    @doc(description="""Edit Users""")
     @firebase_login_required
-    def patch(self, firebase_id):
+    @use_kwargs(NewOrUpdateUserSchema)
+    @marshal_with(UserSchema)
+    def patch(self, firebase_id, **kwargs):
         if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+            return FORBIDDEN
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
 
-        return "hello"
+        user = User.objects(firebase_id=firebase_id).first()
+
+        # one day someone will implement this
+        # use this
+        # https://firebase.google.com/docs/auth/admin/manage-users#python
+        # if kwargs.get('email'):
+        #     user.email = kwargs.get('email')
+        #
+        # if kwargs.get('phone_number'):
+        #     user.phone_number = kwargs.get('phone_number')
+        #
+        # if kwargs.get('display_name'):
+        #     user.display_name = kwargs.get('display_name')
+        #
+        # if kwargs.get('photo_url'):
+        #     user.photo_url = kwargs.get('photo_url')
+        #
+        # if kwargs.get('restaurant'):
+        #     user.restaurant = kwargs.get('restaurant')
+
+        return user.save()

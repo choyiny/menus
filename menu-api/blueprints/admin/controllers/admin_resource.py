@@ -82,8 +82,7 @@ class AdminUserResource(AdminBaseResource):
         slug = kwargs["slug"]
         firebase_id = kwargs["firebase_id"]
         user = User.objects(firebase_id=firebase_id).first()
-        if slug not in user.menus:
-            user.menus.append(slug)
+        user.restaurant = slug
         return user.save()
 
 

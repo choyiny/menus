@@ -1,6 +1,7 @@
 from auth.decorators import firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with
+from utils.errors import NOT_AUTHENTICATED
 
 from ..schemas import UserSchema
 from .auth_base_resource import AuthBaseResource
@@ -12,5 +13,5 @@ class AuthResource(AuthBaseResource):
     @firebase_login_required
     def post(self):
         if g.user is None:
-            return {"description": "Cannot authenticate"}, 401
+            return NOT_AUTHENTICATED
         return g.user
