@@ -26,7 +26,7 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   {
-    path: 'restaurant/:slug',
+    path: 'restaurants/:slug',
     component: RestaurantComponent,
   },
   {
