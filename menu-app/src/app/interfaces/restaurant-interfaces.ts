@@ -48,6 +48,6 @@ export interface Menu {
 }
 
 export interface MenuEditable {
-  name ?: string;
+  name?: string;
   sections?: Section[];
 }

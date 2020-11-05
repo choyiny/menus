@@ -4,12 +4,12 @@ import { TagService } from '../../services/tag.service';
 import { TagDisplay } from '../../interfaces/tag-display';
 import { faPen } from '@fortawesome/pro-solid-svg-icons';
 import { faSave } from '@fortawesome/pro-solid-svg-icons';
-import {Tag} from "../../interfaces/restaurant-interfaces";
+import { Tag } from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-tagv2',
   templateUrl: './tagv2.component.html',
-  styleUrls: ['./tagv2.component.scss']
+  styleUrls: ['./tagv2.component.scss'],
 })
 export class Tagv2Component implements OnInit {
   @Input() tag: Tag;

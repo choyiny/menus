@@ -81,12 +81,10 @@ export class RestaurantComponent implements OnInit {
 
   setValue(editable: RestaurantEditable): void {
     // tslint:disable-next-line:forin
-    this.restaurantService.editRestaurant(this.slug, editable).subscribe(
-      restaurant => {
-        this.restaurant = restaurant;
-        this.loadMenus();
-      }
-    );
+    this.restaurantService.editRestaurant(this.slug, editable).subscribe((restaurant) => {
+      this.restaurant = restaurant;
+      this.loadMenus();
+    });
   }
 
   sameDay(): boolean {

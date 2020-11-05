@@ -9,15 +9,16 @@
       [content]="description"
       theme="snow"
       [ngStyle]="{
-      'font-size': '30px'
-    }"
+        'font-size': '30px'
+      }"
     ></quill-view-html>
   </div>
   <quill-editor
     *ngIf="editMode"
     [(ngModel)]="description"
     [styles]="{
-    'font-size': '30px'
-    }">
+      'font-size': '30px'
+    }"
+  >
   </quill-editor>
 </div>

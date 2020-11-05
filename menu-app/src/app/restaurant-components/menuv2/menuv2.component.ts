@@ -1,7 +1,7 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import {RestaurantService} from '../../services/restaurant.service';
+import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-menuv2',
@@ -22,16 +22,14 @@ export class Menuv2Component implements OnInit {
   ngOnInit(): void {}
 
   newSection(i: number): void {
-    this.restaurantService.newSection().subscribe(
-      section => {
-        this.menu.sections.splice(i + 1, 0, section);
-        this.restaurantService.editMenu(this.slug, this.menu.name, {sections: this.menu.sections}).subscribe(
-          menu => {
-            this.menu = menu;
-          }
-        );
-      }
-    );
+    this.restaurantService.newSection().subscribe((section) => {
+      this.menu.sections.splice(i + 1, 0, section);
+      this.restaurantService
+        .editMenu(this.slug, this.menu.name, { sections: this.menu.sections })
+        .subscribe((menu) => {
+          this.menu = menu;
+        });
+    });
   }
 
   update(menu: Menu): void {
@@ -102,11 +100,11 @@ export class Menuv2Component implements OnInit {
   }
 
   save(): void {
-    this.restaurantService.editMenu(this.slug, this.menu.name, { sections: this.menu.sections}).subscribe(
-      menu => {
+    this.restaurantService
+      .editMenu(this.slug, this.menu.name, { sections: this.menu.sections })
+      .subscribe((menu) => {
         this.menu = menu;
-      }
-    );
+      });
     this.rearrangeMode = false;
   }
 }

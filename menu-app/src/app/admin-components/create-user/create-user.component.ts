@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { MenuService } from '../../services/menu.service';
 import { MenusInterface } from '../../interfaces/menus-interface';
-import {AdminService} from "../../services/admin.service";
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-create-user',
@@ -26,9 +26,8 @@ export class CreateUserComponent implements OnInit {
     photo_url: [''],
   });
 
-  selectPermissionForm = this.fb.group({
-    restaurant: this.fb.group({}),
-  });
+  restaurants: string[];
+  selectedRestaurant = '';
 
   linkFirebaseUserForm = this.fb.group({
     firebase_id: [''],
@@ -38,34 +37,21 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getRestaurants({ limit: 100, page: 1 }).subscribe((restaurantData) => {
-      const restaurants = <FormGroup>this.selectPermissionForm.get('restaurant');
-      for (const restaurant of restaurantData.restaurants) {
-        console.log(restaurant);
-        restaurants.addControl(restaurant, new FormControl());
-      }
+      this.restaurants = restaurantData.restaurants;
     });
-  }
-
-  get restaurantFormData() {
-    return Object.entries(this.selectPermissionForm.get('menus').value)
-      .filter(([k, v]) => v)
-      .map(([k, v]) => k);
   }
 
   submitLink(): void {
-    const restaurant = this.restaurantFormData;
     const firebase_id = this.linkFirebaseUserForm.value.firebase_id;
 
-    this.userService.updateUser({ firebase_id, menus: restaurant }).subscribe((result) => {
-      alert('Success!');
-    });
+    // this.userService.updateUser({ firebase_id, restaurant: this.selectedRestaurant}).subscribe((result) => {
+    //   alert('Success!');
+    // });
   }
 
   submitCreate(): void {
-    const restaurant = this.restaurantFormData;
     const userInfo = this.createUserForm.value;
-
-    this.userService.createUser({ ...userInfo, menus: restaurant }).subscribe((result) => {
+    this.userService.createUser({ ...userInfo, restaurant: this.selectedRestaurant }).subscribe((result) => {
       alert('Success!');
     });
   }

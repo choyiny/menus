@@ -2,13 +2,13 @@
 
 <p><a routerLink="/admin/users">&lt; Back to User Management</a></p>
 
-<form [formGroup]="selectPermissionForm">
+<form *ngIf="restaurants">
   <h3>Select Restaurants</h3>
-  <div formGroupName="restaurant">
-    <li *ngFor="let restaurant of selectPermissionForm.get('restaurant').value | keyvalue">
-      <label> <input type="checkbox" [formControlName]="restaurant.key" [value]="restaurant.value" /> {{ restaurant.key }} </label>
-    </li>
-  </div>
+  <li *ngFor="let restaurant of restaurants">
+    <label>
+      <input type="radio" name="restaurant"  [value]="restaurant" [(ngModel)]="this.selectedRestaurant"/> {{ restaurant }}
+    </label>
+  </li>
 </form>
 
 <hr />

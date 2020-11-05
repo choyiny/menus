@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
 import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
-import {Item, Section, Tag} from '../../interfaces/restaurant-interfaces';
+import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
-import {TagService} from '../../services/tag.service';
+import { TagService } from '../../services/tag.service';
 
 @Component({
   selector: 'app-itemv2',
@@ -68,7 +68,7 @@ export class Itemv2Component implements OnInit {
     const newTag: Tag = {
       text: 'New tag',
       icon: 'no-icon',
-      background_color: 'black'
+      background_color: 'black',
     };
     this.item.tags.push(newTag);
     this.editItem();
@@ -79,7 +79,7 @@ export class Itemv2Component implements OnInit {
       this.item.tags[index] = {
         text: newValue,
         icon: newValue,
-        background_color: 'black'
+        background_color: 'black',
       };
     } else {
       this.item.tags.splice(index, 1);
@@ -87,15 +87,19 @@ export class Itemv2Component implements OnInit {
     this.editItem();
   }
   remove(): void {
-    this.restaurantService.deleteItem(this.slug, this.menuName, this.item._id).subscribe((section) => {
-      this.sectionEmitter.emit(section);
-    });
+    this.restaurantService
+      .deleteItem(this.slug, this.menuName, this.item._id)
+      .subscribe((section) => {
+        this.sectionEmitter.emit(section);
+      });
   }
 
   deletePhoto($event): void {
-    this.restaurantService.deletePhoto(this.slug, this.menuName,this.item._id).subscribe((item) => {
-      this.item = item;
-    });
+    this.restaurantService
+      .deletePhoto(this.slug, this.menuName, this.item._id)
+      .subscribe((item) => {
+        this.item = item;
+      });
     event.stopPropagation();
   }
 
