@@ -12,7 +12,6 @@
     [(ngModel)]="tag.text"
     [style.width.ch]="tag.text.length + 1"
     *ngIf="editable"
-    (change)="(tagDisplay.text)"
   />
   <fa-icon *ngIf="editable && hasPermission" [icon]="saveIcon" (click)="onClick()"></fa-icon>
 </div>
