@@ -22,14 +22,24 @@ export class RestaurantService {
     return this.http.get<Restaurant>(url);
   }
 
+  editRestaurant(slug: string, restaurant: RestaurantEditable): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
+    return this.http.patch<Restaurant>(url, restaurant);
+  }
+
   getMenus(slug: string, menuName: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
     return this.http.get<Menu>(url);
   }
 
-  editRestaurant(slug: string, restaurant: RestaurantEditable): Observable<Restaurant> {
-    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
-    return this.http.patch<Restaurant>(url, restaurant);
+  editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
+    return this.http.patch<Menu>(url, menuEditable);
+  }
+
+  deleteMenu(slug: string, menuName: string): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
+    return this.http.delete<Menu>(url);
   }
 
   editItem(slug: string, menuName: string, item: Item): Observable<Item> {
@@ -77,8 +87,4 @@ export class RestaurantService {
     return this.http.delete<Item>(url);
   }
 
-  editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu> {
-    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
-    return this.http.patch<Menu>(url, menuEditable);
-  }
 }

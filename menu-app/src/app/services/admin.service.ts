@@ -24,4 +24,9 @@ export class AdminService {
     const url = `${environment.settings.endpoint}/admin/restaurants`;
     return this.http.post<Restaurant>(url, restaurantTemplate);
   }
+
+  appendMenu(slug: string, selectedMenu: string, formData: FormData): Observable<Menu> {
+    const url = `${environment.settings.endpoint}/admin/restaurants`;
+    return this.http.patch<Menu>(url, formData);
+  }
 }
