@@ -1,7 +1,7 @@
 from auth.documents.user import User
 from click import argument
 from flask.cli import AppGroup
-from scripts.migrations import migrate
+from scripts.migrations import migrate, user_migrations
 
 
 def register_commands(app):
@@ -27,6 +27,10 @@ def register_commands(app):
     @migration_cli.command("menus")
     def migrate_menus():
         migrate()
+
+    @migration_cli.command("users")
+    def migrate_users():
+        user_migrations()
 
     app.cli.add_command(auth_cli)
     app.cli.add_command(migration_cli)

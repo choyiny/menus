@@ -1,6 +1,9 @@
+import config as c
+from auth.documents.user import User
 from blueprints.menus.documents.menu import Menu
 from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
+from mongomock import MongoClient
 
 
 def migrate():
@@ -97,3 +100,12 @@ def convert_tags(tags):
                 {"text": tag["text"], "icon": "", "background_color": "black"}
             )
     return new_tags
+
+
+def user_migrations():
+    for user in User.objects():
+        if user.menus:
+            user.restaurant = user.menus[0]
+        else:
+            user.restaurant = ""
+        user.save()
