@@ -3,7 +3,6 @@ from auth.documents.user import User
 from blueprints.menus.documents.menu import Menu
 from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
-from mongomock import MongoClient
 
 
 def migrate():
