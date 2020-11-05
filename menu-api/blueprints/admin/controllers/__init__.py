@@ -1,1 +1,7 @@
-from .admin_resource import AdminTracingResource, AdminUserResource
+from .admin_resource import (
+    AdminTracingResource,
+    AdminUserResource,
+    ImportMenuResource,
+    QrRestaurantResource,
+    RestaurantResource,
+)

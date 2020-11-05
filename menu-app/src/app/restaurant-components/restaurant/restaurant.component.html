@@ -1,0 +1,50 @@
+<!--<app-covid-modal [menuv2]="menuv2"></app-covid-modal>-->
+<div *ngIf="restaurant">
+  <div class="desktop-background">
+    <app-mobile-image
+      class="mobile"
+      [name]="restaurant.name"
+      [description]="restaurant.description"
+      [image]="restaurant.image"
+    ></app-mobile-image>
+    <div
+      [ngStyle]="{
+        background: 'url(' + restaurant.image + ')',
+        backgroundSize: '100%',
+        backgroundRepeat: 'no repeat'
+      }"
+      class="desktop-image"
+    >
+      <div class="desktop-background">
+        <app-change-background
+          class="desktop"
+          [hasPermission]="hasPermission"
+          [image]="restaurant.image"
+          (imageEmitter)="setValue($event)"
+        ></app-change-background>
+        <app-menu-name
+          class="desktop"
+          (menuEmitter)="setValue($event)"
+          [hasPermission]="hasPermission"
+          [name]="restaurant.name"
+        ></app-menu-name>
+        <div class="menu-items section-background">
+          <app-menu-details
+            class="desktop"
+            [description]="restaurant.description"
+            [hasPermission]="hasPermission"
+            (menuEmitter)="setValue($event)"
+          ></app-menu-details>
+          <app-menuv2
+            *ngIf="menus[currentMenu]"
+            [slug]="slug"
+            [hasPermission]="hasPermission"
+            [menu]="menus[currentMenu]"
+          >
+          </app-menuv2>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>

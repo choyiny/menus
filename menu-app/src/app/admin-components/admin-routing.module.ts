@@ -8,16 +8,16 @@ import { CreateComponent } from './create/create.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 const routes: Routes = [
   {
     path: 'menus/:slug',
-    component: MenuDashboardComponent
+    component: MenuDashboardComponent,
   },
   {
     path: 'create',
-    component: CreateComponent
+    component: CreateComponent,
   },
   {
     path: 'menus',
@@ -25,15 +25,15 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: ViewUsersComponent
+    component: ViewUsersComponent,
   },
   {
     path: 'users/create',
-    component: CreateUserComponent
+    component: CreateUserComponent,
   },
   {
     path: 'users/:id',
-    component: EditUserComponent
+    component: EditUserComponent,
   },
   {
     path: '**',

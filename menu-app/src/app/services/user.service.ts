@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { UserInterface, UsersWithPaginationInterface, NewUserInterface, LinkUserInterface } from '../interfaces/user-interface';
+import {
+  UserInterface,
+  UsersWithPaginationInterface,
+  NewUserInterface,
+  LinkUserInterface,
+} from '../interfaces/user-interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   getUsers(query): Observable<UsersWithPaginationInterface> {
     const url = `${environment.settings.endpoint}/users`;
     return this.http.get<UsersWithPaginationInterface>(url, { params: query });

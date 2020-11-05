@@ -8,6 +8,7 @@ export const environment: EnvironmentInterface = {
   production: false,
   settings: {
     endpoint: 'http://localhost:5000',
+    apiv2: 'http://localhost:5000/api/v2',
     firebase: {
       apiKey: 'AIzaSyB03cZwKu07MHfTat2CHSSLhpVtezJ0s7g',
       authDomain: 'pickeasy-app.firebaseapp.com',

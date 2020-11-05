@@ -13,7 +13,7 @@ import { CreateComponent } from './create/create.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ViewUsersComponent } from './view-users/view-users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
-import { EditUserComponent } from './edit-user/edit-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -22,14 +22,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
     AdminDashboardComponent,
     ViewUsersComponent,
     CreateUserComponent,
-    EditUserComponent
+    EditUserComponent,
   ],
-  imports: [
-    CommonModule,
-    AdminRoutingModule,
-    FontAwesomeModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+  imports: [CommonModule, AdminRoutingModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
 })
 export class AdminModule {}

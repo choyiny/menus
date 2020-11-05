@@ -38,6 +38,11 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AngularFireModule } from '@angular/fire';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
+import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
+import { Itemv2Component } from './restaurant-components/itemv2/itemv2.component';
+import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.component';
+import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
+import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +63,11 @@ import { QuillModule } from 'ngx-quill';
     FooterComponent,
     ImgViewModalComponent,
     ImgFormModalComponent,
+    RestaurantComponent,
+    Itemv2Component,
+    Sectionv2Component,
+    Menuv2Component,
+    Tagv2Component,
   ],
   imports: [
     BrowserModule,
@@ -89,4 +99,4 @@ import { QuillModule } from 'ngx-quill';
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

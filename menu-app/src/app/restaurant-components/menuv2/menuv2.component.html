@@ -1,0 +1,33 @@
+<app-scrolling-component
+  *ngIf="menu"
+  class="mobile"
+  [sections]="menu.sections"
+    [miniScroll]="miniScroll"
+  [currentSection]="selectedSection"
+></app-scrolling-component>
+<button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="rearrange()">
+  Rearrange Sections
+</button>
+<button class="left desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
+<div cdkDropList [cdkDropListData]="menu.sections" (cdkDropListDropped)="drop($event)">
+  <div
+    class="section-box"
+    *ngFor="let section of menu.sections; let i = index"
+    cdkDrag
+    [cdkDragDisabled]="!rearrangeMode"
+  >
+    <app-sectionv2
+      [rearrangeMode]="rearrangeMode"
+      [hasPermission]="hasPermission"
+      [section]="section"
+      [slug]="slug"
+      [menuName]="menu.name"
+      id="{{ section._id }}"
+      (menuEmitter)="update($event)"
+    >
+    </app-sectionv2>
+    <button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">
+      Add new Section
+    </button>
+  </div>
+</div>

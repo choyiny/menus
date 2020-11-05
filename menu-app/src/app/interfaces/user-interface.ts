@@ -13,7 +13,7 @@ export interface UsersInterface {
 }
 
 export interface UsersWithPaginationInterface extends UsersInterface {
-  total_page: number,
+  total_page: number;
 }
 
 export interface NewUserInterface {

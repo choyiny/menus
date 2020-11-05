@@ -4,8 +4,9 @@ from mongoengine import BooleanField, Document, EmailField, ListField, StringFie
 
 
 class User(Document):
-    menus = ListField()
+    restaurant = StringField(default="")
     is_admin = BooleanField(required=True)
+    menus = ListField()
     firebase_id = StringField()
     email = EmailField()
     phone_number = StringField()
@@ -25,4 +26,4 @@ class User(Document):
         return user
 
     def has_permission(self, slug):
-        return self.is_admin or slug in self.menus
+        return self.is_admin or slug in self.menus or slug == self.restaurant

@@ -4,6 +4,7 @@ export const environment: EnvironmentInterface = {
   production: true,
   settings: {
     endpoint: 'https://menu.pickeasy.ca/api',
+    apiv2: 'https://menu.pickeasy.ca/api/v2',
     firebase: {
       apiKey: 'AIzaSyB03cZwKu07MHfTat2CHSSLhpVtezJ0s7g',
       authDomain: 'pickeasy-app.firebaseapp.com',

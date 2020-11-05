@@ -4,19 +4,20 @@ import { LoginComponent } from './auth-components/login/login.component';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
 import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
+import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 
 const routes: Routes = [
   {
     path: 'menu/:slug',
-    component: MenuComponent
+    component: MenuComponent,
   },
   {
     path: '',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
   },
   {
     path: 'admin',
@@ -25,8 +26,12 @@ const routes: Routes = [
     canActivate: [AdminGuard],
   },
   {
+    path: 'restaurant/:slug',
+    component: RestaurantComponent,
+  },
+  {
     path: '**',
-    redirectTo: ''
+    redirectTo: '',
   },
 ];
 
@@ -34,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

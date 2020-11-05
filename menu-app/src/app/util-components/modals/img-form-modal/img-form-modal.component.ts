@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuService } from '../../../services/menu.service';
+import {RestaurantService} from "../../../services/restaurant.service";
 
 @Component({
   selector: 'app-img-form-modal',
@@ -12,9 +13,10 @@ export class ImgFormModalComponent implements OnInit {
   file;
   @Input() itemId: string;
   @Input() slug: string;
+  @Input() menuName: string;
   @Output() itemEmitter = new EventEmitter<string>();
 
-  constructor(private modalService: NgbModal, private menuService: MenuService) {}
+  constructor(private modalService: NgbModal, private restaurantService: RestaurantService) {}
 
   ngOnInit(): void {}
 
@@ -34,7 +36,7 @@ export class ImgFormModalComponent implements OnInit {
           const file = new File([blob], 'image', { type: 'image/png' });
           const formData = new FormData();
           formData.append('file', file);
-          this.menuService.uploadPhoto(this.slug, this.itemId, formData).subscribe((url) => {
+          this.restaurantService.uploadPhoto(this.slug, this.menuName, this.itemId, formData).subscribe((url) => {
             this.itemEmitter.emit(url);
           });
         });

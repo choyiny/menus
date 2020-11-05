@@ -63,7 +63,26 @@ export class TagService {
     },
   };
 
+  icons = {
+    Vegetarian: [faLeaf],
+    'Top Pick': [faArrowToTop],
+    "Chef's choice": [faHatChef],
+    "Chef's feautured": [faHatChef],
+    Spicy3: [faPepperHot, faPepperHot, faPepperHot],
+    Spicy2: [faPepperHot, faPepperHot],
+    Spicy: [faPepperHot],
+    Recommended: [faThumbsUp]
+  };
+
   constructor() {}
+
+  getIcon(icon: string): any{
+    if (this.icons[icon] !== undefined){
+      return this.icons[icon];
+    } else {
+      return [];
+    }
+  }
 
   getTag(tag: string): TagDisplay {
     if (this.tags[tag] === undefined) {
