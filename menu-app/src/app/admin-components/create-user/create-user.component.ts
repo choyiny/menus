@@ -44,9 +44,10 @@ export class CreateUserComponent implements OnInit {
   submitLink(): void {
     const firebase_id = this.linkFirebaseUserForm.value.firebase_id;
 
-    // this.userService.updateUser({ firebase_id, restaurant: this.selectedRestaurant}).subscribe((result) => {
-    //   alert('Success!');
-    // });
+    const restaurant = this.selectedRestaurant;
+    this.userService.updateUser({ firebase_id, restaurant}).subscribe((result) => {
+      alert('Success!');
+    });
   }
 
   submitCreate(): void {

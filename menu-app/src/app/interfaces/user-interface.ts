@@ -23,10 +23,10 @@ export interface NewUserInterface {
   password: string;
   display_name: string;
   photo_url: string;
-  menus: string[];
+  restaurant: string;
 }
 
 export interface LinkUserInterface {
   firebase_id: string;
-  menus: string[];
+  restaurant: string;
 }
