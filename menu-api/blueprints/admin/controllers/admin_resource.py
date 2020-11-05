@@ -223,10 +223,10 @@ class RestaurantResource(AdminBaseResource):
     @doc(description="Create a new restaurants")
     @use_kwargs(CreateRestaurantSchema)
     @marshal_with(GetRestaurantSchema)
-    # @firebase_login_required
+    @firebase_login_required
     def post(self, **kwargs):
-        # if g.user is None or not g.user.is_admin:
-        #     return FORBIDDEN
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
         restaurant = Restaurant(**kwargs).save()
         return restaurant.to_dict()
 

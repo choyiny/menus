@@ -3,10 +3,10 @@
 <p><a routerLink="/admin/users">&lt; Back to User Management</a></p>
 
 <form [formGroup]="selectPermissionForm">
-  <h3>Select menus</h3>
-  <div formGroupName="menus">
-    <li *ngFor="let menu of selectPermissionForm.get('menus').value | keyvalue">
-      <label> <input type="checkbox" [formControlName]="menu.key" [value]="menu.value" /> {{ menu.key }} </label>
+  <h3>Select Restaurants</h3>
+  <div formGroupName="restaurant">
+    <li *ngFor="let restaurant of selectPermissionForm.get('restaurant').value | keyvalue">
+      <label> <input type="checkbox" [formControlName]="restaurant.key" [value]="restaurant.value" /> {{ restaurant.key }} </label>
     </li>
   </div>
 </form>
