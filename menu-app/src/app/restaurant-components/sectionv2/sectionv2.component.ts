@@ -30,13 +30,12 @@ export class Sectionv2Component implements OnInit {
   delete(): void {
     this.restaurantService.deleteSection(this.slug, this.menuName, this.section._id).subscribe(
       menu => {
-        console.log(menu);
         this.menuEmitter.emit(menu);
       }
     );
   }
 
-  sendRequest(): void {
+  editSection(): void {
     this.restaurantService
       .editSection(this.slug, this.menuName, this.section)
       .subscribe((section) => {
