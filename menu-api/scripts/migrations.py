@@ -52,7 +52,7 @@ def convert_tags(tags):
     special_tags = {
         "Chef Featured": {
             "text": "Chef's Featured",
-            "icons": "Chef Featured",
+            "icon": "Chef Featured",
             "background_color": "black",
         },
         "Recommended": {
@@ -62,7 +62,7 @@ def convert_tags(tags):
         },
         "Spicy": {"text": "", "icon": "Spicy", "background_color": "#EE3353",},
         "Spicy2": {"text": "", "icon": "Spicy2", "background_color": "#EE3353",},
-        "Spicy3": {"text": "", "icons": "Spicy3", "background_color": "#ee3353",},
+        "Spicy3": {"text": "", "icon": "Spicy3", "background_color": "#ee3353",},
         "Peanut": {
             "text": "May Contain Peanuts",
             "icon": "",
