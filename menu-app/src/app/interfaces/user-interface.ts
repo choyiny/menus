@@ -1,7 +1,7 @@
 export interface UserInterface {
   phone_number: string;
   firebase_id: string;
-  menus: string[];
+  restaurant: string;
   is_admin: boolean;
   email: string;
   display_name: string;

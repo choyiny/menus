@@ -48,7 +48,7 @@ export class MenuComponent implements OnInit {
     }
     const user = this.authService.currentUserValue;
     if (user) {
-      this.hasPermission = user.is_admin || user.menus.includes(this.slug);
+      this.hasPermission = user.is_admin || user.restaurant === this.slug;
     } else {
       this.hasPermission = false;
     }
