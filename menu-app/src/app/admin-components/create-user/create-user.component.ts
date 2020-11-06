@@ -37,7 +37,7 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getRestaurants({ limit: 100, page: 1 }).subscribe((restaurantData) => {
-      const restaurants = <FormGroup> this.selectPermissionForm.get('restaurants');
+      const restaurants = <FormGroup>this.selectPermissionForm.get('restaurants');
       for (const restaurant of restaurantData.restaurants) {
         restaurants.addControl(restaurant, new FormControl());
       }
@@ -53,15 +53,17 @@ export class CreateUserComponent implements OnInit {
   submitLink(): void {
     const firebase_id = this.linkFirebaseUserForm.value.firebase_id;
     const restaurants = this.restaurantsFormData;
-    this.userService.updateUser({ firebase_id, restaurants}).subscribe((result) => {
+    this.userService.updateUser({ firebase_id, restaurants }).subscribe((result) => {
       alert('Success!');
     });
   }
 
   submitCreate(): void {
     const userInfo = this.createUserForm.value;
-    this.userService.createUser({ ...userInfo, restaurants: this.restaurantsFormData }).subscribe((result) => {
-      alert('Success!');
-    });
+    this.userService
+      .createUser({ ...userInfo, restaurants: this.restaurantsFormData })
+      .subscribe((result) => {
+        alert('Success!');
+      });
   }
 }

@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 import * as FileSaver from 'file-saver';
 import { MenuInterface } from '../../interfaces/menus-interface';
-import {Form, FormBuilder, FormGroup} from '@angular/forms';
+import { Form, FormBuilder, FormGroup } from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
-import {Restaurant} from '../../interfaces/restaurant-interfaces';
-import {RestaurantService} from '../../services/restaurant.service';
-import {AdminService} from '../../services/admin.service';
+import { Restaurant } from '../../interfaces/restaurant-interfaces';
+import { RestaurantService } from '../../services/restaurant.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-menu-dashboard',
@@ -36,7 +36,7 @@ export class MenuDashboardComponent implements OnInit {
     this.slug = this.route.snapshot.params.slug;
     this.load();
     this.menuBody = this.fb.group({
-      name: ['']
+      name: [''],
     });
   }
 
@@ -67,11 +67,11 @@ export class MenuDashboardComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', this.file);
       this.adminService.importMenu(this.slug, name, formData).subscribe(
-        restaurant => {
+        (restaurant) => {
           this.load();
           window.alert('Success!');
         },
-        err => {
+        (err) => {
           window.alert('Something went wrong!');
           console.log(err);
         }
@@ -90,20 +90,16 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   deleteMenu(): void {
-    this.restaurantService.deleteMenu(this.slug, this.selectedMenu).subscribe(
-      menu => {
-        this.load();
-        window.alert('Success!');
-      }
-    );
+    this.restaurantService.deleteMenu(this.slug, this.selectedMenu).subscribe((menu) => {
+      this.load();
+      window.alert('Success!');
+    });
   }
 
   deleteRestaurant(): void {
-    this.restaurantService.deleteRestaurant(this.slug).subscribe(
-      restaurant => {
-        window.alert('Success!');
-      }
-    );
+    this.restaurantService.deleteRestaurant(this.slug).subscribe((restaurant) => {
+      window.alert('Success!');
+    });
   }
 
   generateQr(): void {

@@ -22,9 +22,9 @@
       </button>
 
       <div>
-        <p> Select Menu</p>
+        <p>Select Menu</p>
         <select [(ngModel)]="selectedMenu">
-          <option *ngFor="let menu of this.menuOptions()" [value]="menu">{{menu}}</option>
+          <option *ngFor="let menu of this.menuOptions()" [value]="menu">{{ menu }}</option>
         </select>
       </div>
 
@@ -36,13 +36,12 @@
           <button (click)="deleteMenu()">Delete Menu</button>
         </div>
         <div *ngIf="selectedMenu === 'Make new menus'" class="form-group">
-          <input type="text" formControlName="name">
+          <input type="text" formControlName="name" />
           <label for="csv-upload">Create new Menu</label>
           <input type="file" class="form-control-file" id="csv-upload" (change)="onChange($event)" />
           <button (click)="importCsv()">Import</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>

@@ -91,5 +91,4 @@ export class RestaurantService {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.delete<Item>(url);
   }
-
 }

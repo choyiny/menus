@@ -15,7 +15,9 @@
   <h3>Select menus</h3>
   <div formGroupName="restaurants">
     <li *ngFor="let restaurant of selectPermissionForm.get('restaurants').value | keyvalue">
-      <label> <input type="checkbox" [formControlName]="restaurant.key" [value]="restaurant.value" /> {{ restaurant.key }} </label>
+      <label>
+        <input type="checkbox" [formControlName]="restaurant.key" [value]="restaurant.value" /> {{ restaurant.key }}
+      </label>
     </li>
   </div>
 </form>

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenusInterface } from '../../interfaces/menus-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestaurantPaginated} from '../../interfaces/restaurant-interfaces';
-import {AdminService} from '../../services/admin.service';
+import { RestaurantPaginated } from '../../interfaces/restaurant-interfaces';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -37,15 +37,13 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   getRestaurants(): void {
-    this.adminService.getRestaurants(
-      {
+    this.adminService
+      .getRestaurants({
         page: this.page,
         limit: this.limit,
-      }
-    ).subscribe(
-      restaurants =>  {
-          this.restaurants = restaurants;
-      }
-    );
+      })
+      .subscribe((restaurants) => {
+        this.restaurants = restaurants;
+      });
   }
 }
