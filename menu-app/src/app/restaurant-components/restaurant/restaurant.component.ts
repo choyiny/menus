@@ -6,6 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
+import {SignupComponent} from '../../util-components/modals/signup/signup.component';
 
 @Component({
   selector: 'app-restaurant',
@@ -26,6 +27,7 @@ export class RestaurantComponent implements OnInit {
   hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
+  @ViewChild(SignupComponent) signup: SignupComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
@@ -59,6 +61,7 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.loadMenus();
+      this.signup.open();
       if (this.sameDay()) {
         return;
       }
