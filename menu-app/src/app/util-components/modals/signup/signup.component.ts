@@ -39,6 +39,18 @@ export class SignupComponent implements OnInit {
 
   next(): void {
     console.log(this.email);
+    const actionCodeSettings = {
+      url: window.location.origin,
+      handleCodeInApp: true,
+    };
+    this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
+      user => {
+        console.log('done?');
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
 }
