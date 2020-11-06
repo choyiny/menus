@@ -19,7 +19,7 @@ export class TracingService {
   }
 
   configureTracing(slug: string, tracingForm: TracingFormInterface): Observable<MenuInterface> {
-    const url = `${environment.settings.endpoint}/admin/menus/${slug}/tracing`;
+    const url = `${environment.settings.endpoint}/admin/restaurants/${slug}/tracing`;
     return this.http.patch<MenuInterface>(url, tracingForm);
   }
 }

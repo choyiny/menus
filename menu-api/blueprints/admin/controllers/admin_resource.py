@@ -42,52 +42,6 @@ from ..schemas import (
 from .admin_base_resource import AdminBaseResource
 
 
-class AdminUserResource(AdminBaseResource):
-    @marshal_with(UsersSchema)
-    @firebase_login_required
-    def get(self):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        return {"users": [user for user in User.objects()]}
-
-    @use_kwargs(CreateUserSchema)
-    @marshal_with(UserSchema)
-    @firebase_login_required
-    def post(self, **user_info):
-        """Create firebase user"""
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        try:
-            firebase_user = auth.create_user(**user_info)
-        except EmailAlreadyExistsError:
-            return USER_ALREADY_EXISTS
-        except PhoneNumberAlreadyExistsError:
-            return NUMBER_ALREADY_EXISTS
-        user = User.create(
-            firebase_id=firebase_user.uid,
-            email=firebase_user.email,
-            phone_number=firebase_user.phone_number,
-            display_name=firebase_user.display_name,
-            photo_url=firebase_user.photo_url,
-            menus=[],
-            is_admin=False,
-        )
-        return user
-
-    @doc(description="""Claim Restaurant url for user""")
-    @use_kwargs(PromoteUserSchema)
-    @marshal_with(UserSchema)
-    @firebase_login_required
-    def patch(self, **kwargs):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        slug = kwargs["slug"]
-        firebase_id = kwargs["firebase_id"]
-        user = User.objects(firebase_id=firebase_id).first()
-        user.restaurant = slug
-        return user.save()
-
-
 class AdminTracingResource(AdminBaseResource):
     @marshal_with(GetRestaurantSchema)
     @use_kwargs(ContactTracingSchema)
