@@ -5,9 +5,9 @@ import * as FileSaver from 'file-saver';
 import { MenuInterface } from '../../interfaces/menus-interface';
 import {Form, FormBuilder, FormGroup} from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
-import {Restaurant} from "../../interfaces/restaurant-interfaces";
-import {RestaurantService} from "../../services/restaurant.service";
-import {AdminService} from "../../services/admin.service";
+import {Restaurant} from '../../interfaces/restaurant-interfaces';
+import {RestaurantService} from '../../services/restaurant.service';
+import {AdminService} from '../../services/admin.service';
 
 @Component({
   selector: 'app-menu-dashboard',
@@ -98,20 +98,26 @@ export class MenuDashboardComponent implements OnInit {
     );
   }
 
+  deleteRestaurant(): void {
+    this.restaurantService.deleteRestaurant(this.slug).subscribe(
+      restaurant => {
+        window.alert('Success!');
+      }
+    );
+  }
+
   generateQr(): void {
     let body;
     if (this.restaurant.enable_trace) {
       body = {
         url: `${window.location.origin}/menu/${this.slug}?trace=true`,
-        name: this.restaurant.name,
       };
     } else {
       body = {
-        url: `${window.location.origin}/menu/${this.slug}`,
-        name: this.restaurant.name,
+        url: `${window.location.origin}/restaurants/${this.slug}`,
       };
     }
-    this.menuService.generateQR(body).subscribe((blob) => {
+    this.adminService.generateQR(body).subscribe((blob) => {
       const fileName = `${this.restaurant.name}.${blob.type}`;
       FileSaver.saveAs(blob, fileName);
     });

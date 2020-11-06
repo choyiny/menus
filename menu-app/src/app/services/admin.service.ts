@@ -29,4 +29,12 @@ export class AdminService {
     const url = `${environment.settings.endpoint}/admin/restaurants`;
     return this.http.patch<Menu>(url, formData);
   }
+
+  generateQR(query): Observable<Blob> {
+    const url = `${environment.settings.endpoint}/admin/generate`;
+    return this.http.get(url, {
+      params: query,
+      responseType: 'blob',
+    });
+  }
 }

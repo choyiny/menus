@@ -13,7 +13,7 @@ from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from flask_marshmallow import Schema
 from marshmallow import fields
-from PIL.Image import Image
+from PIL import Image
 from utils.errors import (
     FORBIDDEN,
     MENU_ALREADY_EXISTS,
@@ -214,7 +214,6 @@ class QrRestaurantResource(AdminBaseResource):
         template = Image.open("assets/print_template_huge.png")
         for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
-        template.show()
         return qr_helper.serve_pil_image(template, "file.png")
 
 

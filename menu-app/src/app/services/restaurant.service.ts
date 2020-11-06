@@ -27,6 +27,11 @@ export class RestaurantService {
     return this.http.patch<Restaurant>(url, restaurant);
   }
 
+  deleteRestaurant(slug: string): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
+    return this.http.delete<Restaurant>(url);
+  }
+
   getMenus(slug: string, menuName: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
     return this.http.get<Menu>(url);
