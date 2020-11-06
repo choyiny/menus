@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AngularFireAuth} from "@angular/fire/auth";
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-signup',
@@ -12,6 +12,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private modalService: NgbModal, private auth: AngularFireAuth) { }
   @ViewChild('signup') signup;
+  email: string;
 
   ngOnInit(): void {
   }
@@ -34,6 +35,10 @@ export class SignupComponent implements OnInit {
         console.log(user);
       }
     );
+  }
+
+  next(): void {
+    console.log(this.email);
   }
 
 }

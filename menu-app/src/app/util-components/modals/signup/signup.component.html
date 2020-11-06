@@ -2,17 +2,22 @@
   <div class="title">
     <h1>Create an Account to Publish for Free</h1>
   </div>
+
   <div class="container">
     <div class="onboard">
       <p>To publish your first menu, fill out the following information and
         click submit to share your page with the world</p>
-      <button (click)="signInWithFacebook()">Sign in with Facebook</button>
-      <button (click)="signInWithGoogle()">Sign in with Google</button>
-      <button>Sign in with Apple</button>
-      <button (click)="modal.close()">Cancel</button>
+      <button class="sign-in" (click)="signInWithFacebook()">Sign in with Facebook</button>
+      <button class="sign-in" (click)="signInWithGoogle()">Sign in with Google</button>
+      <button class="sign-in">Sign in with Apple</button>
       <p class="text-center">-------Or--------</p>
-      <p>Enter your email adress and we will send you a confirmation link</p>
-      <input class="email" type="text" placeholder="Enter your email address">
+      <p>Enter your email address and we will send you a confirmation link</p>
+      <input class="email" type="text" placeholder="Enter your email address" [(ngModel)]="email">
     </div>
+  </div>
+
+  <div class="next-step">
+    <button (click)="modal.close()">Cancel</button>
+    <button (click)="next()">Next step</button>
   </div>
 </ng-template>

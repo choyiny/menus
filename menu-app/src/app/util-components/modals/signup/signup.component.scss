@@ -1,4 +1,4 @@
-button {
+.sign-in {
   display: block;
   width: 100%;
   margin-top: 5%;
@@ -20,8 +20,6 @@ button {
 
 .container {
   background: #f0f3f5;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
 }
 
 .email {
@@ -30,6 +28,15 @@ button {
   border: solid 1.2px #f0f3f5;
   background-color: #ffffff;
   height: 52px;
+  padding-left: 20px;
+}
+
+.next-step {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background-color: white;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
 .title {
