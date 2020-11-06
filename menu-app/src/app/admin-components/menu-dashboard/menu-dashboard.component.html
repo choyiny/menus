@@ -5,7 +5,7 @@
       <div>
         <button type="button" (click)="generateQr()">Generate QR</button>
         <button type="button" (click)="deleteMenu()">Delete this restaurant</button>
-        <p><a [routerLink]="'/menu/' + slug">Visit Menu</a></p>
+        <p><a [routerLink]="'/restaurants/' + slug">Visit Menu</a></p>
       </div>
       <form *ngIf="configureContactTracing" [formGroup]="contactTracingForm" (ngSubmit)="submitContactTracing()">
         <div class="form-group">

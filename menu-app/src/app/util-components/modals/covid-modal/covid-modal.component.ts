@@ -2,8 +2,8 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TracingService } from '../../../services/tracing.service';
-import { MenuInterface } from '../../../interfaces/menus-interface';
 import { ContactInterface } from '../../../interfaces/contact-interface';
+import {Restaurant} from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-covid-modal',
@@ -13,7 +13,7 @@ import { ContactInterface } from '../../../interfaces/contact-interface';
 export class CovidModalComponent implements OnInit {
   @ViewChild('modalContent') input;
   tracingForm: FormGroup;
-  @Input() menu: MenuInterface;
+  @Input() restaurant: Restaurant;
   nameError: string;
   phoneError: string;
 
@@ -38,11 +38,11 @@ export class CovidModalComponent implements OnInit {
     const contact = {
       name: this.tracingForm.value.name,
       phone_number: `+1${this.tracingForm.value.phone_number}`,
-      key: this.menu.tracing_key,
+      key: this.restaurant.tracing_key,
     };
     this.validate(contact);
     if (this.phoneError === '' && this.nameError === '') {
-      this.tracingService.traceCustomer(this.menu.name, contact).subscribe((timeIn) => {
+      this.tracingService.traceCustomer(this.restaurant.name, contact).subscribe((timeIn) => {
         localStorage.setItem('time_in', JSON.stringify(timeIn));
         this.modalService.dismissAll();
       });

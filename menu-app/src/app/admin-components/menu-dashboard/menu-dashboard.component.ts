@@ -125,9 +125,9 @@ export class MenuDashboardComponent implements OnInit {
 
   submitContactTracing(): void {
     const tracingForm = this.contactTracingForm.value;
-    // this.tracingService.configureTracing(this.slug, tracingForm).subscribe((menu) => {
-    //   this.restaurant = menu;
-    // });
-    // this.configureContactTracing = false;
+    this.tracingService.configureTracing(this.slug, tracingForm).subscribe((restaurant) => {
+      this.restaurant = restaurant;
+    });
+    this.configureContactTracing = false;
   }
 }
