@@ -1,8 +1,8 @@
-<ng-template  let-modal>
-  <div >
-    <button>Sign in with facebook</button>
-    <button>Sign in with google</button>
-    <button>Sign in with apple</button>
+<ng-template  #signup let-modal>
+  <div class="onboard">
+    <button (click)="signInWithFacebook()">Sign in with Facebook</button>
+    <button (click)="signInWithGoogle()">Sign in with Google</button>
+    <button>Sign in with Apple</button>
     <button (click)="modal.close()">Cancel</button>
   </div>
 </ng-template>
