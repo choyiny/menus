@@ -111,7 +111,7 @@ def user_migrations():
 
     for user_id in user_map:
         collection.update(
-            {"firebase_id": user_id}, {"$set": {"restaurant": user_map[user_id]}}
+            {"firebase_id": user_id}, {"$set": {"restaurants": user_map[user_id]}}
         )
     collection.update_many(
         {}, {"$unset": {"menus": ""}},
