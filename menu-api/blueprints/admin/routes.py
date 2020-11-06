@@ -1,6 +1,5 @@
 from .controllers import (
     AdminTracingResource,
-    AdminUserResource,
     ImportMenuResource,
     QrRestaurantResource,
     RestaurantResource,
