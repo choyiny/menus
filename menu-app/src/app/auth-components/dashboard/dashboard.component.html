@@ -1,9 +1,14 @@
 <div *ngIf="user">
   <p>Welcome {{ user.display_name }}</p>
-  <div *ngIf="!user.restaurant">
+  <div *ngIf="!user.restaurants">
     <h1>No menus found</h1>
   </div>
-  <div *ngIf="user.restaurant">
-    <a routerLink="/restaurants/{{ user.restaurant }}" routerLinkActive="active">{{ user.restaurant}}</a>
+  <div *ngIf="user.restaurants">
+    <a
+      *ngFor="let restaurant of user.restaurants"
+      routerLink="/restaurants/{{ user.restaurants }}"
+      routerLinkActive="active">
+      {{ user.restaurants}}
+    </a>
   </div>
 </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { MenuService } from '../../services/menu.service';
 import { MenusInterface } from '../../interfaces/menus-interface';
 import { AdminService } from '../../services/admin.service';
 
@@ -26,8 +25,9 @@ export class CreateUserComponent implements OnInit {
     photo_url: [''],
   });
 
-  restaurants: string[];
-  selectedRestaurant = '';
+  selectPermissionForm = this.fb.group({
+    restaurants: this.fb.group({}),
+  });
 
   linkFirebaseUserForm = this.fb.group({
     firebase_id: [''],
@@ -37,22 +37,30 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.adminService.getRestaurants({ limit: 100, page: 1 }).subscribe((restaurantData) => {
-      this.restaurants = restaurantData.restaurants;
+      const restaurants = <FormGroup> this.selectPermissionForm.get('restaurants');
+      for (const restaurant of restaurantData.restaurants) {
+        restaurants.addControl(restaurant, new FormControl());
+      }
     });
+  }
+
+  get restaurantsFormData(): any {
+    return Object.entries(this.selectPermissionForm.get('restaurants').value)
+      .filter(([k, v]) => v)
+      .map(([k, v]) => k);
   }
 
   submitLink(): void {
     const firebase_id = this.linkFirebaseUserForm.value.firebase_id;
-
-    const restaurant = this.selectedRestaurant;
-    this.userService.updateUser({ firebase_id, restaurant}).subscribe((result) => {
+    const restaurants = this.restaurantsFormData;
+    this.userService.updateUser({ firebase_id, restaurants}).subscribe((result) => {
       alert('Success!');
     });
   }
 
   submitCreate(): void {
     const userInfo = this.createUserForm.value;
-    this.userService.createUser({ ...userInfo, restaurant: this.selectedRestaurant }).subscribe((result) => {
+    this.userService.createUser({ ...userInfo, restaurants: this.restaurantsFormData }).subscribe((result) => {
       alert('Success!');
     });
   }

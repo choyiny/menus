@@ -22,7 +22,7 @@ export class Tagv2Component implements OnInit {
   constructor(private tagService: TagService) {}
 
   ngOnInit(): void {
-    this.tagDisplay = this.tagService.getTag(this.tag.text);
+    this.tagDisplay = this.tagService.getTag(this.tag.icon);
   }
 
   onClick(): void {

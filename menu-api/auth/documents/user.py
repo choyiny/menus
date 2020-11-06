@@ -25,4 +25,4 @@ class User(Document):
         return user
 
     def has_permission(self, slug):
-        return self.is_admin or slug == self.restaurant
+        return self.is_admin or slug in self.restaurants

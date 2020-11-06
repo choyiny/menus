@@ -44,19 +44,16 @@ class UserResource(UserManagementBaseResource):
             return FORBIDDEN
 
         firebase_id = kwargs.pop("firebase_id", None)
-        restaurant = kwargs.pop("restaurant", None)
-        if restaurant:
-            new_restaurants = [restaurant]
-        else:
-            new_restaurants = []
+        restaurants = kwargs.pop("restaurants", None)
 
         # Updating user
         if firebase_id is not None:
             user = User.objects(firebase_id=firebase_id).first()
 
             if user:
-                if restaurant and restaurant not in user.restaurants:
-                    user.restaurants.append(restaurant)
+                if restaurants:
+                    user.restaurants = restaurants
+                print(user.restaurants)
                 user.save()
             else:
                 try:
@@ -67,7 +64,7 @@ class UserResource(UserManagementBaseResource):
                         phone_number=firebase_user.phone_number,
                         display_name=firebase_user.display_name,
                         photo_url=firebase_user.photo_url,
-                        restaurants=new_restaurants,
+                        restaurants=restaurants,
                         is_admin=False,
                     )
 
@@ -95,7 +92,7 @@ class UserResource(UserManagementBaseResource):
                 phone_number=firebase_user.phone_number,
                 display_name=firebase_user.display_name,
                 photo_url=firebase_user.photo_url,
-                restaurant=new_restaurants,
+                restaurants=restaurants,
                 is_admin=False,
             )
 

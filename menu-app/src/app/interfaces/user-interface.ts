@@ -1,7 +1,7 @@
 export interface UserInterface {
   phone_number: string;
   firebase_id: string;
-  restaurant: string;
+  restaurants: string[];
   is_admin: boolean;
   email: string;
   display_name: string;
@@ -23,10 +23,10 @@ export interface NewUserInterface {
   password: string;
   display_name: string;
   photo_url: string;
-  restaurant: string;
+  restaurants: string[];
 }
 
 export interface LinkUserInterface {
   firebase_id: string;
-  restaurant: string;
+  restaurants: string[];
 }

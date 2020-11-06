@@ -13,7 +13,7 @@ class NewOrUpdateUserSchema(Schema):
 
     firebase_id = fields.Str()
 
-    restaurant = fields.Str(fields.Str(required=True))
+    restaurants = fields.List(fields.Str())
 
 
 class PaginationSchema(Schema):
