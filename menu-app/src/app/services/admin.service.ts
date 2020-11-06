@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {Menu, Restaurant, Restaurants, RestaurantTemplate} from '../interfaces/restaurant-interfaces';
+import {Menu, Restaurant, RestaurantPaginated, RestaurantTemplate} from '../interfaces/restaurant-interfaces';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -10,9 +10,9 @@ import { environment } from '../../environments/environment';
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  getRestaurants(query): Observable<Restaurants> {
+  getRestaurants(query): Observable<RestaurantPaginated> {
     const url = `${environment.settings.endpoint}/admin/restaurants`;
-    return this.http.get<Restaurants>(url, { params: query });
+    return this.http.get<RestaurantPaginated>(url, { params: query });
   }
 
   importMenu(slug: string, menuName: string, formData: FormData): Observable<Menu>{

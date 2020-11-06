@@ -39,8 +39,9 @@ export class RestaurantComponent implements OnInit {
       this.getRestaurant();
     }
     const user = this.authService.currentUserValue;
+    console.log(user);
     if (user) {
-      this.hasPermission = user.is_admin || user.restaurant === this.slug;
+      this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
     } else {
       this.hasPermission = false;
     }

@@ -22,7 +22,7 @@ export interface RestaurantTemplate {
   slug: string;
 }
 
-export interface Restaurants {
+export interface RestaurantPaginated {
   restaurants: string[];
 }
 

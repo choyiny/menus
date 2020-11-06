@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenusInterface } from '../../interfaces/menus-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Restaurants} from '../../interfaces/restaurant-interfaces';
+import { RestaurantPaginated} from '../../interfaces/restaurant-interfaces';
 import {AdminService} from '../../services/admin.service';
 
 @Component({
@@ -13,7 +13,7 @@ import {AdminService} from '../../services/admin.service';
 export class AdminDashboardComponent implements OnInit {
   limit: number;
   page: number;
-  restaurants: Restaurants;
+  restaurants: RestaurantPaginated;
   constructor(
     private adminService: AdminService,
     private router: Router,
