@@ -2,7 +2,7 @@ from marshmallow import Schema, fields
 
 
 class UserSchema(Schema):
-    restaurant = fields.Str()
+    restaurants = fields.List(fields.Str(required=True))
     is_admin = fields.Bool()
     firebase_id = fields.Str(required=True)
     email = fields.Email()

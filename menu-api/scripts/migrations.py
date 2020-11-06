@@ -107,7 +107,7 @@ def user_migrations():
     user_map = {}
     for user in collection.find({}):
         if "menus" in user and user["menus"]:
-            user_map[user["firebase_id"]] = user["menus"][0]
+            user_map[user["firebase_id"]] = user["menus"]
 
     for user_id in user_map:
         collection.update(

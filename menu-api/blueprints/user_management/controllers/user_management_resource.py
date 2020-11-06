@@ -41,17 +41,22 @@ class UserResource(UserManagementBaseResource):
     @marshal_with(UserSchema)
     def post(self, **kwargs):
         if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+            return FORBIDDEN
 
         firebase_id = kwargs.pop("firebase_id", None)
         restaurant = kwargs.pop("restaurant", None)
+        if restaurant:
+            new_restaurants = [restaurant]
+        else:
+            new_restaurants = []
 
         # Updating user
         if firebase_id is not None:
             user = User.objects(firebase_id=firebase_id).first()
 
-            if user is not None:
-                user.restaurant = restaurant
+            if user:
+                if restaurant and restaurant not in user.restaurants:
+                    user.restaurants.append(restaurant)
                 user.save()
             else:
                 try:
@@ -62,7 +67,7 @@ class UserResource(UserManagementBaseResource):
                         phone_number=firebase_user.phone_number,
                         display_name=firebase_user.display_name,
                         photo_url=firebase_user.photo_url,
-                        restaurant=restaurant,
+                        restaurants=new_restaurants,
                         is_admin=False,
                     )
 
@@ -90,7 +95,7 @@ class UserResource(UserManagementBaseResource):
                 phone_number=firebase_user.phone_number,
                 display_name=firebase_user.display_name,
                 photo_url=firebase_user.photo_url,
-                restaurant=restaurant,
+                restaurant=new_restaurants,
                 is_admin=False,
             )
 

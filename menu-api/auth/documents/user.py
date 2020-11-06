@@ -4,7 +4,7 @@ from mongoengine import BooleanField, Document, EmailField, ListField, StringFie
 
 
 class User(Document):
-    restaurant = StringField(default="")
+    restaurants = ListField(required=list)
     is_admin = BooleanField(required=True)
     firebase_id = StringField()
     email = EmailField()
