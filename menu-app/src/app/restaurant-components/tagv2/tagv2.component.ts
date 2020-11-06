@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TagInterface } from '../../interfaces/tag-interface';
 import { TagService } from '../../services/tag.service';
 import { TagDisplay } from '../../interfaces/tag-display';
 import { faPen } from '@fortawesome/pro-solid-svg-icons';
