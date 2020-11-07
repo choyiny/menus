@@ -13,9 +13,10 @@ from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from flask_marshmallow import Schema
 from marshmallow import fields
-from PIL.Image import Image
+from PIL import Image
 from utils.errors import (
     FORBIDDEN,
+    MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     NUMBER_ALREADY_EXISTS,
     RESTAURANT_NOT_FOUND,
@@ -24,7 +25,8 @@ from utils.errors import (
 from webargs.flaskparser import use_args
 
 from ...auth.schemas import UserSchema, UsersSchema
-from ...restaurants.documents.menuv2 import Item, Section
+from ...menus.documents import Menu
+from ...restaurants.documents.menuv2 import Item, MenuV2, Section
 from ...restaurants.documents.restaurant import Restaurant
 from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema
 from ..helpers import qr_helper
@@ -38,53 +40,6 @@ from ..schemas import (
     qr_args,
 )
 from .admin_base_resource import AdminBaseResource
-
-
-class AdminUserResource(AdminBaseResource):
-    @marshal_with(UsersSchema)
-    @firebase_login_required
-    def get(self):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        return {"users": [user for user in User.objects()]}
-
-    @use_kwargs(CreateUserSchema)
-    @marshal_with(UserSchema)
-    @firebase_login_required
-    def post(self, **user_info):
-        """Create firebase user"""
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        try:
-            firebase_user = auth.create_user(**user_info)
-        except EmailAlreadyExistsError:
-            return USER_ALREADY_EXISTS
-        except PhoneNumberAlreadyExistsError:
-            return NUMBER_ALREADY_EXISTS
-        user = User.create(
-            firebase_id=firebase_user.uid,
-            email=firebase_user.email,
-            phone_number=firebase_user.phone_number,
-            display_name=firebase_user.display_name,
-            photo_url=firebase_user.photo_url,
-            menus=[],
-            is_admin=False,
-        )
-        return user
-
-    @doc(description="""Claim Restaurant url for user""")
-    @use_kwargs(PromoteUserSchema)
-    @marshal_with(UserSchema)
-    @firebase_login_required
-    def patch(self, **kwargs):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        slug = kwargs["slug"]
-        firebase_id = kwargs["firebase_id"]
-        user = User.objects(firebase_id=firebase_id).first()
-        if slug not in user.menus:
-            user.menus.append(slug)
-        return user.save()
 
 
 class AdminTracingResource(AdminBaseResource):
@@ -124,13 +79,13 @@ class ImportMenuResource(AdminBaseResource):
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
 
-        menu = restaurant.get_menu(menu_name)
-        if menu is None:
-            return MENU_NOT_FOUND
+        menu = MenuV2(name=menu_name)
 
         file_str = args["file"].read()
         menu.sections = self.read(file_str)
         menu.save()
+        restaurant.menus.append(menu)
+        restaurant.save()
         return menu
 
     @staticmethod
@@ -213,7 +168,6 @@ class QrRestaurantResource(AdminBaseResource):
         template = Image.open("assets/print_template_huge.png")
         for coord in qr_helper.generate_tuples():
             template.paste(img, coord)
-        template.show()
         return qr_helper.serve_pil_image(template, "file.png")
 
 
@@ -224,10 +178,10 @@ class RestaurantResource(AdminBaseResource):
     @doc(description="Create a new restaurants")
     @use_kwargs(CreateRestaurantSchema)
     @marshal_with(GetRestaurantSchema)
-    # @firebase_login_required
+    @firebase_login_required
     def post(self, **kwargs):
-        # if g.user is None or not g.user.is_admin:
-        #     return FORBIDDEN
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
         restaurant = Restaurant(**kwargs).save()
         return restaurant.to_dict()
 

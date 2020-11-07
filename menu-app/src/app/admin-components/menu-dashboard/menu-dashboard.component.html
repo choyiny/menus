@@ -1,19 +1,11 @@
-<div *ngIf="menu" class="col-md-6 offset-md-3 mt-5">
+<div *ngIf="restaurant" class="col-md-6 offset-md-3 mt-5">
   <div class="card">
-    <h4 class="card-header">{{ menu.name + ' [' + slug + ']' }}</h4>
+    <h4 class="card-header">{{ restaurant.name + ' [' + slug + ']' }}</h4>
     <div class="card-body">
-      <form>
-        <div class="form-group">
-          <label for="csv-upload">Import menu csv</label>
-          <input type="file" class="form-control-file" id="csv-upload" (change)="onChange($event)" />
-        </div>
-        <button (click)="importCsv()">Save</button>
-        <button (click)="appendCsv()">Append</button>
-      </form>
       <div>
         <button type="button" (click)="generateQr()">Generate QR</button>
-        <button type="button" (click)="deleteMenu()">Delete this menu</button>
-        <p><a [routerLink]="'/menu/' + slug">Visit Menu</a></p>
+        <button type="button" (click)="deleteRestaurant()">Delete this restaurant</button>
+        <p><a [routerLink]="'/restaurants/' + slug">Visit Menu</a></p>
       </div>
       <form *ngIf="configureContactTracing" [formGroup]="contactTracingForm" (ngSubmit)="submitContactTracing()">
         <div class="form-group">
@@ -28,6 +20,28 @@
       <button (click)="toggleContactTracing()">
         {{ configureContactTracing ? 'cancel' : 'Configure Contact Tracing' }}
       </button>
+
+      <div>
+        <p>Select Menu</p>
+        <select [(ngModel)]="selectedMenu">
+          <option *ngFor="let menu of this.menuOptions()" [value]="menu">{{ menu }}</option>
+        </select>
+      </div>
+
+      <form [formGroup]="menuBody">
+        <div *ngIf="selectedMenu !== 'Make new menus'" class="form-group">
+          <label for="csv-upload">Import menu csv</label>
+          <input type="file" class="form-control-file" id="csv-append" (change)="onChange($event)" />
+          <button (click)="appendCsv()">Append</button>
+          <button (click)="deleteMenu()">Delete Menu</button>
+        </div>
+        <div *ngIf="selectedMenu === 'Make new menus'" class="form-group">
+          <input type="text" formControlName="name" />
+          <label for="csv-upload">Create new Menu</label>
+          <input type="file" class="form-control-file" id="csv-upload" (change)="onChange($event)" />
+          <button (click)="importCsv()">Import</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

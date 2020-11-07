@@ -1,5 +1,10 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
-<app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)" [menuName]="menuName"></app-img-form-modal>
+<app-img-form-modal
+  [slug]="slug"
+  [itemId]="item._id"
+  (itemEmitter)="setImage($event)"
+  [menuName]="menuName"
+></app-img-form-modal>
 <div class="menu-item">
   <div>
     <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
@@ -53,16 +58,16 @@
       </div>
     </div>
   </div>
-    <span class="tag-container">
-      <app-tagv2
-        *ngFor="let tag of item.tags; let i = index"
-        [tag]="tag"
-        [hasPermission]="hasPermission"
-        (outputTagText)="updateTags($event, i)"
-      >
-      </app-tagv2>
-      <button class="bg-tint round desktop" (click)="addTag()" *ngIf="hasPermission">
-        <fa-icon [icon]="faPlus"></fa-icon>
-      </button>
-    </span>
+  <span class="tag-container">
+    <app-tagv2
+      *ngFor="let tag of item.tags; let i = index"
+      [tag]="tag"
+      [hasPermission]="hasPermission"
+      (outputTagText)="updateTags($event, i)"
+    >
+    </app-tagv2>
+    <button class="bg-tint round desktop" (click)="addTag()" *ngIf="hasPermission">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
+  </span>
 </div>

@@ -7,9 +7,9 @@
       <fa-icon [icon]="deleteIcon"></fa-icon>
     </button>
     <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
-        <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">
-          <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item
-        </button>
+    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">
+      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item
+    </button>
   </div>
   <h1 *ngIf="!editMode">{{ section.name }}</h1>
   <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />

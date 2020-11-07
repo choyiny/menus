@@ -20,6 +20,20 @@
           <input type="text" formControlName="slug" class="form-control" />
         </div>
         <button class="btn btn-primary">Create</button>
+        <form [formGroup]="menuBody" (submit)="import()">
+          <h1>Import a menu</h1>
+          <div class="form-group">
+            <label>Menu name</label>
+            <input type="text" formControlName="name" class="form-control" />
+            <form>
+              <div class="form-group">
+                <label for="csv-upload">Import menu csv</label>
+                <input type="file" class="form-control-file" id="csv-upload" (change)="onChange($event)" />
+              </div>
+            </form>
+            <button class="btn btn-primary">Import</button>
+          </div>
+        </form>
       </form>
     </div>
   </div>

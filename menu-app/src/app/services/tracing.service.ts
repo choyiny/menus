@@ -6,6 +6,7 @@ import { ContactInterface } from '../interfaces/contact-interface';
 import { TimeInterface } from '../interfaces/time-interface';
 import { MenuInterface } from '../interfaces/menus-interface';
 import { TracingFormInterface } from '../interfaces/tracing-form-interface';
+import {Restaurant} from "../interfaces/restaurant-interfaces";
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class TracingService {
     return this.http.post<TimeInterface>(url, contact);
   }
 
-  configureTracing(slug: string, tracingForm: TracingFormInterface): Observable<MenuInterface> {
-    const url = `${environment.settings.endpoint}/admin/menus/${slug}/tracing`;
-    return this.http.patch<MenuInterface>(url, tracingForm);
+  configureTracing(slug: string, tracingForm: TracingFormInterface): Observable<Restaurant> {
+    const url = `${environment.settings.endpoint}/admin/restaurants/${slug}/tracing`;
+    return this.http.patch<Restaurant>(url, tracingForm);
   }
 }

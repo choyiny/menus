@@ -15,6 +15,17 @@ export interface RestaurantEditable {
   menus?: string[];
 }
 
+export interface RestaurantTemplate {
+  description: string;
+  name: string;
+  image: string;
+  slug: string;
+}
+
+export interface RestaurantPaginated {
+  restaurants: string[];
+}
+
 export interface Tag {
   text: string;
   icon: string;
@@ -44,6 +55,6 @@ export interface Menu {
 }
 
 export interface MenuEditable {
-  name ?: string;
+  name?: string;
   sections?: Section[];
 }

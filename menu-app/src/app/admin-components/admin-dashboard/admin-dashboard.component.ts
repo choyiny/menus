@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenusInterface } from '../../interfaces/menus-interface';
 import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RestaurantPaginated } from '../../interfaces/restaurant-interfaces';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -11,9 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AdminDashboardComponent implements OnInit {
   limit: number;
   page: number;
-  menu: MenusInterface;
+  restaurants: RestaurantPaginated;
   constructor(
-    private menuService: MenuService,
+    private adminService: AdminService,
     private router: Router,
     private activatedRouter: ActivatedRoute
   ) {}
@@ -23,7 +25,7 @@ export class AdminDashboardComponent implements OnInit {
       if (params.limit && params.page) {
         this.limit = +params.limit;
         this.page = +params.page;
-        this.getMenus();
+        this.getRestaurants();
       } else {
         this.visit({ limit: 5, page: 1 });
       }
@@ -34,14 +36,14 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate(['admin/menus'], { queryParams: query });
   }
 
-  getMenus(): void {
-    this.menuService
-      .getMenus({
+  getRestaurants(): void {
+    this.adminService
+      .getRestaurants({
         page: this.page,
         limit: this.limit,
       })
-      .subscribe((menu) => {
-        this.menu = menu;
+      .subscribe((restaurants) => {
+        this.restaurants = restaurants;
       });
   }
 }

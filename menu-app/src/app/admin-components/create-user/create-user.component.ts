@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { MenuService } from '../../services/menu.service';
 import { MenusInterface } from '../../interfaces/menus-interface';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-create-user',
@@ -12,7 +12,7 @@ import { MenusInterface } from '../../interfaces/menus-interface';
 export class CreateUserComponent implements OnInit {
   constructor(
     private userService: UserService,
-    private menuService: MenuService,
+    private adminService: AdminService,
     private fb: FormBuilder
   ) {}
 
@@ -26,7 +26,7 @@ export class CreateUserComponent implements OnInit {
   });
 
   selectPermissionForm = this.fb.group({
-    menus: this.fb.group({}),
+    restaurants: this.fb.group({}),
   });
 
   linkFirebaseUserForm = this.fb.group({
@@ -36,35 +36,34 @@ export class CreateUserComponent implements OnInit {
   menus: MenusInterface;
 
   ngOnInit(): void {
-    this.menuService.getMenus({ limit: 100, page: 1 }).subscribe((menusData) => {
-      const menus = <FormGroup>this.selectPermissionForm.get('menus');
-      for (let menu of menusData.menus) {
-        menus.addControl(menu, new FormControl());
+    this.adminService.getRestaurants({ limit: 100, page: 1 }).subscribe((restaurantData) => {
+      const restaurants = <FormGroup>this.selectPermissionForm.get('restaurants');
+      for (const restaurant of restaurantData.restaurants) {
+        restaurants.addControl(restaurant, new FormControl());
       }
     });
   }
 
-  get menusFormData() {
-    return Object.entries(this.selectPermissionForm.get('menus').value)
+  get restaurantsFormData(): any {
+    return Object.entries(this.selectPermissionForm.get('restaurants').value)
       .filter(([k, v]) => v)
       .map(([k, v]) => k);
   }
 
   submitLink(): void {
-    const menus = this.menusFormData;
     const firebase_id = this.linkFirebaseUserForm.value.firebase_id;
-
-    this.userService.updateUser({ firebase_id, menus }).subscribe((result) => {
+    const restaurants = this.restaurantsFormData;
+    this.userService.updateUser({ firebase_id, restaurants }).subscribe((result) => {
       alert('Success!');
     });
   }
 
   submitCreate(): void {
-    const menus = this.menusFormData;
     const userInfo = this.createUserForm.value;
-
-    this.userService.createUser({ ...userInfo, menus }).subscribe((result) => {
-      alert('Success!');
-    });
+    this.userService
+      .createUser({ ...userInfo, restaurants: this.restaurantsFormData })
+      .subscribe((result) => {
+        alert('Success!');
+      });
   }
 }

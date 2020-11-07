@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   Item,
-  Menu, MenuEditable,
+  Menu,
+  MenuEditable,
   Restaurant,
   RestaurantEditable,
   Section,
@@ -21,14 +22,29 @@ export class RestaurantService {
     return this.http.get<Restaurant>(url);
   }
 
+  editRestaurant(slug: string, restaurant: RestaurantEditable): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
+    return this.http.patch<Restaurant>(url, restaurant);
+  }
+
+  deleteRestaurant(slug: string): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
+    return this.http.delete<Restaurant>(url);
+  }
+
   getMenus(slug: string, menuName: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
     return this.http.get<Menu>(url);
   }
 
-  editRestaurant(slug: string, restaurant: RestaurantEditable): Observable<Restaurant> {
-    const url = `${environment.settings.apiv2}/restaurants/${slug}`;
-    return this.http.patch<Restaurant>(url, restaurant);
+  editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
+    return this.http.patch<Menu>(url, menuEditable);
+  }
+
+  deleteMenu(slug: string, menuName: string): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
+    return this.http.delete<Menu>(url);
   }
 
   editItem(slug: string, menuName: string, item: Item): Observable<Item> {
@@ -51,7 +67,7 @@ export class RestaurantService {
     return this.http.patch<Section>(url, section);
   }
 
-  deleteSection(slug: string, menuName: string, sectionId: string): Observable<Menu>{
+  deleteSection(slug: string, menuName: string, sectionId: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/sections/${sectionId}`;
     return this.http.delete<Menu>(url);
   }
@@ -61,7 +77,12 @@ export class RestaurantService {
     return this.http.get<Section>(url);
   }
 
-  uploadPhoto(slug: string, menuName: string, itemId: string, formData: FormData): Observable<string> {
+  uploadPhoto(
+    slug: string,
+    menuName: string,
+    itemId: string,
+    formData: FormData
+  ): Observable<string> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.patch<string>(url, formData);
   }
@@ -69,10 +90,5 @@ export class RestaurantService {
   deletePhoto(slug: string, menuName: string, itemId: string): Observable<Item> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.delete<Item>(url);
-  }
-
-  editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu>{
-    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
-    return this.http.patch<Menu>(url, menuEditable);
   }
 }

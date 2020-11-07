@@ -1,8 +1,8 @@
 import config as c
-from auth.documents.user import User
 from blueprints.menus.documents.menu import Menu
 from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
+from pymongo import MongoClient
 
 
 def migrate():
@@ -102,9 +102,17 @@ def convert_tags(tags):
 
 
 def user_migrations():
-    for user in User.objects():
-        if user.menus:
-            user.restaurant = user.menus[0]
-        else:
-            user.restaurant = ""
-        user.save()
+    client = MongoClient(c.MONGODB_URL)
+    collection = client.get_database("menus").user
+    user_map = {}
+    for user in collection.find({}):
+        if "menus" in user and user["menus"]:
+            user_map[user["firebase_id"]] = user["menus"]
+
+    for user_id in user_map:
+        collection.update(
+            {"firebase_id": user_id}, {"$set": {"restaurants": user_map[user_id]}}
+        )
+    collection.update_many(
+        {}, {"$unset": {"menus": ""}},
+    )

@@ -1,4 +1,4 @@
-<div *ngIf="menu">
+<div *ngIf="restaurants">
   <h1>All Pickeasy Menus</h1>
   <span>
     <div>
@@ -14,7 +14,7 @@
   </span>
   <p><a routerLink="/admin/create">Create new Menu!</a></p>
   <p><a routerLink="/admin/users">User Management</a></p>
-  <div *ngFor="let slug of menu.menus">
+  <div *ngFor="let slug of restaurants.restaurants">
     <p>
       <a routerLink="/admin/menus/{{ slug }}">{{ slug }}</a>
     </p>

@@ -71,13 +71,13 @@ export class TagService {
     Spicy3: [faPepperHot, faPepperHot, faPepperHot],
     Spicy2: [faPepperHot, faPepperHot],
     Spicy: [faPepperHot],
-    Recommended: [faThumbsUp]
+    Recommended: [faThumbsUp],
   };
 
   constructor() {}
 
-  getIcon(icon: string): any{
-    if (this.icons[icon] !== undefined){
+  getIcon(icon: string): any {
+    if (this.icons[icon] !== undefined) {
       return this.icons[icon];
     } else {
       return [];

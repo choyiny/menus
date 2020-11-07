@@ -4,7 +4,6 @@ import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { style, animate, transition, trigger } from '@angular/animations';
 import { AuthService } from '../../services/auth.service';
-import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { SectionInterface } from '../../interfaces/section-interface';
@@ -33,7 +32,6 @@ export class MenuComponent implements OnInit {
   // true if user has permission to edit this menu
   hasPermission: boolean;
 
-  @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   constructor(
     private menuService: MenuService,
     private route: ActivatedRoute,
@@ -48,7 +46,7 @@ export class MenuComponent implements OnInit {
     }
     const user = this.authService.currentUserValue;
     if (user) {
-      this.hasPermission = user.is_admin || user.menus.includes(this.slug);
+      this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
     } else {
       this.hasPermission = false;
     }
@@ -57,21 +55,7 @@ export class MenuComponent implements OnInit {
   getMenu(id: string): void {
     this.menuService.getMenu(id).subscribe((menu) => {
       this.menu = menu;
-      // force <h1>
       this.menu.description = this.injectHeaderStyle(this.menu.description);
-      if (this.sameDay()) {
-        return;
-      }
-      if (this.menu.force_trace) {
-        this.covid.open();
-        return;
-      }
-      this.route.queryParams.subscribe((params) => {
-        const trace: boolean = params.trace === 'true';
-        if (trace && this.menu.enable_trace) {
-          this.covid.open();
-        }
-      });
     });
   }
 
