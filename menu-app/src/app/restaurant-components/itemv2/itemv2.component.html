@@ -27,7 +27,7 @@
         (click)="cropImage($event)"
       ></fa-icon>
       <fa-icon
-        *ngIf="item.image"
+        *ngIf="item.image && hasPermission"
         [icon]="deleteIcon"
         size="lg"
         class="icon-overlay trash-icon desktop"
