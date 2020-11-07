@@ -1,7 +1,10 @@
+import uuid
+
 import config as c
 from blueprints.menus.documents.menu import Menu
 from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
+from mongoengine.errors import ValidationError
 from pymongo import MongoClient
 
 
@@ -20,12 +23,12 @@ def migrate():
                     price=item["price"],
                     description=item["description"],
                     image=item["image"],
-                    _id=item["_id"],
+                    _id=get_or_create(item._id),
                     tags=convert_tags(item["tags"]),
                 )
                 new_items.append(new_item)
             new_section = Section(
-                _id=section["_id"],
+                _id=get_or_create(section.get("id", None)),
                 name=section["name"],
                 subtitle=section["subtitle"],
                 description=section["description"],
@@ -34,7 +37,11 @@ def migrate():
             new_sections.append(new_section)
 
         new_menu = MenuV2(name=menu.slug, sections=new_sections)
-        new_menu.save()
+        try:
+            new_menu.save()
+        except ValidationError as e:
+            print(new_menu.name, e.message)
+
         restaurant = Restaurant(
             name=sectionized["name"],
             slug=menu["slug"],
@@ -45,7 +52,17 @@ def migrate():
             tracing_key=sectionized["tracing_key"],
             menus=[new_menu],
         )
-        restaurant.save()
+        try:
+            restaurant.save()
+            print(restaurant.name, "success")
+        except ValidationError as e:
+            print(restaurant.name, e.message)
+
+
+def get_or_create(new_id):
+    if new_id:
+        return new_id
+    return str(uuid.uuid4())
 
 
 def convert_tags(tags):
