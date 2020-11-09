@@ -58,12 +58,6 @@ def migrate():
             print(restaurant.name, e.message)
 
 
-def get_or_create(new_id):
-    if new_id:
-        return new_id
-    return str(uuid.uuid4())
-
-
 def convert_tags(tags):
     special_tags = {
         "Chef Featured": {
