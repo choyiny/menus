@@ -25,6 +25,10 @@ export class FirstMenuComponent implements OnInit {
     });
   }
 
+  cancel(): void {
+    this.modalService.dismissAll();
+  }
+
   open(): void {
     this.modalService.open(this.firstMenu);
   }
