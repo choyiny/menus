@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit , AfterViewInit{
 
   ngAfterViewInit(): void {
     this.registerMenu.open();
+    this.signup.open();
   }
 
 }

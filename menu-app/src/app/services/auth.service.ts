@@ -28,6 +28,14 @@ export class AuthService {
     return this.authFireBase.idToken;
   }
 
+  public anonymousSignIn(): void {
+    this.authFireBase.signInAnonymously().then(
+      user => {
+        console.log(user.user.toJSON());
+      }
+    );
+  }
+
   login(email: string, password: string): Observable<UserInterface> {
     const firebaseObservable = from(this.authFireBase.signInWithEmailAndPassword(email, password));
     return firebaseObservable.pipe(
