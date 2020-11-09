@@ -11,7 +11,7 @@ export class FirstMenuComponent implements OnInit {
 
   newMenu: FormGroup;
 
-  @ViewChild('register') register;
+  @ViewChild('firstMenu') firstMenu;
   constructor(private fb: FormBuilder, private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -20,11 +20,12 @@ export class FirstMenuComponent implements OnInit {
       name: [''],
       sectionName: [''],
       itemName: [''],
+      itemDescription: [''],
       itemPrice: ['']
     });
   }
 
   open(): void {
-    this.modalService.open(this.register);
+    this.modalService.open(this.firstMenu);
   }
 }
