@@ -15,6 +15,7 @@ resources = [
         "restaurants",
         ["GET", "DELETE", "PATCH"],
     ),
+    (RestaurantResource, "restaurants", "restaurants", ["POST"]),
     (
         MenuResource,
         "restaurants/<string:slug>/menus/<string:menu_name>",

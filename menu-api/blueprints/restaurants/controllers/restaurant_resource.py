@@ -12,12 +12,13 @@ from utils.errors import (
     ITEM_NOT_FOUND,
     MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
+    NOT_AUTHENTICATED,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
 )
 from webargs.flaskparser import use_args
 
-from ...admin.schemas import file_args
+from ...admin.schemas import CreateRestaurantSchema, file_args
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
 from ..schemas import (
@@ -45,8 +46,8 @@ class RestaurantResource(RestaurantBaseResource):
     @use_kwargs(RestaurantSchema)
     @firebase_login_required
     def patch(self, slug, **kwargs):
-        if g.user is None or not g.user.has_permission(slug):
-            return FORBIDDEN
+        if g.user is None:
+            return NOT_AUTHENTICATED
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -80,6 +81,25 @@ class RestaurantResource(RestaurantBaseResource):
                 menu.delete()
             restaurant.delete()
             return restaurant.to_dict()
+
+    @doc(description="Post default restaurant data to server")
+    @marshal_with(GetRestaurantSchema)
+    def post(self, slug):
+        if g.user is None or not g.user.has_permission(slug):
+            return FORBIDDEN
+
+        restaurant = Restaurant().save()
+        return restaurant
+
+    @doc(description="Create a new restaurants")
+    @use_kwargs(CreateRestaurantSchema)
+    @marshal_with(GetRestaurantSchema)
+    @firebase_login_required
+    def post(self, **kwargs):
+        if g.user is None or not g.user.is_admin:
+            return FORBIDDEN
+        restaurant = Restaurant(**kwargs).save()
+        return restaurant.to_dict()
 
 
 class MenuResource(RestaurantBaseResource):
