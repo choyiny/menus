@@ -5,6 +5,7 @@ import { DashboardComponent } from './auth-components/dashboard/dashboard.compon
 import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
+import {RegisterComponent} from "./register/register.component";
 
 const routes: Routes = [
   {
@@ -31,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RestaurantComponent
+    component: RegisterComponent
   },
   {
     path: '**',

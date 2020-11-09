@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
@@ -6,8 +6,6 @@ import { AuthService } from '../../services/auth.service';
 import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
-import {SignupComponent} from '../../util-components/modals/signup/signup.component';
-
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -27,7 +25,6 @@ export class RestaurantComponent implements OnInit {
   hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
-  @ViewChild(SignupComponent) signup: SignupComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
@@ -61,7 +58,6 @@ export class RestaurantComponent implements OnInit {
     this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
       this.restaurant = restaurant;
       this.loadMenus();
-      this.signup.open();
       if (this.sameDay()) {
         return;
       }

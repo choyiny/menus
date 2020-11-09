@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FirstMenuComponent} from '../util-components/modals/first-menu/first-menu.component';
+import {SignupComponent} from '../util-components/modals/signup/signup.component';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {FirstMenuComponent} from '../util-components/modals/first-menu/first-men
 export class RegisterComponent implements OnInit , AfterViewInit{
 
   @ViewChild(FirstMenuComponent) registerMenu: FirstMenuComponent;
+  @ViewChild(SignupComponent) signup: SignupComponent;
   constructor() { }
 
   ngOnInit(): void {
