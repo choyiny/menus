@@ -30,6 +30,10 @@ const routes: Routes = [
     component: RestaurantComponent,
   },
   {
+    path: 'register',
+    component: RestaurantComponent
+  },
+  {
     path: '**',
     redirectTo: '',
   },

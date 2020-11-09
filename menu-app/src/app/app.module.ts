@@ -44,6 +44,8 @@ import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.
 import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
 import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
 import { SignupComponent } from './util-components/modals/signup/signup.component';
+import { FirstMenuComponent } from './util-components/modals/first-menu/first-menu.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +72,8 @@ import { SignupComponent } from './util-components/modals/signup/signup.componen
     Menuv2Component,
     Tagv2Component,
     SignupComponent,
+    FirstMenuComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
