@@ -95,3 +95,26 @@ button {
     display: none;
   }
 }
+
+
+.next-step {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  background-color: white;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.next-button {
+  border-radius: 8px;
+  background-color: #4c28ff;
+  width: 30%;
+}
+
+.cancel-button {
+  float: right;
+  border-radius: 8px;
+  color: #1a1824;
+  background-color: #f0f3f5;
+  width: 20%;
+}

@@ -20,5 +20,8 @@
     </div>
   </div>
 
-  <app-next-step [cancel]="modal.close"></app-next-step>
+  <div class="next-step">
+    <button class="cancel-button" (click)="modal.close()">Cancel</button>
+    <button class="next-button" (click)="next()">Next step</button>
+  </div>
 </ng-template>

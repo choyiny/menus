@@ -25,8 +25,9 @@ export class FirstMenuComponent implements OnInit {
     });
   }
 
-  cancel(): void {
-    this.modalService.dismissAll();
+  next(): void {
+    const slug = this.newMenu.value.slug;
+    const name = this.newMenu.value.name;
   }
 
   open(): void {
