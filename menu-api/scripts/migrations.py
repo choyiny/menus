@@ -28,7 +28,7 @@ def migrate():
                 )
                 new_items.append(new_item)
             new_section = Section(
-                _id=get_or_create(section.get("id", None)),
+                _id=section.get("id", str(uuid.uuid4())),
                 name=section["name"],
                 subtitle=section["subtitle"],
                 description=section["description"],
@@ -54,7 +54,6 @@ def migrate():
         )
         try:
             restaurant.save()
-            print(restaurant.name, "success")
         except ValidationError as e:
             print(restaurant.name, e.message)
 
