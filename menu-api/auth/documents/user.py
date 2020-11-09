@@ -5,12 +5,13 @@ from mongoengine import BooleanField, Document, EmailField, ListField, StringFie
 
 class User(Document):
     restaurants = ListField(default=list)
-    is_admin = BooleanField(required=True)
+    is_admin = BooleanField(required=True, default=False)
     firebase_id = StringField()
     email = EmailField()
     phone_number = StringField()
     display_name = StringField()
     photo_url = StringField()
+    is_anon = BooleanField(default=False)
 
     @classmethod
     def create(cls, **kwargs):

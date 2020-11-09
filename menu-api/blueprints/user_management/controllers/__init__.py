@@ -1,1 +1,1 @@
-from .user_management_resource import UserResource, UsersResource
+from .user_management_resource import AnonymousUserResource, UserResource, UsersResource

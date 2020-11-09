@@ -139,3 +139,32 @@ class UsersResource(UserManagementBaseResource):
         #     user.restaurant = kwargs.get('restaurant')
 
         return user.save()
+
+
+class AnonymousUserResource(UserManagementBaseResource):
+    @doc(description="""Create anonymous user""")
+    def post(self, **kwargs):
+        firebase_id = kwargs.get("firebase_id")
+        user = User(firebase_id=firebase_id, is_anon=True).save()
+        return user
+
+    @doc(description="""Upgrade anonymous user to normal user""")
+    def patch(self, **kwargs):
+        firebase_id = kwargs.get("firebase_id")
+        user = User(firebase_id=firebase_id)
+
+        if kwargs.get("display_name"):
+            user.display_name = kwargs.get("display_name")
+
+        if kwargs.get("photo_url"):
+            user.photo_url = kwargs.get("photo_url")
+
+        if kwargs.get("phone_number"):
+            user.phone_number = kwargs.get("phone_number")
+
+        if kwargs.get("email"):
+            user.email = kwargs.get("phone_number")
+
+        user.is_anon = False
+
+        return user.save()
