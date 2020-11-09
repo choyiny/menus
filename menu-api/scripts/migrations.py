@@ -28,7 +28,7 @@ def migrate():
                 )
                 new_items.append(new_item)
             new_section = Section(
-                _id=section.get("id", str(uuid.uuid4())),
+                _id=section.get("_id", str(uuid.uuid4())),
                 name=section["name"],
                 subtitle=section["subtitle"],
                 description=section["description"],
