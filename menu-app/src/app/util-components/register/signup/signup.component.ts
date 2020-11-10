@@ -37,22 +37,14 @@ export class SignupComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    console.log('login')
-    this.socialService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    this.socialService.authState.subscribe(
-      user => {
-        this.auth.currentUser.then(
-          anonymousUser => {
-            const credentials = firebase.auth.GoogleAuthProvider.credential(user.idToken);
-            const linkWithUser = from(anonymousUser.linkWithCredential(credentials));
-            linkWithUser.subscribe(
-              userCred => {
-                console.log(userCred.user);
-              },
-              err => {
-                console.log(err);
-              }
-            );
+    this.auth.currentUser.then(
+      anonymousUser => {
+        anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+          user => {
+            console.log(user);
+          },
+          err => {
+            console.log(err);
           }
         );
       }

@@ -46,23 +46,7 @@ import { AngularFireModule } from '@angular/fire';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
-import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
-import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
-const config = new AuthServiceConfig([
-  {
-    id: GoogleLoginProvider.PROVIDER_ID,
-    provider: new GoogleLoginProvider(
-      '331541131061-c26lqqgm89asleebg2c2b21l287n5rh5.apps.googleusercontent.com'
-    ),
-  },
-]);
-
-export function provideConfig(): AuthServiceConfig {
-  return config;
-}
-
-console.log(provideConfig());
 
 @NgModule({
   declarations: [
@@ -105,7 +89,6 @@ console.log(provideConfig());
     FormsModule,
     AngularFireModule.initializeApp(environment.settings.firebase),
     DragDropModule,
-    SocialLoginModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [
@@ -121,7 +104,6 @@ console.log(provideConfig());
     }),
   ],
   providers: [
-    { provide: AuthServiceConfig, useFactory: provideConfig },
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
