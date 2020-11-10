@@ -19,3 +19,7 @@ class NewOrUpdateUserSchema(Schema):
 class PaginationSchema(Schema):
     limit = fields.Int()
     page = fields.Int()
+
+
+class AnonymousUserSchema(Schema):
+    firebase_id = fields.Str()

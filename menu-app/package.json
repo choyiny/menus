@@ -34,6 +34,7 @@
     "@fortawesome/pro-solid-svg-icons": "^5.14.0",
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "@types/file-saver": "^2.0.1",
+    "angularx-social-login": "^2.3.0",
     "bootstrap": "^4.5.2",
     "file-saver": "^2.0.2",
     "firebase": "^7.13.1",

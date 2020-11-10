@@ -5,6 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService as SocialService } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
+import {SocialUser} from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +16,10 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
   public currentUser: Observable<UserInterface>;
 
-  constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
+  constructor(
+    private http: HttpClient,
+    private authFireBase: AngularFireAuth,
+  ) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
@@ -29,11 +35,16 @@ export class AuthService {
   }
 
   public anonymousSignIn(): void {
-    this.authFireBase.signInAnonymously().then(
-      user => {
-        console.log(user.user.toJSON());
-      }
-    );
+    this.authFireBase.signInAnonymously().then((credentials) => {
+      const url = `${environment.settings.endpoint}/anonymous`;
+      const anonymousUser = credentials.user;
+      this.http
+        .post<UserInterface>(url, { firebase_id: anonymousUser.uid })
+        .subscribe((user) => {
+          this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+          console.log(user);
+        });
+    });
   }
 
   login(email: string, password: string): Observable<UserInterface> {

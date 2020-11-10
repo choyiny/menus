@@ -14,7 +14,7 @@ from flask_apispec import doc, marshal_with, use_kwargs
 from utils.errors import FORBIDDEN
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
-from ..schemas import NewOrUpdateUserSchema, PaginationSchema
+from ..schemas import AnonymousUserSchema, NewOrUpdateUserSchema, PaginationSchema
 from .user_management_base_resource import UserManagementBaseResource
 
 
@@ -143,6 +143,8 @@ class UsersResource(UserManagementBaseResource):
 
 class AnonymousUserResource(UserManagementBaseResource):
     @doc(description="""Create anonymous user""")
+    @use_kwargs(AnonymousUserSchema)
+    @marshal_with(UserSchema)
     def post(self, **kwargs):
         firebase_id = kwargs.get("firebase_id")
         user = User(firebase_id=firebase_id, is_anon=True).save()

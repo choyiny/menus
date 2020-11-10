@@ -1,38 +1,60 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AngularFireAuth} from "@angular/fire/auth";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
+import { AuthService } from '../../../services/auth.service';
+import { AuthService as SocialService} from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+import {from} from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-
-  constructor(private modalService: NgbModal, private auth: AngularFireAuth) { }
+  constructor(
+    private modalService: NgbModal,
+    private auth: AngularFireAuth,
+    private authService: AuthService,
+    private socialService: SocialService
+  ) {}
   @ViewChild('signup') signup;
   email: string;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   open(): void {
     this.modalService.open(this.signup);
   }
 
   signInWithFacebook(): void {
-    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then(
-      user => {
-        console.log(user);
-      }
-    );
+    const currentUser = this.auth.user;
+    console.log(currentUser);
+    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((user) => {
+      console.log(user);
+    });
   }
 
   signInWithGoogle(): void {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+    console.log('login')
+    this.socialService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    this.socialService.authState.subscribe(
       user => {
-        console.log(user);
+        this.auth.currentUser.then(
+          anonymousUser => {
+            const credentials = firebase.auth.GoogleAuthProvider.credential(user.idToken);
+            const linkWithUser = from(anonymousUser.linkWithCredential(credentials));
+            linkWithUser.subscribe(
+              userCred => {
+                console.log(userCred.user);
+              },
+              err => {
+                console.log(err);
+              }
+            );
+          }
+        );
       }
     );
   }
@@ -44,13 +66,12 @@ export class SignupComponent implements OnInit {
       handleCodeInApp: true,
     };
     this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
-      user => {
+      (user) => {
         console.log('done?');
       },
-      err => {
+      (err) => {
         console.log(err);
       }
     );
   }
-
 }
