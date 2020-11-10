@@ -61,6 +61,7 @@ class AdminTracingResource(AdminBaseResource):
         if "tracing_key" in kwargs:
             restaurant.tracing_key = kwargs.get("tracing_key")
 
+        restaurant.public = True
         restaurant.save()
         return restaurant.to_dict()
 

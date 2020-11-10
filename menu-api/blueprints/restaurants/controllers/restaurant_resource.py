@@ -82,14 +82,20 @@ class RestaurantResource(RestaurantBaseResource):
             restaurant.delete()
             return restaurant.to_dict()
 
-    @doc(description="Post default restaurant data to server")
+    @doc(description="Create a new restaurants")
+    @use_kwargs(CreateRestaurantSchema)
     @marshal_with(GetRestaurantSchema)
-    def post(self, slug):
-        if g.user is None or not g.user.has_permission(slug):
+    @firebase_login_required
+    def post(self, **kwargs):
+
+        if g.user is None:
             return FORBIDDEN
 
-        restaurant = Restaurant().save()
-        return restaurant
+        restaurant = Restaurant(**kwargs)
+        restaurant.public = False
+        g.user.restaurants.append(restaurant.slug)
+        g.user.save()
+        return restaurant.to_dict()
 
     @doc(description="Create a new restaurants")
     @use_kwargs(CreateRestaurantSchema)

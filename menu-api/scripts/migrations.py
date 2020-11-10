@@ -131,11 +131,7 @@ def user_migrations():
     )
 
 
-def onboarding_patch():
+def restaurant_migrations():
     for restaurant in Restaurant.objects():
         restaurant.public = True
         restaurant.save()
-
-    for user in User.objects():
-        user.is_anon = False
-        user.save()
