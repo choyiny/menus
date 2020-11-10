@@ -18,12 +18,14 @@ def migrate():
         for section in sectionized["sections"]:
             new_items = []
             for item in section["menu_items"]:
+                if not item._id:
+                    item._id = str(uuid.uuid4())
                 new_item = Item(
                     name=item["name"],
                     price=item["price"],
                     description=item["description"],
                     image=item["image"],
-                    _id=get_or_create(item._id),
+                    _id=item._id,
                     tags=convert_tags(item["tags"]),
                 )
                 new_items.append(new_item)
