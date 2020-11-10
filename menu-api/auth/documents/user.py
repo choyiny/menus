@@ -11,7 +11,7 @@ class User(Document):
     phone_number = StringField()
     display_name = StringField()
     photo_url = StringField()
-    is_anon = BooleanField(default=False)
+    is_anon = BooleanField(default=True)
 
     @classmethod
     def create(cls, **kwargs):

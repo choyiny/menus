@@ -64,3 +64,4 @@ class RestaurantSchema(Schema):
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
+    public = fields.Bool(example=True)

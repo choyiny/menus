@@ -1,6 +1,7 @@
 import uuid
 
 import config as c
+from auth.documents.user import User
 from blueprints.menus.documents.menu import Menu
 from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
@@ -128,3 +129,13 @@ def user_migrations():
     collection.update_many(
         {}, {"$unset": {"menus": ""}},
     )
+
+
+def onboarding_patch():
+    for restaurant in Restaurant.objects():
+        restaurant.public = True
+        restaurant.save()
+
+    for user in User.objects():
+        user.is_anon = False
+        user.save()
