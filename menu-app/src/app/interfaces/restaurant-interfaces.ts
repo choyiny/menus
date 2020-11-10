@@ -16,9 +16,9 @@ export interface RestaurantEditable {
 }
 
 export interface RestaurantTemplate {
-  description: string;
-  name: string;
-  image: string;
+  description?: string;
+  name?: string;
+  image?: string;
   slug: string;
 }
 

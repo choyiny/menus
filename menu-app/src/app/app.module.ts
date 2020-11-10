@@ -47,7 +47,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -103,9 +102,7 @@ import { RestaurantComponent } from './restaurant-components/restaurant/restaura
       },
     }),
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-  ],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

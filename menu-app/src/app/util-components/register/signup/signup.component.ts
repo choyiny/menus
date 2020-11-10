@@ -3,9 +3,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
-import { AuthService as SocialService} from 'angularx-social-login';
+import { AuthService as SocialService } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import {from} from 'rxjs';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -37,18 +37,16 @@ export class SignupComponent implements OnInit {
   }
 
   signInWithGoogle(): void {
-    this.auth.currentUser.then(
-      anonymousUser => {
-        anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
-          user => {
-            console.log(user);
-          },
-          err => {
-            console.log(err);
-          }
-        );
-      }
-    );
+    this.auth.currentUser.then((anonymousUser) => {
+      anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+        (user) => {
+          console.log(user);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    });
   }
 
   next(): void {
