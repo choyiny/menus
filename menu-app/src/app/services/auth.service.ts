@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user-interface';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import {BehaviorSubject, Observable, from, ReplaySubject} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService as SocialService } from 'angularx-social-login';
-import { FacebookLoginProvider, GoogleLoginProvider } from 'angularx-social-login';
-import { SocialUser } from 'angularx-social-login';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +12,7 @@ import { SocialUser } from 'angularx-social-login';
 export class AuthService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
   public currentUser: Observable<UserInterface>;
+  public authStatus = new ReplaySubject<UserInterface>(1);
 
   constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
@@ -39,7 +37,7 @@ export class AuthService {
         .post<UserInterface>(url, { firebase_id: anonymousUser.uid })
         .subscribe((user) => {
           this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
-          console.log(user);
+          this.authStatus.next(user);
         });
     });
   }
@@ -53,6 +51,7 @@ export class AuthService {
             localStorage.setItem('currentUser', JSON.stringify(user));
             // update subject
             this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+            this.authStatus.next(user);
             return user;
           })
         );

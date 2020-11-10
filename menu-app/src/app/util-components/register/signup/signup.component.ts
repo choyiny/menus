@@ -3,9 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
-import { AuthService as SocialService } from 'angularx-social-login';
-import { GoogleLoginProvider } from 'angularx-social-login';
-import { from } from 'rxjs';
+
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +15,6 @@ export class SignupComponent implements OnInit {
     private modalService: NgbModal,
     private auth: AngularFireAuth,
     private authService: AuthService,
-    private socialService: SocialService
   ) {}
   @ViewChild('signup') signup;
   email: string;

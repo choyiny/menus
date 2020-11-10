@@ -53,7 +53,7 @@ export class RestaurantService {
   }
 
   addMenu(slug: string, name: string): Observable<Menu> {
-    const url = `${environment.settings.apiv2}/restaurants${slug}/menus`;
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus`;
     return this.http.post<Menu>(url, {name});
   }
 
