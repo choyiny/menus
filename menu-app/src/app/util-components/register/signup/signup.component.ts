@@ -46,7 +46,6 @@ export class SignupComponent implements OnInit {
   }
 
   next(): void {
-    console.log(this.email);
     const actionCodeSettings = {
       url: window.location.origin,
       handleCodeInApp: true,

@@ -84,12 +84,11 @@ class RestaurantResource(RestaurantBaseResource):
             restaurant.delete()
             return restaurant.to_dict()
 
-    @doc(description="Create a new restaurants")
+    @doc(description="Create a new restaurant")
     @use_kwargs(CreateRestaurantSchema)
     @marshal_with(GetRestaurantSchema)
     @firebase_login_required
     def post(self, **kwargs):
-
         if g.user is None:
             return FORBIDDEN
 
