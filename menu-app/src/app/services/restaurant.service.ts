@@ -101,4 +101,9 @@ export class RestaurantService {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.delete<Item>(url);
   }
+
+  publishRestaurant(slug: string): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/publish`;
+    return this.http.patch<Restaurant>(url, {});
+  }
 }

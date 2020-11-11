@@ -55,7 +55,6 @@ export class FirstMenuComponent implements OnInit {
         this.restaurantService.postRestaurant({slug, name}).subscribe(
           restaurant => {
             // wait for menu, item and section
-            console.log(restaurant);
             forkJoin({
               menu: this.restaurantService.addMenu(slug, menuName).pipe(take(1)),
               item: this.restaurantService.newItem().pipe(take(1)),
@@ -65,9 +64,7 @@ export class FirstMenuComponent implements OnInit {
               // forkJoin == Promise.all
               data => {
                 this.auth.reloadUser(user.firebase_id);
-                const item = data.item;
-                const menu  = data.menu;
-                const section = data.section;
+                const {item, menu, section} = data;
                 item.name = itemName;
                 item.description = itemDescription;
                 item.price = itemPrice;

@@ -55,6 +55,7 @@ class GetRestaurantSchema(Schema):
     menus = fields.List(
         fields.Str(), example=["lunch"], description="list of menu names"
     )
+    public = fields.Bool(example=True)
 
 
 class RestaurantSchema(Schema):
@@ -64,4 +65,3 @@ class RestaurantSchema(Schema):
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
-    public = fields.Bool(example=True)

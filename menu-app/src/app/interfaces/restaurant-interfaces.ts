@@ -6,6 +6,7 @@ export interface Restaurant {
   tracing_key: string;
   enable_trace: boolean;
   force_trace: boolean;
+  public: boolean;
 }
 
 export interface RestaurantEditable {
