@@ -5,8 +5,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { Restaurant } from '../../../interfaces/restaurant-interfaces';
-import {mergeMap} from 'rxjs/operators';
-import {forkJoin} from 'rxjs';
+import {mergeMap, take} from 'rxjs/operators';
+import {forkJoin, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-first-menu',
@@ -37,6 +37,7 @@ export class FirstMenuComponent implements OnInit {
   }
 
   next(): void {
+    console.log('next');
 
     const name: string = this.newMenu.value.name;
     const sectionName: string = this.newMenu.value.sectionName;
@@ -54,9 +55,9 @@ export class FirstMenuComponent implements OnInit {
             // wait for menu, item and section
             console.log(restaurant);
             forkJoin({
-              menu: this.restaurantService.addMenu(slug, menuName),
-              item: this.restaurantService.newItem(),
-              section: this.restaurantService.newSection(),
+              menu: this.restaurantService.addMenu(slug, menuName).pipe(take(1)),
+              item: this.restaurantService.newItem().pipe(take(1)),
+              section: this.restaurantService.newSection().pipe(take(1)),
             }).subscribe(
               // create new menu after all observables return
               // forkJoin == Promise.all
