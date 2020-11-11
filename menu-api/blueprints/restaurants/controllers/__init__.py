@@ -7,5 +7,6 @@ from .restaurant_resource import (
     OnboardingRestaurantResource,
     PublishRestaurantResource,
     RestaurantResource,
+    RestaurantsResource,
     SectionResource,
 )

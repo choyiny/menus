@@ -84,6 +84,8 @@ class RestaurantResource(RestaurantBaseResource):
             restaurant.delete()
             return restaurant.to_dict()
 
+
+class RestaurantsResource(RestaurantBaseResource):
     @doc(description="Create a new restaurant")
     @use_kwargs(CreateRestaurantSchema)
     @marshal_with(GetRestaurantSchema)
