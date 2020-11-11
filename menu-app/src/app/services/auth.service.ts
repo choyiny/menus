@@ -57,6 +57,20 @@ export class AuthService {
     });
   }
 
+  public upgradeUser(): Observable<UserInterface> {
+    const url = `${environment.settings.endpoint}/anonymous`;
+    const userObserver = new ReplaySubject<UserInterface>();
+    this.http.patch<UserInterface>(url, {} ).subscribe(
+      user => {
+        this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+        this.authStatus.next(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        userObserver.next(user);
+      }
+    );
+    return userObserver;
+  }
+
   login(email: string, password: string): Observable<UserInterface> {
     const firebaseObservable = from(this.authFireBase.signInWithEmailAndPassword(email, password));
     return firebaseObservable.pipe(

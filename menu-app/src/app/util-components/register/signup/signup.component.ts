@@ -32,11 +32,15 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  signInWithGoogle(): void {
+  signInWithGoogle(modal): void {
     this.auth.currentUser.then((anonymousUser) => {
       anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
-        (user) => {
-          console.log(user);
+        (userCred) => {
+          this.authService.upgradeUser().subscribe(
+            user => {
+              modal.close();
+            }
+          );
         },
         (err) => {
           console.log(err);

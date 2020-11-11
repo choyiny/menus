@@ -388,8 +388,6 @@ class PublishRestaurantResource(RestaurantBaseResource):
     @firebase_login_required
     def patch(self, slug):
 
-        print(g.user.to_json())
-
         if g.user is None:
             return FORBIDDEN
 
@@ -434,7 +432,7 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         menu = MenuV2(sections=[section], name="Menu")
         menu.save()
 
-        restaurant = Restaurant(menus=[menu], slug=str(uuid.uuid4()))
+        restaurant = Restaurant(menus=[menu], slug=str(uuid.uuid4()), public=False)
 
         if kwargs.get("name"):
             restaurant.name = kwargs.get("name")
