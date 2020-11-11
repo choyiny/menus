@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from "firebase";
 
 @Injectable({
   providedIn: 'root',
@@ -69,6 +70,16 @@ export class AuthService {
       }
     );
     return userObserver;
+  }
+
+  loginWithGoogle(): Observable<UserInterface> {
+    const firebaseObservable = from(this.authFireBase.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
+    return firebaseObservable.pipe(
+      mergeMap( userCredentials => {
+        const userId = userCredentials.user.uid;
+        return this.reloadUser(userId);
+      })
+    );
   }
 
   login(email: string, password: string): Observable<UserInterface> {
