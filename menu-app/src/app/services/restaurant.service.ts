@@ -5,7 +5,8 @@ import {
   Menu,
   MenuEditable,
   Restaurant,
-  RestaurantEditable, RestaurantTemplate,
+  RestaurantEditable,
+  RestaurantTemplate,
   Section,
 } from '../interfaces/restaurant-interfaces';
 import { environment } from '../../environments/environment';
