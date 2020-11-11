@@ -17,13 +17,9 @@ class User(Document):
     def create(cls, **kwargs):
         return User(**kwargs).save()
 
-    @classmethod
-    def first_or_create(cls, **kwargs):
-        """ Select first cls that matches by kwargs, and create it if it doesn't exist. """
-        user = cls.objects(firebase_id=kwargs["firebase_id"]).first()
-        if user is None:
-            cls.create(**kwargs)
-        return user
-
     def has_permission(self, slug):
         return self.is_admin or slug in self.restaurants
+
+    @classmethod
+    def make_anonymous(cls, firebase_id):
+        user = User(firebase_id=firebase_id, is_anon=True).save()

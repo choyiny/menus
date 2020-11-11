@@ -143,30 +143,31 @@ class UsersResource(UserManagementBaseResource):
 
 class AnonymousUserResource(UserManagementBaseResource):
     @doc(description="""Create anonymous user""")
-    @use_kwargs(AnonymousUserSchema)
     @marshal_with(UserSchema)
-    def post(self, **kwargs):
-        firebase_id = kwargs.get("firebase_id")
-        user = User(firebase_id=firebase_id, is_anon=True).save()
-        return user
+    @firebase_login_required
+    def post(self):
+        if g.user is None:
+            return FORBIDDEN
+        else:
+            return g.user
 
     @doc(description="""Upgrade anonymous user to normal user""")
-    def patch(self, **kwargs):
-        firebase_id = kwargs.get("firebase_id")
-        user = User(firebase_id=firebase_id)
+    @marshal_with(UserSchema)
+    @firebase_login_required
+    def patch(self):
 
-        if kwargs.get("display_name"):
-            user.display_name = kwargs.get("display_name")
+        if g.user is None:
+            return FORBIDDEN
 
-        if kwargs.get("photo_url"):
-            user.photo_url = kwargs.get("photo_url")
+        if not g.user.is_anon:
+            return g.user
 
-        if kwargs.get("phone_number"):
-            user.phone_number = kwargs.get("phone_number")
+        firebase_user = auth.get_user(g.user.firebase_id)
 
-        if kwargs.get("email"):
-            user.email = kwargs.get("phone_number")
+        g.user.is_anon = False
+        g.user.email = firebase_user.email
+        g.user.phone_number = firebase_user.phone_number
+        g.user.photo_url = firebase_user.photo_url
+        g.user.display_name = firebase_user.display_name
 
-        user.is_anon = False
-
-        return user.save()
+        return g.user.save()
