@@ -110,6 +110,9 @@ export class RestaurantComponent implements OnInit {
       },
       (err) => {
         console.log(err);
+        if (err.error.description === 'Please connect this account'){
+          this.signUp.open();
+        }
       }
     );
   }

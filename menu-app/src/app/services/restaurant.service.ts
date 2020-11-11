@@ -105,7 +105,7 @@ export class RestaurantService {
   }
 
   publishRestaurant(slug: string): Observable<Restaurant> {
-    const url = `${environment.settings.apiv2}/restaurants/publish`;
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/publish`;
     return this.http.patch<Restaurant>(url, {});
   }
 

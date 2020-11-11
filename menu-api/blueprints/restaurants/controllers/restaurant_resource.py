@@ -388,6 +388,8 @@ class PublishRestaurantResource(RestaurantBaseResource):
     @firebase_login_required
     def patch(self, slug):
 
+        print(g.user.to_json())
+
         if g.user is None:
             return FORBIDDEN
 
