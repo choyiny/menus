@@ -4,6 +4,7 @@ from .controllers import (
     ImageResource,
     ItemResource,
     MenuResource,
+    PublishRestaurantResource,
     RestaurantResource,
     SectionResource,
 )
@@ -42,5 +43,11 @@ resources = [
         "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>/picture",
         "picture",
         ["DELETE", "PATCH"],
+    ),
+    (
+        PublishRestaurantResource,
+        "restaurants/<string:slug>/publish",
+        "publish",
+        ["PATCH"],
     ),
 ]

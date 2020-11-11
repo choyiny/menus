@@ -7,6 +7,7 @@ from flask_apispec import doc, marshal_with, use_kwargs
 from helpers import delete_file, upload_image
 from PIL import Image
 from utils.errors import (
+    ANONYMOUS_USER_FORBIDDEN,
     FORBIDDEN,
     IMAGE_NOT_FOUND,
     ITEM_NOT_FOUND,
@@ -179,7 +180,6 @@ class MenuResource(RestaurantBaseResource):
         menu.save()
         restaurant.menus.append(menu)
         restaurant.save()
-        print(menu)
         return menu
 
 
@@ -353,7 +353,7 @@ class ImageResource(RestaurantBaseResource):
             return item.image
         return ITEM_NOT_FOUND
 
-    @doc("Delete image form s3 bucket")
+    @doc(description="Delete image form s3 bucket")
     @marshal_with(ItemV2Schema)
     @firebase_login_required
     def delete(self, slug, menu_name, item_id):
@@ -379,3 +379,25 @@ class ImageResource(RestaurantBaseResource):
                 return IMAGE_NOT_FOUND
 
         return ITEM_NOT_FOUND
+
+
+class PublishRestaurantResource(RestaurantBaseResource):
+    @doc(description="""Toggle restaurant visibility""")
+    @marshal_with(GetRestaurantSchema)
+    @firebase_login_required
+    def patch(self, slug):
+
+        if g.user is None:
+            return FORBIDDEN
+
+        if g.user.is_anon:
+            return ANONYMOUS_USER_FORBIDDEN
+
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+
+        restaurant.public = not restaurant.public
+        restaurant.save()
+
+        return restaurant.to_dict()
