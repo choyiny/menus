@@ -14,10 +14,11 @@ import { SignupComponent } from '../../util-components/register/signup/signup.co
 })
 export class RestaurantComponent implements OnInit {
   @Input() restaurant: Restaurant;
+  @Input() selectedImage: string;
   menus = [];
   currentMenu = 0;
-  @Input() selectedImage: string;
   slug: string;
+  viewable: boolean;
 
   // true if user has permission to edit this menuv2
   hasPermission: boolean;
@@ -56,7 +57,7 @@ export class RestaurantComponent implements OnInit {
   getRestaurant(): void {
     this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
       this.restaurant = restaurant;
-      console.log(restaurant);
+      this.viewable = this.restaurant.public || this.hasPermission;
       this.loadMenus();
       if (this.sameDay()) {
         return;
@@ -71,6 +72,11 @@ export class RestaurantComponent implements OnInit {
           this.covid.open();
         }
       });
+    },
+    err => {
+      if (err.error.description === 'Restaurant not found'){
+        this.viewable = false;
+      }
     });
   }
 

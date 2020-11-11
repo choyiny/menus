@@ -1,7 +1,7 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
 <app-signup></app-signup>
 <div *ngIf="restaurant">
-  <div *ngIf="restaurant.public || this.hasPermission">
+  <div *ngIf="viewable">
     <div class="desktop-background">
       <app-mobile-image
         class="mobile"
@@ -31,7 +31,7 @@
             [name]="restaurant.name"
           ></app-menu-name>
           <div class="menu-items section-background">
-            <button class="publish" (click)="publish()">Publish Menu</button>
+            <button *ngIf="hasPermission" class="publish" (click)="publish()">Publish Menu</button>
             <app-menu-details
               class="desktop"
               [description]="restaurant.description"
@@ -51,7 +51,7 @@
       <app-footer></app-footer>
     </div>
   </div>
-  <div *ngIf="!restaurant.public && !this.hasPermission">
+  <div *ngIf="!viewable">
     <h1>Restaurant is private or does not exist</h1>
   </div>
 </div>
