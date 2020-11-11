@@ -21,8 +21,4 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     this.signup.open();
     this.registerMenu.open();
   }
-
-  onSignIn(googleUser): void {
-    console.log(googleUser);
-  }
 }

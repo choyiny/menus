@@ -25,6 +25,16 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  public reloadUser(firebaseId: string): void {
+    const url = `${environment.settings.endpoint}/users/${firebaseId}`;
+    this.http.get<UserInterface>(url).subscribe(
+      user => {
+        this.authStatus.next(user);
+        this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+      }
+    );
+  }
+
   public getUserIdToken(): any {
     return this.authFireBase.idToken;
   }

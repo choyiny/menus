@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -7,6 +7,7 @@ import { RestaurantService } from '../../../services/restaurant.service';
 import { Restaurant } from '../../../interfaces/restaurant-interfaces';
 import {mergeMap, take} from 'rxjs/operators';
 import {forkJoin, Observable} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-first-menu',
@@ -15,7 +16,6 @@ import {forkJoin, Observable} from 'rxjs';
 })
 export class FirstMenuComponent implements OnInit {
   newMenu: FormGroup;
-  restaurantEmitter = new EventEmitter<Restaurant>();
 
   @ViewChild('firstMenu') firstMenu;
   constructor(
@@ -23,7 +23,8 @@ export class FirstMenuComponent implements OnInit {
     private modalService: NgbModal,
     private auth: AuthService,
     private angularAuth: AngularFireAuth,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +38,6 @@ export class FirstMenuComponent implements OnInit {
   }
 
   next(): void {
-    console.log('next');
 
     const name: string = this.newMenu.value.name;
     const sectionName: string = this.newMenu.value.sectionName;
@@ -46,6 +46,8 @@ export class FirstMenuComponent implements OnInit {
     const itemPrice: string = this.newMenu.value.itemPrice;
     const slug = Math.random().toString(36).substring(7);
     const menuName = 'Menu';
+
+    // sign in to get access to backend
     this.auth.anonymousSignIn();
     this.auth.authStatus.subscribe(
       // wait for anonymous user to be created
@@ -62,7 +64,7 @@ export class FirstMenuComponent implements OnInit {
               // create new menu after all observables return
               // forkJoin == Promise.all
               data => {
-                console.log(data);
+                this.auth.reloadUser(user.firebase_id);
                 const item = data.item;
                 const menu  = data.menu;
                 const section = data.section;
@@ -75,9 +77,8 @@ export class FirstMenuComponent implements OnInit {
                 this.restaurantService.editMenu(slug, menu.name, {sections: menu.sections}).subscribe(
                   menuData => {
                     // emit restaurant to parent
-                    console.log(restaurant);
                     restaurant.menus = [menuData.name];
-                    this.restaurantEmitter.emit(restaurant);
+                    this.router.navigateByUrl(`restaurants/${slug}`);
                   }
                 );
               },

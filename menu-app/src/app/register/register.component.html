@@ -1,3 +1,2 @@
-<app-first-menu></app-first-menu>
-<app-signup></app-signup>
-<app-restaurant *ngIf="restaurant"></app-restaurant>
+<app-first-menu (restaurantEmitter)="setRestaurant($event)"></app-first-menu>
+<app-signup ></app-signup>

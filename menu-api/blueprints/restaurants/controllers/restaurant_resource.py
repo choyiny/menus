@@ -95,16 +95,7 @@ class RestaurantResource(RestaurantBaseResource):
         restaurant.public = False
         g.user.restaurants.append(restaurant.slug)
         g.user.save()
-        return restaurant.to_dict()
-
-    @doc(description="Create a new restaurants")
-    @use_kwargs(CreateRestaurantSchema)
-    @marshal_with(GetRestaurantSchema)
-    @firebase_login_required
-    def post(self, **kwargs):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        restaurant = Restaurant(**kwargs).save()
+        restaurant.save()
         return restaurant.to_dict()
 
 
@@ -188,6 +179,7 @@ class MenuResource(RestaurantBaseResource):
         menu.save()
         restaurant.menus.append(menu)
         restaurant.save()
+        print(menu)
         return menu
 
 
@@ -315,6 +307,7 @@ class GenerateSectionResource(RestaurantBaseResource):
         if g.user is None:
             return FORBIDDEN
         section = Section(_id=uuid.uuid4())
+        print(section)
         return section
 
 
@@ -327,6 +320,7 @@ class GenerateItemResource(RestaurantBaseResource):
             return FORBIDDEN
 
         item = Item(_id=uuid.uuid4())
+        print(item)
         return item
 
 
