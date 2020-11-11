@@ -4,7 +4,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
 
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -14,7 +13,7 @@ export class SignupComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private auth: AngularFireAuth,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
   @ViewChild('signup') signup;
   email: string;

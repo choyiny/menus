@@ -14,7 +14,7 @@ from flask_apispec import doc, marshal_with, use_kwargs
 from utils.errors import FORBIDDEN
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
-from ..schemas import AnonymousUserSchema, NewOrUpdateUserSchema, PaginationSchema
+from ..schemas import NewOrUpdateUserSchema, PaginationSchema
 from .user_management_base_resource import UserManagementBaseResource
 
 
@@ -104,8 +104,9 @@ class UsersResource(UserManagementBaseResource):
     @firebase_login_required
     @marshal_with(UserSchema)
     def get(self, firebase_id):
-        if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+        if not g.user.has_user_permission(firebase_id):
+            return FORBIDDEN
+        print(User.objects(firebase_id=firebase_id).first())
         return User.objects(firebase_id=firebase_id).first()
 
     @doc(description="""Edit Users""")

@@ -20,6 +20,9 @@ class User(Document):
     def has_permission(self, slug):
         return self.is_admin or slug in self.restaurants
 
+    def has_user_permission(self, firebase_id):
+        return self.is_admin or firebase_id == self.firebase_id
+
     @classmethod
     def make_anonymous(cls, firebase_id):
-        user = User(firebase_id=firebase_id, is_anon=True).save()
+        return User(firebase_id=firebase_id, is_anon=True).save()

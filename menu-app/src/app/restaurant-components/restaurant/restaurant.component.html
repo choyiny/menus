@@ -1,7 +1,7 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
 <app-signup></app-signup>
 <div *ngIf="restaurant">
-  <div *ngIf="restaurant.public">
+  <div *ngIf="restaurant.public || this.hasPermission">
     <div class="desktop-background">
       <app-mobile-image
         class="mobile"
@@ -11,10 +11,10 @@
       ></app-mobile-image>
       <div
         [ngStyle]="{
-        background: 'url(' + restaurant.image + ')',
-        backgroundSize: '100%',
-        backgroundRepeat: 'no repeat'
-      }"
+          background: 'url(' + restaurant.image + ')',
+          backgroundSize: '100%',
+          backgroundRepeat: 'no repeat'
+        }"
         class="desktop-image"
       >
         <div class="desktop-background">
@@ -51,7 +51,7 @@
       <app-footer></app-footer>
     </div>
   </div>
-  <div *ngIf="!restaurant.public">
+  <div *ngIf="!restaurant.public && !this.hasPermission">
     <h1>Restaurant is private or does not exist</h1>
   </div>
 </div>

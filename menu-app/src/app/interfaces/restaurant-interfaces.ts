@@ -9,6 +9,14 @@ export interface Restaurant {
   public: boolean;
 }
 
+export interface RestaurantOnboarding {
+  name: string;
+  item_name: string;
+  item_price: string;
+  item_description: string;
+  section_name: string;
+}
+
 export interface RestaurantEditable {
   image?: string;
   name?: string;

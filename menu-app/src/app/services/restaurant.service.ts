@@ -6,6 +6,7 @@ import {
   MenuEditable,
   Restaurant,
   RestaurantEditable,
+  RestaurantOnboarding,
   RestaurantTemplate,
   Section,
 } from '../interfaces/restaurant-interfaces';
@@ -55,7 +56,7 @@ export class RestaurantService {
 
   addMenu(slug: string, name: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus`;
-    return this.http.post<Menu>(url, {name});
+    return this.http.post<Menu>(url, { name });
   }
 
   editItem(slug: string, menuName: string, item: Item): Observable<Item> {
@@ -106,5 +107,10 @@ export class RestaurantService {
   publishRestaurant(slug: string): Observable<Restaurant> {
     const url = `${environment.settings.apiv2}/restaurants/publish`;
     return this.http.patch<Restaurant>(url, {});
+  }
+
+  onboardRestaurant(restaurant: RestaurantOnboarding): Observable<string> {
+    const url = `${environment.settings.apiv2}/restaurants/onboard`;
+    return this.http.post<string>(url, restaurant);
   }
 }

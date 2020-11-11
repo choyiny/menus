@@ -10,7 +10,6 @@ import { Restaurant } from '../interfaces/restaurant-interfaces';
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChild(FirstMenuComponent) registerMenu: FirstMenuComponent;
-  @ViewChild(SignupComponent) signup: SignupComponent;
   constructor() {}
 
   restaurant: Restaurant;
@@ -18,7 +17,6 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.signup.open();
     this.registerMenu.open();
   }
 }

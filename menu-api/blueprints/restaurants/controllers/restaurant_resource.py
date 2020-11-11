@@ -27,6 +27,7 @@ from ..schemas import (
     GetRestaurantSchema,
     ItemV2Schema,
     MenuV2Schema,
+    OnboardingSchema,
     RestaurantSchema,
     SectionV2Schema,
 )
@@ -401,3 +402,43 @@ class PublishRestaurantResource(RestaurantBaseResource):
         restaurant.save()
 
         return restaurant.to_dict()
+
+
+class OnboardingRestaurantResource(RestaurantBaseResource):
+    @doc(description="""Onboard user's first restaurant""")
+    @use_kwargs(OnboardingSchema)
+    @firebase_login_required
+    def post(self, **kwargs):
+
+        if g.user is None:
+            return FORBIDDEN
+
+        item = Item(_id=str(uuid.uuid4()))
+
+        if kwargs.get("item_name"):
+            item.name = kwargs.get("item_name")
+
+        if kwargs.get("item_price"):
+            item.price = kwargs.get("item_price")
+
+        if kwargs.get("item_description"):
+            item.description = kwargs.get("description")
+
+        section = Section(_id=str(uuid.uuid4()), menu_items=[item])
+
+        if kwargs.get("section_name"):
+            section.name = kwargs.get("section_name")
+
+        menu = MenuV2(sections=[section], name="Menu")
+        menu.save()
+
+        restaurant = Restaurant(menus=[menu], slug=str(uuid.uuid4()))
+
+        if kwargs.get("name"):
+            restaurant.name = kwargs.get("name")
+
+        restaurant.save()
+        g.user.restaurants.append(restaurant.slug)
+        g.user.save()
+
+        return restaurant.slug

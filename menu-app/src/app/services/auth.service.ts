@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user-interface';
-import {BehaviorSubject, Observable, from, ReplaySubject} from 'rxjs';
+import { BehaviorSubject, Observable, from, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -25,14 +25,17 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public reloadUser(firebaseId: string): void {
+  public reloadUser(firebaseId: string): Observable<UserInterface> {
     const url = `${environment.settings.endpoint}/users/${firebaseId}`;
-    this.http.get<UserInterface>(url).subscribe(
-      user => {
-        this.authStatus.next(user);
-        this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
-      }
-    );
+    const observable = new ReplaySubject<UserInterface>();
+    this.http.get<UserInterface>(url).subscribe((user) => {
+      console.log(user);
+      this.authStatus.next(user);
+      this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      observable.next(user);
+    });
+    return observable;
   }
 
   public getUserIdToken(): any {
@@ -46,8 +49,10 @@ export class AuthService {
       this.http
         .post<UserInterface>(url, { firebase_id: anonymousUser.uid })
         .subscribe((user) => {
+          console.log(user);
           this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
           this.authStatus.next(user);
+          localStorage.setItem('currentUser', JSON.stringify(user));
         });
     });
   }

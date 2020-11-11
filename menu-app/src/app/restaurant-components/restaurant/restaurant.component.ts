@@ -6,7 +6,7 @@ import { AuthService } from '../../services/auth.service';
 import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
-import {SignupComponent} from "../../util-components/register/signup/signup.component";
+import { SignupComponent } from '../../util-components/register/signup/signup.component';
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -16,9 +16,6 @@ export class RestaurantComponent implements OnInit {
   @Input() restaurant: Restaurant;
   menus = [];
   currentMenu = 0;
-  miniScroll = false;
-  previousScroll = 0;
-  selectedSection = 0;
   @Input() selectedImage: string;
   slug: string;
 
@@ -108,10 +105,10 @@ export class RestaurantComponent implements OnInit {
 
   publish(): void {
     this.restaurantService.publishRestaurant(this.slug).subscribe(
-      restaurant => {
+      (restaurant) => {
         this.restaurant = restaurant;
       },
-      err => {
+      (err) => {
         console.log(err);
       }
     );
