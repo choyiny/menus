@@ -24,5 +24,12 @@ class User(Document):
         return self.is_admin or firebase_id == self.firebase_id
 
     @classmethod
-    def make_anonymous(cls, firebase_id):
-        return User(firebase_id=firebase_id, is_anon=True).save()
+    def get_or_create(cls, firebase_id):
+        """Create user in backend if user exists in firebase"""
+        user = User.objects(firebase_id=firebase_id).first()
+
+        if user is None:
+            user = User(firebase_id=firebase_id, is_anon=True)
+            user.save()
+
+        return user
