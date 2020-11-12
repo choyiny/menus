@@ -4,10 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { RestaurantService } from '../../../services/restaurant.service';
-import { Restaurant } from '../../../interfaces/restaurant-interfaces';
-import { mergeMap, take } from 'rxjs/operators';
-import { forkJoin, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-first-menu',
@@ -35,26 +33,23 @@ export class FirstMenuComponent implements OnInit {
       itemDescription: [''],
       itemPrice: [''],
     });
+    this.auth.anonymousSignIn().subscribe((user) => {});
   }
 
   next(modal): void {
     // sign in to get access to backend
-    const onboard = this.auth.anonymousSignIn().subscribe((user) => {
-      const onboarding = {
-        name: this.newMenu.value.name,
-        section_name: this.newMenu.value.sectionName,
-        item_name: this.newMenu.value.itemName,
-        item_description: this.newMenu.value.itemDescription,
-        item_price: this.newMenu.value.itemPrice,
-      };
-      this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
-        this.auth
-          .reloadUser(user.firebase_id)
-          .subscribe((reloadedUser) => {
-            modal.close();
-            this.router.navigateByUrl(`restaurants/${slug}`);
-            onboard.unsubscribe();
-          });
+    const user = this.auth.currentUserValue;
+    const onboarding = {
+      name: this.newMenu.value.name,
+      section_name: this.newMenu.value.sectionName,
+      item_name: this.newMenu.value.itemName,
+      item_description: this.newMenu.value.itemDescription,
+      item_price: this.newMenu.value.itemPrice,
+    };
+    const observer = this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
+      this.auth.reloadUser(user.firebase_id).subscribe((reloadedUser) => {
+        modal.close();
+        this.router.navigateByUrl(`restaurants/${slug}`);
       });
     });
   }

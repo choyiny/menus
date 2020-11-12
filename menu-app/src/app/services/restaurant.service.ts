@@ -110,6 +110,7 @@ export class RestaurantService {
   }
 
   onboardRestaurant(restaurant: RestaurantOnboarding): Observable<string> {
+    console.log(restaurant, "Onboarding....");
     const url = `${environment.settings.apiv2}/restaurants/onboard`;
     return this.http.post<string>(url, restaurant);
   }

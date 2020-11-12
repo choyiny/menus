@@ -101,12 +101,11 @@ class UserResource(UserManagementBaseResource):
 
 class UsersResource(UserManagementBaseResource):
     @doc(description="""Get information about a user""")
-    @firebase_login_required
     @marshal_with(UserSchema)
+    @firebase_login_required
     def get(self, firebase_id):
         if not g.user.has_user_permission(firebase_id):
             return FORBIDDEN
-        print(User.objects(firebase_id=firebase_id).first())
         return User.objects(firebase_id=firebase_id).first()
 
     @doc(description="""Edit Users""")
@@ -156,6 +155,7 @@ class AnonymousUserResource(UserManagementBaseResource):
     @marshal_with(UserSchema)
     @firebase_login_required
     def patch(self):
+        print(g.user.restaurants, "before")
 
         if g.user is None:
             return FORBIDDEN
@@ -170,5 +170,6 @@ class AnonymousUserResource(UserManagementBaseResource):
         g.user.phone_number = firebase_user.phone_number
         g.user.photo_url = firebase_user.photo_url
         g.user.display_name = firebase_user.display_name
+        print(g.user.restaurants, "after")
 
         return g.user.save()

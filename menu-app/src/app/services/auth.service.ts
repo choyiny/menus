@@ -27,13 +27,13 @@ export class AuthService {
 
   public reloadUser(firebaseId: string): Observable<UserInterface> {
     const url = `${environment.settings.endpoint}/users/${firebaseId}`;
-    return this.http.get<UserInterface>(url).pipe(mergeMap(
-      user => {
+    return this.http.get<UserInterface>(url).pipe(
+      mergeMap((user) => {
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         return of(user);
-      }
-    ));
+      })
+    );
   }
 
   public getUserIdToken(): any {
@@ -41,7 +41,6 @@ export class AuthService {
   }
 
   public anonymousSignIn(): Observable<UserInterface> {
-
     return from(this.authFireBase.signInAnonymously())
       .pipe(
         mergeMap((credentials) => {
@@ -61,13 +60,13 @@ export class AuthService {
 
   public upgradeUser(): Observable<UserInterface> {
     const url = `${environment.settings.endpoint}/anonymous`;
-    return this.http.patch<UserInterface>(url, {}).pipe(mergeMap(
-      user => {
+    return this.http.patch<UserInterface>(url, {}).pipe(
+      mergeMap((user) => {
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         return of(user);
-      }
-    ));
+      })
+    );
   }
 
   loginWithGoogle(): Observable<UserInterface> {

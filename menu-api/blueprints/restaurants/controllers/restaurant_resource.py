@@ -411,7 +411,9 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
     @firebase_login_required
     def post(self, **kwargs):
 
-        print("Onboarding")
+        # temporary fix, not sure why multiple requests are send
+        if g.user.restaurants:
+            return FORBIDDEN
 
         if g.user is None:
             return FORBIDDEN
