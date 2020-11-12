@@ -48,6 +48,7 @@ import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 import { VerificationComponent } from './auth-components/verification/verification.component';
 import { ManageSectionsComponent } from './control-panel/manage-sections/manage-sections.component';
+import { CollapsedSectionComponent } from './control-panel/collapsed-section/collapsed-section.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { ManageSectionsComponent } from './control-panel/manage-sections/manage-
     RegisterComponent,
     VerificationComponent,
     ManageSectionsComponent,
+    CollapsedSectionComponent,
   ],
   imports: [
     BrowserModule,
