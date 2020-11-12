@@ -39,9 +39,7 @@ export class FirstMenuComponent implements OnInit {
 
   next(modal): void {
     // sign in to get access to backend
-    this.auth.anonymousSignIn();
-    this.auth.authStatus.pipe(take(1)).subscribe(
-      // wait for anonymous user to be created
+    this.auth.anonymousSignIn().subscribe(
       (user) => {
         const onboarding = {
           name: this.newMenu.value.name,
@@ -51,7 +49,7 @@ export class FirstMenuComponent implements OnInit {
           item_price: this.newMenu.value.itemPrice,
         };
         this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
-          this.auth.reloadUser(user.firebase_id).subscribe((reloadedUser) => {
+          this.auth.reloadUser(user.firebase_id).pipe(take(1)).subscribe((reloadedUser) => {
             modal.close();
             this.router.navigateByUrl(`restaurants/${slug}`);
           });

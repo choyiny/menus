@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,6 @@ import * as firebase from "firebase";
 export class AuthService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
   public currentUser: Observable<UserInterface>;
-  public authStatus = new ReplaySubject<UserInterface>(1);
 
   constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
@@ -30,8 +29,6 @@ export class AuthService {
     const url = `${environment.settings.endpoint}/users/${firebaseId}`;
     const observable = new ReplaySubject<UserInterface>();
     this.http.get<UserInterface>(url).subscribe((user) => {
-      console.log(user);
-      this.authStatus.next(user);
       this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
       localStorage.setItem('currentUser', JSON.stringify(user));
       observable.next(user);
@@ -43,19 +40,22 @@ export class AuthService {
     return this.authFireBase.idToken;
   }
 
-  public anonymousSignIn(): void {
+  public anonymousSignIn(): Observable<UserInterface> {
+    const userObserver = new ReplaySubject<UserInterface>(1);
     this.authFireBase.signInAnonymously().then((credentials) => {
+      console.log(credentials);
       const url = `${environment.settings.endpoint}/anonymous`;
       const anonymousUser = credentials.user;
+      const userObservable = new ReplaySubject<UserInterface>(1);
       this.http
         .post<UserInterface>(url, { firebase_id: anonymousUser.uid })
         .subscribe((user) => {
-          console.log(user);
           this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
-          this.authStatus.next(user);
           localStorage.setItem('currentUser', JSON.stringify(user));
+          userObservable.next(user);
         });
     });
+    return userObserver;
   }
 
   public upgradeUser(): Observable<UserInterface> {
@@ -64,7 +64,6 @@ export class AuthService {
     this.http.patch<UserInterface>(url, {} ).subscribe(
       user => {
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
-        this.authStatus.next(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         userObserver.next(user);
       }
@@ -91,7 +90,6 @@ export class AuthService {
             localStorage.setItem('currentUser', JSON.stringify(user));
             // update subject
             this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
-            this.authStatus.next(user);
             return user;
           })
         );

@@ -21,4 +21,4 @@ NUMBER_ALREADY_EXISTS = (
     400,
 )
 
-ANONYMOUS_USER_FORBIDDEN = {"description": "Please connect this account"}, 404
+ANONYMOUS_USER_FORBIDDEN = {"description": "Please connect this account"}, 401

@@ -6,6 +6,7 @@ from .controllers import (
     MenuResource,
     OnboardingRestaurantResource,
     PublishRestaurantResource,
+    RestaurantResource,
     RestaurantsResource,
     SectionResource,
 )

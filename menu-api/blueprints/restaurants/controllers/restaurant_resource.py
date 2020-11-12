@@ -411,6 +411,8 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
     @firebase_login_required
     def post(self, **kwargs):
 
+        print("Onboarding")
+
         if g.user is None:
             return FORBIDDEN
 
