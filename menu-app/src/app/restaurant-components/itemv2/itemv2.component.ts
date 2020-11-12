@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
-import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
+import { ImgViewModalComponent } from '../../util-components/image-util/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from '../../util-components/image-util/img-form-modal/img-form-modal.component';
 import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
 import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';

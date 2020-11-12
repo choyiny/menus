@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
-import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
+import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ScrollService } from '../../services/scroll.service';
