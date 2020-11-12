@@ -43,12 +43,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AngularFireModule } from '@angular/fire';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {CDK_DRAG_CONFIG, DragDropModule} from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 import { VerificationComponent } from './auth-components/verification/verification.component';
 import { ManageSectionsComponent } from './control-panel/manage-sections/manage-sections.component';
 import { CollapsedSectionComponent } from './control-panel/collapsed-section/collapsed-section.component';
+
+const DragConfig = {
+  dragStartThreshold: 0,
+  pointerDirectionChangeThreshold: 5,
+  zIndex: 10000
+};
 
 @NgModule({
   declarations: [
@@ -108,7 +114,8 @@ import { CollapsedSectionComponent } from './control-panel/collapsed-section/col
       },
     }),
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    { provide: CDK_DRAG_CONFIG, useValue: DragConfig }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

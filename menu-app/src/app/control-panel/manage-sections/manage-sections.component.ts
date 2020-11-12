@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {Section} from "../../interfaces/restaurant-interfaces";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Section} from '../../interfaces/restaurant-interfaces';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-manage-sections',
@@ -24,6 +25,19 @@ export class ManageSectionsComponent implements OnInit {
   save(modal): void {
     this.sectionEmitter.emit(this.sections);
     modal.close();
+  }
+
+  drop(event: CdkDragDrop<Section[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 
 }
