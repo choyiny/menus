@@ -1,5 +1,6 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
 <app-signup></app-signup>
+<app-manage-sections></app-manage-sections>
 <div *ngIf="restaurant">
   <div *ngIf="viewable">
     <div class="desktop-background">
@@ -32,6 +33,7 @@
           ></app-menu-name>
           <div class="menu-items section-background">
             <button *ngIf="hasPermission" class="publish" (click)="publish()">Publish Menu</button>
+            <button (click)="manageSections()">Manage Sections</button>
             <app-menu-details
               class="desktop"
               [description]="restaurant.description"
