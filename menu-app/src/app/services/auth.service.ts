@@ -63,7 +63,6 @@ export class AuthService {
     const url = `${environment.settings.endpoint}/anonymous`;
     return this.http.patch<UserInterface>(url, {}).pipe(mergeMap(
       user => {
-        console.log('upgrade');
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         return of(user);

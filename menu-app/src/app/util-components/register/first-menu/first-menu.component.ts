@@ -47,7 +47,6 @@ export class FirstMenuComponent implements OnInit {
         item_description: this.newMenu.value.itemDescription,
         item_price: this.newMenu.value.itemPrice,
       };
-      console.log('here we are again');
       this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
         this.auth
           .reloadUser(user.firebase_id)

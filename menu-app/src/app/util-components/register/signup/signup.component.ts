@@ -33,7 +33,6 @@ export class SignupComponent implements OnInit {
   }
 
   signInWithGoogle(modal): void {
-    console.log('sign in with google');
     this.auth.currentUser.then((anonymousUser) => {
       anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         (userCred) => {
