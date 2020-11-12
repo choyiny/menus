@@ -1,8 +1,8 @@
-import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
-import {ManageSectionsComponent} from "../../control-panel/manage-sections/manage-sections.component";
+import { ManageSectionsComponent } from '../../control-panel/manage-sections/manage-sections.component';
 
 @Component({
   selector: 'app-menuv2',

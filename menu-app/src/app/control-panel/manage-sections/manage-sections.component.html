@@ -1,25 +1,32 @@
 <ng-template #section let-modal>
-
   <div class="title">
     <h1>Manage Menu sections</h1>
   </div>
 
   <div class="container">
+
     <div class="section-list" cdkDropList [cdkDropListData]="sections" (cdkDropListDropped)="drop($event)">
       <app-collapsed-section
         cdkDrag
-        *ngFor="let section of sections, let index=i"
+        *ngFor="let section of sections; let index = i"
         [section]="section"
         [index]="index"
         class="section-drag"
       >
       </app-collapsed-section>
     </div>
+
+    <div>
+      <button class="new-section">
+        <fa-icon [icon]="addIcon"></fa-icon>
+        Add New Section
+      </button>
+    </div>
+
   </div>
 
   <div class="next-step">
     <button (click)="modal.close()">Cancel</button>
     <button>Save</button>
   </div>
-
 </ng-template>

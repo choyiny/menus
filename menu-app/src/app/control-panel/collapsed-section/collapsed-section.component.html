@@ -1,3 +1,10 @@
 <div class="section-collapsed">
-  <h1>{{section.name}}</h1>
+  <div class="section-title">
+    <quill-view-html [content]="section.name"></quill-view-html>
+  </div>
+  <div class="icons">
+    <button class="bg-tint"><fa-icon [icon]="deleteIcon" ></fa-icon></button>
+    <button class="bg2-tint"><fa-icon [icon]="editIcon"></fa-icon></button>
+  </div>
+
 </div>
