@@ -27,13 +27,13 @@ export class AuthService {
 
   public reloadUser(firebaseId: string): Observable<UserInterface> {
     const url = `${environment.settings.endpoint}/users/${firebaseId}`;
-    const observable = new ReplaySubject<UserInterface>();
-    this.http.get<UserInterface>(url).subscribe((user) => {
-      this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      observable.next(user);
-    });
-    return observable;
+    return this.http.get<UserInterface>(url).pipe(mergeMap(
+      user => {
+        this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        return of(user);
+      }
+    ));
   }
 
   public getUserIdToken(): any {
@@ -63,6 +63,7 @@ export class AuthService {
     const url = `${environment.settings.endpoint}/anonymous`;
     return this.http.patch<UserInterface>(url, {}).pipe(mergeMap(
       user => {
+        console.log('upgrade');
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
         return of(user);

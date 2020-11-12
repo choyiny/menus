@@ -39,7 +39,7 @@ export class FirstMenuComponent implements OnInit {
 
   next(modal): void {
     // sign in to get access to backend
-    this.auth.anonymousSignIn().subscribe((user) => {
+    const onboard = this.auth.anonymousSignIn().subscribe((user) => {
       const onboarding = {
         name: this.newMenu.value.name,
         section_name: this.newMenu.value.sectionName,
@@ -47,13 +47,14 @@ export class FirstMenuComponent implements OnInit {
         item_description: this.newMenu.value.itemDescription,
         item_price: this.newMenu.value.itemPrice,
       };
+      console.log('here we are again');
       this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
         this.auth
           .reloadUser(user.firebase_id)
-          .pipe(take(1))
           .subscribe((reloadedUser) => {
             modal.close();
             this.router.navigateByUrl(`restaurants/${slug}`);
+            onboard.unsubscribe();
           });
       });
     });
