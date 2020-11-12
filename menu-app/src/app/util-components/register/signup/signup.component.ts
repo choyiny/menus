@@ -37,11 +37,9 @@ export class SignupComponent implements OnInit {
     this.auth.currentUser.then((anonymousUser) => {
       anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         (userCred) => {
-          this.authService.upgradeUser().subscribe(
-            user => {
-              modal.close();
-            }
-          );
+          this.authService.upgradeUser().subscribe((user) => {
+            modal.close();
+          });
         },
         (err) => {
           console.log(err);

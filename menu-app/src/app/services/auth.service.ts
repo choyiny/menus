@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user-interface';
-import { BehaviorSubject, Observable, from, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, from, ReplaySubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, mergeMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -41,40 +41,41 @@ export class AuthService {
   }
 
   public anonymousSignIn(): Observable<UserInterface> {
-    const userObserver = new ReplaySubject<UserInterface>(1);
-    this.authFireBase.signInAnonymously().then((credentials) => {
-      console.log(credentials);
-      const url = `${environment.settings.endpoint}/anonymous`;
-      const anonymousUser = credentials.user;
-      const userObservable = new ReplaySubject<UserInterface>(1);
-      this.http
-        .post<UserInterface>(url, { firebase_id: anonymousUser.uid })
-        .subscribe((user) => {
+
+    return from(this.authFireBase.signInAnonymously())
+      .pipe(
+        mergeMap((credentials) => {
+          const url = `${environment.settings.endpoint}/anonymous`;
+          const anonymousUser = credentials.user;
+          return this.http.post<UserInterface>(url, { firebase_id: anonymousUser.uid });
+        })
+      )
+      .pipe(
+        mergeMap((user) => {
           this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
           localStorage.setItem('currentUser', JSON.stringify(user));
-          userObservable.next(user);
-        });
-    });
-    return userObserver;
+          return of(user);
+        })
+      );
   }
 
   public upgradeUser(): Observable<UserInterface> {
     const url = `${environment.settings.endpoint}/anonymous`;
-    const userObserver = new ReplaySubject<UserInterface>();
-    this.http.patch<UserInterface>(url, {} ).subscribe(
+    return this.http.patch<UserInterface>(url, {}).pipe(mergeMap(
       user => {
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
         localStorage.setItem('currentUser', JSON.stringify(user));
-        userObserver.next(user);
+        return of(user);
       }
-    );
-    return userObserver;
+    ));
   }
 
   loginWithGoogle(): Observable<UserInterface> {
-    const firebaseObservable = from(this.authFireBase.signInWithPopup(new firebase.auth.GoogleAuthProvider()));
+    const firebaseObservable = from(
+      this.authFireBase.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    );
     return firebaseObservable.pipe(
-      mergeMap( userCredentials => {
+      mergeMap((userCredentials) => {
         const userId = userCredentials.user.uid;
         return this.reloadUser(userId);
       })

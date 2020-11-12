@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import {AngularFireAuth} from "@angular/fire/auth";
-import {UserInterface} from "../../interfaces/user-interface";
+import { AngularFireAuth } from '@angular/fire/auth';
+import { UserInterface } from '../../interfaces/user-interface';
 
 @Component({
   selector: 'app-login',
@@ -23,11 +23,9 @@ export class LoginComponent implements OnInit {
   }
 
   loginWithGoogle(): void {
-    this.authService.loginWithGoogle().subscribe(
-      user => {
-        this.onSuccess(user);
-      }
-    );
+    this.authService.loginWithGoogle().subscribe((user) => {
+      this.onSuccess(user);
+    });
   }
 
   onSuccess(user: UserInterface): void {

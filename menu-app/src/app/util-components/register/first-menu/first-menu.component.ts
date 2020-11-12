@@ -39,23 +39,24 @@ export class FirstMenuComponent implements OnInit {
 
   next(modal): void {
     // sign in to get access to backend
-    this.auth.anonymousSignIn().subscribe(
-      (user) => {
-        const onboarding = {
-          name: this.newMenu.value.name,
-          section_name: this.newMenu.value.sectionName,
-          item_name: this.newMenu.value.itemName,
-          item_description: this.newMenu.value.itemDescription,
-          item_price: this.newMenu.value.itemPrice,
-        };
-        this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
-          this.auth.reloadUser(user.firebase_id).pipe(take(1)).subscribe((reloadedUser) => {
+    this.auth.anonymousSignIn().subscribe((user) => {
+      const onboarding = {
+        name: this.newMenu.value.name,
+        section_name: this.newMenu.value.sectionName,
+        item_name: this.newMenu.value.itemName,
+        item_description: this.newMenu.value.itemDescription,
+        item_price: this.newMenu.value.itemPrice,
+      };
+      this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
+        this.auth
+          .reloadUser(user.firebase_id)
+          .pipe(take(1))
+          .subscribe((reloadedUser) => {
             modal.close();
             this.router.navigateByUrl(`restaurants/${slug}`);
           });
-        });
-      }
-    );
+      });
+    });
   }
 
   open(): void {

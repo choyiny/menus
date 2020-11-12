@@ -55,29 +55,31 @@ export class RestaurantComponent implements OnInit {
   }
 
   getRestaurant(): void {
-    this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
-      this.restaurant = restaurant;
-      this.viewable = this.restaurant.public || this.hasPermission;
-      this.loadMenus();
-      if (this.sameDay()) {
-        return;
-      }
-      if (this.restaurant.force_trace) {
-        this.covid.open();
-        return;
-      }
-      this.route.queryParams.subscribe((params) => {
-        const trace: boolean = params.trace === 'true';
-        if (trace && this.restaurant.enable_trace) {
-          this.covid.open();
+    this.restaurantService.getRestaurant(this.slug).subscribe(
+      (restaurant) => {
+        this.restaurant = restaurant;
+        this.viewable = this.restaurant.public || this.hasPermission;
+        this.loadMenus();
+        if (this.sameDay()) {
+          return;
         }
-      });
-    },
-    err => {
-      if (err.error.description === 'Restaurant not found'){
-        this.viewable = false;
+        if (this.restaurant.force_trace) {
+          this.covid.open();
+          return;
+        }
+        this.route.queryParams.subscribe((params) => {
+          const trace: boolean = params.trace === 'true';
+          if (trace && this.restaurant.enable_trace) {
+            this.covid.open();
+          }
+        });
+      },
+      (err) => {
+        if (err.error.description === 'Restaurant not found') {
+          this.viewable = false;
+        }
       }
-    });
+    );
   }
 
   scrollToSection(id: string): void {
@@ -116,7 +118,7 @@ export class RestaurantComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        if (err.error.description === 'Please connect this account'){
+        if (err.error.description === 'Please connect this account') {
           this.signUp.open();
         }
       }
