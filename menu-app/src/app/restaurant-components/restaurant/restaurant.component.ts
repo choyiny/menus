@@ -7,7 +7,6 @@ import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
-import {ManageSectionsComponent} from "../../control-panel/manage-sections/manage-sections.component";
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -26,7 +25,6 @@ export class RestaurantComponent implements OnInit {
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
-  @ViewChild(ManageSectionsComponent) sections: ManageSectionsComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
@@ -125,9 +123,5 @@ export class RestaurantComponent implements OnInit {
         }
       }
     );
-  }
-
-  manageSections(): void {
-    this.sections.open();
   }
 }

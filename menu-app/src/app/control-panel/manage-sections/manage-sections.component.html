@@ -5,7 +5,12 @@
   </div>
 
   <div class="container">
-    <h1>yo</h1>
+    <app-collapsed-section
+      *ngFor="let section of sections, let index=i"
+      [section]="section"
+      [index]="index"
+    >
+    </app-collapsed-section>
   </div>
 
   <div class="next-step">

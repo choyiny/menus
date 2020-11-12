@@ -1,7 +1,8 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import {Component, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
+import {ManageSectionsComponent} from "../../control-panel/manage-sections/manage-sections.component";
 
 @Component({
   selector: 'app-menuv2',
@@ -16,6 +17,7 @@ export class Menuv2Component implements OnInit {
   previousScroll = 0;
   selectedSection = 0;
   rearrangeMode = false;
+  @ViewChild(ManageSectionsComponent) sections: ManageSectionsComponent;
 
   constructor(private restaurantService: RestaurantService) {}
 
@@ -106,5 +108,9 @@ export class Menuv2Component implements OnInit {
         this.menu = menu;
       });
     this.rearrangeMode = false;
+  }
+
+  manageSections(): void {
+    this.sections.open();
   }
 }
