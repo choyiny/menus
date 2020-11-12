@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SectionInterface } from '../../interfaces/section-interface';
-import { ScrollService } from '../../services/scroll.service';
-import { Section } from '../../interfaces/restaurant-interfaces';
+import { SectionInterface } from '../../../interfaces/section-interface';
+import { ScrollService } from '../../../services/scroll.service';
+import { Section } from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-scrolling-component',

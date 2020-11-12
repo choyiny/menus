@@ -19,7 +19,7 @@ import { MenuComponent } from './menu-components/menu/menu.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
 import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
-import { ScrollingComponentComponent } from './util-components/scrolling-component/scrolling-component.component';
+import { ScrollingComponentComponent } from './util-components/menu-util/scrolling-component/scrolling-component.component';
 import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
 import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
 import { ChangeBackgroundComponent } from './util-components/menu-util/change-background/change-background.component';
