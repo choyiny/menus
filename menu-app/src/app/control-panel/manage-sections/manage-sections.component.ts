@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-manage-sections',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageSectionsComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('section') modal;
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
+  }
+
+  open(): void {
+    this.modalService.open(this.modal);
   }
 
 }
