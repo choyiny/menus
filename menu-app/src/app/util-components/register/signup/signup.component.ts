@@ -26,9 +26,7 @@ export class SignupComponent implements OnInit {
 
   signInWithFacebook(): void {
     const currentUser = this.auth.user;
-    console.log(currentUser);
     this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((user) => {
-      console.log(user);
     });
   }
 
@@ -54,7 +52,6 @@ export class SignupComponent implements OnInit {
     };
     this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
       (user) => {
-        console.log('done?');
       },
       (err) => {
         console.log(err);

@@ -309,7 +309,6 @@ class GenerateSectionResource(RestaurantBaseResource):
         if g.user is None:
             return FORBIDDEN
         section = Section(_id=uuid.uuid4())
-        print(section)
         return section
 
 
@@ -322,7 +321,6 @@ class GenerateItemResource(RestaurantBaseResource):
             return FORBIDDEN
 
         item = Item(_id=uuid.uuid4())
-        print(item)
         return item
 
 

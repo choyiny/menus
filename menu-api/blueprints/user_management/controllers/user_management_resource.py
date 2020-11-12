@@ -53,7 +53,6 @@ class UserResource(UserManagementBaseResource):
             if user:
                 if restaurants:
                     user.restaurants = restaurants
-                print(user.restaurants)
                 user.save()
             else:
                 try:
@@ -155,7 +154,6 @@ class AnonymousUserResource(UserManagementBaseResource):
     @marshal_with(UserSchema)
     @firebase_login_required
     def patch(self):
-        print(g.user.restaurants, "before")
 
         if g.user is None:
             return FORBIDDEN
@@ -170,6 +168,5 @@ class AnonymousUserResource(UserManagementBaseResource):
         g.user.phone_number = firebase_user.phone_number
         g.user.photo_url = firebase_user.photo_url
         g.user.display_name = firebase_user.display_name
-        print(g.user.restaurants, "after")
 
         return g.user.save()
