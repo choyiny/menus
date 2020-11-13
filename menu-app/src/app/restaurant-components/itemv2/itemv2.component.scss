@@ -83,14 +83,26 @@
 // edit mode
 .edit-body {
   background-color: #f0f3f5;
-  position: relative;
+  padding-bottom: 10px;
   overflow: scroll;
+
+  & .tag-container {
+    position: relative;
+
+    &.bg-tint {
+      position: relative;
+    }
+  }
 
   .button-container {
     position: relative;
     border-top: solid 0.5px #dfe0e3;
     button {
+      margin-top: 10px;
       float: right;
+      padding: 11px 0px 11px 0px;
+      border-radius: 8px;
+      width: 25%;
     }
   }
 

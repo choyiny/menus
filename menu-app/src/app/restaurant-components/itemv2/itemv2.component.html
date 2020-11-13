@@ -45,6 +45,7 @@
       <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </span>
+
 </div>
 
 <div *ngIf="editMode" class="menu-item edit-body">
@@ -58,11 +59,24 @@
     <quill-editor *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
   </div>
 
+  <span class="tag-container">
+    <app-tagv2
+      *ngFor="let tag of item.tags; let i = index"
+      [tag]="tag"
+      [hasPermission]="hasPermission"
+      (outputTagText)="updateTags($event, i)"
+    >
+    </app-tagv2>
+    <button class="bg-tint round desktop" (click)="addTag()">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
+  </span>
+
   <div class="button-container">
     <button class="desktop bg-tint" (click)="remove()">
       <fa-icon [icon]="deleteIcon"> </fa-icon>
     </button>
     <button class="desktop" (click)="discard()">Cancel</button>
-    <button class="save-button desktop bg2-tint" (click)="editItem()">Save</button>
+    <button class="desktop bg2-tint" (click)="editItem()">Save</button>
   </div>
 </div>

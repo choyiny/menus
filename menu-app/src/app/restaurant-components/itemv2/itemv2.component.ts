@@ -50,11 +50,9 @@ export class Itemv2Component implements OnInit {
 
   editItem(): void {
     this.restaurantService.editItem(this.slug, this.menuName, this.item).subscribe((item) => {
-      console.log(this.item);
       this.item = item;
       this.itemOriginal = { ...item };
     });
-    this.editMode = false;
   }
 
   edit(): void {
