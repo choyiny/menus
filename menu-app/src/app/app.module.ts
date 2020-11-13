@@ -46,6 +46,7 @@ import { AngularFireModule } from '@angular/fire';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
+import { VerificationComponent } from './auth-components/verification/verification.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { RestaurantComponent } from './restaurant-components/restaurant/restaura
     SignupComponent,
     FirstMenuComponent,
     RegisterComponent,
+    VerificationComponent,
   ],
   imports: [
     BrowserModule,

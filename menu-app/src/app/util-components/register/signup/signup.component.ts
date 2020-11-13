@@ -17,6 +17,7 @@ export class SignupComponent implements OnInit {
   ) {}
   @ViewChild('signup') signup;
   email: string;
+  password: string;
 
   ngOnInit(): void {}
 
@@ -47,7 +48,7 @@ export class SignupComponent implements OnInit {
 
   next(): void {
     const actionCodeSettings = {
-      url: window.location.origin,
+      url: `${window.location.origin}?password=${this.password}&email=${this.email}`,
       handleCodeInApp: true,
     };
     this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
