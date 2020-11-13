@@ -6,7 +6,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 import { RegisterComponent } from './register/register.component';
-import {VerificationComponent} from './auth-components/verification/verification.component';
+import { VerificationComponent } from './auth-components/verification/verification.component';
 
 const routes: Routes = [
   {
@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'verify',
-    component: VerificationComponent
+    component: VerificationComponent,
   },
   {
     path: 'admin',

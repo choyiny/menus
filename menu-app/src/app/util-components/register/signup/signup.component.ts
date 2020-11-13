@@ -27,8 +27,7 @@ export class SignupComponent implements OnInit {
 
   signInWithFacebook(): void {
     const currentUser = this.auth.user;
-    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((user) => {
-    });
+    this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).then((user) => {});
   }
 
   signInWithGoogle(modal): void {
@@ -47,27 +46,21 @@ export class SignupComponent implements OnInit {
   }
 
   next(): void {
-
-    this.auth.user.subscribe(
-      anonymousUser => {
-        const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
-        anonymousUser.linkWithCredential(credentials).then(
-          userCredentials => {
-            const actionCodeSettings = {
-              url: `${window.location.origin}/verify`,
-              handleCodeInApp: true,
-            };
-            this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
-              (user) => {
-              },
-              (err) => {
-                console.log(err);
-              }
-            );
-
+    this.auth.user.subscribe((anonymousUser) => {
+      console.log(this.email, this.password);
+      const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
+      anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
+        const actionCodeSettings = {
+          url: `${window.location.origin}/verify?email=${this.email}`,
+          handleCodeInApp: true,
+        };
+        this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
+          (user) => {},
+          (err) => {
+            console.log(err);
           }
         );
-      }
-    );
+      });
+    });
   }
 }

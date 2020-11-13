@@ -46,7 +46,7 @@ export class FirstMenuComponent implements OnInit {
       item_description: this.newMenu.value.itemDescription,
       item_price: this.newMenu.value.itemPrice,
     };
-    const observer = this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
+    this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
       this.auth.reloadUser().subscribe((reloadedUser) => {
         modal.close();
         this.router.navigateByUrl(`restaurants/${slug}`);

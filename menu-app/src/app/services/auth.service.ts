@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   public reloadUser(): Observable<UserInterface> {
-    const url = `${environment.settings.endpoint}/auth`;
+    const url = `${environment.settings.endpoint}/auth/`;
     return this.http.get<UserInterface>(url).pipe(
       mergeMap((user) => {
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
