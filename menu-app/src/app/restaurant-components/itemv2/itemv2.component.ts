@@ -32,33 +32,6 @@ export class Itemv2Component implements OnInit {
     this.itemOriginal = { ...this.item };
   }
 
-  get imageUrl(): string {
-    if (this.hasPermission) {
-      return this.item.image ? this.item.image : 'assets/add_photos.png';
-    } else {
-      return this.item.image;
-    }
-  }
-
-  showImage(): void {
-    this.imgView.open();
-  }
-
-  cropImage(): void {
-    this.imgForm.open();
-  }
-
-  editItem(): void {
-    this.restaurantService.editItem(this.slug, this.menuName, this.item).subscribe((item) => {
-      this.item = item;
-      this.itemOriginal = { ...item };
-    });
-  }
-
-  edit(): void {
-    this.editMode = true;
-  }
-
   addTag(): void {
     const newTag: Tag = {
       text: 'New tag',
@@ -82,14 +55,6 @@ export class Itemv2Component implements OnInit {
     this.editItem();
   }
 
-  remove(): void {
-    this.restaurantService
-      .deleteItem(this.slug, this.menuName, this.item._id)
-      .subscribe((section) => {
-        this.sectionEmitter.emit(section);
-      });
-  }
-
   deletePhoto(): void {
     this.restaurantService
       .deletePhoto(this.slug, this.menuName, this.item._id)
@@ -98,13 +63,45 @@ export class Itemv2Component implements OnInit {
       });
   }
 
+  setImage(url: string): void {
+    this.editMode = false;
+    this.item.image = url;
+  }
+
+  showImage(): void {
+    this.imgView.open();
+  }
+
+  cropImage(): void {
+    this.imgForm.open();
+  }
+
   discard(): void {
     this.editMode = false;
     this.item = { ...this.itemOriginal };
   }
 
-  setImage(url: string): void {
+  save(): void {
+    this.editItem();
     this.editMode = false;
-    this.item.image = url;
+  }
+
+  remove(): void {
+    this.restaurantService
+      .deleteItem(this.slug, this.menuName, this.item._id)
+      .subscribe((section) => {
+        this.sectionEmitter.emit(section);
+      });
+  }
+
+  editItem(): void {
+    this.restaurantService.editItem(this.slug, this.menuName, this.item).subscribe((item) => {
+      this.item = item;
+      this.itemOriginal = { ...item };
+    });
+  }
+
+  edit(): void {
+    this.editMode = true;
   }
 }
