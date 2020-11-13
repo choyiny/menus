@@ -13,7 +13,7 @@
   <div class="img-description">
 
     <div class="logo" (click)="showImage()">
-      <img class="mobile img-fluid icon" src="{{ item.image }}" />
+      <img class="img-fluid icon" src="{{ item.image }}"/>
     </div>
 
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
@@ -54,7 +54,7 @@
 <div *ngIf="editMode" class="menu-item edit-body">
 
   <div class="item-top">
-    <button class="upload" (click)="cropImage($event)">Upload Image</button>
+    <button class="upload" (click)="cropImage()">Upload Image</button>
     <input class="edit-price" type="text" placeholder="Add Price" [(ngModel)]="item.price">
   </div>
 

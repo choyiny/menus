@@ -25,8 +25,6 @@ export class Itemv2Component implements OnInit {
   faPlus = faPlus;
   faPen = faPen;
   deleteIcon = faTrash;
-  saveIcon = faSave;
-  imageIcon = faImage;
 
   constructor(private restaurantService: RestaurantService, private tagService: TagService) {}
 
@@ -46,9 +44,8 @@ export class Itemv2Component implements OnInit {
     this.imgView.open();
   }
 
-  cropImage($event): void {
+  cropImage(): void {
     this.imgForm.open();
-    event.stopPropagation();
   }
 
   editItem(): void {
@@ -86,6 +83,7 @@ export class Itemv2Component implements OnInit {
     }
     this.editItem();
   }
+
   remove(): void {
     this.restaurantService
       .deleteItem(this.slug, this.menuName, this.item._id)
@@ -94,13 +92,12 @@ export class Itemv2Component implements OnInit {
       });
   }
 
-  deletePhoto($event): void {
+  deletePhoto(): void {
     this.restaurantService
       .deletePhoto(this.slug, this.menuName, this.item._id)
       .subscribe((item) => {
         this.item = item;
       });
-    event.stopPropagation();
   }
 
   discard(): void {
@@ -109,6 +106,7 @@ export class Itemv2Component implements OnInit {
   }
 
   setImage(url: string): void {
+    this.editMode = false;
     this.item.image = url;
   }
 }
