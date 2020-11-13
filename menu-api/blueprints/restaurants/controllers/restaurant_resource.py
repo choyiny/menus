@@ -129,7 +129,7 @@ class MenuResource(RestaurantBaseResource):
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
-        if "name" in kwargs:
+        if kwargs.get("name") and kwargs.get("name") != menu_name:
             name = kwargs.get("name")
             if name in restaurant.to_dict()["menus"]:
                 return MENU_ALREADY_EXISTS

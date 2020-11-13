@@ -23,6 +23,17 @@ export class Menuv2Component implements OnInit {
 
   ngOnInit(): void {}
 
+  updateSections(sections: Section[]): void {
+    this.menu.sections = sections;
+    this.restaurantService.editMenu(
+      this.slug, this.menu.name, this.menu
+    ).subscribe(
+      menu => {
+        this.menu = menu;
+      }
+    );
+  }
+
   newSection(i: number): void {
     this.restaurantService.newSection().subscribe((section) => {
       this.menu.sections.splice(i + 1, 0, section);
