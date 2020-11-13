@@ -1,14 +1,10 @@
-<div class="section-collapsed"
-     cdkDrag
-     [cdkDragDisabled]="editMode"
->
+<div class="section-collapsed" cdkDrag [cdkDragDisabled]="editMode">
   <div class="section-title">
     <quill-view-html *ngIf="!editMode" [content]="section.name"></quill-view-html>
     <quill-editor *ngIf="editMode" [(ngModel)]="section.name"></quill-editor>
   </div>
   <div class="icons">
-    <button class="bg-tint"><fa-icon [icon]="deleteIcon" ></fa-icon></button>
+    <button class="bg-tint"><fa-icon [icon]="deleteIcon"></fa-icon></button>
     <button class="bg2-tint" (click)="edit()"><fa-icon [icon]="editIcon"></fa-icon></button>
   </div>
-
 </div>

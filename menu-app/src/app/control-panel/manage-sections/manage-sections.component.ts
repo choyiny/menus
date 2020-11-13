@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { faPlus} from '@fortawesome/pro-solid-svg-icons';
-import {RestaurantService} from '../../services/restaurant.service';
+import { faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { RestaurantService } from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-manage-sections',
@@ -31,11 +31,9 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   newSection(): void {
-    this.restaurantService.newSection().subscribe(
-      section => {
-        this.sections.push(section);
-      }
-    );
+    this.restaurantService.newSection().subscribe((section) => {
+      this.sections.push(section);
+    });
   }
 
   drop(event: CdkDragDrop<Section[]>): void {

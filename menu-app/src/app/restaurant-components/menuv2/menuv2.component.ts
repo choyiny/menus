@@ -25,13 +25,9 @@ export class Menuv2Component implements OnInit {
 
   updateSections(sections: Section[]): void {
     this.menu.sections = sections;
-    this.restaurantService.editMenu(
-      this.slug, this.menu.name, this.menu
-    ).subscribe(
-      menu => {
-        this.menu = menu;
-      }
-    );
+    this.restaurantService.editMenu(this.slug, this.menu.name, this.menu).subscribe((menu) => {
+      this.menu = menu;
+    });
   }
 
   newSection(i: number): void {

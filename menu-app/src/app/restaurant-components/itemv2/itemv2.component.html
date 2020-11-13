@@ -6,33 +6,31 @@
   [menuName]="menuName"
 ></app-img-form-modal>
 <div *ngIf="!editMode" class="menu-item">
-    <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
-      <fa-icon [icon]="faPen"></fa-icon>
-    </button>
+  <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
+    <fa-icon [icon]="faPen"></fa-icon>
+  </button>
 
   <div class="img-description">
-
     <div class="logo" (click)="showImage()">
-      <img class="img-fluid icon" src="{{ item.image }}"/>
+      <img class="img-fluid icon" src="{{ item.image }}" />
     </div>
 
     <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
-        <h1  class="item">{{ item.name }}</h1>
+        <h1 class="item">{{ item.name }}</h1>
         <h1 class="price">{{ item.price }}</h1>
       </div>
-        <quill-view-html
-          *ngIf="!editMode"
-          [content]="item.description"
-          [style]="{
-            color: 'rgba(26, 24, 36, 0.5)',
-            margin: '2.5px 0px 2.5px 0px'
-          }"
-          theme="snow"
-        >
-        </quill-view-html>
+      <quill-view-html
+        *ngIf="!editMode"
+        [content]="item.description"
+        [style]="{
+          color: 'rgba(26, 24, 36, 0.5)',
+          margin: '2.5px 0px 2.5px 0px'
+        }"
+        theme="snow"
+      >
+      </quill-view-html>
     </div>
-
   </div>
 
   <span class="tag-container">
@@ -47,31 +45,24 @@
       <fa-icon [icon]="faPlus"></fa-icon>
     </button>
   </span>
-
 </div>
 
-
 <div *ngIf="editMode" class="menu-item edit-body">
-
   <div class="item-top">
     <button class="upload" (click)="cropImage()">Upload Image</button>
-    <input class="edit-price" type="text" placeholder="Add Price" [(ngModel)]="item.price">
+    <input class="edit-price" type="text" placeholder="Add Price" [(ngModel)]="item.price" />
   </div>
 
   <div class="item-body">
-    <input class="item-title" type="text" placeholder="Enter title">
+    <input class="item-title" type="text" placeholder="Enter title" />
     <quill-editor *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
   </div>
 
   <div class="button-container">
     <button class="desktop bg-tint" (click)="remove()">
-      <fa-icon [icon]="deleteIcon">
-      </fa-icon>
+      <fa-icon [icon]="deleteIcon"> </fa-icon>
     </button>
     <button class="desktop" (click)="discard()">Cancel</button>
-    <button class="save-button desktop bg2-tint" (click)="editItem()">
-      Save
-    </button>
+    <button class="save-button desktop bg2-tint" (click)="editItem()">Save</button>
   </div>
-
 </div>

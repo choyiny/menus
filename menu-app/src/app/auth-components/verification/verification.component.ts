@@ -9,7 +9,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./verification.component.scss'],
 })
 export class VerificationComponent implements OnInit {
-
   status = 'Currently verifying email ... please wait';
   constructor(
     private router: Router,
@@ -19,17 +18,17 @@ export class VerificationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const email = params.email;
       this.auth.signInWithEmailLink(email, window.location.href).then(
-        res => {
+        (res) => {
           console.log(res);
           this.authService.upgradeUser().subscribe((user) => {
             this.status = 'Success!';
             this.router.navigateByUrl('');
           });
         },
-        err => {
+        (err) => {
           console.log(err);
           this.status = 'Something went wrong!';
         }
