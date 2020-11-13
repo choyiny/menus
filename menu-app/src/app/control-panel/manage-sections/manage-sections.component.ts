@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { faPlus} from '@fortawesome/pro-solid-svg-icons';
-import {RestaurantService} from "../../services/restaurant.service";
+import {RestaurantService} from '../../services/restaurant.service';
 
 @Component({
   selector: 'app-manage-sections',
