@@ -11,6 +11,10 @@ $tint-color: #ee3353;
   line-height: normal;
 }
 
+input:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
 .ql-editor {
   padding: 0 0 0 0;
   position: relative;

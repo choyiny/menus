@@ -16,10 +16,6 @@
     height: 80%;
   }
 
-  //.img-description {
-  //  padding-bottom: 30px;
-  //}
-
   .tag-container {
     bottom: 5px;
     position: absolute;
@@ -29,32 +25,8 @@
       bottom: 0px;
     }
   }
-
-  .editor-margin {
-    position: relative;
-  }
-
-  .icon-overlay {
-    display: inline-block;
-    position: absolute;
-    z-index: 10;
-  }
-
-  .image-icon {
-    top: 22px;
-    left: 22px;
-  }
-
-  .trash-icon {
-    left: 40px;
-    top: 5px;
-  }
 }
 
-h1 {
-  font-size: 14px;
-  font-weight: 500;
-}
 
 .logo {
   position: relative;
@@ -93,6 +65,11 @@ h1 {
     .item {
       float: left;
     }
+
+    h1 {
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 }
 
@@ -102,3 +79,53 @@ h1 {
 .no-logo-description {
   width: 100%;
 }
+
+// edit mode
+.edit-body {
+  background-color: #f0f3f5;
+  position: relative;
+  overflow: scroll;
+
+  .button-container {
+    position: relative;
+    border-top: solid 0.5px #dfe0e3;
+    button {
+      float: right;
+    }
+  }
+
+  .item-top {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .upload {
+      background-color: #ffffff;
+      color: #4c28ff;
+      margin: 0;
+      padding: 11px 27px 11px 26px;
+      width: 40%;
+    }
+
+    .edit-price {
+      margin: 0;
+      width: 40%;
+      border-radius: 10px;
+      border: solid 1.2px #f0f3f5;
+      float: right;
+      padding: 14px 14px 12px;
+    }
+  }
+
+  .item-body {
+    margin-bottom: 20px;
+    .item-title {
+      border-radius: 10px;
+      border: solid 1.2px #f0f3f5;
+      background-color: #ffffff;
+      width: 100%;
+      padding: 8px 0px 8px 17px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
