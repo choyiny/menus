@@ -47,7 +47,6 @@ export class SignupComponent implements OnInit {
 
   next(): void {
     this.auth.user.subscribe((anonymousUser) => {
-      console.log(this.email, this.password);
       const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
       anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
         const actionCodeSettings = {
