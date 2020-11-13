@@ -25,8 +25,8 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  public reloadUser(firebaseId: string): Observable<UserInterface> {
-    const url = `${environment.settings.endpoint}/users/${firebaseId}`;
+  public reloadUser(): Observable<UserInterface> {
+    const url = `${environment.settings.endpoint}/auth`;
     return this.http.get<UserInterface>(url).pipe(
       mergeMap((user) => {
         this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
@@ -75,8 +75,7 @@ export class AuthService {
     );
     return firebaseObservable.pipe(
       mergeMap((userCredentials) => {
-        const userId = userCredentials.user.uid;
-        return this.reloadUser(userId);
+        return this.reloadUser();
       })
     );
   }
@@ -85,7 +84,7 @@ export class AuthService {
     const firebaseObservable = from(this.authFireBase.signInWithEmailAndPassword(email, password));
     return firebaseObservable.pipe(
       mergeMap((userCredentials) => {
-        return this.http.post<any>(`${environment.settings.endpoint}/auth/`, {}).pipe(
+        return this.http.get<UserInterface>(`${environment.settings.endpoint}/auth/`).pipe(
           map((user) => {
             localStorage.setItem('currentUser', JSON.stringify(user));
             // update subject

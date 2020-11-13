@@ -47,7 +47,7 @@ export class FirstMenuComponent implements OnInit {
       item_price: this.newMenu.value.itemPrice,
     };
     const observer = this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
-      this.auth.reloadUser(user.firebase_id).subscribe((reloadedUser) => {
+      this.auth.reloadUser().subscribe((reloadedUser) => {
         modal.close();
         this.router.navigateByUrl(`restaurants/${slug}`);
       });

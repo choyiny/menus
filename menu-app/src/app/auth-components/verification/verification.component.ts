@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AngularFireAuth} from "@angular/fire/auth";
 import EmailAuthProvider = firebase.auth.EmailAuthProvider;
 import * as firebase from "firebase";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-verification',
@@ -11,26 +12,17 @@ import * as firebase from "firebase";
 })
 export class VerificationComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private auth: AngularFireAuth) { }
+  constructor(private router: Router, private auth: AngularFireAuth, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-        const email = params.email;
-        const password = params.password;
-        this.auth.user.subscribe(
-          userCred => {
-            const credentials = firebase.auth.EmailAuthProvider.credential(email, password);
-            userCred.linkWithCredential(credentials).then(
-              user => {
-                console.log(user);
-              },
-              err => {
-                console.log(err);
-              }
-            );
+    this.auth.user.subscribe(
+      firebaseUser => {
+        this.authService.upgradeUser().subscribe(
+          user => {
+            this.router.navigateByUrl('');
           }
-        );
-    });
+        )
+      }
+    );
   }
-
 }

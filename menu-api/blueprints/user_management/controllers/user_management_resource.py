@@ -103,7 +103,7 @@ class UsersResource(UserManagementBaseResource):
     @marshal_with(UserSchema)
     @firebase_login_required
     def get(self, firebase_id):
-        if not g.user.has_user_permission(firebase_id):
+        if not g.user.is_admin:
             return FORBIDDEN
         return User.objects(firebase_id=firebase_id).first()
 

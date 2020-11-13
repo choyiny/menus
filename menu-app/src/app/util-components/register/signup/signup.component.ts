@@ -32,7 +32,7 @@ export class SignupComponent implements OnInit {
   }
 
   signInWithGoogle(modal): void {
-    this.auth.currentUser.then((anonymousUser) => {
+    this.auth.user.subscribe((anonymousUser) => {
       anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         (userCred) => {
           this.authService.upgradeUser().subscribe((user) => {
@@ -47,15 +47,26 @@ export class SignupComponent implements OnInit {
   }
 
   next(): void {
-    const actionCodeSettings = {
-      url: `${window.location.origin}?password=${this.password}&email=${this.email}`,
-      handleCodeInApp: true,
-    };
-    this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
-      (user) => {
-      },
-      (err) => {
-        console.log(err);
+
+    this.auth.user.subscribe(
+      anonymousUser => {
+        const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
+        anonymousUser.linkWithCredential(credentials).then(
+          userCredentials => {
+            const actionCodeSettings = {
+              url: `${window.location.origin}/verify`,
+              handleCodeInApp: true,
+            };
+            this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
+              (user) => {
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+
+          }
+        );
       }
     );
   }
