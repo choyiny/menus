@@ -12,7 +12,7 @@ export class CollapsedSectionComponent implements OnInit {
   @Input() index: number;
   editMode = false;
   @Output() sectionEmitter = new EventEmitter<Section>();
-  @Output() editEmitter = new EventEmitter<boolean>();
+  @Output() indexEmitter = new EventEmitter<number>();
 
   // icons
   deleteIcon = faTrash;
@@ -30,7 +30,7 @@ export class CollapsedSectionComponent implements OnInit {
     this.editMode = !this.editMode;
   }
 
-  isEditable(): void {
-    this.editEmitter.emit(this.editMode);
+  delete(): void {
+    this.indexEmitter.emit(this.index);
   }
 }

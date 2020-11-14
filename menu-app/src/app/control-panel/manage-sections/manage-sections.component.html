@@ -4,11 +4,12 @@
   </div>
 
   <div class="container">
-    <div class="section-list" cdkDropList [cdkDropListData]="sections" (cdkDropListDropped)="drop($event)">
+    <div class="section-list" cdkDropList [cdkDropListData]="mySections" (cdkDropListDropped)="drop($event)">
       <app-collapsed-section
-        *ngFor="let section of sections; let index = i"
+        *ngFor="let section of mySections; let index = i"
         [section]="section"
         [index]="index"
+        (indexEmitter)="deleteSection($event)"
         class="section-drag"
       >
       </app-collapsed-section>
