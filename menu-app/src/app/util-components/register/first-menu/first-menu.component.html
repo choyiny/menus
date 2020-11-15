@@ -1,0 +1,47 @@
+<ng-template #firstMenu let-modal>
+  <div class="title">
+    <h1>Start building your first Menu</h1>
+  </div>
+
+  <div class="container">
+    <div class="container-body">
+      <p>
+        To create your first Menu, fill out the following information and click next to jump into our full menu editor
+      </p>
+      <form [formGroup]="newMenu">
+        <div class="form-group form-input">
+          <input type="text" formControlName="name" class="form-control form-input" placeholder="Restaurant name" />
+          <input
+            type="text"
+            formControlName="sectionName"
+            class="form-control form-input"
+            placeholder="Enter your first menu section"
+          />
+          <input
+            type="text"
+            formControlName="itemName"
+            class="form-control form-input"
+            placeholder="Add your first menu item"
+          />
+          <input
+            type="text"
+            formControlName="itemDescription"
+            class="form-control form-input"
+            placeholder="Add your first menu item description"
+          />
+          <input
+            type="text"
+            formControlName="itemPrice"
+            class="form-control form-input"
+            placeholder="Add your first menu item Price"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="next-step">
+    <button class="cancel-button" (click)="modal.close()">Cancel</button>
+    <button class="next-button" (click)="next(modal)">Next step</button>
+  </div>
+</ng-template>

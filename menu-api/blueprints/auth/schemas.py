@@ -9,6 +9,7 @@ class UserSchema(Schema):
     phone_number = fields.Str()
     display_name = fields.Str()
     photo_url = fields.Str()
+    is_anon = fields.Bool(description="True if the user is not authenticated by login")
 
 
 class UsersSchema(Schema):

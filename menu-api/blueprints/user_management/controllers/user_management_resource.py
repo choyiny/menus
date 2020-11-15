@@ -53,7 +53,6 @@ class UserResource(UserManagementBaseResource):
             if user:
                 if restaurants:
                     user.restaurants = restaurants
-                print(user.restaurants)
                 user.save()
             else:
                 try:
@@ -101,11 +100,11 @@ class UserResource(UserManagementBaseResource):
 
 class UsersResource(UserManagementBaseResource):
     @doc(description="""Get information about a user""")
-    @firebase_login_required
     @marshal_with(UserSchema)
+    @firebase_login_required
     def get(self, firebase_id):
-        if g.user is None or not g.user.is_admin:
-            return {"description": "You do not have permission"}, 401
+        if not g.user.is_admin:
+            return FORBIDDEN
         return User.objects(firebase_id=firebase_id).first()
 
     @doc(description="""Edit Users""")
@@ -139,3 +138,35 @@ class UsersResource(UserManagementBaseResource):
         #     user.restaurant = kwargs.get('restaurant')
 
         return user.save()
+
+
+class AnonymousUserResource(UserManagementBaseResource):
+    @doc(description="""Create anonymous user""")
+    @marshal_with(UserSchema)
+    @firebase_login_required
+    def post(self):
+        if g.user is None:
+            return FORBIDDEN
+        else:
+            return g.user
+
+    @doc(description="""Upgrade anonymous user to normal user""")
+    @marshal_with(UserSchema)
+    @firebase_login_required
+    def patch(self):
+
+        if g.user is None:
+            return FORBIDDEN
+
+        if not g.user.is_anon:
+            return g.user
+
+        firebase_user = auth.get_user(g.user.firebase_id)
+
+        g.user.is_anon = firebase_user.email is None
+        g.user.email = firebase_user.email
+        g.user.phone_number = firebase_user.phone_number
+        g.user.photo_url = firebase_user.photo_url
+        g.user.display_name = firebase_user.display_name
+
+        return g.user.save()

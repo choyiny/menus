@@ -20,3 +20,5 @@ NUMBER_ALREADY_EXISTS = (
     {"description": "User already exists with that phone-number"},
     400,
 )
+
+ANONYMOUS_USER_FORBIDDEN = {"description": "Please connect this account"}, 401

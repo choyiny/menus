@@ -11,7 +11,7 @@ class AuthResource(AuthBaseResource):
     @doc(description="""Authenticate User""")
     @marshal_with(UserSchema)
     @firebase_login_required
-    def post(self):
+    def get(self):
         if g.user is None:
             return NOT_AUTHENTICATED
         return g.user

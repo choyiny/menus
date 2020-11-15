@@ -1,0 +1,26 @@
+<ng-template #signup let-modal>
+  <div class="title">
+    <h1>Create an Account to Publish for Free</h1>
+  </div>
+
+  <div class="container">
+    <div class="onboard">
+      <p>
+        To publish your first menu, fill out the following information and click submit to share your page with the
+        world
+      </p>
+      <!--      <button class="sign-in" (click)="signInWithFacebook()">Sign in with Facebook</button>-->
+      <button class="sign-in" (click)="signInWithGoogle(modal)">Sign in with Google</button>
+      <!--      <button class="sign-in">Sign in with Apple</button>-->
+      <p class="text-center">-------Or--------</p>
+      <p>Enter your email address and we will send you a confirmation link</p>
+      <input class="email-password" type="text" placeholder="Enter your email address" [(ngModel)]="email" />
+      <input class="email-password" type="password" placeholder="Enter your password" [(ngModel)]="password" />
+    </div>
+  </div>
+
+  <div class="next-step">
+    <button class="cancel-button" (click)="modal.close()">Cancel</button>
+    <button class="next-button" (click)="next()">Next step</button>
+  </div>
+</ng-template>

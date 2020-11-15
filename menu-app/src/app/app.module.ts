@@ -28,6 +28,13 @@ import { MenuDetailsComponent } from './util-components/menu-util/menu-details/m
 import { FooterComponent } from './util-components/footer/footer.component';
 import { ImgFormModalComponent } from './util-components/modals/img-form-modal/img-form-modal.component';
 import { ImgViewModalComponent } from './util-components/modals/img-view-modal/img-view-modal.component';
+import { Itemv2Component } from './restaurant-components/itemv2/itemv2.component';
+import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.component';
+import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
+import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
+import { SignupComponent } from './util-components/register/signup/signup.component';
+import { FirstMenuComponent } from './util-components/register/first-menu/first-menu.component';
+import { RegisterComponent } from './register/register.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -39,10 +46,7 @@ import { AngularFireModule } from '@angular/fire';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
-import { Itemv2Component } from './restaurant-components/itemv2/itemv2.component';
-import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.component';
-import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
-import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
+import { VerificationComponent } from './auth-components/verification/verification.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +72,10 @@ import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
     Sectionv2Component,
     Menuv2Component,
     Tagv2Component,
+    SignupComponent,
+    FirstMenuComponent,
+    RegisterComponent,
+    VerificationComponent,
   ],
   imports: [
     BrowserModule,

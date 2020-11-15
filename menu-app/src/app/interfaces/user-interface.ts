@@ -6,6 +6,7 @@ export interface UserInterface {
   email: string;
   display_name: string;
   photo_url: string;
+  is_anon: boolean;
 }
 
 export interface UsersInterface {

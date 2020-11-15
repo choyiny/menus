@@ -6,6 +6,15 @@ export interface Restaurant {
   tracing_key: string;
   enable_trace: boolean;
   force_trace: boolean;
+  public: boolean;
+}
+
+export interface RestaurantOnboarding {
+  name: string;
+  item_name: string;
+  item_price: string;
+  item_description: string;
+  section_name: string;
 }
 
 export interface RestaurantEditable {
@@ -16,9 +25,9 @@ export interface RestaurantEditable {
 }
 
 export interface RestaurantTemplate {
-  description: string;
-  name: string;
-  image: string;
+  description?: string;
+  name?: string;
+  image?: string;
   slug: string;
 }
 

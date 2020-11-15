@@ -6,6 +6,8 @@ import {
   MenuEditable,
   Restaurant,
   RestaurantEditable,
+  RestaurantOnboarding,
+  RestaurantTemplate,
   Section,
 } from '../interfaces/restaurant-interfaces';
 import { environment } from '../../environments/environment';
@@ -20,6 +22,11 @@ export class RestaurantService {
   getRestaurant(slug: string): Observable<Restaurant> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}`;
     return this.http.get<Restaurant>(url);
+  }
+
+  postRestaurant(restaurantTemplate: RestaurantTemplate): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants`;
+    return this.http.post<Restaurant>(url, restaurantTemplate);
   }
 
   editRestaurant(slug: string, restaurant: RestaurantEditable): Observable<Restaurant> {
@@ -45,6 +52,11 @@ export class RestaurantService {
   deleteMenu(slug: string, menuName: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
     return this.http.delete<Menu>(url);
+  }
+
+  addMenu(slug: string, name: string): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus`;
+    return this.http.post<Menu>(url, { name });
   }
 
   editItem(slug: string, menuName: string, item: Item): Observable<Item> {
@@ -90,5 +102,16 @@ export class RestaurantService {
   deletePhoto(slug: string, menuName: string, itemId: string): Observable<Item> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/items/${itemId}/picture`;
     return this.http.delete<Item>(url);
+  }
+
+  publishRestaurant(slug: string): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/publish`;
+    return this.http.patch<Restaurant>(url, {});
+  }
+
+  onboardRestaurant(restaurant: RestaurantOnboarding): Observable<string> {
+    console.log(restaurant, 'Onboarding....');
+    const url = `${environment.settings.apiv2}/restaurants/onboard`;
+    return this.http.post<string>(url, restaurant);
   }
 }

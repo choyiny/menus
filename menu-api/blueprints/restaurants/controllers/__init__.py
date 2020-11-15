@@ -4,6 +4,9 @@ from .restaurant_resource import (
     ImageResource,
     ItemResource,
     MenuResource,
+    OnboardingRestaurantResource,
+    PublishRestaurantResource,
     RestaurantResource,
+    RestaurantsResource,
     SectionResource,
 )

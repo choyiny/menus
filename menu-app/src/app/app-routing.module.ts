@@ -5,6 +5,8 @@ import { DashboardComponent } from './auth-components/dashboard/dashboard.compon
 import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
+import { RegisterComponent } from './register/register.component';
+import { VerificationComponent } from './auth-components/verification/verification.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,10 @@ const routes: Routes = [
     component: DashboardComponent,
   },
   {
+    path: 'verify',
+    component: VerificationComponent,
+  },
+  {
     path: 'admin',
     loadChildren: () =>
       import('./admin-components/admin.module').then((module) => module.AdminModule),
@@ -28,6 +34,10 @@ const routes: Routes = [
   {
     path: 'restaurants/:slug',
     component: RestaurantComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: '**',

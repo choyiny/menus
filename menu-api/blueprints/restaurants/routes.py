@@ -4,7 +4,10 @@ from .controllers import (
     ImageResource,
     ItemResource,
     MenuResource,
+    OnboardingRestaurantResource,
+    PublishRestaurantResource,
     RestaurantResource,
+    RestaurantsResource,
     SectionResource,
 )
 
@@ -15,6 +18,7 @@ resources = [
         "restaurants",
         ["GET", "DELETE", "PATCH"],
     ),
+    (RestaurantsResource, "restaurants", "create_restaurants", ["POST"]),
     (
         MenuResource,
         "restaurants/<string:slug>/menus/<string:menu_name>",
@@ -42,4 +46,11 @@ resources = [
         "picture",
         ["DELETE", "PATCH"],
     ),
+    (
+        PublishRestaurantResource,
+        "restaurants/<string:slug>/publish",
+        "publish",
+        ["PATCH"],
+    ),
+    (OnboardingRestaurantResource, "restaurants/onboard", "onboard", ["POST"]),
 ]

@@ -1,6 +1,7 @@
 import uuid
 
 import config as c
+from auth.documents.user import User
 from blueprints.menus.documents.menu import Menu
 from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
@@ -18,12 +19,14 @@ def migrate():
         for section in sectionized["sections"]:
             new_items = []
             for item in section["menu_items"]:
+                if not item._id:
+                    item._id = str(uuid.uuid4())
                 new_item = Item(
                     name=item["name"],
                     price=item["price"],
                     description=item["description"],
                     image=item["image"],
-                    _id=get_or_create(item._id),
+                    _id=item._id,
                     tags=convert_tags(item["tags"]),
                 )
                 new_items.append(new_item)
@@ -126,3 +129,9 @@ def user_migrations():
     collection.update_many(
         {}, {"$unset": {"menus": ""}},
     )
+
+
+def restaurant_migrations():
+    for restaurant in Restaurant.objects():
+        restaurant.public = True
+        restaurant.save()

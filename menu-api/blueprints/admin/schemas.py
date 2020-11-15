@@ -1,4 +1,4 @@
-from marshmallow import INCLUDE, Schema, fields
+from marshmallow import Schema, fields
 
 from ..auth.schemas import UserSchema
 
@@ -32,6 +32,9 @@ class CreateRestaurantSchema(Schema):
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
+    public = fields.Bool(
+        example=True, description="Allow restaurant to be viewable", allow_none=True
+    )
 
 
 pagination_args = {

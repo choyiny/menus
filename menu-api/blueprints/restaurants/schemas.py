@@ -55,6 +55,7 @@ class GetRestaurantSchema(Schema):
     menus = fields.List(
         fields.Str(), example=["lunch"], description="list of menu names"
     )
+    public = fields.Bool(example=True)
 
 
 class RestaurantSchema(Schema):
@@ -64,3 +65,19 @@ class RestaurantSchema(Schema):
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
+
+
+class OnboardingSchema(Schema):
+    name = fields.Str(
+        description="Restaurant name", example="My first restaurant", allow_none=True
+    )
+    item_price = fields.Str(
+        description="Item's price", exmaple="$5.99", allow_none=True
+    )
+    item_name = fields.Str(description="Item's name", example="Sushi", allow_none=True)
+    item_description = fields.Str(
+        description="Item's description", example="Raw fish", allow_none=True
+    )
+    section_name = fields.Str(
+        description="Section's description", example="Japanese", allow_none=True
+    )
