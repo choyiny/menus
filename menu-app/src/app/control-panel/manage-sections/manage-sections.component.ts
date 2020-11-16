@@ -13,15 +13,19 @@ import { RestaurantService } from '../../services/restaurant.service';
 export class ManageSectionsComponent implements OnInit {
   @ViewChild('section') modal;
   @Input() sections: Section[];
-  mySections: Section[];
+  originalSections: Section[];
   @Output() sectionEmitter = new EventEmitter<Section[]>();
 
   // icons
   addIcon = faPlus;
   constructor(private modalService: NgbModal, private restaurantService: RestaurantService) {}
 
+  parse(sections: Section[]): Section[] {
+    return JSON.parse(JSON.stringify(sections));
+  }
+
   ngOnInit(): void {
-    this.mySections = [...this.sections];
+    this.originalSections = this.parse(this.sections);
   }
 
   open(): void {
@@ -29,7 +33,7 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   save(modal): void {
-    this.sectionEmitter.emit(this.mySections);
+    this.sectionEmitter.emit(this.originalSections);
     modal.close();
   }
 
@@ -40,7 +44,7 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   deleteSection(i): void {
-    this.mySections.splice(0, i);
+    this.originalSections.splice(0, i);
   }
 
   drop(event: CdkDragDrop<Section[]>): void {

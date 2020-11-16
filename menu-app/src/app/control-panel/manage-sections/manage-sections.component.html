@@ -4,9 +4,9 @@
   </div>
 
   <div class="container">
-    <div class="section-list" cdkDropList [cdkDropListData]="mySections" (cdkDropListDropped)="drop($event)">
+    <div class="section-list" cdkDropList [cdkDropListData]="originalSections" (cdkDropListDropped)="drop($event)">
       <app-collapsed-section
-        *ngFor="let section of mySections; let index = i"
+        *ngFor="let section of originalSections; let index = i"
         [section]="section"
         [index]="index"
         (indexEmitter)="deleteSection($event)"
@@ -23,8 +23,8 @@
     </div>
   </div>
 
-  <div class="next-step">
-    <button (click)="modal.close()">Cancel</button>
-    <button (click)="save(modal)">Save</button>
+  <div class="btn-container-manage">
+    <button class="btn4" (click)="modal.close()">Cancel</button>
+    <button class="btn1" (click)="save(modal)">Save</button>
   </div>
 </ng-template>
