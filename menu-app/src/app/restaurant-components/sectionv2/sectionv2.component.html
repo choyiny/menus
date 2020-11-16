@@ -1,13 +1,14 @@
 <div class="section">
-  <div>
-    <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
-      <fa-icon [icon]="editIcon"></fa-icon>
-    </button>
-    <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
+  <div class="edit-section">
+    <h1 *ngIf="!editMode">{{ section.name }}</h1>
+    <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
+    <div class="edit-save">
+      <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
+        <fa-icon [icon]="editIcon"></fa-icon>
+      </button>
+      <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
+    </div>
   </div>
-
-  <h1 *ngIf="!editMode">{{ section.name }}</h1>
-  <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
     <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />

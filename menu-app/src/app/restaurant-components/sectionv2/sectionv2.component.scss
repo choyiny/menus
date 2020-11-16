@@ -37,6 +37,16 @@ p {
   overflow-x: hidden;
 }
 
+.edit-section {
+  & h1 {
+    display: inline-block;
+  }
+
+  & .edit-save {
+    display: inline-block;
+  }
+}
+
 .item-container {
   .new-item {
     padding: 10%;
