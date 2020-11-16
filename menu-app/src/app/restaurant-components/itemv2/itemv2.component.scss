@@ -22,11 +22,16 @@
 
     & .add-tag {
       border-radius: 18px;
-      background-color: #ffffff;
-      color: #4c28ff;
       padding: 8px 29px 8px 26px;
+      margin-right: 10px;
     }
   }
+}
+
+.edit-button {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
 
 
@@ -113,8 +118,6 @@
     padding-bottom: 10px;
 
     .upload {
-      background-color: #ffffff;
-      color: #4c28ff;
       margin: 0;
       padding: 11px 27px 11px 26px;
       width: 40%;

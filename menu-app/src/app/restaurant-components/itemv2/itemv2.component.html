@@ -7,9 +7,6 @@
 ></app-img-form-modal>
 
 <div *ngIf="!editMode" class="menu-item">
-  <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
-    <fa-icon [icon]="faPen"></fa-icon>
-  </button>
 
   <div class="img-description">
     <div class="logo" (click)="showImage()">
@@ -22,7 +19,6 @@
         <h1 class="price">{{ item.price }}</h1>
       </div>
       <quill-view-html
-        *ngIf="!editMode"
         [content]="item.description"
         [style]="{
           color: 'rgba(26, 24, 36, 0.5)',
@@ -43,11 +39,18 @@
     >
     </app-tagv2>
   </span>
+
+  <button *ngIf="hasPermission" class="edit-button desktop" (click)="edit()">
+    <fa-icon [icon]="faPen"></fa-icon>
+  </button>
+
 </div>
 
 <div *ngIf="editMode" class="menu-item edit-body">
   <div class="item-top">
-    <button class="upload" (click)="cropImage()">Upload Image</button>
+    <button class="upload btn2" (click)="cropImage()">
+      <fa-icon [icon]="faPlus"></fa-icon>Upload Image
+    </button>
     <input class="edit-price" type="text" placeholder="Add Price" [(ngModel)]="item.price" />
   </div>
 
@@ -57,7 +60,7 @@
   </div>
 
   <span class="tag-container">
-    <button class="add-tag" (click)="addTag()"><fa-icon [icon]="faPlus"></fa-icon> Add Tag</button>
+    <button class="add-tag btn2" (click)="addTag()"><fa-icon [icon]="faPlus"></fa-icon> Add Tag</button>
     <app-tagv2
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
@@ -71,7 +74,7 @@
     <button class="desktop bg-tint" (click)="remove()">
       <fa-icon [icon]="deleteIcon"> </fa-icon>
     </button>
-    <button class="desktop" (click)="discard()">Cancel</button>
-    <button class="desktop bg2-tint" (click)="save()">Save</button>
+    <button class="desktop btn3" (click)="discard()">Cancel</button>
+    <button class="desktop btn1" (click)="save()">Save</button>
   </div>
 </div>

@@ -121,6 +121,26 @@ button {
     margin: 3px;
   }
 }
+// Global button styles
+.edit-button {
+  background-color: #f0f3f5;
+  color: #4c28ff;
+}
+
+.btn1 {
+  background-color: #4c28ff;
+  color: white;
+}
+
+.btn2 {
+  background-color: #ffffff;
+  color: #4c28ff;
+}
+
+.btn3 {
+  background-color: #ffffff;
+  color: black;
+}
 
 //mobile
 @media only screen and (max-width: 600px) {
@@ -174,4 +194,5 @@ button {
 
 .container {
   background: #f0f3f5;
+  color: #4c28ff;
 }
