@@ -18,7 +18,6 @@ export class Sectionv2Component implements OnInit {
   @Input() slug: string;
   @Input() menuName: string;
   @Input() hasPermission: boolean;
-  @Input() rearrangeMode: boolean;
   @Output() menuEmitter = new EventEmitter<Menu>();
   editMode: boolean;
 
@@ -44,19 +43,6 @@ export class Sectionv2Component implements OnInit {
       }
     );
     this.editMode = false;
-  }
-
-  drop(event: CdkDragDrop<Item[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   edit(): void {
