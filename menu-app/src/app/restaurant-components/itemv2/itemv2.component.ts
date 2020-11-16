@@ -29,17 +29,15 @@ export class Itemv2Component implements OnInit {
   constructor(private restaurantService: RestaurantService, private tagService: TagService) {}
 
   ngOnInit(): void {
-    this.itemOriginal = { ...this.item };
   }
 
   addTag(): void {
     const newTag: Tag = {
       text: 'New tag',
-      icon: 'no-icon',
+      icon: '',
       background_color: 'black',
     };
     this.item.tags.push(newTag);
-    this.editItem();
   }
 
   updateTags(newValue, index): void {
@@ -52,7 +50,6 @@ export class Itemv2Component implements OnInit {
     } else {
       this.item.tags.splice(index, 1);
     }
-    this.editItem();
   }
 
   deletePhoto(): void {
@@ -78,7 +75,8 @@ export class Itemv2Component implements OnInit {
 
   discard(): void {
     this.editMode = false;
-    this.item = { ...this.itemOriginal };
+    console.log(this.itemOriginal.tags);
+    this.item = JSON.parse(JSON.stringify(this.itemOriginal));
   }
 
   save(): void {
@@ -97,11 +95,13 @@ export class Itemv2Component implements OnInit {
   editItem(): void {
     this.restaurantService.editItem(this.slug, this.menuName, this.item).subscribe((item) => {
       this.item = item;
-      this.itemOriginal = { ...item };
+      this.itemOriginal = JSON.parse(JSON.stringify(item));
     });
   }
 
   edit(): void {
     this.editMode = true;
+    // Save item state, also do not use spread does not deep copy
+    this.itemOriginal = JSON.parse(JSON.stringify(this.item));
   }
 }
