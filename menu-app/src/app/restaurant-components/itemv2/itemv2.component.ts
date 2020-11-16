@@ -75,7 +75,6 @@ export class Itemv2Component implements OnInit {
 
   discard(): void {
     this.editMode = false;
-    console.log(this.itemOriginal.tags);
     this.item = JSON.parse(JSON.stringify(this.itemOriginal));
   }
 

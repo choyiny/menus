@@ -87,7 +87,6 @@
   background-color: #f0f3f5;
   padding-bottom: 10px;
   height: calc(100% - 10px);
-  height: calc(100% - 10px);
 
   & .tag-container {
     position: relative;
@@ -128,6 +127,7 @@
       border: solid 1.2px #f0f3f5;
       float: right;
       padding: 14px 14px 12px;
+      color: #8c8b91;
     }
   }
 
@@ -140,6 +140,12 @@
       width: 100%;
       padding: 8px 0px 8px 17px;
       margin-bottom: 10px;
+      color: #8c8b91;
+    }
+    ::ng-deep {
+      .item-editor .ql-editor p {
+        color: #8c8b91;
+      }
     }
   }
 }
