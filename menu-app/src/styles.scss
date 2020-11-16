@@ -15,6 +15,17 @@ input:focus, textarea:focus, button:focus {
   outline: none;
 }
 
+.ql-container {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.ql-toolbar {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: none;
+}
+
 .ql-editor {
   padding: 0 0 0 0;
   position: relative;

@@ -1,5 +1,5 @@
 <app-manage-sections [sections]="menu.sections" (sectionEmitter)="updateSections($event)"></app-manage-sections>
-<button (click)="manageSections()">Manage Sections</button>
+<button class="manage-sections" (click)="manageSections()">Manage Sections</button>
 <app-scrolling-component
   *ngIf="menu"
   [sections]="menu.sections"
