@@ -10,6 +10,9 @@
    .section-title .ql-editor {
     font-size: 30px;
     font-weight: 600;
+     & p {
+      font-weight: 600;
+     }
   }
 }
 

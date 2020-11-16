@@ -6,7 +6,7 @@
     [ngClass]="{ selected: i === currentSection, 'not-selected': i !== currentSection }"
     id="{{ section._id + ' button' }}"
   >
-    {{ section.name }}
+    <quill-view-html [content]="section.name"></quill-view-html>
     <p class="section-description">{{ section.subtitle }}</p>
   </button>
 </div>

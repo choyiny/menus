@@ -11,8 +11,6 @@
   padding: 14px 20px;
   margin: 20px 10px 20px 0px;
   border: none;
-  font-size: 24px;
-  font-weight: 600;
   transition: all 0.3s;
   background-color: white;
   cursor: pointer;
@@ -60,7 +58,6 @@
       box-shadow: 0 -20px 60px 0 rgba(101, 30, 27, 0.22);
       margin: 0;
       .menu-section {
-        font-size: 18px;
         margin: 0 2px 0 0;
         padding: 9px 17px;
         color: #1a1824;
@@ -92,5 +89,16 @@
         overflow-x: scroll;
       }
     }
+  }
+}
+
+::ng-deep {
+  .menu-section .ql-editor {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .mini-scroll .menu-section .ql-editor {
+    font-size: 18px;
   }
 }

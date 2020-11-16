@@ -1,4 +1,4 @@
-<div  *ngIf="!editMode" class="section-collapsed" cdkDrag>
+<div *ngIf="!editMode" class="section-collapsed" cdkDrag>
   <div class="section-title">
     <quill-view-html *ngIf="!editMode" [content]="section.name"></quill-view-html>
   </div>
@@ -13,7 +13,7 @@
     <quill-editor *ngIf="editMode" [(ngModel)]="section.name"></quill-editor>
   </div>
   <div class="btn-container">
-    <button class="btn1">Save</button>
-    <button class="btn3">Cancel</button>
+    <button class="btn1" (click)="save()">Save</button>
+    <button class="btn3" (click)="cancel()">Cancel</button>
   </div>
 </div>

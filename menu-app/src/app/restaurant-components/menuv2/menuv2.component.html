@@ -7,8 +7,8 @@
   [currentSection]="selectedSection"
   class="mobile"
 ></app-scrolling-component>
-<button class="left desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
-<div class="left" *ngFor="let section of menu.sections; let i = index">
+<button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
+<div class="align" *ngFor="let section of menu.sections; let i = index">
   <app-sectionv2
     [hasPermission]="hasPermission"
     [section]="section"

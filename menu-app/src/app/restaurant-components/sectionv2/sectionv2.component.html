@@ -1,13 +1,20 @@
 <div class="section">
   <div class="edit-section">
-    <h1 *ngIf="!editMode">{{ section.name }}</h1>
-    <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
     <div class="edit-save">
-      <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
+      <button class="desktop edit-button" *ngIf="!editMode && hasPermission" (click)="edit()">
         <fa-icon [icon]="editIcon"></fa-icon>
       </button>
       <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
     </div>
+    <quill-view-html
+      [content]="section.name"
+      [style]="{
+        'font-size': '22px',
+        'font-weight': '600'
+      }"
+    >
+    </quill-view-html>
+    <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.name"></quill-editor>
   </div>
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>

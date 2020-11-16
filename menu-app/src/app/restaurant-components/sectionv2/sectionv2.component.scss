@@ -9,9 +9,12 @@
   }
 }
 
-h1 {
-  font-size: 22px;
-  font-weight: 600;
+::ng-deep {
+   .edit-section  .ql-editor {
+      font-size: 22px;
+      font-weight: 600;
+     display: inline-block;
+  }
 }
 
 p {
@@ -38,9 +41,6 @@ p {
 }
 
 .edit-section {
-  & h1 {
-    display: inline-block;
-  }
 
   & .edit-save {
     display: inline-block;

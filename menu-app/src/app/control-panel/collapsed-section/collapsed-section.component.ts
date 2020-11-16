@@ -10,9 +10,11 @@ import { faTrash, faPen } from '@fortawesome/pro-solid-svg-icons';
 export class CollapsedSectionComponent implements OnInit {
   @Input() section: Section;
   @Input() index: number;
-  editMode = false;
-  @Output() sectionEmitter = new EventEmitter<Section>();
+
   @Output() indexEmitter = new EventEmitter<number>();
+
+  editMode = false;
+  sectionOriginal: Section;
 
   // icons
   deleteIcon = faTrash;
@@ -22,15 +24,25 @@ export class CollapsedSectionComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  parse(section: Section): Section {
+    return (this.sectionOriginal = JSON.parse(JSON.stringify(section)));
+  }
+
   save(): void {
-    this.sectionEmitter.emit(this.section);
+    this.editMode = false;
   }
 
   edit(): void {
     this.editMode = !this.editMode;
+    this.sectionOriginal = this.parse(this.section);
   }
 
   delete(): void {
     this.indexEmitter.emit(this.index);
+  }
+
+  cancel(): void {
+    this.section = this.parse(this.sectionOriginal);
+    this.editMode = false;
   }
 }
