@@ -7,19 +7,15 @@
   [currentSection]="selectedSection"
 ></app-scrolling-component>
 <button class="left desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
-  <div
-    *ngFor="let section of menu.sections; let i = index"
+<div *ngFor="let section of menu.sections; let i = index">
+  <app-sectionv2
+    [hasPermission]="hasPermission"
+    [section]="section"
+    [slug]="slug"
+    [menuName]="menu.name"
+    id="{{ section._id }}"
+    (menuEmitter)="update($event)"
   >
-    <app-sectionv2
-      [hasPermission]="hasPermission"
-      [section]="section"
-      [slug]="slug"
-      [menuName]="menu.name"
-      id="{{ section._id }}"
-      (menuEmitter)="update($event)"
-    >
-    </app-sectionv2>
-    <button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">
-      Add new Section
-    </button>
-  </div>
+  </app-sectionv2>
+  <button class="left desktop" *ngIf="!rearrangeMode && hasPermission" (click)="newSection(i)">Add new Section</button>
+</div>

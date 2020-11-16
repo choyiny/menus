@@ -39,7 +39,7 @@ export class ManageSectionsComponent implements OnInit {
     });
   }
 
-  deleteSection(i): void{
+  deleteSection(i): void {
     this.mySections.splice(0, i);
   }
 

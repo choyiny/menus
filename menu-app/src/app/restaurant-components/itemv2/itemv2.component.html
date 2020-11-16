@@ -43,7 +43,6 @@
     >
     </app-tagv2>
   </span>
-
 </div>
 
 <div *ngIf="editMode" class="menu-item edit-body">
@@ -53,14 +52,12 @@
   </div>
 
   <div class="item-body">
-    <input class="item-title" type="text" placeholder="Enter title" [(ngModel)]="item.name"/>
+    <input class="item-title" type="text" placeholder="Enter title" [(ngModel)]="item.name" />
     <quill-editor class="item-editor" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
   </div>
 
   <span class="tag-container">
-    <button class="add-tag"(click)="addTag()">
-      <fa-icon [icon]="faPlus"></fa-icon> Add Tag
-    </button>
+    <button class="add-tag" (click)="addTag()"><fa-icon [icon]="faPlus"></fa-icon> Add Tag</button>
     <app-tagv2
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
@@ -77,5 +74,4 @@
     <button class="desktop" (click)="discard()">Cancel</button>
     <button class="desktop bg2-tint" (click)="save()">Save</button>
   </div>
-
 </div>

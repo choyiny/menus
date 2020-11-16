@@ -28,8 +28,7 @@ export class Itemv2Component implements OnInit {
 
   constructor(private restaurantService: RestaurantService, private tagService: TagService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addTag(): void {
     const newTag: Tag = {
