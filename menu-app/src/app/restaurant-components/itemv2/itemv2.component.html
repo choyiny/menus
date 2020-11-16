@@ -53,7 +53,7 @@
 
   <div class="item-body">
     <input class="item-title" type="text" placeholder="Enter title" [(ngModel)]="item.name" />
-    <quill-editor class="item-editor" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
+    <quill-editor class="editor" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
   </div>
 
   <span class="tag-container">

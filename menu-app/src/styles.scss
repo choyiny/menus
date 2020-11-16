@@ -23,7 +23,36 @@ input:focus, textarea:focus, button:focus {
 .ql-toolbar {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-bottom: none;
+   & .ql-snow {
+     border-top: solid 1.2px #f0f3f5;
+     border-left: solid 1.2px #f0f3f5;
+     border-right: solid 1.2px #f0f3f5;
+     border-bottom: none;
+   }
+}
+
+.editor {
+
+  & .ql-toolbar {
+    background-color: white;
+    border-top: solid 1.2px #f0f3f5;
+    border-left: solid 1.2px #f0f3f5;
+    border-right: solid 1.2px #f0f3f5;
+    border-bottom: none;
+  }
+
+  & .ql-editor {
+    color: #8c8b91;
+    margin-left: 15px;
+
+  }
+
+  & .ql-container {
+    border-left: solid 1.2px #f0f3f5;
+    border-right: solid 1.2px #f0f3f5;
+    border-bottom: solid 1.2px #f0f3f5;
+    background-color: white;
+  }
 }
 
 .ql-editor {
