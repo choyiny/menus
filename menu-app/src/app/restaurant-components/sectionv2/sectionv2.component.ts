@@ -53,6 +53,19 @@ export class Sectionv2Component implements OnInit {
     this.section = section;
   }
 
+  drop(event: CdkDragDrop<Item[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+  }
+
   addMenuItem(): void {
     this.restaurantService.newItem().subscribe((item) => {
       this.section.menu_items.push(item);
@@ -64,7 +77,6 @@ export class Sectionv2Component implements OnInit {
             const newItem = document.getElementById(item._id);
             if (newItem) {
               // find component and then manually set editMode to True
-              console.log(newItem);
               self.disconnect();
               return;
             }

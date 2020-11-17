@@ -1,29 +1,35 @@
 <div class="section">
-    <div class="view">
-      <quill-view-html
-        [content]="section.name"
-        [style]="{
+  <div class="view" *ngIf="!editMode">
+    <quill-view-html
+      [content]="section.name"
+      [style]="{
         'font-size': '22px',
         'font-weight': '600'
       }"
-      >
-      </quill-view-html>
-      <button class="align-top desktop btn0" *ngIf="!editMode && hasPermission" (click)="edit()">
-        <fa-icon [icon]="editIcon"></fa-icon>
-      </button>
-    </div>
-    <div class="edit">
-      <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.name"></quill-editor>
-      <button class="align-top save desktop" *ngIf="editMode" (click)="editSection()">Save</button>
-    </div>
+    >
+    </quill-view-html>
+    <button class="align-top desktop btn0" *ngIf="!editMode && hasPermission" (click)="edit()">
+      <fa-icon [icon]="editIcon"></fa-icon>
+    </button>
+  </div>
+  <div class="edit">
+    <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.name"></quill-editor>
+    <button class="align-top save desktop" *ngIf="editMode" (click)="editSection()">Save</button>
+  </div>
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
     <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
     <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
     <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
   </div>
-  <div class="row">
+  <div class="row"
+       cdkDropList
+       [cdkDropListDisabled]="!editMode"
+       [cdkDropListData]="section.menu_items"
+       (cdkDropListDropped)="drop($event)"
+  >
     <app-itemv2
+      cdkDrag
       *ngFor="let item of section.menu_items"
       id="{{ item._id }}"
       [item]="item"
@@ -31,6 +37,7 @@
       [slug]="slug"
       [menuName]="menuName"
       [hasPermission]="hasPermission"
+      (sectionEmitter)="updateSection($event)"
     ></app-itemv2>
 
     <div class="col-md-4 col-sm-6 col-12 item-container desktop">
