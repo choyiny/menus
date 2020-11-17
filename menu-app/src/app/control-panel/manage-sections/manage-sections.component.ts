@@ -18,6 +18,7 @@ export class ManageSectionsComponent implements OnInit {
 
   // icons
   addIcon = faPlus;
+
   constructor(private modalService: NgbModal, private restaurantService: RestaurantService) {}
 
   parse(sections: Section[]): Section[] {

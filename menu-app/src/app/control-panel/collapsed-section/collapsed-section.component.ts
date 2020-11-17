@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Section } from '../../interfaces/restaurant-interfaces';
-import { faTrash, faPen } from '@fortawesome/pro-solid-svg-icons';
+import { faTrash, faPen, faArrowsAlt } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-collapsed-section',
@@ -19,6 +19,7 @@ export class CollapsedSectionComponent implements OnInit {
   // icons
   deleteIcon = faTrash;
   editIcon = faPen;
+  dragIcon = faArrowsAlt;
 
   constructor() {}
 

@@ -6,15 +6,20 @@
   position: relative;
 }
 
+.drag {
+  margin-right: 2em;
+}
+
 ::ng-deep {
    .section-title .ql-editor {
-    font-size: 30px;
-    font-weight: 600;
-     color: black;
-     & p {
-      font-weight: 600;
-     }
-  }
+        display: inline-block;
+        font-size: 30px;
+        font-weight: 600;
+        color: black;
+        & p {
+          font-weight: 600;
+        }
+      }
 }
 
 .icons {

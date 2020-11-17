@@ -22,11 +22,12 @@
     <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
     <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
   </div>
-  <div class="row"
-       cdkDropList
-       [cdkDropListDisabled]="!editMode"
-       [cdkDropListData]="section.menu_items"
-       (cdkDropListDropped)="drop($event)"
+  <div
+    class="row"
+    cdkDropList
+    [cdkDropListDisabled]="!editMode"
+    [cdkDropListData]="section.menu_items"
+    (cdkDropListDropped)="drop($event)"
   >
     <app-itemv2
       cdkDrag

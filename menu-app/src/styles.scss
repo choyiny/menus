@@ -72,6 +72,17 @@ input:focus, textarea:focus, button:focus {
   }
 }
 
+.inline {
+
+  & .ql-editor {
+    display: inline-block;
+  }
+
+  & .ql-container{
+    display: inline-block;
+  }
+}
+
 .modal-content {
   background-color: transparent;
   border: none;
