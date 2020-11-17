@@ -24,13 +24,6 @@ p {
   margin: 2.5px 0px 2.5px 0px;
 }
 
-.rearrange {
-  border-bottom: solid 0.5px #dfe0e3;
-  margin-top: 5px;
-  padding-left: 20px;
-  overflow-x: hidden;
-}
-
 .item-container {
   .new-item {
     padding: 10%;
@@ -49,20 +42,33 @@ p {
 }
 
 ::ng-deep {
-  .edit-section  .ql-container {
+  .view .ql-container {
+      font-size: 22px;
+      font-weight: 600;
+      & p {
+        font-weight: 600;
+      }
+    }
+
+  .edit .ql-editor {
     font-size: 22px;
     font-weight: 600;
-    display: inline-block;
     & p {
       font-weight: 600;
     }
   }
 }
 
-.edit-section {
-
-  & .edit-save {
-    display: inline-block;
+.view {
+  & button {
     margin-left: 2em;
+  }
+}
+
+.edit {
+  margin-bottom: 1.5em;
+  & button {
+    margin-top: 0.5em;
+    float: right;
   }
 }
