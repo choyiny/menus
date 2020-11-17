@@ -1,5 +1,5 @@
 <div class="section">
-  <div class="view" *ngIf="!editMode">
+  <div class="view-edit inline" *ngIf="!editMode">
     <quill-view-html
       [content]="section.name"
       [style]="{
@@ -12,9 +12,9 @@
       <fa-icon [icon]="editIcon"></fa-icon>
     </button>
   </div>
-  <div class="edit">
-    <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.name"></quill-editor>
-    <button class="align-top save desktop" *ngIf="editMode" (click)="editSection()">Save</button>
+  <div class="view-edit" *ngIf="editMode">
+    <quill-editor class="editor" [(ngModel)]="section.name"></quill-editor>
+    <button class="align-top btn4 desktop" (click)="editSection()">Save</button>
   </div>
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>

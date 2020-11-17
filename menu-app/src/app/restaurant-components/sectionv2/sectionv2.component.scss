@@ -42,32 +42,22 @@ p {
 }
 
 ::ng-deep {
-  .view .ql-container {
+  .view-edit .ql-container {
       font-size: 22px;
       font-weight: 600;
       & p {
         font-weight: 600;
       }
     }
-
-  .edit .ql-editor {
-    font-size: 22px;
-    font-weight: 600;
-    & p {
-      font-weight: 600;
-    }
-  }
 }
 
-.view {
-  & button {
+.view-edit {
+  margin-bottom: 2em;
+  & .btn0{
     margin-left: 2em;
   }
-}
 
-.edit {
-  margin-bottom: 1.5em;
-  & button {
+  & .btn4 {
     margin-top: 0.5em;
     float: right;
   }
