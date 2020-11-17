@@ -63,7 +63,8 @@ export class Sectionv2Component implements OnInit {
           const observer = new MutationObserver((mutations, self) => {
             const newItem = document.getElementById(item._id);
             if (newItem) {
-              this.scrollService.scrollToSection(item._id);
+              // find component and then manually set editMode to True
+              console.log(newItem);
               self.disconnect();
               return;
             }

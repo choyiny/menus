@@ -49,6 +49,7 @@ import { RestaurantComponent } from './restaurant-components/restaurant/restaura
 import { VerificationComponent } from './auth-components/verification/verification.component';
 import { ManageSectionsComponent } from './control-panel/manage-sections/manage-sections.component';
 import { CollapsedSectionComponent } from './control-panel/collapsed-section/collapsed-section.component';
+import { NavbarComponent } from './util-components/navbar/navbar.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -86,6 +87,7 @@ const DragConfig = {
     VerificationComponent,
     ManageSectionsComponent,
     CollapsedSectionComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

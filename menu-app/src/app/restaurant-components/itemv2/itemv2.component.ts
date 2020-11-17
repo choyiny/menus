@@ -20,7 +20,7 @@ export class Itemv2Component implements OnInit {
   @Input() menuName: string;
   @Input() hasPermission: boolean;
   @Output() sectionEmitter = new EventEmitter<Section>();
-  editMode: boolean;
+  @Input() editMode: boolean;
   // icons
   faPlus = faPlus;
   faPen = faPen;
