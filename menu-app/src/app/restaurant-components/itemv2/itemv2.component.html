@@ -39,7 +39,7 @@
     </app-tagv2>
   </span>
 
-  <button *ngIf="hasPermission" class="edit-button desktop" (click)="edit()">
+  <button *ngIf="hasPermission" class="btn0 desktop" (click)="edit()">
     <fa-icon [icon]="faPen"></fa-icon>
   </button>
 </div>
@@ -67,10 +67,10 @@
   </span>
 
   <div class="button-container">
+    <button class="desktop btn1" (click)="save()">Save</button>
+    <button class="desktop btn3" (click)="discard()">Cancel</button>
     <button class="desktop bg-tint" (click)="remove()">
       <fa-icon [icon]="deleteIcon"> </fa-icon>
     </button>
-    <button class="desktop btn3" (click)="discard()">Cancel</button>
-    <button class="desktop btn1" (click)="save()">Save</button>
   </div>
 </div>

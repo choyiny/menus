@@ -1,5 +1,5 @@
 <div class="button-container">
-  <button *ngIf="!editMode && hasPermission" (click)="edit()"><fa-icon [icon]="imageIcon"></fa-icon></button>
+  <button class="btn0" *ngIf="!editMode" (click)="edit()"><fa-icon [icon]="addIcon"></fa-icon>Upload Image</button>
   <button *ngIf="editMode" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon></button>
   <input *ngIf="editMode" type="text" [(ngModel)]="image" />
 </div>

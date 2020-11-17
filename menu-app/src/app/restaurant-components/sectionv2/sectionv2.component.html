@@ -1,11 +1,5 @@
 <div class="section">
   <div class="edit-section">
-    <div class="edit-save">
-      <button class="desktop edit-button" *ngIf="!editMode && hasPermission" (click)="edit()">
-        <fa-icon [icon]="editIcon"></fa-icon>
-      </button>
-      <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
-    </div>
     <quill-view-html
       [content]="section.name"
       [style]="{
@@ -15,6 +9,12 @@
     >
     </quill-view-html>
     <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.name"></quill-editor>
+    <div class="edit-save align-top">
+      <button class="desktop btn0" *ngIf="!editMode && hasPermission" (click)="edit()">
+        <fa-icon [icon]="editIcon"></fa-icon>
+      </button>
+      <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
+    </div>
   </div>
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
@@ -35,7 +35,9 @@
 
     <div class="col-md-4 col-sm-6 col-12 item-container desktop">
       <div class="new-item">
-        <button (click)="addMenuItem()" class="btn2 new-button"><fa-icon [icon]="faPlus"></fa-icon>Add new Menu Item</button>
+        <button (click)="addMenuItem()" class="btn2 new-button">
+          <fa-icon [icon]="faPlus"></fa-icon>Add new Menu Item
+        </button>
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <div class="desktop-description">
   <h1 *ngIf="!editMode" class="desc">{{ name }}</h1>
   <input *ngIf="editMode" class="desc" [style.width.ch]="name.length" type="text" [(ngModel)]="name" />
-  <button *ngIf="!editMode && hasPermission" (click)="edit()"><fa-icon [icon]="editIcon"></fa-icon></button>
+  <button class="btn0 align-top" *ngIf="!editMode" (click)="edit()"><fa-icon [icon]="editIcon"></fa-icon></button>
   <button *ngIf="editMode" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon></button>
 </div>

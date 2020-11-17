@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faImage, faSave } from '@fortawesome/pro-solid-svg-icons';
+import { faImage, faSave, faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { MenuEditable } from '../../../interfaces/menus-interface';
 
 @Component({
@@ -16,6 +16,7 @@ export class ChangeBackgroundComponent implements OnInit {
   // icons
   imageIcon = faImage;
   saveIcon = faSave;
+  addIcon = faPlus;
 
   constructor() {}
 
