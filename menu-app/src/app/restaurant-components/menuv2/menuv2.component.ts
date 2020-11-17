@@ -17,7 +17,6 @@ export class Menuv2Component implements OnInit {
   previousScroll = 0;
   selectedSection = 0;
   rearrangeMode = false;
-  @ViewChild(ManageSectionsComponent) sections: ManageSectionsComponent;
 
   constructor(private restaurantService: RestaurantService) {}
 
@@ -117,7 +116,7 @@ export class Menuv2Component implements OnInit {
     this.rearrangeMode = false;
   }
 
-  manageSections(): void {
-    this.sections.open();
+  updateMenu(menu: Menu): void {
+    this.menu = menu;
   }
 }

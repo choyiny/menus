@@ -1,10 +1,11 @@
-<app-manage-sections [sections]="menu.sections" (sectionEmitter)="updateSections($event)"></app-manage-sections>
-<button class="manage-sections" (click)="manageSections()">Manage Sections</button>
 <app-scrolling-component
   *ngIf="menu"
   [sections]="menu.sections"
   [miniScroll]="miniScroll"
   [currentSection]="selectedSection"
+  [menuName]="menu.name"
+  [slug]="slug"
+  (menuEmitter)="updateMenu($event)"
 ></app-scrolling-component>
 <button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
 <div class="align" *ngFor="let section of menu.sections; let i = index">

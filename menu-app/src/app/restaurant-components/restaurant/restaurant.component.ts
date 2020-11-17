@@ -34,7 +34,7 @@ export class RestaurantComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
-    if (this.slug != null) {
+    if (this.slug != null && !this.restaurant) {
       this.getRestaurant();
     }
     const user = this.authService.currentUserValue;
