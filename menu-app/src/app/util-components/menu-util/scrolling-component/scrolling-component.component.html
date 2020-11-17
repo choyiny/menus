@@ -1,4 +1,5 @@
 <div class="scrolling-wrapper sticky-top" [ngClass]="{ 'mini-scroll': miniScroll }" id="wrapper">
+  <button class="btn1 manage-sections" (click)="manageSections()">Manage Sections</button>
   <button
     class="menu-section"
     *ngFor="let section of sections; let i = index"

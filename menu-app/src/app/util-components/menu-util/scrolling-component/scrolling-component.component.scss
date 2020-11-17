@@ -35,16 +35,12 @@
     border-color: rgba(196, 208, 217, 0.5);
   }
 
-  .selected {
-    color: #ee3353;
-  }
-
   .sticky-top {
     position: relative;
   }
 
   .not-selected {
-    color: #626168;
+    color: black;
   }
 }
 
@@ -77,6 +73,15 @@
       opacity: 0.2;
     }
   }
+
+  ::ng-deep {
+    .mini-scroll .menu-section .ql-editor {
+      font-size: 18px;
+      & p {
+        font-weight: 600;
+      }
+    }
+  }
 }
 
 //band-aid
@@ -100,11 +105,12 @@
       font-weight: 600;
     }
   }
+}
 
-  .mini-scroll .menu-section .ql-editor {
-    font-size: 18px;
-    & p {
-      font-weight: 600;
-    }
-  }
+.manage-sections {
+  margin: 17px 27px 17px 13px;
+  padding: 8px 19px 8px 26px;
+  border-radius: 18px;
+  background-color: #4c28ff;
+  color: white;
 }

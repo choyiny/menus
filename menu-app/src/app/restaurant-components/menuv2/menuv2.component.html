@@ -5,7 +5,6 @@
   [sections]="menu.sections"
   [miniScroll]="miniScroll"
   [currentSection]="selectedSection"
-  class="mobile"
 ></app-scrolling-component>
 <button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
 <div class="align" *ngFor="let section of menu.sections; let i = index">

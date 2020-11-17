@@ -11,6 +11,7 @@ export class MenuNameComponent implements OnInit {
   constructor() {}
 
   @Input() name: string;
+  @Input() hasPermission: boolean;
   @Output() menuEmitter = new EventEmitter<MenuEditable>();
   editMode = false;
 
