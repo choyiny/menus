@@ -3,8 +3,21 @@
   padding-right: 20px;
 }
 
+.view {
+  padding-top: 2em;
+  & button {
+    margin-left: 2em;
+    margin-top: 0.5em;
+  }
+}
+
 ::ng-deep {
   .view .ql-editor{
     font-size: 30px;
+    display: inline-block;
+  }
+
+  .view .ql-container {
+    display: inline-block;
   }
 }

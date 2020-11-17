@@ -1,8 +1,4 @@
 <div class="menu-view">
-  <button *ngIf="!editMode && hasPermission" (click)="edit()">
-    <fa-icon [icon]="editIcon"></fa-icon> Edit Menu details
-  </button>
-  <button *ngIf="editMode" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon> Save</button>
   <div class="view">
     <quill-view-html
       *ngIf="!editMode && description"
@@ -12,6 +8,9 @@
         'font-size': '30px'
       }"
     ></quill-view-html>
+    <button class="btn0 align-top" *ngIf="!editMode && hasPermission" (click)="edit()">
+      <fa-icon [icon]="editIcon"></fa-icon>
+    </button>
   </div>
   <quill-editor
     *ngIf="editMode"
@@ -22,4 +21,5 @@
     class="editor"
   >
   </quill-editor>
+  <button class="float-right" *ngIf="editMode" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon> Save</button>
 </div>
