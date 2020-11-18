@@ -46,7 +46,6 @@ export class ManageSectionsComponent implements OnInit {
 
   deleteSection(i): void {
     this.originalSections.splice(i, 1);
-    console.log(this.originalSections.length);
   }
 
   drop(event: CdkDragDrop<Section[]>): void {

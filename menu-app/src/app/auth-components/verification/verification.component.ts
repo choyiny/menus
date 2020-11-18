@@ -22,7 +22,6 @@ export class VerificationComponent implements OnInit {
       const email = params.email;
       this.auth.signInWithEmailLink(email, window.location.href).then(
         (res) => {
-          console.log(res);
           this.authService.upgradeUser().subscribe((user) => {
             this.status = 'Success!';
             this.router.navigateByUrl('');

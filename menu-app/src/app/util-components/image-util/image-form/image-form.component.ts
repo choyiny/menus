@@ -22,11 +22,9 @@ export class ImageFormComponent implements OnInit {
   }
   imageLoaded(): void {
     // show cropper
-    console.log('loaded');
   }
   cropperReady(): void {
     // cropper ready
-    console.log('ready');
   }
   loadImageFailed(): void {
     // show message
