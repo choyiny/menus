@@ -1,3 +1,5 @@
+import random
+import string
 import uuid
 from io import BytesIO
 
@@ -14,6 +16,7 @@ from utils.errors import (
     MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     NOT_AUTHENTICATED,
+    ONE_RESTAURANT_ONLY,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
 )
@@ -415,17 +418,38 @@ class PublishRestaurantResource(RestaurantBaseResource):
 
 
 class OnboardingRestaurantResource(RestaurantBaseResource):
-    @doc(description="""Onboard user's first restaurant""")
-    @use_kwargs(OnboardingSchema)
+    @doc(description="""Generate random restaurant with menu 'Menu'""")
+    @marshal_with(RestaurantSchema)
     @firebase_login_required
-    def post(self, **kwargs):
-
-        # temporary fix, not sure why multiple requests are send
-        if g.user.restaurants:
-            return FORBIDDEN
+    def post(self):
 
         if g.user is None:
             return FORBIDDEN
+
+        if g.user.restaurants:
+            return ONE_RESTAURANT_ONLY
+
+        menu = MenuV2(name="Menu").save()
+
+        random_slug = "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=7)
+        )
+        g.user.restaurants.append(random_slug)
+        g.user.save()
+
+        return Restaurant(menus=[menu], slug=random_slug, public=False).save()
+
+    @doc(description="""Onboard user's first restaurant""")
+    @use_kwargs(OnboardingSchema)
+    @firebase_login_required
+    def patch(self, slug, **kwargs):
+
+        if g.user is None:
+            return FORBIDDEN
+
+        menu = Restaurant.objects(slug=slug).get_menu("Menu")
+        if menu is None:
+            return MENU_NOT_FOUND
 
         item = Item(_id=str(uuid.uuid4()))
 
@@ -443,16 +467,5 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         if kwargs.get("section_name"):
             section.name = kwargs.get("section_name")
 
-        menu = MenuV2(sections=[section], name="Menu")
-        menu.save()
-
-        restaurant = Restaurant(menus=[menu], slug=str(uuid.uuid4()), public=False)
-
-        if kwargs.get("name"):
-            restaurant.name = kwargs.get("name")
-
-        restaurant.save()
-        g.user.restaurants.append(restaurant.slug)
-        g.user.save()
-
-        return restaurant.slug
+        menu.sections = [section]
+        return menu
