@@ -52,5 +52,11 @@ resources = [
         "publish",
         ["PATCH"],
     ),
-    (OnboardingRestaurantResource, "restaurants/onboard", "onboard", ["POST", "PATCH"]),
+    (OnboardingRestaurantResource, "restaurants/onboard", "onboard", ["POST"]),
+    (
+        OnboardingRestaurantResource,
+        "restaurants/<string:slug>/onboard",
+        "onboard_patch",
+        ["PATCH"],
+    ),
 ]

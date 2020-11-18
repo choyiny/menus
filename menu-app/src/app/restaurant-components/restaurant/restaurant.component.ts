@@ -49,7 +49,6 @@ export class RestaurantComponent implements OnInit {
   }
 
   loadMenus(): void {
-    console.log(this.restaurant.menus);
     for (let i = 0; i < this.restaurant.menus.length; i++) {
       const menuName = this.restaurant.menus[i];
       this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {

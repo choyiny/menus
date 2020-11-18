@@ -435,19 +435,27 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         )
         g.user.restaurants.append(random_slug)
         g.user.save()
-        restaurant = Restaurant(menus=[menu], slug=random_slug, public=False).save()
+        restaurant = Restaurant(
+            menus=[menu], slug=random_slug, name="Menu 1", public=False
+        ).save()
 
         return restaurant.slug
 
     @doc(description="""Onboard user's first restaurant""")
     @use_kwargs(OnboardingSchema)
     @firebase_login_required
+    @marshal_with(MenuV2Schema)
     def patch(self, slug, **kwargs):
 
         if g.user is None:
             return FORBIDDEN
 
-        menu = Restaurant.objects(slug=slug).get_menu("Menu")
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+
+        menu = restaurant.get_menu("Menu")
+
         if menu is None:
             return MENU_NOT_FOUND
 
@@ -468,4 +476,5 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
             section.name = kwargs.get("section_name")
 
         menu.sections = [section]
+        menu.save()
         return menu

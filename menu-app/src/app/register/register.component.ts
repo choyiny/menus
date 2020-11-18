@@ -1,41 +1,35 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FirstMenuComponent } from '../util-components/register/first-menu/first-menu.component';
-import { Restaurant } from '../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../services/restaurant.service';
 import { AuthService } from '../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent implements OnInit {
   @ViewChild(FirstMenuComponent) registerMenu: FirstMenuComponent;
-  constructor(private restaurantService: RestaurantService, private auth: AuthService) {}
-
-  restaurant: Restaurant;
-  hasPermission: boolean;
   slug: string;
+  constructor(private restaurantService: RestaurantService, private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.auth.anonymousSignIn().subscribe((user) => {
       console.log(user);
       this.restaurantService.onboardRestaurant().subscribe((slug) => {
+        this.slug = slug;
         console.log(slug);
-        this.restaurantService.getRestaurant(slug).subscribe((restaurant) => {
-          console.log(restaurant);
-          this.auth.reloadUser().subscribe((newUser) => {
-            console.log(newUser);
-            this.hasPermission = user.restaurants.includes(slug);
-            this.restaurant = restaurant;
-            this.slug = slug;
-          });
-        });
+        this.auth.reloadUser().subscribe(
+          newUser => {
+            this.router.navigateByUrl(`restaurants/${slug}`).then(
+              res => {
+                this.registerMenu.open();
+              }
+            );
+          }
+        );
       });
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.registerMenu.open();
   }
 }

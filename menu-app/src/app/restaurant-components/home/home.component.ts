@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
+    console.log(this.slug, 'slug');
     const user = this.authService.currentUserValue;
     if (user) {
       this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
