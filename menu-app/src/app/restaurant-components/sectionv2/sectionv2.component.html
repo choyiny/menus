@@ -1,23 +1,26 @@
-<div *ngIf="!rearrangeMode" class="section">
-  <div>
-    <button class="desktop" *ngIf="!editMode && hasPermission" (click)="edit()">
+<div class="section">
+  <div class="view-edit inline" *ngIf="!editMode">
+    <quill-view-html
+      [content]="section.name"
+      [style]="{
+        'font-size': '22px',
+        'font-weight': '600'
+      }"
+    >
+    </quill-view-html>
+    <button class="align-top desktop btn0" *ngIf="!editMode && hasPermission" (click)="edit()">
       <fa-icon [icon]="editIcon"></fa-icon>
     </button>
-    <button class="desktop" *ngIf="!editMode && hasPermission" (click)="delete()">
-      <fa-icon [icon]="deleteIcon"></fa-icon>
-    </button>
-    <button class="desktop" *ngIf="editMode" (click)="editSection()">Save</button>
-    <button *ngIf="hasPermission" class="bg-tint desktop" (click)="addMenuItem()">
-      <fa-icon [icon]="faPlus"></fa-icon>Add Menu Item
-    </button>
   </div>
-  <h1 *ngIf="!editMode">{{ section.name }}</h1>
-  <input *ngIf="editMode" type="text" [(ngModel)]="section.name" />
+  <div class="view-edit" *ngIf="editMode">
+    <quill-editor class="editor" [(ngModel)]="section.name"></quill-editor>
+    <button class="align-top btn4 desktop" (click)="editSection()">Save</button>
+  </div>
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
     <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
     <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
-    <quill-editor *ngIf="editMode" [(ngModel)]="section.description"></quill-editor>
+    <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
   </div>
   <div
     class="row"
@@ -30,16 +33,20 @@
       cdkDrag
       *ngFor="let item of section.menu_items"
       id="{{ item._id }}"
-      (sectionEmitter)="updateSection($event)"
       [item]="item"
       class="col-md-4 col-sm-6 col-12"
       [slug]="slug"
       [menuName]="menuName"
       [hasPermission]="hasPermission"
+      (sectionEmitter)="updateSection($event)"
     ></app-itemv2>
+
+    <div  *ngIf="hasPermission" class="col-md-4 col-sm-6 col-12 item-container desktop">
+      <div class="new-item">
+        <button (click)="addMenuItem()" class="btn2 new-button">
+          <fa-icon [icon]="faPlus"></fa-icon>Add new Menu Item
+        </button>
+      </div>
+    </div>
   </div>
-</div>
-<div *ngIf="rearrangeMode" class="rearrange">
-  <h1>{{ section.name }}</h1>
-  <quill-view-html [content]="section.description" theme="snow"></quill-view-html>
 </div>

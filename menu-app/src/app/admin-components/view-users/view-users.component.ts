@@ -28,7 +28,6 @@ export class ViewUsersComponent implements OnInit {
         this.userService
           .getUsers({ limit: this.per_page, page: this.current_page })
           .subscribe(({ total_page, users }) => {
-            console.log(users);
             this.total_page = total_page;
             this.users = { users };
           });

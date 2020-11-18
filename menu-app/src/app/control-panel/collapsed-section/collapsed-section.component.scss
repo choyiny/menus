@@ -1,0 +1,45 @@
+.section-collapsed {
+  margin: 10px 10px 20px 10px;
+  padding: 4px 13px 9px 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.drag {
+  margin-right: 2em;
+}
+
+::ng-deep {
+   .section-title .ql-editor {
+        display: inline-block;
+        font-size: 30px;
+        font-weight: 600;
+        color: black;
+        & p {
+          font-weight: 600;
+        }
+      }
+}
+
+.icons {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.section-collapsed-edit {
+  margin: 10px 10px 20px 10px;
+  padding: 4px 13px 9px 10px;
+  border-radius: 8px;
+  position: relative;
+
+  & .btn-container {
+    margin-top: 10px;
+
+    & button {
+      margin-right: 5px;
+      padding: 8px 30px 8px 30px;
+    }
+  }
+}

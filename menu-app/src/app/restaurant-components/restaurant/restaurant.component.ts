@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
-import { CovidModalComponent } from '../../util-components/modals/covid-modal/covid-modal.component';
+import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ScrollService } from '../../services/scroll.service';
@@ -34,7 +34,7 @@ export class RestaurantComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
-    if (this.slug != null) {
+    if (this.slug != null && !this.restaurant) {
       this.getRestaurant();
     }
     const user = this.authService.currentUserValue;

@@ -1,0 +1,20 @@
+<div *ngIf="!editMode" class="section-collapsed" cdkDrag>
+  <div class="section-title inline">
+    <fa-icon class="align-top drag" [icon]="dragIcon"></fa-icon>
+    <quill-view-html *ngIf="!editMode" [content]="section.name"></quill-view-html>
+  </div>
+  <div class="icons">
+    <button class="bg-tint" (click)="delete()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
+    <button class="bg2-tint" (click)="edit()"><fa-icon [icon]="editIcon"></fa-icon></button>
+  </div>
+</div>
+
+<div *ngIf="editMode" class="section-collapsed-edit" cdkDropList [cdkDropListDisabled]="true">
+  <div class="section-title editor">
+    <quill-editor *ngIf="editMode" [(ngModel)]="section.name"></quill-editor>
+  </div>
+  <div class="btn-container">
+    <button class="btn1" (click)="save()">Save</button>
+    <button class="btn3" (click)="cancel()">Cancel</button>
+  </div>
+</div>

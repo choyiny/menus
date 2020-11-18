@@ -1,7 +1,12 @@
 .button-container {
   padding-top: 3em;
-  margin-left: 3em;
+  margin-left: 4em;
   & input {
     width: 90%;
   }
+
+  & button {
+    padding: 8px 24px 8px 24px;
+  }
 }
+

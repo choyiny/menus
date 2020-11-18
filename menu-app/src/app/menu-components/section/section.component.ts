@@ -26,7 +26,6 @@ export class SectionComponent implements OnInit {
 
   sendRequest(): void {
     this.menuService.editSection(this.slug, this.section).subscribe((section) => {
-      console.log(section);
       this.section = section;
     });
     this.editMode = false;

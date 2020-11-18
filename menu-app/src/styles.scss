@@ -11,6 +11,50 @@ $tint-color: #ee3353;
   line-height: normal;
 }
 
+input:focus, textarea:focus, button:focus {
+  outline: none;
+}
+
+.ql-container {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.ql-toolbar {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+   & .ql-snow {
+     border-top: solid 1.2px #f0f3f5;
+     border-left: solid 1.2px #f0f3f5;
+     border-right: solid 1.2px #f0f3f5;
+     border-bottom: none;
+   }
+}
+
+.editor {
+
+  & .ql-toolbar {
+    background-color: white;
+    border-top: solid 1.2px #f0f3f5;
+    border-left: solid 1.2px #f0f3f5;
+    border-right: solid 1.2px #f0f3f5;
+    border-bottom: none;
+  }
+
+  & .ql-editor {
+    color: #8c8b91;
+    margin-left: 15px;
+
+  }
+
+  & .ql-container {
+    border-left: solid 1.2px #f0f3f5;
+    border-right: solid 1.2px #f0f3f5;
+    border-bottom: solid 1.2px #f0f3f5;
+    background-color: white;
+  }
+}
+
 .ql-editor {
   padding: 0 0 0 0;
   position: relative;
@@ -25,6 +69,17 @@ $tint-color: #ee3353;
 
   & strong {
     font-weight: 700;
+  }
+}
+
+.inline {
+
+  & .ql-editor {
+    display: inline-block;
+  }
+
+  & .ql-container{
+    display: inline-block;
   }
 }
 
@@ -63,6 +118,10 @@ button {
     background-color: $tint-color;
   }
 
+  &.bg2-tint {
+    background-color: #4c28ff;;
+  }
+
   &.round {
     width: 26px;
     height: 26px;
@@ -73,14 +132,31 @@ button {
     margin: 3px;
   }
 }
+// Global button styles
+.btn0 {
+  background-color: #f0f3f5;
+  color: #4c28ff;
+}
 
-//input[type='text'] {
-//  border: none;
-//  background: transparent;
-//  &:focus {
-//    outline: none;
-//  }
-//}
+.btn1 {
+  background-color: #4c28ff;
+  color: white;
+}
+
+.btn2 {
+  background-color: #ffffff;
+  color: #4c28ff;
+}
+
+.btn3 {
+  background-color: #ffffff;
+  color: black;
+}
+
+.btn4 {
+  background-color: #f0f3f5;
+  color: black;
+}
 
 //mobile
 @media only screen and (max-width: 600px) {
@@ -96,6 +172,19 @@ button {
   }
 }
 
+// modal
+
+.title {
+  background: white;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  & h1 {
+    margin-top: 3%;
+    margin-bottom: 3%;
+    font-size: 25px;
+    text-align: center;
+  }
+}
 
 .next-step {
   padding-top: 2%;
@@ -117,4 +206,8 @@ button {
   color: #1a1824;
   background-color: #f0f3f5;
   width: 20%;
+}
+
+.container {
+  background: #f0f3f5;
 }

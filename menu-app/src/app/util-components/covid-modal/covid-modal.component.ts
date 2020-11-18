@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { TracingService } from '../../../services/tracing.service';
-import { ContactInterface } from '../../../interfaces/contact-interface';
-import { Restaurant } from '../../../interfaces/restaurant-interfaces';
+import { TracingService } from '../../services/tracing.service';
+import { ContactInterface } from '../../interfaces/contact-interface';
+import { Restaurant } from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-covid-modal',

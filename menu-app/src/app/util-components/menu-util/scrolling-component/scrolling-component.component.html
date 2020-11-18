@@ -1,4 +1,9 @@
+<app-manage-sections [sections]="sections" (sectionEmitter)="updateSections($event)"></app-manage-sections>
 <div class="scrolling-wrapper sticky-top" [ngClass]="{ 'mini-scroll': miniScroll }" id="wrapper">
+  <button  *ngIf="hasPermission" class="btn1 manage-sections desktop" (click)="manageSections()">
+    <fa-icon [icon]="addIcon"></fa-icon>
+    Manage Menu Sections
+  </button>
   <button
     class="menu-section"
     *ngFor="let section of sections; let i = index"
@@ -6,7 +11,7 @@
     [ngClass]="{ selected: i === currentSection, 'not-selected': i !== currentSection }"
     id="{{ section._id + ' button' }}"
   >
-    {{ section.name }}
+    <quill-view-html [content]="section.name"></quill-view-html>
     <p class="section-description">{{ section.subtitle }}</p>
   </button>
 </div>

@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MenuItemInterface } from '../../interfaces/menu-item-interface';
 import { MenuService } from '../../services/menu.service';
-import { ImgViewModalComponent } from '../../util-components/modals/img-view-modal/img-view-modal.component';
-import { ImgFormModalComponent } from '../../util-components/modals/img-form-modal/img-form-modal.component';
+import { ImgViewModalComponent } from '../../util-components/image-util/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from '../../util-components/image-util/img-form-modal/img-form-modal.component';
 import { TagInterface } from '../../interfaces/tag-interface';
 import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
 import { SectionInterface } from '../../interfaces/section-interface';

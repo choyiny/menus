@@ -12,22 +12,22 @@ import { AppComponent } from './app.component';
 
 // Components
 import { AuthenticationInterceptor } from './interceptor/authentication.interceptor';
-import { ImageFormComponent } from './util-components/image-form/image-form.component';
+import { ImageFormComponent } from './util-components/image-util/image-form/image-form.component';
 import { LoginComponent } from './auth-components/login/login.component';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
 import { MenuComponent } from './menu-components/menu/menu.component';
 import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
 import { SectionComponent } from './menu-components/section/section.component';
 import { TagsComponent } from './menu-components/tags/tags.component';
-import { ScrollingComponentComponent } from './util-components/scrolling-component/scrolling-component.component';
+import { ScrollingComponentComponent } from './util-components/menu-util/scrolling-component/scrolling-component.component';
 import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
-import { CovidModalComponent } from './util-components/modals/covid-modal/covid-modal.component';
+import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
 import { ChangeBackgroundComponent } from './util-components/menu-util/change-background/change-background.component';
 import { MenuNameComponent } from './util-components/menu-util/menu-name/menu-name.component';
 import { MenuDetailsComponent } from './util-components/menu-util/menu-details/menu-details.component';
 import { FooterComponent } from './util-components/footer/footer.component';
-import { ImgFormModalComponent } from './util-components/modals/img-form-modal/img-form-modal.component';
-import { ImgViewModalComponent } from './util-components/modals/img-view-modal/img-view-modal.component';
+import { ImgFormModalComponent } from './util-components/image-util/img-form-modal/img-form-modal.component';
+import { ImgViewModalComponent } from './util-components/image-util/img-view-modal/img-view-modal.component';
 import { Itemv2Component } from './restaurant-components/itemv2/itemv2.component';
 import { Sectionv2Component } from './restaurant-components/sectionv2/sectionv2.component';
 import { Menuv2Component } from './restaurant-components/menuv2/menuv2.component';
@@ -43,10 +43,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AngularFireModule } from '@angular/fire';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CDK_DRAG_CONFIG, DragDropModule } from '@angular/cdk/drag-drop';
 import { QuillModule } from 'ngx-quill';
 import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 import { VerificationComponent } from './auth-components/verification/verification.component';
+import { ManageSectionsComponent } from './control-panel/manage-sections/manage-sections.component';
+import { CollapsedSectionComponent } from './control-panel/collapsed-section/collapsed-section.component';
+import { NavbarComponent } from './util-components/navbar/navbar.component';
+import { HomeComponent } from './restaurant-components/home/home.component';
+
+const DragConfig = {
+  dragStartThreshold: 0,
+  pointerDirectionChangeThreshold: 5,
+  zIndex: 10000,
+};
 
 @NgModule({
   declarations: [
@@ -76,6 +86,10 @@ import { VerificationComponent } from './auth-components/verification/verificati
     FirstMenuComponent,
     RegisterComponent,
     VerificationComponent,
+    ManageSectionsComponent,
+    CollapsedSectionComponent,
+    NavbarComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +118,10 @@ import { VerificationComponent } from './auth-components/verification/verificati
       },
     }),
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
+    { provide: CDK_DRAG_CONFIG, useValue: DragConfig },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

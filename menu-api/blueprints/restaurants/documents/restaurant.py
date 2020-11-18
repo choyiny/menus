@@ -22,7 +22,9 @@ class Restaurant(Document):
     description of this restaurants
     """
 
-    image = URLField()
+    image = URLField(
+        default="https://pickeasy.ca/wp-content/uploads/2020/11/marble.jpeg"
+    )
     """
     image url for this restaurant
     """

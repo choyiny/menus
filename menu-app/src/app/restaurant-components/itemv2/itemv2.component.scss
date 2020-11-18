@@ -16,45 +16,24 @@
     height: 80%;
   }
 
-  //.img-description {
-  //  padding-bottom: 30px;
-  //}
-
   .tag-container {
     bottom: 5px;
     position: absolute;
 
-    &.bg-tint {
-      position: absolute;
-      bottom: 0px;
+    & .add-tag {
+      border-radius: 18px;
+      padding: 8px 29px 8px 26px;
+      margin-right: 10px;
     }
   }
-
-  .editor-margin {
-    position: relative;
-  }
-
-  .icon-overlay {
-    display: inline-block;
-    position: absolute;
-    z-index: 10;
-  }
-
-  .image-icon {
-    top: 22px;
-    left: 22px;
-  }
-
-  .trash-icon {
-    left: 40px;
-    top: 5px;
-  }
 }
 
-h1 {
-  font-size: 14px;
-  font-weight: 500;
+.btn0 {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
+
 
 .logo {
   position: relative;
@@ -93,6 +72,11 @@ h1 {
     .item {
       float: left;
     }
+
+    h1 {
+      font-size: 14px;
+      font-weight: 500;
+    }
   }
 }
 
@@ -102,3 +86,72 @@ h1 {
 .no-logo-description {
   width: 100%;
 }
+
+// edit mode
+.edit-body {
+  background-color: #f0f3f5;
+  padding-bottom: 10px;
+  height: calc(100% - 10px);
+
+  & .tag-container {
+    position: relative;
+
+    &.bg-tint {
+      position: relative;
+    }
+  }
+
+  .button-container {
+    position: relative;
+    border-top: solid 0.5px #dfe0e3;
+    & button {
+      margin-top: 10px;
+      float: right;
+      padding: 11px 0px 11px 0px;
+      border-radius: 8px;
+      width: 25%;
+      margin-left: 5px;
+    }
+
+    & .bg-tint {
+      width: 11%;
+    }
+  }
+
+  .item-top {
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .upload {
+      margin: 0;
+      padding: 11px;
+      width: 40%;
+    }
+
+    .edit-price {
+      margin: 0;
+      width: 40%;
+      border-radius: 10px;
+      border: solid 1.2px #f0f3f5;
+      float: right;
+      padding: 8px 14px 12px;
+      color: #8c8b91;
+      font-size: 14px;
+    }
+  }
+
+  .item-body {
+    margin-bottom: 20px;
+    .item-title {
+      border-radius: 10px;
+      border: solid 1.2px #f0f3f5;
+      background-color: #ffffff;
+      width: 100%;
+      padding: 8px 0px 8px 17px;
+      margin-bottom: 10px;
+      color: #8c8b91;
+      font-size: 14px;
+    }
+  }
+}
+

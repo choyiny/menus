@@ -10,6 +10,11 @@ from pymongo import MongoClient
 
 
 def migrate():
+    def create_or_new(elem):
+        if elem["_id"]:
+            return elem["_id"]
+        return str(uuid.uuid4())
+
     """
     Migrates existing menus from apiv1 to restaurants in apiv2
     """
@@ -19,19 +24,17 @@ def migrate():
         for section in sectionized["sections"]:
             new_items = []
             for item in section["menu_items"]:
-                if not item._id:
-                    item._id = str(uuid.uuid4())
                 new_item = Item(
                     name=item["name"],
                     price=item["price"],
                     description=item["description"],
                     image=item["image"],
-                    _id=item._id,
+                    _id=create_or_new(item),
                     tags=convert_tags(item["tags"]),
                 )
                 new_items.append(new_item)
             new_section = Section(
-                _id=section.get("_id", str(uuid.uuid4())),
+                _id=create_or_new(section),
                 name=section["name"],
                 subtitle=section["subtitle"],
                 description=section["description"],
@@ -43,7 +46,7 @@ def migrate():
         try:
             new_menu.save()
         except ValidationError as e:
-            print(new_menu.name, e.message)
+            print("menu", new_menu.name, e.message)
 
         restaurant = Restaurant(
             name=sectionized["name"],
@@ -58,7 +61,7 @@ def migrate():
         try:
             restaurant.save()
         except ValidationError as e:
-            print(restaurant.name, e.message)
+            print("restaurant: ", restaurant.name, e.message)
 
 
 def convert_tags(tags):

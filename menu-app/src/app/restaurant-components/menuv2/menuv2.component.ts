@@ -1,7 +1,8 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
+import { ManageSectionsComponent } from '../../control-panel/manage-sections/manage-sections.component';
 
 @Component({
   selector: 'app-menuv2',
@@ -20,6 +21,13 @@ export class Menuv2Component implements OnInit {
   constructor(private restaurantService: RestaurantService) {}
 
   ngOnInit(): void {}
+
+  updateSections(sections: Section[]): void {
+    this.menu.sections = sections;
+    this.restaurantService.editMenu(this.slug, this.menu.name, this.menu).subscribe((menu) => {
+      this.menu = menu;
+    });
+  }
 
   newSection(i: number): void {
     this.restaurantService.newSection().subscribe((section) => {
@@ -65,7 +73,7 @@ export class Menuv2Component implements OnInit {
     }
 
     // linear time solution, if performance is an issue, should switch to using pointers
-    if (this.menu) {
+    if (this.menu && window.innerWidth < 600) {
       if (scrollPosition > this.previousScroll) {
         for (let i = 0; i < this.menu.sections.length; i++) {
           const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;
@@ -106,5 +114,9 @@ export class Menuv2Component implements OnInit {
         this.menu = menu;
       });
     this.rearrangeMode = false;
+  }
+
+  updateMenu(menu: Menu): void {
+    this.menu = menu;
   }
 }

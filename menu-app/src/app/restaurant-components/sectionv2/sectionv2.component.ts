@@ -18,7 +18,6 @@ export class Sectionv2Component implements OnInit {
   @Input() slug: string;
   @Input() menuName: string;
   @Input() hasPermission: boolean;
-  @Input() rearrangeMode: boolean;
   @Output() menuEmitter = new EventEmitter<Menu>();
   editMode: boolean;
 
@@ -46,6 +45,14 @@ export class Sectionv2Component implements OnInit {
     this.editMode = false;
   }
 
+  edit(): void {
+    this.editMode = true;
+  }
+
+  updateSection(section: Section): void {
+    this.section = section;
+  }
+
   drop(event: CdkDragDrop<Item[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -59,14 +66,6 @@ export class Sectionv2Component implements OnInit {
     }
   }
 
-  edit(): void {
-    this.editMode = true;
-  }
-
-  updateSection(section: Section): void {
-    this.section = section;
-  }
-
   addMenuItem(): void {
     this.restaurantService.newItem().subscribe((item) => {
       this.section.menu_items.push(item);
@@ -77,7 +76,7 @@ export class Sectionv2Component implements OnInit {
           const observer = new MutationObserver((mutations, self) => {
             const newItem = document.getElementById(item._id);
             if (newItem) {
-              this.scrollService.scrollToSection(item._id);
+              // find component and then manually set editMode to True
               self.disconnect();
               return;
             }

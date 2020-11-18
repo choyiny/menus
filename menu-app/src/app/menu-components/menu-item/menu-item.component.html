@@ -2,7 +2,7 @@
 <app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 <div class="menu-item">
   <div>
-    <button *ngIf="!editMode && hasPermission" class="edit-button desktop" (click)="edit()">
+    <button *ngIf="!editMode && hasPermission" class="btn0 desktop" (click)="edit()">
       <fa-icon [icon]="faPen"></fa-icon>
     </button>
     <button *ngIf="editMode" class="discard-button desktop" (click)="discard()">Discard</button>

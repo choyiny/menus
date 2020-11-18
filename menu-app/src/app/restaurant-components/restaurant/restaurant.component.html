@@ -1,6 +1,7 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
 <app-signup></app-signup>
 <div *ngIf="restaurant">
+  <app-navbar *ngIf="hasPermission" [restaurantName]="restaurant.name"></app-navbar>
   <div *ngIf="viewable">
     <div class="desktop-background">
       <app-mobile-image
@@ -20,7 +21,7 @@
         <div class="desktop-background">
           <app-change-background
             class="desktop"
-            [hasPermission]="hasPermission"
+            *ngIf="hasPermission"
             [image]="restaurant.image"
             (imageEmitter)="setValue($event)"
           ></app-change-background>
@@ -31,7 +32,6 @@
             [name]="restaurant.name"
           ></app-menu-name>
           <div class="menu-items section-background">
-            <button *ngIf="hasPermission" class="publish" (click)="publish()">Publish Menu</button>
             <app-menu-details
               class="desktop"
               [description]="restaurant.description"
