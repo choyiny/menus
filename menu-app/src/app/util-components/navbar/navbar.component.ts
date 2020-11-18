@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {}
 
   publish(): void {
+    console.log('publishing');
     this.restaurantService.editRestaurant(this.slug, {public: !this.isPublic}).subscribe(
       (restaurant) => {},
       (err) => {

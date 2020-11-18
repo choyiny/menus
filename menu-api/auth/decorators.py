@@ -34,3 +34,33 @@ def firebase_login_required(f):
         return f(*args, **kwargs)
 
     return wrapped
+
+
+def firebase_login_preferred(f):
+    """More access if given firebase login"""
+
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        # Check for Authorization header in the form of "Bearer <token>"
+        if "Authorization" not in request.headers:
+            g.user = None
+            return f(*args, **kwargs)
+
+        try:
+            id_token = request.headers.get("Authorization").split(" ")[1]
+        except IndexError:
+            g.user = None
+            return f(*args, **kwargs)
+
+        # verify with Firebase
+        try:
+            decoded_token = auth.verify_id_token(id_token)
+        except InvalidIdTokenError:
+            g.user = None
+            return f(*args, **kwargs)
+
+        # get our user with the uid (create if not exists)
+        g.user = User.get_or_create(decoded_token["uid"])
+        return f(*args, **kwargs)
+
+    return wrapped

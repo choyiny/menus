@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
-    console.log(this.slug, 'slug');
     const user = this.authService.currentUserValue;
     if (user) {
       this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
@@ -33,11 +32,7 @@ export class HomeComponent implements OnInit {
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe(
         (restaurant) => {
-          if (restaurant.public ||  ( user && user.restaurants.includes(this.slug))) {
-            this.restaurant = restaurant;
-          } else {
-            this.viewable = false;
-          }
+          this.restaurant = restaurant;
         },
         (err) => {
           console.log(err);

@@ -3,7 +3,7 @@ import string
 import uuid
 from io import BytesIO
 
-from auth.decorators import firebase_login_required
+from auth.decorators import firebase_login_preferred, firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from helpers import delete_file, upload_image
@@ -40,11 +40,14 @@ from .restaurant_base_resource import RestaurantBaseResource
 class RestaurantResource(RestaurantBaseResource):
     @doc(description="Get restaurants details")
     @marshal_with(GetRestaurantSchema)
+    @firebase_login_preferred
     def get(self, slug: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
-        return restaurant.to_dict()
+        if restaurant.public or (g.user and g.user.has_permission(restaurant.slug)):
+            return restaurant.to_dict()
+        return RESTAURANT_NOT_FOUND
 
     @doc(description="Edit restaurants details")
     @marshal_with(GetRestaurantSchema)
