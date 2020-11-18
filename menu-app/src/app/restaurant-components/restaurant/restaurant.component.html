@@ -1,6 +1,5 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
-<app-signup></app-signup>
-<app-navbar *ngIf="hasPermission" [restaurantName]="restaurant.name"></app-navbar>
+<app-navbar  *ngIf="hasPermission" [slug]="slug" [restaurantName]="restaurant.name" [isPublic]="restaurant.public"></app-navbar>
 <div class="desktop-background">
   <app-mobile-image
     class="mobile"

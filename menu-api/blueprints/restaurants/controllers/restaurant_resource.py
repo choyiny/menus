@@ -66,6 +66,12 @@ class RestaurantResource(RestaurantBaseResource):
         if "image" in kwargs:
             restaurant.image = kwargs.get("image")
 
+        if "public" in kwargs:
+            if g.user.is_anon:
+                return ANONYMOUS_USER_FORBIDDEN
+            else:
+                restaurant.public = kwargs.get("public")
+
         if g.user.is_admin:
             if "enable_trace" in kwargs:
                 restaurant.enable_trace = kwargs.get("enable_trace")

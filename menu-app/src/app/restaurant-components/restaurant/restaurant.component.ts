@@ -85,18 +85,4 @@ export class RestaurantComponent implements OnInit {
       return false;
     }
   }
-
-  publish(): void {
-    this.restaurantService.publishRestaurant(this.slug).subscribe(
-      (restaurant) => {
-        this.restaurant = restaurant;
-      },
-      (err) => {
-        console.log(err);
-        if (err.error.description === 'Please connect this account') {
-          this.signUp.open();
-        }
-      }
-    );
-  }
 }

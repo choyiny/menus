@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe(
         (restaurant) => {
-          if (restaurant.public || user.restaurants.includes(this.slug)) {
+          if (restaurant.public ||  ( user && user.restaurants.includes(this.slug))) {
             this.restaurant = restaurant;
           } else {
             this.viewable = false;
