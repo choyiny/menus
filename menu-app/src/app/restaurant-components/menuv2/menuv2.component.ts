@@ -73,7 +73,7 @@ export class Menuv2Component implements OnInit {
     }
 
     // linear time solution, if performance is an issue, should switch to using pointers
-    if (this.menu) {
+    if (this.menu && window.innerWidth < 600) {
       if (scrollPosition > this.previousScroll) {
         for (let i = 0; i < this.menu.sections.length; i++) {
           const sectionPosition = document.getElementById(this.menu.sections[i]._id).offsetTop;

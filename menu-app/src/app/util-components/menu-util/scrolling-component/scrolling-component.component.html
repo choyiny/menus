@@ -1,6 +1,9 @@
 <app-manage-sections [sections]="sections" (sectionEmitter)="updateSections($event)"></app-manage-sections>
 <div class="scrolling-wrapper sticky-top" [ngClass]="{ 'mini-scroll': miniScroll }" id="wrapper">
-  <button  class="btn1 manage-sections desktop" (click)="manageSections()">Manage Sections</button>
+  <button  class="btn1 manage-sections desktop" (click)="manageSections()">
+    <fa-icon [icon]="addIcon"></fa-icon>
+    Manage Menu Sections
+  </button>
   <button
     class="menu-section"
     *ngFor="let section of sections; let i = index"

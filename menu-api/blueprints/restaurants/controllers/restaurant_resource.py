@@ -140,7 +140,7 @@ class MenuResource(RestaurantBaseResource):
                 Section(**section_dict) for section_dict in kwargs.get("sections")
             ]
 
-        menu.save()
+        menu.save(force_insert=True)
         return menu
 
     @doc(description="Delete menu")

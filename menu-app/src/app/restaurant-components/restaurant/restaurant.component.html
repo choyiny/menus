@@ -1,7 +1,7 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
 <app-signup></app-signup>
-<app-navbar></app-navbar>
 <div *ngIf="restaurant">
+  <app-navbar [restaurantName]="restaurant.name"></app-navbar>
   <div *ngIf="viewable">
     <div class="desktop-background">
       <app-mobile-image

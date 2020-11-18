@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 
 @Component({
@@ -8,6 +8,7 @@ import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 })
 export class NavbarComponent implements OnInit {
   mobileIcon = faMobileAlt;
+  @Input() restaurantName;
 
   constructor() {}
 

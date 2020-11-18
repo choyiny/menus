@@ -3,6 +3,7 @@ import { ScrollService } from '../../../services/scroll.service';
 import {Menu, Section} from '../../../interfaces/restaurant-interfaces';
 import {RestaurantService} from '../../../services/restaurant.service';
 import {ManageSectionsComponent} from '../../../control-panel/manage-sections/manage-sections.component';
+import { faPlus} from "@fortawesome/pro-solid-svg-icons";
 
 @Component({
   selector: 'app-scrolling-component',
@@ -15,8 +16,12 @@ export class ScrollingComponentComponent implements OnInit {
   @Input() currentSection: number;
   @Input() slug: string;
   @Input() menuName: string;
+  @Input() hasPermission: boolean;
   @Output() menuEmitter = new EventEmitter<Menu>();
   @ViewChild(ManageSectionsComponent) controlPanel: ManageSectionsComponent;
+
+  // Icons
+  addIcon = faPlus;
 
   constructor(public scrollService: ScrollService, private restaurantService: RestaurantService) {}
 
