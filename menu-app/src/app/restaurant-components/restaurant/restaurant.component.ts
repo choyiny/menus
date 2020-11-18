@@ -17,11 +17,10 @@ export class RestaurantComponent implements OnInit {
   @Input() selectedImage: string;
   menus = [];
   currentMenu = 0;
-  slug: string;
-  viewable: boolean;
+  @Input() slug: string;
 
   // true if user has permission to edit this menuv2
-  hasPermission: boolean;
+  @Input() hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
@@ -33,53 +32,30 @@ export class RestaurantComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.slug = this.route.snapshot.params.slug;
-    if (this.slug != null && !this.restaurant) {
-      this.getRestaurant();
+    this.loadMenus();
+    if (this.sameDay()) {
+      return;
     }
-    const user = this.authService.currentUserValue;
-    if (user) {
-      this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
-    } else {
-      this.hasPermission = false;
+    if (this.restaurant.force_trace) {
+      this.covid.open();
+      return;
     }
+    this.route.queryParams.subscribe((params) => {
+      const trace: boolean = params.trace === 'true';
+      if (trace && this.restaurant.enable_trace) {
+        this.covid.open();
+      }
+    });
   }
 
   loadMenus(): void {
+    console.log(this.restaurant.menus);
     for (let i = 0; i < this.restaurant.menus.length; i++) {
       const menuName = this.restaurant.menus[i];
       this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
         this.menus[i] = menu;
       });
     }
-  }
-
-  getRestaurant(): void {
-    this.restaurantService.getRestaurant(this.slug).subscribe(
-      (restaurant) => {
-        this.restaurant = restaurant;
-        this.viewable = this.restaurant.public || this.hasPermission;
-        this.loadMenus();
-        if (this.sameDay()) {
-          return;
-        }
-        if (this.restaurant.force_trace) {
-          this.covid.open();
-          return;
-        }
-        this.route.queryParams.subscribe((params) => {
-          const trace: boolean = params.trace === 'true';
-          if (trace && this.restaurant.enable_trace) {
-            this.covid.open();
-          }
-        });
-      },
-      (err) => {
-        if (err.error.description === 'Restaurant not found') {
-          this.viewable = false;
-        }
-      }
-    );
   }
 
   scrollToSection(id: string): void {
