@@ -40,12 +40,17 @@ export class ManageSectionsComponent implements OnInit {
 
   newSection(): void {
     this.restaurantService.newSection().subscribe((section) => {
-      this.sections.push(section);
+      this.originalSections.push(section);
     });
   }
 
   deleteSection(i): void {
     this.originalSections.splice(i, 1);
+  }
+
+  cancel(modal): void{
+    this.originalSections = this.sections;
+    modal.close();
   }
 
   drop(event: CdkDragDrop<Section[]>): void {
