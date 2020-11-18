@@ -1,3 +1,4 @@
+# project wide gitignore
 .DS_Store
 **bin/
 **.firebase/
