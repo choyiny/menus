@@ -109,8 +109,13 @@ export class RestaurantService {
     return this.http.patch<Restaurant>(url, {});
   }
 
-  onboardRestaurant(restaurant: RestaurantOnboarding): Observable<string> {
+  onboardRestaurant(): Observable<string> {
     const url = `${environment.settings.apiv2}/restaurants/onboard`;
-    return this.http.post<string>(url, restaurant);
+    return this.http.post<string>(url, {});
+  }
+
+  onboard(restaurant: RestaurantOnboarding): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/onboard`;
+    return this.http.patch<Menu>(url, restaurant);
   }
 }

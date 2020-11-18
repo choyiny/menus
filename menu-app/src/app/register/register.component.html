@@ -1,1 +1,7 @@
 <app-first-menu></app-first-menu>
+<app-restaurant
+  *ngIf="restaurant"
+  [restaurant]="restaurant"
+  [slug]="slug"
+  [hasPermission]="hasPermission"
+></app-restaurant>

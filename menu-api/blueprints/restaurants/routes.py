@@ -52,5 +52,5 @@ resources = [
         "publish",
         ["PATCH"],
     ),
-    (OnboardingRestaurantResource, "restaurants/onboard", "onboard", ["POST"]),
+    (OnboardingRestaurantResource, "restaurants/onboard", "onboard", ["POST", "PATCH"]),
 ]

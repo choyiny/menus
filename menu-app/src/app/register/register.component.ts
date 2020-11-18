@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FirstMenuComponent } from '../util-components/register/first-menu/first-menu.component';
-import { SignupComponent } from '../util-components/register/signup/signup.component';
 import { Restaurant } from '../interfaces/restaurant-interfaces';
+import { RestaurantService } from '../services/restaurant.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,11 +11,29 @@ import { Restaurant } from '../interfaces/restaurant-interfaces';
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
   @ViewChild(FirstMenuComponent) registerMenu: FirstMenuComponent;
-  constructor() {}
+  constructor(private restaurantService: RestaurantService, private auth: AuthService) {}
 
   restaurant: Restaurant;
+  hasPermission: boolean;
+  slug: string;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.auth.anonymousSignIn().subscribe((user) => {
+      console.log(user);
+      this.restaurantService.onboardRestaurant().subscribe((slug) => {
+        console.log(slug);
+        this.restaurantService.getRestaurant(slug).subscribe((restaurant) => {
+          console.log(restaurant);
+          this.auth.reloadUser().subscribe((newUser) => {
+            console.log(newUser);
+            this.hasPermission = user.restaurants.includes(slug);
+            this.restaurant = restaurant;
+            this.slug = slug;
+          });
+        });
+      });
+    });
+  }
 
   ngAfterViewInit(): void {
     this.registerMenu.open();

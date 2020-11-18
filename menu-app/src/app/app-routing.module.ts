@@ -6,7 +6,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
 import { RegisterComponent } from './register/register.component';
 import { VerificationComponent } from './auth-components/verification/verification.component';
-import {HomeComponent} from './restaurant-components/home/home.component';
+import { HomeComponent } from './restaurant-components/home/home.component';
 
 const routes: Routes = [
   {

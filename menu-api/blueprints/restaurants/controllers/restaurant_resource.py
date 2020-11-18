@@ -419,7 +419,6 @@ class PublishRestaurantResource(RestaurantBaseResource):
 
 class OnboardingRestaurantResource(RestaurantBaseResource):
     @doc(description="""Generate random restaurant with menu 'Menu'""")
-    @marshal_with(RestaurantSchema)
     @firebase_login_required
     def post(self):
 
@@ -427,7 +426,7 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
             return FORBIDDEN
 
         if g.user.restaurants:
-            return ONE_RESTAURANT_ONLY
+            return g.user.restaurants[0]
 
         menu = MenuV2(name="Menu").save()
 
@@ -436,8 +435,9 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         )
         g.user.restaurants.append(random_slug)
         g.user.save()
+        restaurant = Restaurant(menus=[menu], slug=random_slug, public=False).save()
 
-        return Restaurant(menus=[menu], slug=random_slug, public=False).save()
+        return restaurant.slug
 
     @doc(description="""Onboard user's first restaurant""")
     @use_kwargs(OnboardingSchema)

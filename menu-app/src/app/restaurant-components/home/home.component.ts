@@ -31,14 +31,14 @@ export class HomeComponent implements OnInit {
     }
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe(
-        restaurant => {
-          if (restaurant.public || user.restaurants.includes(this.slug)){
+        (restaurant) => {
+          if (restaurant.public || user.restaurants.includes(this.slug)) {
             this.restaurant = restaurant;
           } else {
             this.viewable = false;
           }
         },
-        err => {
+        (err) => {
           console.log(err);
           this.viewable = false;
         }

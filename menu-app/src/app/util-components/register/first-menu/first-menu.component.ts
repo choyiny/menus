@@ -33,12 +33,10 @@ export class FirstMenuComponent implements OnInit {
       itemDescription: [''],
       itemPrice: [''],
     });
-    this.auth.anonymousSignIn().subscribe((user) => {});
   }
 
   next(modal): void {
     // sign in to get access to backend
-    const user = this.auth.currentUserValue;
     const onboarding = {
       name: this.newMenu.value.name,
       section_name: this.newMenu.value.sectionName,
@@ -46,7 +44,7 @@ export class FirstMenuComponent implements OnInit {
       item_description: this.newMenu.value.itemDescription,
       item_price: this.newMenu.value.itemPrice,
     };
-    this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
+    this.restaurantService.onboard(onboarding).subscribe((slug) => {
       this.auth.reloadUser().subscribe((reloadedUser) => {
         modal.close();
         this.router.navigateByUrl(`restaurants/${slug}`);
