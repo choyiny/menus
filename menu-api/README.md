@@ -1,4 +1,5 @@
 # Menu API
+Version: 1.0
 
 ## Development
 ### Setup
