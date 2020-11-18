@@ -96,7 +96,8 @@ class RestaurantsResource(RestaurantBaseResource):
 
         restaurant = Restaurant(**kwargs)
         restaurant.public = False
-        g.user.restaurants.append(restaurant.slug)
+        if not g.user.restaurants:
+            g.user.restaurants.append(restaurant.slug)
         g.user.save()
         restaurant.save()
         return restaurant.to_dict()
