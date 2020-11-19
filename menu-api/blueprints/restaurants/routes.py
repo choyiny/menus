@@ -5,7 +5,6 @@ from .controllers import (
     ItemResource,
     MenuResource,
     OnboardingRestaurantResource,
-    PublishRestaurantResource,
     RestaurantResource,
     RestaurantsResource,
     SectionResource,
@@ -45,12 +44,6 @@ resources = [
         "restaurants/<string:slug>/menus/<string:menu_name>/items/<string:item_id>/picture",
         "picture",
         ["DELETE", "PATCH"],
-    ),
-    (
-        PublishRestaurantResource,
-        "restaurants/<string:slug>/publish",
-        "publish",
-        ["PATCH"],
     ),
     (OnboardingRestaurantResource, "restaurants/onboard", "onboard", ["POST"]),
     (

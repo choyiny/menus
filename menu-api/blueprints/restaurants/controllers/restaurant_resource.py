@@ -404,28 +404,6 @@ class ImageResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
-class PublishRestaurantResource(RestaurantBaseResource):
-    @doc(description="""Toggle restaurant visibility""")
-    @marshal_with(GetRestaurantSchema)
-    @firebase_login_required
-    def patch(self, slug):
-
-        if g.user is None:
-            return FORBIDDEN
-
-        if g.user.is_anon:
-            return ANONYMOUS_USER_FORBIDDEN
-
-        restaurant = Restaurant.objects(slug=slug).first()
-        if restaurant is None:
-            return RESTAURANT_NOT_FOUND
-
-        restaurant.public = not restaurant.public
-        restaurant.save()
-
-        return restaurant.to_dict()
-
-
 class OnboardingRestaurantResource(RestaurantBaseResource):
     @doc(description="""Generate random restaurant with menu 'Menu'""")
     @firebase_login_required
