@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserInterface } from '../../interfaces/user-interface';
 
@@ -12,10 +12,17 @@ import { UserInterface } from '../../interfaces/user-interface';
 })
 export class LoginComponent implements OnInit {
   loginForm;
+  restaurant: string;
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(
+      params => {
+        this.restaurant = params.restaurant;
+      }
+    );
+
     this.loginForm = this.fb.group({
       email: [''],
       password: [''],
@@ -32,7 +39,15 @@ export class LoginComponent implements OnInit {
     if (user.is_admin) {
       this.router.navigate(['admin/menus'], { queryParams: { limit: 5, page: 1 } });
     } else {
-      this.router.navigateByUrl('dashboard');
+      if (this.restaurant) {
+        this.router.navigateByUrl('restaurant').then(
+          () => {
+            window.alert('Congratulations! email verified');
+          }
+        );
+      } else {
+        this.router.navigateByUrl('dashboard');
+      }
     }
   }
 

@@ -99,4 +99,17 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
   }
+
+  verifyEmail(email: string, token: string): Observable<UserInterface>{
+    const url = `${environment.settings.endpoint}/email`;
+    return this.http.patch<UserInterface>(url, {email, token}).pipe(
+      mergeMap(
+        user => {
+          this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          return of(user);
+        }
+      )
+    );
+  }
 }

@@ -20,16 +20,15 @@ export class VerificationComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       const email = params.email;
-      this.auth.signInWithEmailLink(email, window.location.href).then(
-        (res) => {
-          this.authService.upgradeUser().subscribe((user) => {
-            this.status = 'Success!';
-            this.router.navigateByUrl('');
-          });
-        },
-        (err) => {
-          console.log(err);
-          this.status = 'Something went wrong!';
+      const token = params.token;
+      this.authService.verifyEmail(email, token).subscribe(
+        user => {
+          if (user.restaurants){
+            const restaurant = user.restaurants[0];
+            this.router.navigateByUrl(`?restaurant=${restaurant}`).then(
+              res => {}
+            );
+          }
         }
       );
     });
