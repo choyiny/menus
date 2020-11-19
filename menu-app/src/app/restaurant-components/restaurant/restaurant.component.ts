@@ -69,6 +69,10 @@ export class RestaurantComponent implements OnInit {
     });
   }
 
+  updateRestaurant(restaurant: Restaurant): void {
+    this.restaurant = restaurant;
+  }
+
   sameDay(): boolean {
     if (localStorage.getItem('time_in')) {
       const timeIn: TimeInterface = JSON.parse(localStorage.getItem('time_in'));

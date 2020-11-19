@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import {SignupComponent} from '../register/signup/signup.component';
 import {RestaurantService} from '../../services/restaurant.service';
@@ -15,15 +15,18 @@ export class NavbarComponent implements OnInit {
   @Input() restaurantName: string;
   @Input() slug: string;
   @ViewChild(SignupComponent) signUp: SignupComponent;
+  @Output() restaurantEmitter = new EventEmitter<Restaurant>();
 
   constructor(private restaurantService: RestaurantService) {}
 
   ngOnInit(): void {}
 
   publish(): void {
-    console.log('publishing');
     this.restaurantService.editRestaurant(this.slug, {public: !this.isPublic}).subscribe(
-      (restaurant) => {},
+      (restaurant) => {
+        window.alert(`Your restaurant is now ${!this.isPublic ? 'public' : 'private' }`);
+        this.restaurantEmitter.emit(restaurant);
+      },
       (err) => {
         console.log(err);
         if (err.error.description === 'Please connect this account') {
