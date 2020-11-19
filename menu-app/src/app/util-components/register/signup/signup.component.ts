@@ -49,14 +49,10 @@ export class SignupComponent implements OnInit {
     this.auth.user.subscribe((anonymousUser) => {
       const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
       anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
-        const actionCodeSettings = {
-          url: `${window.location.origin}/verify?email=${this.email}`,
-          handleCodeInApp: true,
-        };
-        this.auth.sendSignInLinkToEmail(this.email, actionCodeSettings).then(
-          (user) => {},
-          (err) => {
-            console.log(err);
+        const location = window.location.origin;
+        this.authService.sendEmail(this.email, location).subscribe(
+          () => {
+            window.alert('Email send!');
           }
         );
       });

@@ -17,7 +17,7 @@ from flask_apispec import doc, marshal_with, use_kwargs
 from marshmallow import Schema
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from utils.errors import FORBIDDEN, INVALID_TOKEN
+from utils.errors import FORBIDDEN, INVALID_TOKEN, USER_NOT_FOUND
 from webargs import fields
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
@@ -192,13 +192,13 @@ class EmailUserResource(UserManagementBaseResource):
         verified = fields.Bool()
 
     @doc(description="""Send verification email to user""")
-    # @firebase_login_required
-    @use_kwargs(EmailSchema, location="query")
+    @firebase_login_required
+    @use_kwargs(EmailSchema)
     def post(self, **kwargs):
         email = kwargs.get("email")
         location = kwargs.get("location")
         token = secrets.token_hex(32)
-        verification_url = location + f"verification?token={token}"
+        verification_url = location + f"/verification?token={token}&email={email}"
 
         r = redis.Redis.from_url(c.REDIS_CACHE_URL)
         r.set(token, email)
@@ -220,18 +220,22 @@ class EmailUserResource(UserManagementBaseResource):
 
     @doc(description="""Verify email""")
     @marshal_with(UserSchema)
+    @use_kwargs(VerifySchema)
     def patch(self, **kwargs):
 
         token = kwargs.get("token")
         email = kwargs.get("email")
         r = redis.Redis.from_url(c.REDIS_CACHE_URL)
-        if r.get(token) == email:
-            firebase_user = auth.get_user(email)
-            user = User.objects(firebase_id=firebase_user.uid).first()
-            user.email = firebase_user.email
-            user.phone_number = firebase_user.phone_number
-            user.photo_url = firebase_user.photo_url
-            user.display_name = firebase_user.display_name
+        if r.get(token) == email.encode("utf-8"):
+            try:
+                firebase_user = auth.get_user_by_email(email)
+                user = User.objects(firebase_id=firebase_user.uid).first()
+                user.email = firebase_user.email
+                user.phone_number = firebase_user.phone_number
+                user.photo_url = firebase_user.photo_url
+                user.display_name = firebase_user.display_name
+            except UserNotFoundError:
+                return
             return user.save()
 
         return INVALID_TOKEN

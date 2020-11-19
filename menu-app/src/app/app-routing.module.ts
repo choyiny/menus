@@ -22,7 +22,7 @@ const routes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'verify',
+    path: 'verification',
     component: VerificationComponent,
   },
   {

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['admin/menus'], { queryParams: { limit: 5, page: 1 } });
     } else {
       if (this.restaurant) {
-        this.router.navigateByUrl('restaurant').then(
+        this.router.navigateByUrl(`restaurants/${this.restaurant}`).then(
           () => {
             window.alert('Congratulations! email verified');
           }
