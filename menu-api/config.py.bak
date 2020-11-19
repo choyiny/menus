@@ -24,3 +24,6 @@ S3_BUCKET_NAME = "pickeasy-restaurant-images"
 
 # Firebase
 FIREBASE_CERT_NAME = "pickeasy-app-firebase-adminsdk-94cx4-03192a4733.json"
+
+# Sengrid
+SENGRID_API = "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"

@@ -1,6 +1,9 @@
 import math
+import secrets
 from contextlib import closing
 
+import config as c
+import redis
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
 from firebase_admin import auth
@@ -11,7 +14,11 @@ from firebase_admin._auth_utils import (
 )
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
+from marshmallow import Schema
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from utils.errors import FORBIDDEN
+from webargs import fields
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
 from ..schemas import NewOrUpdateUserSchema, PaginationSchema
@@ -170,3 +177,36 @@ class AnonymousUserResource(UserManagementBaseResource):
         g.user.display_name = firebase_user.display_name
 
         return g.user.save()
+
+
+class EmailUserResource(UserManagementBaseResource):
+    class EmailSchema(Schema):
+        email = fields.Email(required=True)
+        location = fields.Url(required=True)
+
+    @doc(description="""Send verification email to user""")
+    # @firebase_login_required
+    @use_kwargs(EmailSchema, location="query")
+    def get(self, **kwargs):
+        email = kwargs.get("email")
+        location = kwargs.get("location")
+        token = secrets.token_hex(32)
+        verification_url = location + f"verification?token={token}"
+
+        r = redis.Redis.from_url(c.REDIS_CACHE_URL)
+        r.set(token, email)
+
+        message = Mail(
+            from_email="info@pickeasy.ca",
+            to_emails=email,
+            subject="PickEasy new account verification",
+            html_content=f"<a href={verification_url}>Verify your email here</a>",
+        )
+
+        try:
+            sg = SendGridAPIClient(c.SENGRID_API)
+            sg.send(message)
+        except Exception as e:
+            print(e.message)
+
+        return "success"
