@@ -24,7 +24,7 @@
   position: absolute;
   display: inline-block;
   margin-right: 10px;
-  border-radius: 1px;
+  border-radius: 4px;
   background: grey;
   left: -5px;
   cursor: pointer;
@@ -55,8 +55,9 @@
 
 // Highlight items for tab focus
 .form-check-input:focus + label::before {
-  outline: #000000 solid 1px;
+  border: #000000 solid 1px;
   box-shadow: 0 0px 4px #ee3353;
+  border-radius: 4px;
 }
 
 //Shift all checkboxes for spacing
