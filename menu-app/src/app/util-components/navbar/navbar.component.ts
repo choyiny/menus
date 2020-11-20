@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
-import {SignupComponent} from '../register/signup/signup.component';
-import {RestaurantService} from '../../services/restaurant.service';
-import {Restaurant} from '../../interfaces/restaurant-interfaces';
+import { SignupComponent } from '../register/signup/signup.component';
+import { RestaurantService } from '../../services/restaurant.service';
+import { Restaurant } from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-navbar',
@@ -22,9 +22,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {}
 
   publish(): void {
-    this.restaurantService.editRestaurant(this.slug, {public: !this.isPublic}).subscribe(
+    this.restaurantService.editRestaurant(this.slug, { public: !this.isPublic }).subscribe(
       (restaurant) => {
-        window.alert(`Your restaurant is now ${!this.isPublic ? 'public' : 'private' }`);
+        window.alert(`Your restaurant is now ${!this.isPublic ? 'public' : 'private'}`);
         this.restaurantEmitter.emit(restaurant);
       },
       (err) => {

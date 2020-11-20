@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserInterface } from '../../interfaces/user-interface';
 
@@ -14,14 +14,17 @@ export class LoginComponent implements OnInit {
   loginForm;
   restaurant: string;
 
-  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(
-      params => {
-        this.restaurant = params.restaurant;
-      }
-    );
+    this.route.queryParams.subscribe((params) => {
+      this.restaurant = params.restaurant;
+    });
 
     this.loginForm = this.fb.group({
       email: [''],
@@ -37,16 +40,14 @@ export class LoginComponent implements OnInit {
 
   onSuccess(user: UserInterface): void {
     if (user.is_admin) {
-      this.router.navigate(['admin/menus'], { queryParams: { limit: 5, page: 1 } });
+      this.router.navigate(['admin/menus'], { queryParams: { limit: 5, page: 1 } }).then(() => {});
     } else {
       if (this.restaurant) {
-        this.router.navigateByUrl(`restaurants/${this.restaurant}`).then(
-          () => {
-            window.alert('Congratulations! email verified');
-          }
-        );
+        this.router.navigate([`restaurants/${this.restaurant}`]).then(() => {
+          window.alert('Congratulations! Account verified');
+        });
       } else {
-        this.router.navigateByUrl('dashboard');
+        this.router.navigate(['dashboard']).then(() => {});
       }
     }
   }

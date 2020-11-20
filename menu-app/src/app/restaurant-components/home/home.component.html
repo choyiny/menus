@@ -1,5 +1,10 @@
 <div *ngIf="viewable">
-  <app-restaurant *ngIf="restaurant" [restaurant]="restaurant" [slug]="slug" [hasPermission]="hasPermission"></app-restaurant>
+  <app-restaurant
+    *ngIf="restaurant"
+    [restaurant]="restaurant"
+    [slug]="slug"
+    [hasPermission]="hasPermission"
+  ></app-restaurant>
 </div>
 <div *ngIf="!viewable">
   <h1>Restaurant is private or does not exist</h1>

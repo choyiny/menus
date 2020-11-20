@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FirstMenuComponent } from '../util-components/register/first-menu/first-menu.component';
 import { RestaurantService } from '../services/restaurant.service';
 import { AuthService } from '../services/auth.service';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,11 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
   @ViewChild(FirstMenuComponent) registerMenu: FirstMenuComponent;
   slug: string;
-  constructor(private restaurantService: RestaurantService, private auth: AuthService, private router: Router) {}
+  constructor(
+    private restaurantService: RestaurantService,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.auth.anonymousSignIn().subscribe((user) => {
@@ -20,15 +24,11 @@ export class RegisterComponent implements OnInit {
       this.restaurantService.onboardRestaurant().subscribe((slug) => {
         this.slug = slug;
         console.log(slug);
-        this.auth.reloadUser().subscribe(
-          newUser => {
-            this.router.navigateByUrl(`restaurants/${slug}`).then(
-              res => {
-                this.registerMenu.open();
-              }
-            );
-          }
-        );
+        this.auth.reloadUser().subscribe((newUser) => {
+          this.router.navigateByUrl(`restaurants/${slug}`).then((res) => {
+            this.registerMenu.open();
+          });
+        });
       });
     });
   }

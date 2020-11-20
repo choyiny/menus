@@ -103,19 +103,19 @@ export class AuthService {
   sendEmail(email: string, location: string): Observable<string> {
     console.log(email, location);
     const url = `${environment.settings.endpoint}/verify`;
-    return this.http.post<string>(url, {email, location});
+    return this.http.post<string>(url, { email, location });
   }
 
-  verifyEmail(email: string, token: string): Observable<UserInterface>{
+  verifyEmail(email: string, token: string): Observable<UserInterface> {
     const url = `${environment.settings.endpoint}/verify`;
-    return this.http.patch<UserInterface>(url, {email, token}).pipe(
-      mergeMap(
-        user => {
+    return this.http
+      .patch<UserInterface>(url, { email, token })
+      .pipe(
+        mergeMap((user) => {
           this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
           localStorage.setItem('currentUser', JSON.stringify(user));
           return of(user);
-        }
-      )
-    );
+        })
+      );
   }
 }

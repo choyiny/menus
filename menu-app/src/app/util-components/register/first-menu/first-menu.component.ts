@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { RestaurantService } from '../../../services/restaurant.service';
-import {Menu} from '../../../interfaces/restaurant-interfaces';
+import { Menu } from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-first-menu',
@@ -16,17 +16,20 @@ export class FirstMenuComponent implements OnInit {
 
   @ViewChild('firstMenu') firstMenu;
   @Input() slug: string;
+  modalOptions: NgbModalOptions = {
+    backdrop: 'static',
+    keyboard: false,
+  };
 
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
     private auth: AuthService,
     private angularAuth: AngularFireAuth,
-    private restaurantService: RestaurantService,
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
-    console.log(this.slug, 'le slug');
     this.newMenu = this.fb.group({
       name: [''],
       sectionName: [''],
@@ -52,6 +55,6 @@ export class FirstMenuComponent implements OnInit {
   }
 
   open(): void {
-    this.modalService.open(this.firstMenu);
+    this.modalService.open(this.firstMenu, this.modalOptions);
   }
 }

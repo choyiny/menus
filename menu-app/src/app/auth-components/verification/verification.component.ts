@@ -21,16 +21,12 @@ export class VerificationComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const email = params.email;
       const token = params.token;
-      this.authService.verifyEmail(email, token).subscribe(
-        user => {
-          if (user.restaurants){
-            const restaurant = user.restaurants[0];
-            this.router.navigateByUrl(`?restaurant=${restaurant}`).then(
-              res => {}
-            );
-          }
+      this.authService.verifyEmail(email, token).subscribe((user) => {
+        if (user.restaurants) {
+          const restaurant = user.restaurants[0];
+          this.router.navigateByUrl(`?restaurant=${restaurant}`).then((res) => {});
         }
-      );
+      });
     });
   }
 }

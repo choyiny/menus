@@ -192,7 +192,7 @@ class EmailUserResource(UserManagementBaseResource):
         verified = fields.Bool()
 
     @doc(description="""Send verification email to user""")
-    # @firebase_login_required
+    @firebase_login_required
     @use_kwargs(EmailSchema)
     def post(self, **kwargs):
         email = kwargs.get("email")
@@ -217,20 +217,17 @@ class EmailUserResource(UserManagementBaseResource):
                     },
                 }
             ],
-            "from": {"email": "info@pickeasy.ca"},
+            "from": {"email": c.SENGRID_SENDER},
             "template_id": "d-366053af87d2416aaced7af86d5a2723",
         }
 
         try:
             sg = SendGridAPIClient(c.SENGRID_API)
-            response = sg.send(message)
-            print(response.status_code)
-            print(response.body)
-            print(response.headers)
+            sg.send(message)
         except Exception as e:
-            print(e.message)
+            return {"description": e.message}
 
-        return "success"
+        return {"email-sent": True}
 
     @doc(description="""Verify email""")
     @marshal_with(UserSchema)
