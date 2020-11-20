@@ -20,10 +20,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.anonymousSignIn().subscribe((user) => {
-      console.log(user);
       this.restaurantService.onboardRestaurant().subscribe((slug) => {
         this.slug = slug;
-        console.log(slug);
         this.auth.reloadUser().subscribe((newUser) => {
           this.router.navigateByUrl(`restaurants/${slug}`).then((res) => {
             this.registerMenu.open();
