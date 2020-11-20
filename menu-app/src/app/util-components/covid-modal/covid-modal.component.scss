@@ -13,6 +13,60 @@
   opacity: 0.75;
   border-bottom: rgba(196, 208, 217, 0.5) solid 1px;
   margin-bottom: 10px;
+  position: relative;
+}
+
+//Add custom checkbox before the label
+.form-check-input + label::before {
+  width: 17px;
+  height: 17px;
+  content: '';
+  position: absolute;
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 1px;
+  background: grey;
+  left: -5px;
+  cursor: pointer;
+}
+
+//Change cursor icon for disbled checkboxes
+.form-check-input:disabled + label::before {
+  cursor: default;
+}
+
+//Set color for checked boxes
+.form-check-input:checked + label::before {
+  background: #ee3353;
+}
+
+// Add the custom checkmark
+.form-check-input:checked + label::after {
+  content: '';
+  position: absolute;
+  // top: 3px;
+  left: 0px;
+  border-left: 2px solid white;
+  border-bottom: 2px solid white;
+  height: 6px;
+  width: 13px;
+  transform: rotate(-45deg);
+}
+
+// Highlight items for tab focus
+.form-check-input:focus + label::before {
+  outline: #000000 solid 1px;
+  box-shadow: 0 0px 4px #ee3353;
+}
+
+//Shift all checkboxes for spacing
+.form-check-input {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
 }
 
 .customer-form-body {
