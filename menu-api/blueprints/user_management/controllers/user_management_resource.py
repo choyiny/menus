@@ -213,7 +213,7 @@ class EmailUserResource(UserManagementBaseResource):
                     "to": [{"email": email}],
                     "dynamic_template_data": {
                         "url": verification_url,
-                        "display_name": firebase_user.display_name,
+                        "display_name": firebase_user.email,
                     },
                 }
             ],
@@ -239,6 +239,11 @@ class EmailUserResource(UserManagementBaseResource):
 
         token = kwargs.get("token")
         email = kwargs.get("email")
+
+        user = User.objects(email=email).first()
+        if not user.is_anon:
+            return user
+
         r = redis.Redis.from_url(c.REDIS_CACHE_URL)
         if r.get(token) == email.encode("utf-8"):
             try:
