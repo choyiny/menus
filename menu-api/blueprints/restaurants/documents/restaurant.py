@@ -59,6 +59,11 @@ class Restaurant(Document):
     status field for whether restaurant is viewable to the public
     """
 
+    qrcode_link = URLField()
+    """
+    deployed qr codes redirect to this link
+    """
+
     def to_dict(self):
         """ serialize restaurants to json"""
         menus = [menu.name for menu in self.menus]

@@ -56,6 +56,9 @@ class GetRestaurantSchema(Schema):
         fields.Str(), example=["lunch"], description="list of menu names"
     )
     public = fields.Bool(example=True)
+    qrcode_link = fields.Url(
+        example="https://menu.pickeasy,ca", description="dynamic qrcode link"
+    )
 
 
 class RestaurantSchema(Schema):
@@ -65,6 +68,9 @@ class RestaurantSchema(Schema):
     )
     image = fields.Url(example="https://via.placeholder.com/150", allow_none=True)
     description = fields.Str(example="A cafe in Hollywood", allow_none=True)
+    qrcode_link = fields.Url(
+        example="https://menu.pickeasy,ca", description="dynamic qrcode link"
+    )
 
 
 class OnboardingSchema(Schema):
