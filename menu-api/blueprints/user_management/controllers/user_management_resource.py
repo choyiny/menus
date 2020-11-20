@@ -192,7 +192,7 @@ class EmailUserResource(UserManagementBaseResource):
         verified = fields.Bool()
 
     @doc(description="""Send verification email to user""")
-    @firebase_login_required
+    # @firebase_login_required
     @use_kwargs(EmailSchema)
     def post(self, **kwargs):
         email = kwargs.get("email")
@@ -202,17 +202,31 @@ class EmailUserResource(UserManagementBaseResource):
 
         r = redis.Redis.from_url(c.REDIS_CACHE_URL)
         r.set(token, email)
+        try:
+            firebase_user = auth.get_user_by_email(email)
+        except UserNotFoundError:
+            return USER_NOT_FOUND
 
-        message = Mail(
-            from_email="info@pickeasy.ca",
-            to_emails=email,
-            subject="PickEasy new account verification",
-            html_content=f"<a href={verification_url}>Verify your email here</a>",
-        )
+        message = {
+            "personalizations": [
+                {
+                    "to": [{"email": email}],
+                    "dynamic_template_data": {
+                        "url": verification_url,
+                        "display_name": firebase_user.display_name,
+                    },
+                }
+            ],
+            "from": {"email": "info@pickeasy.ca"},
+            "template_id": "d-366053af87d2416aaced7af86d5a2723",
+        }
 
         try:
             sg = SendGridAPIClient(c.SENGRID_API)
-            sg.send(message)
+            response = sg.send(message)
+            print(response.status_code)
+            print(response.body)
+            print(response.headers)
         except Exception as e:
             print(e.message)
 
