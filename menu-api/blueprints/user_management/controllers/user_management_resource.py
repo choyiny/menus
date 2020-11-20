@@ -21,6 +21,7 @@ from utils.errors import FORBIDDEN, INVALID_TOKEN, USER_NOT_FOUND
 from webargs import fields
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
+from ...restaurants.documents.restaurant import Restaurant
 from ..schemas import NewOrUpdateUserSchema, PaginationSchema
 from .user_management_base_resource import UserManagementBaseResource
 
@@ -250,6 +251,11 @@ class EmailUserResource(UserManagementBaseResource):
                 user.phone_number = firebase_user.phone_number
                 user.photo_url = firebase_user.photo_url
                 user.display_name = firebase_user.display_name
+                if user.restaurants:
+                    slug = user.restaurants[0]
+                    restaurant = Restaurant.objects(slug=slug).first()
+                    restaurant.public = True
+                    restaurant.save()
             except UserNotFoundError:
                 return
             return user.save()

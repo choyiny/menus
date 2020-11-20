@@ -3,6 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
+import {take} from 'rxjs/operators';
+import {RestaurantService} from '../../../services/restaurant.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +15,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private auth: AngularFireAuth,
-    private authService: AuthService
+    private authService: AuthService,
+    private restaurantService: RestaurantService
   ) {}
   @ViewChild('signup') signup;
   email: string;
@@ -31,11 +34,17 @@ export class SignupComponent implements OnInit {
   }
 
   signInWithGoogle(modal): void {
-    this.auth.user.subscribe((anonymousUser) => {
+    this.auth.user.pipe(take(1)).subscribe((anonymousUser) => {
       anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         (userCred) => {
           this.authService.upgradeUser().subscribe((user) => {
-            modal.close();
+            if (user.restaurants){
+              this.restaurantService.editRestaurant(user.restaurants[0], {public: true} ).subscribe(
+                restaurant => {
+                  modal.close();
+                  window.alert('Restaurant published!');
+                });
+            }
           });
         },
         (err) => {
