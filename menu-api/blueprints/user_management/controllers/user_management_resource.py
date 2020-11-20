@@ -238,7 +238,7 @@ class EmailUserResource(UserManagementBaseResource):
         email = kwargs.get("email")
 
         user = User.objects(email=email).first()
-        if not user.is_anon:
+        if user and user.is_anon:
             return user
 
         r = redis.Redis.from_url(c.REDIS_CACHE_URL)
