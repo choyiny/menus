@@ -48,7 +48,7 @@ export class ManageSectionsComponent implements OnInit {
     this.originalSections.splice(i, 1);
   }
 
-  cancel(modal): void{
+  cancel(modal): void {
     this.originalSections = this.sections;
     modal.close();
   }

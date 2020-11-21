@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ScrollService } from '../../../services/scroll.service';
-import {Menu, Section} from '../../../interfaces/restaurant-interfaces';
-import {RestaurantService} from '../../../services/restaurant.service';
-import {ManageSectionsComponent} from '../../../control-panel/manage-sections/manage-sections.component';
-import { faPlus} from "@fortawesome/pro-solid-svg-icons";
+import { Menu, Section } from '../../../interfaces/restaurant-interfaces';
+import { RestaurantService } from '../../../services/restaurant.service';
+import { ManageSectionsComponent } from '../../../control-panel/manage-sections/manage-sections.component';
+import { faPlus } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-scrolling-component',
@@ -28,7 +28,7 @@ export class ScrollingComponentComponent implements OnInit {
   ngOnInit(): void {}
 
   updateSections(sections: Section[]): void {
-    this.restaurantService.editMenu(this.slug, this.menuName, {sections}).subscribe((menu) => {
+    this.restaurantService.editMenu(this.slug, this.menuName, { sections }).subscribe((menu) => {
       this.menuEmitter.emit(menu);
     });
   }

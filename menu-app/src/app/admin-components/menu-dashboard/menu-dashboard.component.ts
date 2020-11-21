@@ -31,6 +31,8 @@ export class MenuDashboardComponent implements OnInit {
   contactTracingForm: FormGroup;
   selectedMenu: string;
   menuBody: FormGroup;
+  qrcodeLink: string;
+  configureQrCodeLink = false;
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
@@ -103,20 +105,26 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   generateQr(): void {
-    let body;
-    if (this.restaurant.enable_trace) {
-      body = {
-        url: `${window.location.origin}/menu/${this.slug}?trace=true`,
-      };
+    const saveQrCode = () => {
+      this.adminService.generateQR(this.slug).subscribe(
+        (blob) => {
+          const fileName = `${this.restaurant.name}.${blob.type}`;
+          FileSaver.saveAs(blob, fileName);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    };
+
+    if (!this.restaurant.qrcode_link) {
+      const url = `${window.location.origin}/restaurants/${this.slug}`;
+      this.adminService.updateQrCode(this.slug, url).subscribe(() => {
+        saveQrCode();
+      });
     } else {
-      body = {
-        url: `${window.location.origin}/restaurants/${this.slug}`,
-      };
+      saveQrCode();
     }
-    this.adminService.generateQR(body).subscribe((blob) => {
-      const fileName = `${this.restaurant.name}.${blob.type}`;
-      FileSaver.saveAs(blob, fileName);
-    });
   }
 
   toggleContactTracing(): void {
@@ -129,5 +137,16 @@ export class MenuDashboardComponent implements OnInit {
       this.restaurant = restaurant;
     });
     this.configureContactTracing = false;
+  }
+
+  configureQrCode(): void {
+    console.log(this.qrcodeLink);
+    this.adminService.updateQrCode(this.slug, this.qrcodeLink).subscribe(() => {
+      this.configureQrCodeLink = false;
+    });
+  }
+
+  toggleConfigureQRCode(): void {
+    this.configureQrCodeLink = !this.configureQrCodeLink;
   }
 }

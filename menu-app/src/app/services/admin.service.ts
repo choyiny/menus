@@ -35,11 +35,13 @@ export class AdminService {
     return this.http.patch<Menu>(url, formData);
   }
 
-  generateQR(query): Observable<Blob> {
-    const url = `${environment.settings.endpoint}/admin/generate`;
-    return this.http.get(url, {
-      params: query,
-      responseType: 'blob',
-    });
+  generateQR(slug): Observable<Blob> {
+    const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
+    return this.http.get(url, { responseType: 'blob', });
+  }
+
+  updateQrCode(slug: string, qrcodeLink: string): Observable<Restaurant> {
+    const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
+    return this.http.patch<Restaurant>(url, { qrcode_link: qrcodeLink });
   }
 }

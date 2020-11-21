@@ -42,6 +42,12 @@
           <button (click)="importCsv()">Import</button>
         </div>
       </form>
+
+      <button *ngIf="!configureQrCodeLink" (click)="toggleConfigureQRCode()">Configure qrcode</button>
+      <div *ngIf="configureQrCodeLink">
+        <input type="text" [(ngModel)]="qrcodeLink" />
+        <button (click)="configureQrCode()">Update Qr code</button>
+      </div>
     </div>
   </div>
 </div>

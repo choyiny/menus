@@ -165,7 +165,10 @@ class QrRestaurantResource(AdminBaseResource):
                 box_size=10,
                 border=1,
             )
-            qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}")
+            if restaurant.enable_trace or restaurant.force_trace:
+                qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}?trace=true")
+            else:
+                qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}")
             qr.make(fit=True)
             img = qr.make_image(fill_color="white", back_color="black")
             img = img.resize((950, 950))

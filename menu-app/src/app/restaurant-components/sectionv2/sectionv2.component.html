@@ -41,7 +41,7 @@
       (sectionEmitter)="updateSection($event)"
     ></app-itemv2>
 
-    <div  *ngIf="hasPermission" class="col-md-4 col-sm-6 col-12 item-container desktop">
+    <div *ngIf="hasPermission" class="col-md-4 col-sm-6 col-12 item-container desktop">
       <div class="new-item">
         <button (click)="addMenuItem()" class="btn2 new-button">
           <fa-icon [icon]="faPlus"></fa-icon>Add new Menu Item

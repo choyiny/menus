@@ -7,6 +7,7 @@ export interface Restaurant {
   enable_trace: boolean;
   force_trace: boolean;
   public: boolean;
+  qrcode_link: string;
 }
 
 export interface RestaurantOnboarding {

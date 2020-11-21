@@ -15,6 +15,6 @@ resources = [
         "import",
         ["POST", "PATCH"],
     ),
-    (QrRestaurantResource, "generate", "QR", ["GET"]),
+    (QrRestaurantResource, "generate/<string:slug>", "QR", ["GET", "PATCH"]),
     (RestaurantResource, "restaurants", "restaurant", ["GET", "POST"]),
 ]
