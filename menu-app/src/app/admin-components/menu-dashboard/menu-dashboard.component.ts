@@ -140,7 +140,6 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   configureQrCode(): void {
-    console.log(this.qrcodeLink);
     this.adminService.updateQrCode(this.slug, this.qrcodeLink).subscribe(() => {
       this.configureQrCodeLink = false;
     });
