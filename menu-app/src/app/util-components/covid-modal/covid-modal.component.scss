@@ -20,6 +20,8 @@
   position: relative;
 }
 
+//Variables
+$checkbox-size: 18px;
 .form-check-input {
   position: absolute;
   opacity: 0;
@@ -37,14 +39,14 @@
     display: inline-block;
     position: relative;
     cursor: pointer;
-    line-height: 17px;
-    padding-left: 17px + 5;
+    line-height: $checkbox-size;
+    padding-left: $checkbox-size + 5;
     left: -10px;
 
     //Add custom checkbox before the label
     &:before {
-      width: 17px;
-      height: 17px;
+      width: $checkbox-size;
+      height: $checkbox-size;
       content: '';
       position: absolute;
       display: inline-block;
