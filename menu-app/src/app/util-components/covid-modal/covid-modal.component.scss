@@ -20,42 +20,105 @@
   position: relative;
 }
 
+.form-check-input {
+  position: absolute;
+  opacity: 0;
+
+  //  Shift all checkboxes for spacing
+  // position: absolute;
+  // height: 1px;
+  // width: 1px;
+  // overflow: hidden;
+  // clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  // clip: rect(1px, 1px, 1px, 1px);
+
+  //Default Label
+  & + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    line-height: 17px;
+    padding-left: 17px + 5;
+    left: -10px;
+
+    //Add custom checkbox before the label
+    &:before {
+      width: 17px;
+      height: 17px;
+      content: '';
+      position: absolute;
+      display: inline-block;
+      margin-right: 10px;
+      border-radius: 4px;
+      background: grey;
+      left: -5px;
+      cursor: pointer;
+    }
+  }
+
+  // Checked label
+  &:checked {
+    & + label {
+      &:before {
+        background: #ee3353;
+      }
+      //check mark for checked label
+      &:after {
+        position: absolute;
+        display: block;
+        top: 3px;
+        left: 2px;
+        content: '';
+        width: 4px;
+        height: 8px;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        border-color: white;
+        transform: rotate(45deg);
+        transition: 200ms ease-in-out all;
+      }
+    }
+  }
+
+  // Disabled label
+  &:disabled + label {
+    cursor: default;
+
+    &:before {
+      cursor: default;
+
+      background: #000000;
+    }
+  }
+}
+
 //Add custom checkbox before the label
 .form-check-input + label::before {
-  width: 17px;
-  height: 17px;
-  content: '';
-  position: absolute;
-  display: inline-block;
-  margin-right: 10px;
-  border-radius: 4px;
-  background: grey;
-  left: -5px;
-  cursor: pointer;
 }
 
 //Set color for checked boxes
 .form-check-input:checked + label::before {
-  background: #ee3353;
 }
 
 //Change cursor icon for disbled checkboxes
 .form-check-input:disabled + label::before {
-  cursor: default;
-  background: #000000;
 }
 
-// Add the custom checkmark
+// // Add the custom checkmark
+// .form-check-input:checked + label::after {
+//   content: '';
+//   position: absolute;
+//   // top: 3px;
+//   left: 0px;
+//   border-left: 2px solid white;
+//   border-bottom: 2px solid white;
+//   height: 6px;
+//   width: 13px;
+//   transform: rotate(-45deg);
+// }
+
+// Tick
 .form-check-input:checked + label::after {
-  content: '';
-  position: absolute;
-  // top: 3px;
-  left: 0px;
-  border-left: 2px solid white;
-  border-bottom: 2px solid white;
-  height: 6px;
-  width: 13px;
-  transform: rotate(-45deg);
 }
 
 // Highlight items for tab focus
@@ -65,15 +128,106 @@
   border-radius: 4px;
 }
 
-//Shift all checkboxes for spacing
-.form-check-input {
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
-}
+// // Variables
+// $checkbox-size: 20px;
+// $checkbox-border: #cecece;
+// $checkbox-selected: #02BB72; // Primary colour
+
+// .form-check-input {
+//   position: absolute;
+//   opacity: 0;
+
+//   // Text
+//   & + label{
+//     display: inline-block;
+//     position: relative;
+//     cursor: pointer;
+//     line-height: $checkbox-size;
+//     padding-left: $checkbox-size + 10;
+//     color: #666; // Label colour
+
+//     // Checkbox
+//     &:before{
+//       position: absolute;
+//       display: block;
+//       left: 0;
+//       top: 0;
+//       content: "";
+//       background: transparent;
+//       width: $checkbox-size;
+//       height: $checkbox-size;
+
+//       box-shadow: inset 0 0 0 1px $checkbox-border;
+//       border-radius: 4px;
+//       transition: 200ms ease-in-out all;
+//     }
+
+//     // Tick
+//     &:after{
+//       position: absolute;
+//       display: block;
+//       top: 5px;
+//       left: 8px;
+//       content: "";
+//       width: 3px;
+//       height: 7px;
+//       border-right: 1px solid transparent;
+//       border-bottom: 1px solid transparent;
+//       transform: rotate(45deg);
+
+//       transition: 200ms ease-in-out all;
+//     }
+//   }
+
+//   // Hover
+//   & + label:hover{
+//     color: rgb(0, 0, 0);
+//   }
+
+//   // Focus
+//   & + label:focus{
+//     outline: none;
+//   }
+
+//   // Checked
+//   &:checked{
+//     & + label{
+//       &:before{
+//         background: $checkbox-selected;
+//         box-shadow: none;
+//       }
+//       &:after{
+//         border-color: white;
+//       }
+//     }
+//   }
+
+//   // Disabled
+//   &:disabled{
+//     & + label{
+//       &:before{
+//         background: #f2f2f2; // Disabled colour
+//         box-shadow: none;
+//       }
+//       &:after{
+//         border-color: transparent;
+//       }
+//     }
+//   }
+
+//   // Disabled Checked
+//   &:checked:disabled{
+//     & + label{
+//       &:before{
+//         background: #f2f2f2;
+//         box-shadow: none;
+//       }
+//       &:after{
+//         border-color: #cecece;
+//       }
+//     }
+//   }
+// }
 
 .customer-form-body {
   margin-bottom: 20px;
