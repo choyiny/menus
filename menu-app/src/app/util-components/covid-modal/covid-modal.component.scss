@@ -24,7 +24,6 @@
   position: relative;
 }
 
-//Variables
 $checkbox-size: 18px;
 .form-check-input {
   position: absolute;
@@ -96,6 +95,14 @@ $checkbox-size: 18px;
       background: #000000;
     }
   }
+
+  // Highlight items for tab focus
+  &:focus + label::before {
+    border: #000000 solid 1px;
+    // box-shadow: 0 0px 4px #ee3353;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-radius: 4px;
+  }
 }
 
 //Add custom checkbox before the label
@@ -129,9 +136,6 @@ $checkbox-size: 18px;
 
 // Highlight items for tab focus
 .form-check-input:focus + label::before {
-  border: #000000 solid 1px;
-  box-shadow: 0 0px 4px #ee3353;
-  border-radius: 4px;
 }
 
 // // Variables
