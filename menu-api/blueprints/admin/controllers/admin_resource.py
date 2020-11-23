@@ -1,6 +1,7 @@
 import csv
 import uuid
 
+import config as c
 import qrcode
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
@@ -18,6 +19,7 @@ from utils.errors import (
     FORBIDDEN,
     MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
+    NO_QR_CODE,
     NUMBER_ALREADY_EXISTS,
     RESTAURANT_NOT_FOUND,
     USER_ALREADY_EXISTS,
@@ -28,10 +30,9 @@ from ...auth.schemas import UserSchema, UsersSchema
 from ...menus.documents import Menu
 from ...restaurants.documents.menuv2 import Item, MenuV2, Section
 from ...restaurants.documents.restaurant import Restaurant
-from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema
+from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema, RestaurantSchema
 from ..helpers import qr_helper
 from ..schemas import (
-    ContactTracingSchema,
     CreateRestaurantSchema,
     CreateUserSchema,
     PromoteUserSchema,
@@ -40,29 +41,6 @@ from ..schemas import (
     qr_args,
 )
 from .admin_base_resource import AdminBaseResource
-
-
-class AdminTracingResource(AdminBaseResource):
-    @marshal_with(GetRestaurantSchema)
-    @use_kwargs(ContactTracingSchema)
-    @firebase_login_required
-    def patch(self, slug, **kwargs):
-        """Enable/disable contact tracing on menu"""
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        restaurant = Restaurant.objects(slug=slug).first()
-        if restaurant is None:
-            return MENU_NOT_FOUND
-
-        if "enable_trace" in kwargs:
-            restaurant.enable_trace = kwargs.get("enable_trace")
-        if "force_trace" in kwargs:
-            restaurant.force_trace = kwargs.get("force_trace")
-        if "tracing_key" in kwargs:
-            restaurant.tracing_key = kwargs.get("tracing_key")
-
-        restaurant.save()
-        return restaurant.to_dict()
 
 
 class ImportMenuResource(AdminBaseResource):
@@ -148,27 +126,33 @@ class ImportMenuResource(AdminBaseResource):
 
 class QrRestaurantResource(AdminBaseResource):
     @doc(description="Generate qr code for url and paste qr code to template")
-    @use_args(qr_args, location="query")
     @firebase_login_required
-    def get(self, args):
+    def get(self, slug):
         """Generate QR code in template"""
         if g.user is None or not g.user.is_admin:
             return FORBIDDEN
-        url = args["url"]
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=1,
-        )
-        qr.add_data(url)
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="white", back_color="black")
-        img = img.resize((950, 950))
-        template = Image.open("assets/print_template_huge.png")
-        for coord in qr_helper.generate_tuples():
-            template.paste(img, coord)
-        return qr_helper.serve_pil_image(template, "file.png")
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        if restaurant.qrcode_link:
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10,
+                border=1,
+            )
+            if restaurant.enable_trace or restaurant.force_trace:
+                qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}?trace=true")
+            else:
+                qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}")
+            qr.make(fit=True)
+            img = qr.make_image(fill_color="white", back_color="black")
+            img = img.resize((950, 950))
+            template = Image.open("assets/print_template_huge.png")
+            for coord in qr_helper.generate_tuples():
+                template.paste(img, coord)
+            return qr_helper.serve_pil_image(template, "file.png")
+        return NO_QR_CODE
 
 
 class RestaurantResource(AdminBaseResource):

@@ -63,6 +63,16 @@ class RestaurantResource(RestaurantBaseResource):
         if "image" in kwargs:
             restaurant.image = kwargs.get("image")
 
+        if g.user.is_admin:
+            if "enable_trace" in kwargs:
+                restaurant.enable_trace = kwargs.get("enable_trace")
+            if "force_trace" in kwargs:
+                restaurant.force_trace = kwargs.get("force_trace")
+            if "tracing_key" in kwargs:
+                restaurant.tracing_key = kwargs.get("tracing_key")
+            if "qrcode_link" in kwargs:
+                restaurant.qrcode_link = kwargs.get("qrcode_link")
+
         restaurant.save()
         return restaurant.to_dict()
 

@@ -31,6 +31,8 @@ export class MenuDashboardComponent implements OnInit {
   contactTracingForm: FormGroup;
   selectedMenu: string;
   menuBody: FormGroup;
+  qrcodeLink: string;
+  configureQrCodeLink = false;
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
@@ -103,20 +105,26 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   generateQr(): void {
-    let body;
-    if (this.restaurant.enable_trace) {
-      body = {
-        url: `${window.location.origin}/menu/${this.slug}?trace=true`,
-      };
+    const saveQrCode = () => {
+      this.adminService.generateQR(this.slug).subscribe(
+        (blob) => {
+          const fileName = `${this.restaurant.name}.${blob.type}`;
+          FileSaver.saveAs(blob, fileName);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    };
+
+    if (!this.restaurant.qrcode_link) {
+      const url = `${window.location.origin}/restaurants/${this.slug}`;
+      this.restaurantService.editRestaurant(this.slug, {qrcode_link: url}).subscribe(() => {
+        saveQrCode();
+      });
     } else {
-      body = {
-        url: `${window.location.origin}/restaurants/${this.slug}`,
-      };
+      saveQrCode();
     }
-    this.adminService.generateQR(body).subscribe((blob) => {
-      const fileName = `${this.restaurant.name}.${blob.type}`;
-      FileSaver.saveAs(blob, fileName);
-    });
   }
 
   toggleContactTracing(): void {
@@ -125,9 +133,19 @@ export class MenuDashboardComponent implements OnInit {
 
   submitContactTracing(): void {
     const tracingForm = this.contactTracingForm.value;
-    this.tracingService.configureTracing(this.slug, tracingForm).subscribe((restaurant) => {
+    this.restaurantService.editRestaurant(this.slug, tracingForm).subscribe((restaurant) => {
       this.restaurant = restaurant;
     });
     this.configureContactTracing = false;
+  }
+
+  configureQrCode(): void {
+    this.restaurantService.editRestaurant(this.slug, {qrcode_link: this.qrcodeLink}).subscribe(() => {
+      this.configureQrCodeLink = false;
+    });
+  }
+
+  toggleConfigureQRCode(): void {
+    this.configureQrCodeLink = !this.configureQrCodeLink;
   }
 }

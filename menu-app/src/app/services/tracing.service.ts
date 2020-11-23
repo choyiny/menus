@@ -18,9 +18,4 @@ export class TracingService {
     const url = `${environment.settings.tracing_api}/locations/${name}/customers`;
     return this.http.post<TimeInterface>(url, contact);
   }
-
-  configureTracing(slug: string, tracingForm: TracingFormInterface): Observable<Restaurant> {
-    const url = `${environment.settings.endpoint}/admin/restaurants/${slug}/tracing`;
-    return this.http.patch<Restaurant>(url, tracingForm);
-  }
 }

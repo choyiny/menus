@@ -17,12 +17,6 @@ class CreateUserSchema(Schema):
     photo_url = fields.Str()
 
 
-class ContactTracingSchema(Schema):
-    enable_trace = fields.Bool()
-    force_trace = fields.Bool()
-    tracing_key = fields.Str()
-
-
 class CreateRestaurantSchema(Schema):
     slug = fields.Str(
         description="Slug of the menu", example="hollywood", required=True

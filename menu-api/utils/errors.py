@@ -22,3 +22,5 @@ NUMBER_ALREADY_EXISTS = (
 )
 
 ANONYMOUS_USER_FORBIDDEN = {"description": "Please connect this account"}, 401
+
+NO_QR_CODE = {"description": "No qr-code found"}

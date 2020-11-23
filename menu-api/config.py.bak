@@ -14,7 +14,7 @@ FRONTEND_URL = "http://localhost:4200"
 SENTRY_DSN = ""
 
 # Constants
-QR_CODE_ROOT_URL = 'https://menu.pickeasy.ca/menu/'
+QR_CODE_ROOT_URL = 'https://menu.pickeasy.ca/api/qr'
 
 # AWS Secrets
 AWS_KEY_ID = "AKIAX7MH2ROBO3P2RAHI"
