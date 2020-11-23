@@ -33,7 +33,6 @@ from ...restaurants.documents.restaurant import Restaurant
 from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema, RestaurantSchema
 from ..helpers import qr_helper
 from ..schemas import (
-    ContactTracingSchema,
     CreateRestaurantSchema,
     CreateUserSchema,
     PromoteUserSchema,
