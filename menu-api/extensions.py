@@ -4,6 +4,7 @@ import logging
 import boto3
 import config
 import firebase_admin
+import redis
 from firebase_admin import credentials
 
 cred = credentials.Certificate("firebase.json")
@@ -17,4 +18,4 @@ s3 = boto3.client(
     "s3", aws_access_key_id=config.AWS_KEY_ID, aws_secret_access_key=config.AWS_SECRET
 )
 
-r = redis.Redis.from_url(c.REDIS_CACHE_URL)
+r = redis.Redis.from_url(config.REDIS_CACHE_URL)
