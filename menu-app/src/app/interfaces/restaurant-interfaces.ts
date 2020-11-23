@@ -23,6 +23,10 @@ export interface RestaurantEditable {
   name?: string;
   description?: string;
   menus?: string[];
+  qrcode_link?: string;
+  tracing_key?: string;
+  enable_trace?: boolean;
+  force_trace?: boolean;
 }
 
 export interface RestaurantTemplate {

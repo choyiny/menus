@@ -39,9 +39,4 @@ export class AdminService {
     const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
     return this.http.get(url, { responseType: 'blob', });
   }
-
-  updateQrCode(slug: string, qrcodeLink: string): Observable<Restaurant> {
-    const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
-    return this.http.patch<Restaurant>(url, { qrcode_link: qrcodeLink });
-  }
 }

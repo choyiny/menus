@@ -119,7 +119,7 @@ export class MenuDashboardComponent implements OnInit {
 
     if (!this.restaurant.qrcode_link) {
       const url = `${window.location.origin}/restaurants/${this.slug}`;
-      this.adminService.updateQrCode(this.slug, url).subscribe(() => {
+      this.restaurantService.editRestaurant(this.slug, {qrcode_link: url}).subscribe(() => {
         saveQrCode();
       });
     } else {
@@ -133,14 +133,14 @@ export class MenuDashboardComponent implements OnInit {
 
   submitContactTracing(): void {
     const tracingForm = this.contactTracingForm.value;
-    this.tracingService.configureTracing(this.slug, tracingForm).subscribe((restaurant) => {
+    this.restaurantService.editRestaurant(this.slug, tracingForm).subscribe((restaurant) => {
       this.restaurant = restaurant;
     });
     this.configureContactTracing = false;
   }
 
   configureQrCode(): void {
-    this.adminService.updateQrCode(this.slug, this.qrcodeLink).subscribe(() => {
+    this.restaurantService.editRestaurant(this.slug, {qrcode_link: this.qrcodeLink}).subscribe(() => {
       this.configureQrCodeLink = false;
     });
   }
