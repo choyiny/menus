@@ -12,5 +12,4 @@ class DynamicQrResource(QrBaseResource):
         if restaurant.qrcode_link:
             return redirect(restaurant.qrcode_link, 301)
         else:
-            # PickEasy not found page?
-            return {"description": "not-found"}
+            return redirect("https://pickeasy.ca", 301)

@@ -44,29 +44,6 @@ from ..schemas import (
 from .admin_base_resource import AdminBaseResource
 
 
-class AdminTracingResource(AdminBaseResource):
-    @marshal_with(GetRestaurantSchema)
-    @use_kwargs(ContactTracingSchema)
-    @firebase_login_required
-    def patch(self, slug, **kwargs):
-        """Enable/disable contact tracing on menu"""
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-        restaurant = Restaurant.objects(slug=slug).first()
-        if restaurant is None:
-            return MENU_NOT_FOUND
-
-        if "enable_trace" in kwargs:
-            restaurant.enable_trace = kwargs.get("enable_trace")
-        if "force_trace" in kwargs:
-            restaurant.force_trace = kwargs.get("force_trace")
-        if "tracing_key" in kwargs:
-            restaurant.tracing_key = kwargs.get("tracing_key")
-
-        restaurant.save()
-        return restaurant.to_dict()
-
-
 class ImportMenuResource(AdminBaseResource):
     @doc(description="Populate empty menu with sections and menu-items")
     @marshal_with(MenuV2Schema)
@@ -177,23 +154,6 @@ class QrRestaurantResource(AdminBaseResource):
                 template.paste(img, coord)
             return qr_helper.serve_pil_image(template, "file.png")
         return NO_QR_CODE
-
-    @doc(description="Generate qr code for url and paste qr code to template")
-    @firebase_login_required
-    @use_kwargs(RestaurantSchema)
-    @marshal_with(GetRestaurantSchema)
-    def patch(self, slug, **kwargs):
-        if g.user is None or not g.user.is_admin:
-            return FORBIDDEN
-
-        restaurant = Restaurant.objects(slug=slug).first()
-        if restaurant is None:
-            return RESTAURANT_NOT_FOUND
-        if kwargs.get("qrcode_link"):
-            restaurant.qrcode_link = kwargs.get("qrcode_link")
-
-        restaurant.save()
-        return restaurant.to_dict()
 
 
 class RestaurantResource(AdminBaseResource):
