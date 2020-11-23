@@ -3,9 +3,9 @@ import secrets
 from contextlib import closing
 
 import config as c
-import redis
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
+from extensions import r
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
     EmailAlreadyExistsError,
@@ -16,7 +16,6 @@ from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from marshmallow import Schema
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
 from utils.errors import FORBIDDEN, INVALID_TOKEN, USER_NOT_FOUND
 from webargs import fields
 
@@ -201,7 +200,6 @@ class EmailUserResource(UserManagementBaseResource):
         token = secrets.token_hex(32)
         verification_url = location + f"/verification?token={token}&email={email}"
 
-        r = redis.Redis.from_url(c.REDIS_CACHE_URL)
         r.set(token, email)
         try:
             firebase_user = auth.get_user_by_email(email)
@@ -242,7 +240,6 @@ class EmailUserResource(UserManagementBaseResource):
         if user and user.is_anon:
             return user
 
-        r = redis.Redis.from_url(c.REDIS_CACHE_URL)
         if r.get(token) == email.encode("utf-8"):
             try:
                 firebase_user = auth.get_user_by_email(email)

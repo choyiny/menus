@@ -16,3 +16,5 @@ logger = logging.getLogger("flask.general")
 s3 = boto3.client(
     "s3", aws_access_key_id=config.AWS_KEY_ID, aws_secret_access_key=config.AWS_SECRET
 )
+
+r = redis.Redis.from_url(c.REDIS_CACHE_URL)
