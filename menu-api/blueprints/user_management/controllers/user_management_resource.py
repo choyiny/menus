@@ -181,17 +181,25 @@ class AnonymousUserResource(UserManagementBaseResource):
 
 class EmailUserResource(UserManagementBaseResource):
     class EmailSchema(Schema):
+
         email = fields.Email(required=True)
+
         location = fields.Url(required=True)
+        """Location of where user is signed up (staging, local, prod)"""
 
     class VerifySchema(Schema):
+
         token = fields.Str(required=True)
+        """Generated token from backend, used to verify user from key-value pair (token, email)"""
+
         email = fields.Email(required=True)
 
     class VerifiedSchema(Schema):
         verified = fields.Bool()
 
-    @doc(description="""Send verification email to user""")
+    @doc(
+        description="""Send verification email to user to be upgraded from anonymous status to a social account"""
+    )
     @firebase_login_required
     @use_kwargs(EmailSchema)
     def post(self, **kwargs):
@@ -226,9 +234,11 @@ class EmailUserResource(UserManagementBaseResource):
         except Exception as e:
             return {"description": e.message}
 
-        return {"email-sent": True}
+        return {"verified": True}
 
-    @doc(description="""Verify email""")
+    @doc(
+        description="""Verify user's email address by verifying their token email key-value pair with backend's pair"""
+    )
     @marshal_with(UserSchema)
     @use_kwargs(VerifySchema)
     def patch(self, **kwargs):
