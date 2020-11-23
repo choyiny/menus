@@ -14,12 +14,18 @@ export class NavbarComponent implements OnInit {
   @Input() isPublic: boolean;
   @Input() restaurantName: string;
   @Input() slug: string;
+  @Input() previewMode: boolean;
   @ViewChild(SignupComponent) signUp: SignupComponent;
   @Output() restaurantEmitter = new EventEmitter<Restaurant>();
 
   constructor(private restaurantService: RestaurantService) {}
+  @Output() viewEmitter = new EventEmitter<boolean>();
 
   ngOnInit(): void {}
+
+  mobileView(): void {
+    this.viewEmitter.emit(!this.previewMode);
+  }
 
   publish(): void {
     this.restaurantService.editRestaurant(this.slug, { public: !this.isPublic }).subscribe(
