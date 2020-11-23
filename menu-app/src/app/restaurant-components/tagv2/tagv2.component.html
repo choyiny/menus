@@ -1,6 +1,6 @@
 <div class="tag" *ngIf="tagDisplay" [style.background-color]="tagDisplay.backgroundColor">
   <div *ngIf="!editable">
-    <fa-icon *ngIf="!editable && hasPermission" [icon]="editIcon" (click)="edit()"></fa-icon>
+    <fa-icon *ngIf="!editable && hasPermission && editMode" [icon]="editIcon" (click)="edit()"></fa-icon>
     <span *ngFor="let icon of tagDisplay.icons">
       <fa-icon [icon]="icon"></fa-icon>
     </span>
