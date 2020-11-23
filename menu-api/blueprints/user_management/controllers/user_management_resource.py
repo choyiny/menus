@@ -218,12 +218,12 @@ class EmailUserResource(UserManagementBaseResource):
                     },
                 }
             ],
-            "from": {"email": c.SENGRID_SENDER},
+            "from": {"email": c.SENDGRID_SENDER},
             "template_id": "d-366053af87d2416aaced7af86d5a2723",
         }
 
         try:
-            sg = SendGridAPIClient(c.SENGRID_API)
+            sg = SendGridAPIClient(c.SENDGRID_API_KEY)
             sg.send(message)
         except Exception as e:
             return {"description": e.message}
