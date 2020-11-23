@@ -139,6 +139,15 @@ $checkbox-size: 18px;
   padding-top: 10px;
   padding-bottom: 10px;
   margin-top: 15px;
+
+  &:focus {
+    border: #000000 solid 1px;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-radius: 10px;
+  }
+  &:hover {
+    background-color: #ee3353;
+  }
 }
 
 .content {
