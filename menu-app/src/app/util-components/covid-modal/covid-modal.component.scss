@@ -7,12 +7,93 @@
 .modal-header {
   font-size: 28px;
   font-weight: 500;
+  &.text-center {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.form-check {
+  margin-left: 10px;
 }
 
 .form-body {
   opacity: 0.75;
   border-bottom: rgba(196, 208, 217, 0.5) solid 1px;
   margin-bottom: 10px;
+  position: relative;
+}
+
+$checkbox-size: 18px;
+.form-check-input {
+  position: absolute;
+  opacity: 0;
+
+  //Default Label
+  & + label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    line-height: $checkbox-size;
+    padding-left: $checkbox-size + 5;
+    left: -10px;
+
+    //Add custom checkbox before the label
+    &:before {
+      width: $checkbox-size;
+      height: $checkbox-size;
+      content: '';
+      position: absolute;
+      display: inline-block;
+      margin-right: 10px;
+      border-radius: 4px;
+      background: grey;
+      left: -5px;
+      cursor: pointer;
+    }
+  }
+
+  // Checked label
+  &:checked {
+    & + label {
+      &:before {
+        background: #ee3353;
+      }
+      //check mark for checked label
+      &:after {
+        position: absolute;
+        display: block;
+        top: 3px;
+        left: 2px;
+        content: '';
+        width: 4px;
+        height: 8px;
+        border-right: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+        border-color: white;
+        transform: rotate(45deg);
+        transition: 200ms ease-in-out all;
+      }
+    }
+  }
+
+  // Disabled label
+  &:disabled + label {
+    cursor: default;
+
+    &:before {
+      cursor: default;
+
+      background: #000000;
+    }
+  }
+
+  // Highlight items for tab focus
+  &:focus + label::before {
+    border: #000000 solid 1px;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-radius: 4px;
+  }
 }
 
 .customer-form-body {
@@ -58,6 +139,15 @@
   padding-top: 10px;
   padding-bottom: 10px;
   margin-top: 15px;
+
+  &:focus {
+    border: #000000 solid 1px;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-radius: 10px;
+  }
+  &:hover {
+    background-color: #ee3353;
+  }
 }
 
 .content {
