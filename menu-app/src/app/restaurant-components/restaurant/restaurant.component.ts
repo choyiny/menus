@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { SignupComponent } from '../../util-components/register/signup/signup.co
   templateUrl: './restaurant.component.html',
   styleUrls: ['./restaurant.component.scss'],
 })
-export class RestaurantComponent implements OnInit {
+export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() restaurant: Restaurant;
   @Input() selectedImage: string;
   menus = [];
@@ -31,8 +31,7 @@ export class RestaurantComponent implements OnInit {
     private scrollService: ScrollService
   ) {}
 
-  ngOnInit(): void {
-    this.loadMenus();
+  ngAfterViewInit(): void {
     if (this.sameDay()) {
       return;
     }
@@ -46,6 +45,10 @@ export class RestaurantComponent implements OnInit {
         this.covid.open();
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.loadMenus();
   }
 
   loadMenus(): void {
