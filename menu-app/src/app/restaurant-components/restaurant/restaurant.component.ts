@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
@@ -70,10 +70,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       this.restaurant = restaurant;
       this.loadMenus();
     });
-  }
-
-  updateRestaurant(restaurant: Restaurant): void {
-    this.restaurant = restaurant;
   }
 
   sameDay(): boolean {

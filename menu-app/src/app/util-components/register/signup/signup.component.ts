@@ -3,8 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
-import {take} from 'rxjs/operators';
-import {RestaurantService} from '../../../services/restaurant.service';
+import { take } from 'rxjs/operators';
+import { RestaurantService } from '../../../services/restaurant.service';
 
 @Component({
   selector: 'app-signup',
@@ -38,9 +38,10 @@ export class SignupComponent implements OnInit {
       anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
         (userCred) => {
           this.authService.upgradeUser().subscribe((user) => {
-            if (user.restaurants){
-              this.restaurantService.editRestaurant(user.restaurants[0], {public: true} ).subscribe(
-                restaurant => {
+            if (user.restaurants) {
+              this.restaurantService
+                .editRestaurant(user.restaurants[0], { public: true })
+                .subscribe((restaurant) => {
                   modal.close();
                   window.alert('Restaurant published!');
                 });

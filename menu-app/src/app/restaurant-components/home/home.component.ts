@@ -14,12 +14,21 @@ export class HomeComponent implements OnInit {
   restaurant: Restaurant;
   hasPermission: boolean;
   viewable = true;
+  previewMode = false;
 
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private authService: AuthService
   ) {}
+
+  updatePreviewMode(previewMode: boolean): void {
+    this.previewMode = previewMode;
+  }
+
+  updateRestaurant(restaurant: Restaurant): void {
+    this.restaurant = restaurant;
+  }
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;

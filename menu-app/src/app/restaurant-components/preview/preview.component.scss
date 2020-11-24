@@ -1,0 +1,22 @@
+iframe {
+  margin: 0 auto;
+  display: block;
+  padding-top: 4em;
+  padding-bottom: 4em;
+  border-radius: 20px;
+}
+.background {
+  background-color: gray;
+}
+
+.rounded-corner {
+  width: 414px;
+  height: 800px;
+  //looks weird, try to make better
+  //-moz-border-radius: 50%;
+  //-webkit-border-radius: 50%;
+  //border-radius: 50%;
+  overflow:hidden;
+  position:relative;
+  margin: 0 auto;
+}

@@ -27,7 +27,7 @@ export interface RestaurantEditable {
   tracing_key?: string;
   enable_trace?: boolean;
   force_trace?: boolean;
-  public ?: boolean;
+  public?: boolean;
 }
 
 export interface RestaurantTemplate {
