@@ -369,8 +369,11 @@ class ImageResource(RestaurantBaseResource):
         out_img.seek(0)
 
         restaurant = Restaurant.objects(slug=slug).first()
-        if restaurant is None or not restaurant.can_upload:
+        if restaurant is None:
             return RESTAURANT_NOT_FOUND
+        if not restaurant.can_upload:
+            return FORBIDDEN
+
         menu = restaurant.get_menu(menu_name)
         item = menu.get_item(item_id)
         if item:
