@@ -184,13 +184,18 @@ class EmailUserResource(UserManagementBaseResource):
 
         email = fields.Email(required=True)
 
-        location = fields.Url(required=True)
-        """Location of where user is signed up (staging, local, prod)"""
+        location = fields.Url(
+            required=True,
+            description="Location of where user is signed up (staging, local, prod)",
+        )
 
     class VerifySchema(Schema):
 
-        token = fields.Str(required=True)
-        """Generated token from backend, used to verify user from key-value pair (token, email)"""
+        token = fields.Str(
+            required=True,
+            description="Generated token from backend, used to verify user from "
+            "key-value pair (token, email) ",
+        )
 
         email = fields.Email(required=True)
 
@@ -264,7 +269,7 @@ class EmailUserResource(UserManagementBaseResource):
                     restaurant.public = True
                     restaurant.save()
             except UserNotFoundError:
-                return
+                return USER_NOT_FOUND
             return user.save()
 
         return INVALID_TOKEN
