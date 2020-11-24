@@ -1,45 +1,60 @@
 import { Injectable } from '@angular/core';
 import {Restaurant} from '../interfaces/restaurant-interfaces';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
 
-  hasPermission: boolean;
-  slug: string;
-  canUpload: boolean;
-  isRestaurantPublic: boolean;
+  hasPermissionObservable = new BehaviorSubject<boolean>(false);
+  slugObservable = new BehaviorSubject<string>(null);
+  canUploadObservable = new BehaviorSubject<boolean>(false);
+  isRestaurantPublicObservable = new BehaviorSubject<boolean>(false);
+  restaurantNameObservable = new BehaviorSubject<string>(null);
+  menuNameObservable = new BehaviorSubject<string>(null);
 
   constructor() { }
 
   setPermission(permission: boolean): void {
-    this.hasPermission = permission;
+    this.hasPermissionObservable.next(permission);
   }
 
-  getPermission(): boolean {
-    return this.hasPermission;
+  getPermission(): Observable<boolean>{
+    return this.hasPermissionObservable;
   }
 
   setSlug(slug: string): void {
-    this.slug = slug;
+    this.slugObservable.next(slug);
   }
 
-  getSlug(): string {
-    return this.slug;
+  getSlug(): Observable<string> {
+    return this.slugObservable;
   }
 
   setRestaurantPermissions(restaurant: Restaurant): void {
-    this.canUpload = restaurant.can_upload;
-    this.isRestaurantPublic = restaurant.public;
+    this.canUploadObservable.next(restaurant.can_upload);
+    this.isRestaurantPublicObservable.next(restaurant.public);
+    this.restaurantNameObservable.next(restaurant.name);
   }
 
-  isPublic(): boolean {
-    return this.isRestaurantPublic;
+  isPublic(): Observable<boolean> {
+    return this.isRestaurantPublicObservable;
   }
 
-  canRestaurantUpload(): boolean {
-    return this.canUpload;
+  canRestaurantUpload(): BehaviorSubject<boolean> {
+    return this.canUploadObservable;
   }
 
+  getRestaurantName(): BehaviorSubject<string> {
+    return this.restaurantNameObservable;
+  }
+
+  getMenuName(): BehaviorSubject<string> {
+    return this.menuNameObservable;
+  }
+
+  setMenuName(menuName: string): void {
+    this.menuNameObservable.next(menuName);
+  }
 }

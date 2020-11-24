@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuService } from '../../../services/menu.service';
 import { RestaurantService } from '../../../services/restaurant.service';
+import {GlobalService} from "../../../services/global.service";
 
 @Component({
   selector: 'app-img-form-modal',
@@ -12,13 +13,17 @@ export class ImgFormModalComponent implements OnInit {
   @ViewChild('template') input;
   file;
   @Input() itemId: string;
-  @Input() slug: string;
-  @Input() menuName: string;
   @Output() itemEmitter = new EventEmitter<string>();
 
-  constructor(private modalService: NgbModal, private restaurantService: RestaurantService) {}
+  slug: string;
+  menuName: string;
 
-  ngOnInit(): void {}
+  constructor(private modalService: NgbModal, private restaurantService: RestaurantService, public globalService: GlobalService) {}
+
+  ngOnInit(): void {
+    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
+    this.globalService.menuNameObservable.subscribe(menuName => this.menuName = menuName);
+  }
 
   open(): void {
     this.modalService.open(this.input);

@@ -3,18 +3,12 @@
   [sections]="menu.sections"
   [miniScroll]="miniScroll"
   [currentSection]="selectedSection"
-  [menuName]="menu.name"
-  [hasPermission]="hasPermission"
-  [slug]="slug"
   (menuEmitter)="updateMenu($event)"
 ></app-scrolling-component>
 <button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
 <div class="align" *ngFor="let section of menu.sections; let i = index">
   <app-sectionv2
-    [hasPermission]="hasPermission"
     [section]="section"
-    [slug]="slug"
-    [menuName]="menu.name"
     id="{{ section._id }}"
     (menuEmitter)="update($event)"
   >

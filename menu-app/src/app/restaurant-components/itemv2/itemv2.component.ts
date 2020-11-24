@@ -5,6 +5,7 @@ import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid
 import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { TagService } from '../../services/tag.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-itemv2',
@@ -16,19 +17,26 @@ export class Itemv2Component implements OnInit {
   itemOriginal: Item;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
-  @Input() slug: string;
-  @Input() menuName: string;
-  @Input() hasPermission: boolean;
   @Output() sectionEmitter = new EventEmitter<Section>();
   @Input() editMode: boolean;
+
   // icons
   faPlus = faPlus;
   faPen = faPen;
   deleteIcon = faTrash;
 
-  constructor(private restaurantService: RestaurantService, private tagService: TagService) {}
+  slug: string;
+  menuName: string;
+  hasPermission: boolean;
 
-  ngOnInit(): void {}
+  constructor(private restaurantService: RestaurantService, public globalService: GlobalService) {}
+
+  ngOnInit(): void {
+    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
+    this.globalService.menuNameObservable.subscribe(menuName => this.menuName = menuName);
+    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+
+  }
 
   addTag(): void {
     const newTag: Tag = {

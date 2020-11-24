@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
-import { ManageSectionsComponent } from '../../control-panel/manage-sections/manage-sections.component';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-menuv2',
@@ -10,17 +10,21 @@ import { ManageSectionsComponent } from '../../control-panel/manage-sections/man
   styleUrls: ['./menuv2.component.scss'],
 })
 export class Menuv2Component implements OnInit {
-  @Input() hasPermission: boolean;
   @Input() menu: Menu;
-  @Input() slug: string;
   miniScroll = false;
   previousScroll = 0;
   selectedSection = 0;
   rearrangeMode = false;
 
-  constructor(private restaurantService: RestaurantService) {}
+  slug: string;
+  hasPermission: boolean;
 
-  ngOnInit(): void {}
+  constructor(private restaurantService: RestaurantService, public globalService: GlobalService) {}
+
+  ngOnInit(): void {
+    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
+    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+  }
 
   updateSections(sections: Section[]): void {
     this.menu.sections = sections;

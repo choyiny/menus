@@ -7,6 +7,7 @@ import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
+import {GlobalService} from '../../services/global.service';
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -17,10 +18,9 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() selectedImage: string;
   menus = [];
   currentMenu = 0;
-  @Input() slug: string;
 
-  // true if user has permission to edit this menuv2
-  @Input() hasPermission: boolean;
+  slug: string;
+  hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
@@ -28,7 +28,8 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private scrollService: ScrollService
+    private scrollService: ScrollService,
+    public globalService: GlobalService,
   ) {}
 
   ngAfterViewInit(): void {
@@ -48,6 +49,8 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
+    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
     this.loadMenus();
   }
 
@@ -55,6 +58,9 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.restaurant.menus.length; i++) {
       const menuName = this.restaurant.menus[i];
       this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
+        if (i === this.currentMenu) {
+          this.globalService.setMenuName(menuName);
+        }
         this.menus[i] = menu;
       });
     }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { AuthService } from '../../services/auth.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
-    private authService: AuthService
+    private authService: AuthService,
+    private globalService: GlobalService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +34,9 @@ export class HomeComponent implements OnInit {
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe(
         (restaurant) => {
+          this.globalService.setPermission(this.hasPermission);
+          this.globalService.setRestaurantPermissions(restaurant);
+          this.globalService.setSlug(this.slug);
           this.restaurant = restaurant;
         },
         (err) => {

@@ -4,6 +4,7 @@ import { ScrollService } from '../../services/scroll.service';
 import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-sectionv2',
@@ -15,15 +16,20 @@ export class Sectionv2Component implements OnInit {
   editIcon = faPen;
   deleteIcon = faTrash;
   @Input() section: Section;
-  @Input() slug: string;
-  @Input() menuName: string;
-  @Input() hasPermission: boolean;
   @Output() menuEmitter = new EventEmitter<Menu>();
   editMode: boolean;
 
-  constructor(private restaurantService: RestaurantService, private scrollService: ScrollService) {}
+  slug: string;
+  hasPermission: boolean;
+  menuName: string;
 
-  ngOnInit(): void {}
+  constructor(private restaurantService: RestaurantService, private scrollService: ScrollService, public globalService: GlobalService) {}
+
+  ngOnInit(): void {
+    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
+    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+    this.globalService.menuNameObservable.subscribe(menuName => this.menuName = menuName);
+  }
 
   delete(): void {
     this.restaurantService

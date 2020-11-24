@@ -2,9 +2,6 @@
 <app-navbar
   (restaurantEmitter)="updateRestaurant($event)"
   *ngIf="hasPermission"
-  [slug]="slug"
-  [restaurantName]="restaurant.name"
-  [isPublic]="restaurant.public"
 ></app-navbar>
 <div class="desktop-background">
   <app-mobile-image
@@ -31,20 +28,16 @@
       <app-menu-name
         class="desktop"
         (menuEmitter)="setValue($event)"
-        [hasPermission]="hasPermission"
         [name]="restaurant.name"
       ></app-menu-name>
       <div class="menu-items section-background">
         <app-menu-details
           class="desktop"
           [description]="restaurant.description"
-          [hasPermission]="hasPermission"
           (menuEmitter)="setValue($event)"
         ></app-menu-details>
         <app-menuv2
           *ngIf="menus[currentMenu]"
-          [slug]="slug"
-          [hasPermission]="hasPermission"
           [menu]="menus[currentMenu]"
         >
         </app-menuv2>

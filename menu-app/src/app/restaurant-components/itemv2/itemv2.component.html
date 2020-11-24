@@ -1,9 +1,7 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
 <app-img-form-modal
-  [slug]="slug"
   [itemId]="item._id"
   (itemEmitter)="setImage($event)"
-  [menuName]="menuName"
 ></app-img-form-modal>
 
 <div *ngIf="!editMode" class="menu-item">
@@ -33,7 +31,6 @@
     <app-tagv2
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
-      [hasPermission]="hasPermission"
       (outputTagText)="updateTags($event, i)"
     >
     </app-tagv2>
@@ -60,7 +57,6 @@
     <app-tagv2
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
-      [hasPermission]="hasPermission"
       [editMode]="editMode"
       (outputTagText)="updateTags($event, i)"
     >
