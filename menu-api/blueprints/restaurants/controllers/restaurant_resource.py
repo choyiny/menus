@@ -404,6 +404,38 @@ class ImageResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
+class RestaurantHeaderImageResource(RestaurantBaseResource):
+    @doc(description="""Update restaurant header image with uploaded image""")
+    # @firebase_login_required
+    @use_args(file_args, location="files")
+    @marshal_with(GetRestaurantSchema)
+    def patch(self, args, slug):
+
+        # if g.user is None:
+        #     return FORBIDDEN
+
+        image_bytes = args["file"].read()
+        loaded_image = Image.open(BytesIO(image_bytes))
+        max_length = max(loaded_image.size)
+        if max_length > 1500:
+            ratio = 1500 / max_length
+            width, height = loaded_image.size
+            loaded_image = loaded_image.resize(
+                (int(width * ratio), int(height * ratio))
+            )
+        out_img = BytesIO()
+        loaded_image.save(out_img, "PNG")
+        out_img.seek(0)
+
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+
+        restaurant.image = upload_image(out_img)
+        restaurant.save()
+        return restaurant.to_dict()
+
+
 class OnboardingRestaurantResource(RestaurantBaseResource):
     @doc(description="""Generate random restaurant with menu 'Menu'""")
     @firebase_login_required
