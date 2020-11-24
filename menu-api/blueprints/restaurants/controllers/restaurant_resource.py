@@ -84,6 +84,8 @@ class RestaurantResource(RestaurantBaseResource):
                 restaurant.tracing_key = kwargs.get("tracing_key")
             if "qrcode_link" in kwargs:
                 restaurant.qrcode_link = kwargs.get("qrcode_link")
+            if "can_upload" in kwargs:
+                restaurant.can_upload = kwargs.get("can_upload")
 
         restaurant.save()
         return restaurant.to_dict()
@@ -365,8 +367,9 @@ class ImageResource(RestaurantBaseResource):
         out_img = BytesIO()
         loaded_image.save(out_img, "PNG")
         out_img.seek(0)
+
         restaurant = Restaurant.objects(slug=slug).first()
-        if restaurant is None:
+        if restaurant is None or not restaurant.can_upload:
             return RESTAURANT_NOT_FOUND
         menu = restaurant.get_menu(menu_name)
         item = menu.get_item(item_id)
