@@ -35,7 +35,7 @@ import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
 import { SignupComponent } from './util-components/register/signup/signup.component';
 import { FirstMenuComponent } from './util-components/register/first-menu/first-menu.component';
 import { RegisterComponent } from './register/register.component';
-import { PreviewComponent} from './restaurant-components/preview/preview.component';
+import { PreviewComponent } from './restaurant-components/preview/preview.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -91,7 +91,7 @@ const DragConfig = {
     CollapsedSectionComponent,
     NavbarComponent,
     HomeComponent,
-    PreviewComponent
+    PreviewComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,12 +8,12 @@
     [previewMode]="previewMode"
     (viewEmitter)="updatePreviewMode($event)"
   ></app-navbar>
-    <app-restaurant
-      *ngIf="restaurant && !previewMode"
-      [restaurant]="restaurant"
-      [slug]="slug"
-      [hasPermission]="hasPermission"
-    ></app-restaurant>
+  <app-restaurant
+    *ngIf="restaurant && !previewMode"
+    [restaurant]="restaurant"
+    [slug]="slug"
+    [hasPermission]="hasPermission"
+  ></app-restaurant>
   <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>
 </div>
 <div *ngIf="!viewable">

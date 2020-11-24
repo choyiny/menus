@@ -37,6 +37,6 @@ export class AdminService {
 
   generateQR(slug): Observable<Blob> {
     const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
-    return this.http.get(url, { responseType: 'blob', });
+    return this.http.get(url, { responseType: 'blob' });
   }
 }
