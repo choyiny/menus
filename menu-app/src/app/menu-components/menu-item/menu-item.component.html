@@ -1,5 +1,5 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
-<app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
+<!--<app-img-form-modal [slug]="slug" [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>-->
 <div class="menu-item">
   <div>
     <button *ngIf="!editMode && hasPermission" class="btn0 desktop" (click)="edit()">
