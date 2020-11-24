@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Restaurant} from '../../interfaces/restaurant-interfaces';
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-preview',
@@ -12,11 +13,14 @@ export class PreviewComponent implements OnInit {
   @Input()slug: string;
   url: string;
 
-  constructor() { }
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    this.url = 'http://localhost:4200';
-    console.log(this.url, 'url');
+    this.url = `${window.location.origin}/restaurants/${this.slug}`;
+  }
+
+  getUrl(): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
 }
