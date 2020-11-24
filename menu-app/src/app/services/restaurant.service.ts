@@ -113,4 +113,9 @@ export class RestaurantService {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/onboard`;
     return this.http.patch<Menu>(url, restaurant);
   }
+
+  uploadHeader(slug: string, formData: FormData): Observable<Restaurant> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/image`;
+    return this.http.patch<Restaurant>(url, formData);
+  }
 }
