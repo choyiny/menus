@@ -4,9 +4,9 @@ import { LoginComponent } from './auth-components/login/login.component';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
 import { AdminGuard } from './guards/admin.guard';
 import { MenuComponent } from './menu-components/menu/menu.component';
-import { RestaurantComponent } from './restaurant-components/restaurant/restaurant.component';
 import { RegisterComponent } from './register/register.component';
 import { VerificationComponent } from './auth-components/verification/verification.component';
+import { HomeComponent } from './restaurant-components/home/home.component';
 
 const routes: Routes = [
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
     component: DashboardComponent,
   },
   {
-    path: 'verify',
+    path: 'verification',
     component: VerificationComponent,
   },
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'restaurants/:slug',
-    component: RestaurantComponent,
+    component: HomeComponent,
   },
   {
     path: 'register',

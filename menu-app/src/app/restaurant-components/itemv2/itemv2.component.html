@@ -61,6 +61,7 @@
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
       [hasPermission]="hasPermission"
+      [editMode]="editMode"
       (outputTagText)="updateTags($event, i)"
     >
     </app-tagv2>

@@ -104,13 +104,13 @@ export class RestaurantService {
     return this.http.delete<Item>(url);
   }
 
-  publishRestaurant(slug: string): Observable<Restaurant> {
-    const url = `${environment.settings.apiv2}/restaurants/${slug}/publish`;
-    return this.http.patch<Restaurant>(url, {});
+  onboardRestaurant(): Observable<string> {
+    const url = `${environment.settings.apiv2}/restaurants/onboard`;
+    return this.http.post<string>(url, {});
   }
 
-  onboardRestaurant(restaurant: RestaurantOnboarding): Observable<string> {
-    const url = `${environment.settings.apiv2}/restaurants/onboard`;
-    return this.http.post<string>(url, restaurant);
+  onboard(slug: string, restaurant: RestaurantOnboarding): Observable<Menu> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/onboard`;
+    return this.http.patch<Menu>(url, restaurant);
   }
 }

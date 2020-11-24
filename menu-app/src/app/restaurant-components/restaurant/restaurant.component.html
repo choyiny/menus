@@ -1,57 +1,55 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
-<app-signup></app-signup>
-<div *ngIf="restaurant">
-  <app-navbar *ngIf="hasPermission" [restaurantName]="restaurant.name"></app-navbar>
-  <div *ngIf="viewable">
+<app-navbar
+  (restaurantEmitter)="updateRestaurant($event)"
+  *ngIf="hasPermission"
+  [slug]="slug"
+  [restaurantName]="restaurant.name"
+  [isPublic]="restaurant.public"
+></app-navbar>
+<div class="desktop-background">
+  <app-mobile-image
+    class="mobile"
+    [name]="restaurant.name"
+    [description]="restaurant.description"
+    [image]="restaurant.image"
+  ></app-mobile-image>
+  <div
+    [ngStyle]="{
+      background: 'url(' + restaurant.image + ')',
+      backgroundSize: '100%',
+      backgroundRepeat: 'no repeat'
+    }"
+    class="desktop-image"
+  >
     <div class="desktop-background">
-      <app-mobile-image
-        class="mobile"
-        [name]="restaurant.name"
-        [description]="restaurant.description"
+      <app-change-background
+        class="desktop"
+        *ngIf="hasPermission"
         [image]="restaurant.image"
-      ></app-mobile-image>
-      <div
-        [ngStyle]="{
-          background: 'url(' + restaurant.image + ')',
-          backgroundSize: '100%',
-          backgroundRepeat: 'no repeat'
-        }"
-        class="desktop-image"
-      >
-        <div class="desktop-background">
-          <app-change-background
-            class="desktop"
-            *ngIf="hasPermission"
-            [image]="restaurant.image"
-            (imageEmitter)="setValue($event)"
-          ></app-change-background>
-          <app-menu-name
-            class="desktop"
-            (menuEmitter)="setValue($event)"
-            [hasPermission]="hasPermission"
-            [name]="restaurant.name"
-          ></app-menu-name>
-          <div class="menu-items section-background">
-            <app-menu-details
-              class="desktop"
-              [description]="restaurant.description"
-              [hasPermission]="hasPermission"
-              (menuEmitter)="setValue($event)"
-            ></app-menu-details>
-            <app-menuv2
-              *ngIf="menus[currentMenu]"
-              [slug]="slug"
-              [hasPermission]="hasPermission"
-              [menu]="menus[currentMenu]"
-            >
-            </app-menuv2>
-          </div>
-        </div>
+        (imageEmitter)="setValue($event)"
+      ></app-change-background>
+      <app-menu-name
+        class="desktop"
+        (menuEmitter)="setValue($event)"
+        [hasPermission]="hasPermission"
+        [name]="restaurant.name"
+      ></app-menu-name>
+      <div class="menu-items section-background">
+        <app-menu-details
+          class="desktop"
+          [description]="restaurant.description"
+          [hasPermission]="hasPermission"
+          (menuEmitter)="setValue($event)"
+        ></app-menu-details>
+        <app-menuv2
+          *ngIf="menus[currentMenu]"
+          [slug]="slug"
+          [hasPermission]="hasPermission"
+          [menu]="menus[currentMenu]"
+        >
+        </app-menuv2>
       </div>
-      <app-footer></app-footer>
     </div>
   </div>
-  <div *ngIf="!viewable">
-    <h1>Restaurant is private or does not exist</h1>
-  </div>
+  <app-footer></app-footer>
 </div>

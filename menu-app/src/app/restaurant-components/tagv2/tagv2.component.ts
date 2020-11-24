@@ -13,6 +13,7 @@ import { Tag } from '../../interfaces/restaurant-interfaces';
 export class Tagv2Component implements OnInit {
   @Input() tag: Tag;
   @Input() hasPermission: boolean;
+  @Input() editMode: boolean;
   tagDisplay: TagDisplay;
   editIcon = faPen;
   saveIcon = faSave;

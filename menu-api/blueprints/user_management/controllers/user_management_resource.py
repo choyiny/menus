@@ -1,8 +1,11 @@
 import math
+import secrets
 from contextlib import closing
 
+import config as c
 from auth.decorators import firebase_login_required
 from auth.documents.user import User
+from extensions import r
 from firebase_admin import auth
 from firebase_admin._auth_utils import (
     EmailAlreadyExistsError,
@@ -11,9 +14,13 @@ from firebase_admin._auth_utils import (
 )
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
-from utils.errors import FORBIDDEN
+from marshmallow import Schema
+from sendgrid import SendGridAPIClient
+from utils.errors import FORBIDDEN, INVALID_TOKEN, USER_NOT_FOUND
+from webargs import fields
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
+from ...restaurants.documents.restaurant import Restaurant
 from ..schemas import NewOrUpdateUserSchema, PaginationSchema
 from .user_management_base_resource import UserManagementBaseResource
 
@@ -170,3 +177,99 @@ class AnonymousUserResource(UserManagementBaseResource):
         g.user.display_name = firebase_user.display_name
 
         return g.user.save()
+
+
+class EmailUserResource(UserManagementBaseResource):
+    class EmailSchema(Schema):
+
+        email = fields.Email(required=True)
+
+        location = fields.Url(
+            required=True,
+            description="Location of where user is signed up (staging, local, prod)",
+        )
+
+    class VerifySchema(Schema):
+
+        token = fields.Str(
+            required=True,
+            description="Generated token from backend, used to verify user from "
+            "key-value pair (token, email) ",
+        )
+
+        email = fields.Email(required=True)
+
+    class VerifiedSchema(Schema):
+        verified = fields.Bool()
+
+    @doc(
+        description="""Send verification email to user to be upgraded from anonymous status to a social account"""
+    )
+    @firebase_login_required
+    @use_kwargs(EmailSchema)
+    def post(self, **kwargs):
+        email = kwargs.get("email")
+        location = kwargs.get("location")
+        token = secrets.token_hex(32)
+        verification_url = location + f"/verification?token={token}&email={email}"
+
+        r.set(token, email)
+        try:
+            firebase_user = auth.get_user_by_email(email)
+        except UserNotFoundError:
+            return USER_NOT_FOUND
+
+        message = {
+            "personalizations": [
+                {
+                    "to": [{"email": email}],
+                    "dynamic_template_data": {
+                        "url": verification_url,
+                        "display_name": firebase_user.email,
+                    },
+                }
+            ],
+            "from": {"email": c.SENDGRID_SENDER},
+            "template_id": "d-366053af87d2416aaced7af86d5a2723",
+        }
+
+        try:
+            sg = SendGridAPIClient(c.SENDGRID_API_KEY)
+            sg.send(message)
+        except Exception as e:
+            return {"description": e.message}
+
+        return {"verified": True}
+
+    @doc(
+        description="""Verify user's email address by verifying their token email key-value pair with backend's pair"""
+    )
+    @marshal_with(UserSchema)
+    @use_kwargs(VerifySchema)
+    def patch(self, **kwargs):
+
+        token = kwargs.get("token")
+        email = kwargs.get("email")
+
+        user = User.objects(email=email).first()
+        if user and user.is_anon:
+            return user
+
+        if r.get(token) == email.encode("utf-8"):
+            try:
+                firebase_user = auth.get_user_by_email(email)
+                user = User.objects(firebase_id=firebase_user.uid).first()
+                user.email = firebase_user.email
+                user.phone_number = firebase_user.phone_number
+                user.photo_url = firebase_user.photo_url
+                user.display_name = firebase_user.display_name
+                if user.restaurants:
+                    slug = user.restaurants[0]
+                    restaurant = Restaurant.objects(slug=slug).first()
+                    restaurant.public = True
+                    restaurant.save()
+            except UserNotFoundError:
+                return USER_NOT_FOUND
+            return user.save()
+
+        return INVALID_TOKEN

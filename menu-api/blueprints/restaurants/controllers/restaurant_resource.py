@@ -1,7 +1,9 @@
+import random
+import string
 import uuid
 from io import BytesIO
 
-from auth.decorators import firebase_login_required
+from auth.decorators import firebase_login_preferred, firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from helpers import delete_file, upload_image
@@ -14,6 +16,7 @@ from utils.errors import (
     MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     NOT_AUTHENTICATED,
+    ONE_RESTAURANT_ONLY,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
 )
@@ -37,11 +40,14 @@ from .restaurant_base_resource import RestaurantBaseResource
 class RestaurantResource(RestaurantBaseResource):
     @doc(description="Get restaurants details")
     @marshal_with(GetRestaurantSchema)
+    @firebase_login_preferred
     def get(self, slug: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
-        return restaurant.to_dict()
+        if restaurant.public or (g.user and g.user.has_permission(restaurant.slug)):
+            return restaurant.to_dict()
+        return RESTAURANT_NOT_FOUND
 
     @doc(description="Edit restaurants details")
     @marshal_with(GetRestaurantSchema)
@@ -62,6 +68,12 @@ class RestaurantResource(RestaurantBaseResource):
 
         if "image" in kwargs:
             restaurant.image = kwargs.get("image")
+
+        if "public" in kwargs:
+            if g.user.is_anon:
+                return ANONYMOUS_USER_FORBIDDEN
+            else:
+                restaurant.public = kwargs.get("public")
 
         if g.user.is_admin:
             if "enable_trace" in kwargs:
@@ -392,40 +404,47 @@ class ImageResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
-class PublishRestaurantResource(RestaurantBaseResource):
-    @doc(description="""Toggle restaurant visibility""")
-    @marshal_with(GetRestaurantSchema)
+class OnboardingRestaurantResource(RestaurantBaseResource):
+    @doc(description="""Generate random restaurant with menu 'Menu'""")
     @firebase_login_required
-    def patch(self, slug):
+    def post(self):
 
         if g.user is None:
             return FORBIDDEN
 
-        if g.user.is_anon:
-            return ANONYMOUS_USER_FORBIDDEN
+        if g.user.restaurants:
+            return g.user.restaurants[0]
+
+        menu = MenuV2(name="Menu").save()
+
+        random_slug = "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=7)
+        )
+        g.user.restaurants.append(random_slug)
+        g.user.save()
+        restaurant = Restaurant(
+            menus=[menu], slug=random_slug, name="Menu 1", public=False
+        ).save()
+
+        return restaurant.slug
+
+    @doc(description="""Onboard user's first restaurant""")
+    @use_kwargs(OnboardingSchema)
+    @firebase_login_required
+    @marshal_with(MenuV2Schema)
+    def patch(self, slug, **kwargs):
+
+        if g.user is None:
+            return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
 
-        restaurant.public = not restaurant.public
-        restaurant.save()
+        menu = restaurant.get_menu("Menu")
 
-        return restaurant.to_dict()
-
-
-class OnboardingRestaurantResource(RestaurantBaseResource):
-    @doc(description="""Onboard user's first restaurant""")
-    @use_kwargs(OnboardingSchema)
-    @firebase_login_required
-    def post(self, **kwargs):
-
-        # temporary fix, not sure why multiple requests are send
-        if g.user.restaurants:
-            return FORBIDDEN
-
-        if g.user is None:
-            return FORBIDDEN
+        if menu is None:
+            return MENU_NOT_FOUND
 
         item = Item(_id=str(uuid.uuid4()))
 
@@ -443,16 +462,6 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         if kwargs.get("section_name"):
             section.name = kwargs.get("section_name")
 
-        menu = MenuV2(sections=[section], name="Menu")
+        menu.sections = [section]
         menu.save()
-
-        restaurant = Restaurant(menus=[menu], slug=str(uuid.uuid4()), public=False)
-
-        if kwargs.get("name"):
-            restaurant.name = kwargs.get("name")
-
-        restaurant.save()
-        g.user.restaurants.append(restaurant.slug)
-        g.user.save()
-
-        return restaurant.slug
+        return menu

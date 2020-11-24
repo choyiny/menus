@@ -32,7 +32,7 @@ export class Itemv2Component implements OnInit {
 
   addTag(): void {
     const newTag: Tag = {
-      text: 'New tag',
+      text: 'Edit tag',
       icon: '',
       background_color: 'black',
     };
