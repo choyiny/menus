@@ -8,6 +8,7 @@ export interface Restaurant {
   force_trace: boolean;
   public: boolean;
   qrcode_link: string;
+  can_upload: boolean;
 }
 
 export interface RestaurantOnboarding {
@@ -28,6 +29,7 @@ export interface RestaurantEditable {
   enable_trace?: boolean;
   force_trace?: boolean;
   public ?: boolean;
+  can_upload?: boolean;
 }
 
 export interface RestaurantTemplate {
