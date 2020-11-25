@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private authService: AuthService,
-    private globalService: RestaurantPermissionService
+    private restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   updatePreviewMode(previewMode: boolean): void {
@@ -43,9 +43,9 @@ export class HomeComponent implements OnInit {
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe(
         (restaurant) => {
-          this.globalService.setPermission(this.hasPermission);
-          this.globalService.setRestaurantPermissions(restaurant);
-          this.globalService.setSlug(this.slug);
+          this.restaurantPermissionService.setPermission(this.hasPermission);
+          this.restaurantPermissionService.setRestaurantPermissions(restaurant);
+          this.restaurantPermissionService.setSlug(this.slug);
           this.restaurant = restaurant;
         },
         (err) => {

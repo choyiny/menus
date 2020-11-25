@@ -29,7 +29,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private scrollService: ScrollService,
-    public globalService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngAfterViewInit(): void {
@@ -49,8 +49,8 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
     this.loadMenus();
@@ -61,7 +61,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       const menuName = this.restaurant.menus[i];
       this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
         if (i === this.currentMenu) {
-          this.globalService.setMenuName(menuName);
+          this.restaurantPermissionService.setMenuName(menuName);
         }
         this.menus[i] = menu;
       });

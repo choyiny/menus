@@ -26,15 +26,15 @@ export class Sectionv2Component implements OnInit {
   constructor(
     private restaurantService: RestaurantService,
     private scrollService: ScrollService,
-    public globalService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
-    this.globalService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
   }
 
   delete(): void {

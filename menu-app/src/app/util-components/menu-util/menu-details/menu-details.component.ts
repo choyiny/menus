@@ -18,10 +18,10 @@ export class MenuDetailsComponent implements OnInit {
 
   hasPermission: boolean;
 
-  constructor(private globalService: RestaurantPermissionService) {}
+  constructor(private restaurantPermissionService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
   }

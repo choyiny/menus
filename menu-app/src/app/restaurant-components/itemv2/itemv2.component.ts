@@ -31,16 +31,16 @@ export class Itemv2Component implements OnInit {
 
   constructor(
     private restaurantService: RestaurantService,
-    public globalService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.globalService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
-    this.globalService.canUploadObservable.subscribe((canUpload) => (this.canUpload = canUpload));
+    this.restaurantPermissionService.canUploadObservable.subscribe((canUpload) => (this.canUpload = canUpload));
   }
 
   addTag(): void {

@@ -21,12 +21,12 @@ export class Menuv2Component implements OnInit {
 
   constructor(
     private restaurantService: RestaurantService,
-    public globalService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
   }

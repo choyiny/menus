@@ -9,7 +9,7 @@ import { RestaurantPermissionService } from '../../../services/restaurantPermiss
   styleUrls: ['./menu-name.component.scss'],
 })
 export class MenuNameComponent implements OnInit {
-  constructor(private globalService: RestaurantPermissionService) {}
+  constructor(private restaurantPermissionService: RestaurantPermissionService) {}
 
   @Input() name: string;
   @Output() menuEmitter = new EventEmitter<MenuEditable>();
@@ -22,7 +22,7 @@ export class MenuNameComponent implements OnInit {
   hasPermission: boolean;
 
   ngOnInit(): void {
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
   }

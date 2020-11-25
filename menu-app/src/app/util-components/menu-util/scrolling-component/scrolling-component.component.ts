@@ -28,13 +28,13 @@ export class ScrollingComponentComponent implements OnInit {
   constructor(
     public scrollService: ScrollService,
     private restaurantService: RestaurantService,
-    private globalService: RestaurantPermissionService
+    private restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.globalService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
-    this.globalService.hasPermissionObservable.subscribe(
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
   }

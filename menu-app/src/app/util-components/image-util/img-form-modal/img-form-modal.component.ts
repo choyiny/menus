@@ -21,12 +21,12 @@ export class ImgFormModalComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private restaurantService: RestaurantService,
-    public globalService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.globalService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
   }
 
   open(): void {
