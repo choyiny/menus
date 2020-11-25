@@ -36,9 +36,11 @@
 
 <div *ngIf="editMode" class="menu-item edit-body">
   <div class="item-top">
-    <button class="upload btn2" [disabled]="!canUpload" (click)="cropImage()">
-      <fa-icon [icon]="faPlus"></fa-icon>Upload Image
-    </button>
+    <div class="wrapper" [title]="canUpload ? 'Upload image' : 'Only available on paid plans' ">
+      <button class="upload btn2" [disabled]="!canUpload" (click)="cropImage() ">
+        <fa-icon [icon]="faPlus"></fa-icon>Upload Image
+      </button>
+    </div>
     <input class="edit-price" type="text" placeholder="Add Price" [(ngModel)]="item.price" />
   </div>
 
