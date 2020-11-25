@@ -41,7 +41,7 @@ def register_commands(app):
     def migrate_restaurants():
         restaurant_migrations()
 
-    @migration_cli.command("restaurant_permissions")
+    @migration_cli.command("add_can_upload_to_all_restaurants")
     def migrate_restaurant_permissions():
         restaurant_permission_migrations()
 
