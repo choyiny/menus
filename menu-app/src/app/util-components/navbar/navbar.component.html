@@ -6,7 +6,9 @@
   <h1 class="d-inline-block align-top title">{{ restaurantName }}</h1>
 
   <div class="float-right d-inline-block">
-    <button class="align-top"><fa-icon [icon]="mobileIcon"></fa-icon>Mobile Preview</button>
+    <button (click)="mobileView()" class="align-top">
+      <fa-icon [icon]="mobileIcon"></fa-icon>{{ !previewMode ? 'Mobile preview' : 'Back to editing' }}
+    </button>
     <div class="vl"></div>
     <button (click)="publish()" class="publish btn1 align-top">Publish</button>
   </div>

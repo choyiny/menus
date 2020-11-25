@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Restaurant} from '../interfaces/restaurant-interfaces';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import { Restaurant } from '../interfaces/restaurant-interfaces';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RestaurantPermissionService {
-
   hasPermissionObservable = new BehaviorSubject<boolean>(false);
   slugObservable = new BehaviorSubject<string>(null);
   canUploadObservable = new BehaviorSubject<boolean>(false);
@@ -14,13 +13,13 @@ export class RestaurantPermissionService {
   restaurantNameObservable = new BehaviorSubject<string>(null);
   menuNameObservable = new BehaviorSubject<string>(null);
 
-  constructor() { }
+  constructor() {}
 
   setPermission(permission: boolean): void {
     this.hasPermissionObservable.next(permission);
   }
 
-  getPermission(): Observable<boolean>{
+  getPermission(): Observable<boolean> {
     return this.hasPermissionObservable;
   }
 

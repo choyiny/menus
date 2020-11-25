@@ -1,8 +1,4 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
-<app-navbar
-  (restaurantEmitter)="updateRestaurant($event)"
-  *ngIf="hasPermission"
-></app-navbar>
 <div class="desktop-background">
   <app-mobile-image
     class="mobile"
@@ -25,22 +21,14 @@
         [image]="restaurant.image"
         (imageEmitter)="setValue($event)"
       ></app-change-background>
-      <app-menu-name
-        class="desktop"
-        (menuEmitter)="setValue($event)"
-        [name]="restaurant.name"
-      ></app-menu-name>
+      <app-menu-name class="desktop" (menuEmitter)="setValue($event)" [name]="restaurant.name"></app-menu-name>
       <div class="menu-items section-background">
         <app-menu-details
           class="desktop"
           [description]="restaurant.description"
           (menuEmitter)="setValue($event)"
         ></app-menu-details>
-        <app-menuv2
-          *ngIf="menus[currentMenu]"
-          [menu]="menus[currentMenu]"
-        >
-        </app-menuv2>
+        <app-menuv2 *ngIf="menus[currentMenu]" [menu]="menus[currentMenu]"> </app-menuv2>
       </div>
     </div>
   </div>

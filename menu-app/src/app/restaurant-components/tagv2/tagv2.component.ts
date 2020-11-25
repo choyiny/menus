@@ -4,7 +4,7 @@ import { TagDisplay } from '../../interfaces/tag-display';
 import { faPen } from '@fortawesome/pro-solid-svg-icons';
 import { faSave } from '@fortawesome/pro-solid-svg-icons';
 import { Tag } from '../../interfaces/restaurant-interfaces';
-import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-tagv2',
@@ -24,7 +24,9 @@ export class Tagv2Component implements OnInit {
   constructor(private tagService: TagService, public globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
-    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+    this.globalService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
     if (this.tag.icon) {
       this.tagDisplay = this.tagService.getTag(this.tag.icon);
     } else if (this.tag.text) {

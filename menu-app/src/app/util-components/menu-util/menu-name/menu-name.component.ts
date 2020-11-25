@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { MenuEditable } from '../../../interfaces/menus-interface';
 import { faSave, faPen } from '@fortawesome/pro-solid-svg-icons';
-import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-menu-name',
@@ -22,7 +22,9 @@ export class MenuNameComponent implements OnInit {
   hasPermission: boolean;
 
   ngOnInit(): void {
-    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+    this.globalService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
   }
 
   edit(): void {

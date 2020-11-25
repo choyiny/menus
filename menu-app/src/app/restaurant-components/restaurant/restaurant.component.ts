@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +7,7 @@ import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
-import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -29,7 +29,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private scrollService: ScrollService,
-    public globalService: RestaurantPermissionService,
+    public globalService: RestaurantPermissionService
   ) {}
 
   ngAfterViewInit(): void {
@@ -49,8 +49,10 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
-    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.globalService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
     this.loadMenus();
   }
 
@@ -76,10 +78,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       this.restaurant = restaurant;
       this.loadMenus();
     });
-  }
-
-  updateRestaurant(restaurant: Restaurant): void {
-    this.restaurant = restaurant;
   }
 
   sameDay(): boolean {

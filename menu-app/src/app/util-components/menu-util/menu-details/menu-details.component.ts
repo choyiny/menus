@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuEditable } from '../../../interfaces/menus-interface';
 import { faPen } from '@fortawesome/pro-solid-svg-icons';
 import { faSave } from '@fortawesome/pro-solid-svg-icons';
-import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-menu-details',
@@ -21,7 +21,9 @@ export class MenuDetailsComponent implements OnInit {
   constructor(private globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
-    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
+    this.globalService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
   }
 
   edit(): void {

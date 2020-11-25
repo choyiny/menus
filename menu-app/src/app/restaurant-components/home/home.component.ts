@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { AuthService } from '../../services/auth.service';
-import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   restaurant: Restaurant;
   hasPermission: boolean;
   viewable = true;
+  previewMode = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,6 +23,14 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private globalService: RestaurantPermissionService
   ) {}
+
+  updatePreviewMode(previewMode: boolean): void {
+    this.previewMode = previewMode;
+  }
+
+  updateRestaurant(restaurant: Restaurant): void {
+    this.restaurant = restaurant;
+  }
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;

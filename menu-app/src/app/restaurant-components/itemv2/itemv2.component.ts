@@ -4,7 +4,7 @@ import { ImgFormModalComponent } from '../../util-components/image-util/img-form
 import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
-import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-itemv2',
@@ -29,13 +29,18 @@ export class Itemv2Component implements OnInit {
   hasPermission: boolean;
   canUpload: boolean;
 
-  constructor(private restaurantService: RestaurantService, public globalService: RestaurantPermissionService) {}
+  constructor(
+    private restaurantService: RestaurantService,
+    public globalService: RestaurantPermissionService
+  ) {}
 
   ngOnInit(): void {
-    this.globalService.slugObservable.subscribe( slug => this.slug = slug);
-    this.globalService.menuNameObservable.subscribe(menuName => this.menuName = menuName);
-    this.globalService.hasPermissionObservable.subscribe( hasPermission => this.hasPermission = hasPermission);
-    this.globalService.canUploadObservable.subscribe(canUpload => this.canUpload = canUpload);
+    this.globalService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.globalService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.globalService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
+    this.globalService.canUploadObservable.subscribe((canUpload) => (this.canUpload = canUpload));
   }
 
   addTag(): void {

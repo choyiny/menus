@@ -7,10 +7,5 @@
 ></app-scrolling-component>
 <button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
 <div class="align" *ngFor="let section of menu.sections; let i = index">
-  <app-sectionv2
-    [section]="section"
-    id="{{ section._id }}"
-    (menuEmitter)="update($event)"
-  >
-  </app-sectionv2>
+  <app-sectionv2 [section]="section" id="{{ section._id }}" (menuEmitter)="update($event)"> </app-sectionv2>
 </div>

@@ -1,10 +1,15 @@
 <div *ngIf="viewable">
-  <app-restaurant
-    *ngIf="restaurant"
-    [restaurant]="restaurant"
+  <app-navbar
+    (restaurantEmitter)="updateRestaurant($event)"
+    *ngIf="hasPermission && restaurant"
     [slug]="slug"
-    [hasPermission]="hasPermission"
-  ></app-restaurant>
+    [restaurantName]="restaurant.name"
+    [isPublic]="restaurant.public"
+    [previewMode]="previewMode"
+    (viewEmitter)="updatePreviewMode($event)"
+  ></app-navbar>
+  <app-restaurant *ngIf="restaurant && !previewMode" [restaurant]="restaurant"></app-restaurant>
+  <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>
 </div>
 <div *ngIf="!viewable">
   <h1>Restaurant is private or does not exist</h1>

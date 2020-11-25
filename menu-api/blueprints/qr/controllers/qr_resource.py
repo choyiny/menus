@@ -13,6 +13,6 @@ class DynamicQrResource(QrBaseResource):
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
         if restaurant.qrcode_link:
-            return redirect(restaurant.qrcode_link, 301)
+            return redirect(restaurant.qrcode_link, 302)
         else:
-            return redirect("https://pickeasy.ca", 301)
+            return redirect("https://pickeasy.ca", 302)
