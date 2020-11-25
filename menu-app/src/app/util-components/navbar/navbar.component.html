@@ -8,6 +8,6 @@
   <div class="float-right d-inline-block">
     <button class="align-top"><fa-icon [icon]="mobileIcon"></fa-icon>Mobile Preview</button>
     <div class="vl"></div>
-    <button (click)="publish()" class="publish btn1 align-top">Publish</button>
+    <button (click)="publish()" class="publish btn1 align-top">{{ isPublic ? 'Un-publish' : 'Publish' }}</button>
   </div>
 </div>
