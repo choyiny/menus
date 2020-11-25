@@ -34,7 +34,9 @@ export class Sectionv2Component implements OnInit {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
-    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.menuNameObservable.subscribe(
+      (menuName) => (this.menuName = menuName)
+    );
   }
 
   delete(): void {

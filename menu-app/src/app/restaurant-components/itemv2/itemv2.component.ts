@@ -36,11 +36,15 @@ export class Itemv2Component implements OnInit {
 
   ngOnInit(): void {
     this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.menuNameObservable.subscribe(
+      (menuName) => (this.menuName = menuName)
+    );
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
-    this.restaurantPermissionService.canUploadObservable.subscribe((canUpload) => (this.canUpload = canUpload));
+    this.restaurantPermissionService.canUploadObservable.subscribe(
+      (canUpload) => (this.canUpload = canUpload)
+    );
   }
 
   addTag(): void {

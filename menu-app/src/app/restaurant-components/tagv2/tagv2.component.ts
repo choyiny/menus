@@ -21,7 +21,10 @@ export class Tagv2Component implements OnInit {
   @Output() outputTagText = new EventEmitter<string>();
   hasPermission: boolean;
 
-  constructor(private tagService: TagService, public restaurantPermissionService: RestaurantPermissionService) {}
+  constructor(
+    private tagService: TagService,
+    public restaurantPermissionService: RestaurantPermissionService
+  ) {}
 
   ngOnInit(): void {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(

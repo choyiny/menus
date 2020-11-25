@@ -33,7 +33,9 @@ export class ScrollingComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.menuNameObservable.subscribe(
+      (menuName) => (this.menuName = menuName)
+    );
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );

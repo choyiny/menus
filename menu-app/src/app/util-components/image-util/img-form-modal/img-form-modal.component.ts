@@ -26,7 +26,9 @@ export class ImgFormModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
-    this.restaurantPermissionService.menuNameObservable.subscribe((menuName) => (this.menuName = menuName));
+    this.restaurantPermissionService.menuNameObservable.subscribe(
+      (menuName) => (this.menuName = menuName)
+    );
   }
 
   open(): void {
