@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { AuthService } from '../../services/auth.service';
-import {GlobalService} from '../../services/global.service';
+import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     private route: ActivatedRoute,
     private restaurantService: RestaurantService,
     private authService: AuthService,
-    private globalService: GlobalService
+    private globalService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {

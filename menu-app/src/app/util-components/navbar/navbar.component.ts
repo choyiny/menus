@@ -3,7 +3,7 @@ import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import { SignupComponent } from '../register/signup/signup.component';
 import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
-import {GlobalService} from '../../services/global.service';
+import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
   isPublic: boolean;
   slug: string;
 
-  constructor(private restaurantService: RestaurantService, public globalService: GlobalService) {}
+  constructor(private restaurantService: RestaurantService, public globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
     this.globalService.restaurantNameObservable.subscribe(restaurantName => this.restaurantName = restaurantName);

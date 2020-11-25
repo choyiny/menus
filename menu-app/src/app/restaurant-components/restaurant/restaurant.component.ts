@@ -7,7 +7,7 @@ import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
-import {GlobalService} from '../../services/global.service';
+import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -29,7 +29,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private scrollService: ScrollService,
-    public globalService: GlobalService,
+    public globalService: RestaurantPermissionService,
   ) {}
 
   ngAfterViewInit(): void {

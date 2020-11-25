@@ -4,7 +4,7 @@ import { ScrollService } from '../../services/scroll.service';
 import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
-import {GlobalService} from '../../services/global.service';
+import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-sectionv2',
@@ -23,7 +23,7 @@ export class Sectionv2Component implements OnInit {
   hasPermission: boolean;
   menuName: string;
 
-  constructor(private restaurantService: RestaurantService, private scrollService: ScrollService, public globalService: GlobalService) {}
+  constructor(private restaurantService: RestaurantService, private scrollService: ScrollService, public globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
     this.globalService.slugObservable.subscribe( slug => this.slug = slug);

@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core
 import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
-import {GlobalService} from '../../services/global.service';
+import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-menuv2',
@@ -19,7 +19,7 @@ export class Menuv2Component implements OnInit {
   slug: string;
   hasPermission: boolean;
 
-  constructor(private restaurantService: RestaurantService, public globalService: GlobalService) {}
+  constructor(private restaurantService: RestaurantService, public globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
     this.globalService.slugObservable.subscribe( slug => this.slug = slug);

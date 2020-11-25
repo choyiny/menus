@@ -4,7 +4,7 @@ import { Menu, Section } from '../../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { ManageSectionsComponent } from '../../../control-panel/manage-sections/manage-sections.component';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons';
-import {GlobalService} from "../../../services/global.service";
+import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
 
 @Component({
   selector: 'app-scrolling-component',
@@ -25,7 +25,7 @@ export class ScrollingComponentComponent implements OnInit {
   menuName: string;
   hasPermission: boolean;
 
-  constructor(public scrollService: ScrollService, private restaurantService: RestaurantService, private globalService: GlobalService) {}
+  constructor(public scrollService: ScrollService, private restaurantService: RestaurantService, private globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
     this.globalService.slugObservable.subscribe( slug => this.slug = slug);

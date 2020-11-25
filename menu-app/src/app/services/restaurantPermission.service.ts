@@ -5,7 +5,7 @@ import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalService {
+export class RestaurantPermissionService {
 
   hasPermissionObservable = new BehaviorSubject<boolean>(false);
   slugObservable = new BehaviorSubject<string>(null);

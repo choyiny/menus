@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { MenuEditable } from '../../../interfaces/menus-interface';
 import { faSave, faPen } from '@fortawesome/pro-solid-svg-icons';
-import {GlobalService} from "../../../services/global.service";
+import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
 
 @Component({
   selector: 'app-menu-name',
@@ -9,7 +9,7 @@ import {GlobalService} from "../../../services/global.service";
   styleUrls: ['./menu-name.component.scss'],
 })
 export class MenuNameComponent implements OnInit {
-  constructor(private globalService: GlobalService) {}
+  constructor(private globalService: RestaurantPermissionService) {}
 
   @Input() name: string;
   @Output() menuEmitter = new EventEmitter<MenuEditable>();

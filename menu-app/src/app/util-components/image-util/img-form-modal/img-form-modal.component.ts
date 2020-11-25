@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MenuService } from '../../../services/menu.service';
 import { RestaurantService } from '../../../services/restaurant.service';
-import {GlobalService} from "../../../services/global.service";
+import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
 
 @Component({
   selector: 'app-img-form-modal',
@@ -18,7 +18,7 @@ export class ImgFormModalComponent implements OnInit {
   slug: string;
   menuName: string;
 
-  constructor(private modalService: NgbModal, private restaurantService: RestaurantService, public globalService: GlobalService) {}
+  constructor(private modalService: NgbModal, private restaurantService: RestaurantService, public globalService: RestaurantPermissionService) {}
 
   ngOnInit(): void {
     this.globalService.slugObservable.subscribe( slug => this.slug = slug);
