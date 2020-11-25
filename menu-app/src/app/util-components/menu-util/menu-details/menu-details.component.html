@@ -1,4 +1,4 @@
-<div class="menu-view">
+<div class="menu-view" [ngClass]="{'space': editMode}">
   <div class="view inline">
     <quill-view-html
       *ngIf="!editMode && description"
@@ -16,7 +16,7 @@
     *ngIf="editMode"
     [(ngModel)]="description"
     [styles]="{
-      'font-size': '30px'
+      'font-size': '16px'
     }"
     class="editor"
   >
