@@ -150,4 +150,13 @@ export class MenuDashboardComponent implements OnInit {
   toggleConfigureQRCode(): void {
     this.configureQrCodeLink = !this.configureQrCodeLink;
   }
+
+  updateCanUpload(): void {
+    this.restaurantService.editRestaurant(this.slug, {can_upload: !this.restaurant.can_upload}).subscribe(
+      restaurant => {
+        this.restaurant = restaurant;
+        window.alert(`Image upload ${restaurant.can_upload ? 'enabled' : 'disabled'}`);
+      }
+    );
+  }
 }

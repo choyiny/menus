@@ -48,6 +48,10 @@
         <input type="text" [(ngModel)]="qrcodeLink" />
         <button (click)="configureQrCode()">Update Qr code</button>
       </div>
+
+      <div>
+        <input type="checkbox" [checked]="restaurant.can_upload" (change)="updateCanUpload()">
+      </div>
     </div>
   </div>
 </div>
