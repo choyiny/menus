@@ -1,4 +1,4 @@
-<div class="menu-view">
+<div class="menu-view" [ngClass]="{'space': editMode}">
   <div class="view inline">
     <quill-view-html
       *ngIf="!editMode && description"
