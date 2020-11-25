@@ -64,6 +64,8 @@ class Restaurant(Document):
     deployed qr codes redirect to this link
     """
 
+    can_upload = BooleanField()
+
     def to_dict(self):
         """ serialize restaurants to json"""
         menus = [menu.name for menu in self.menus]

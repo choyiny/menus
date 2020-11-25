@@ -159,6 +159,9 @@ class MenuResource(RestaurantBaseResource):
             menu.name = name
 
         if "sections" in kwargs:
+            # temporary fix so db gets updated, not sure why changes aren't detected otherwise
+            menu.sections = []
+            menu.save()
             menu.sections = [
                 Section(**section_dict) for section_dict in kwargs.get("sections")
             ]
