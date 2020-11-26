@@ -8,6 +8,8 @@ import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import {forkJoin} from "rxjs";
+import {take} from "rxjs/operators";
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -17,7 +19,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() restaurant: Restaurant;
   @Input() selectedImage: string;
   menus = [];
-  currentMenu = 0;
+  currentMenu = -1;
 
   slug: string;
   hasPermission: boolean;
@@ -48,6 +50,10 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     });
   }
 
+  updateRestaurant(restaurant: Restaurant): void {
+    this.restaurant = restaurant;
+  }
+
   ngOnInit(): void {
     this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
@@ -57,15 +63,29 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   loadMenus(): void {
-    for (let i = 0; i < this.restaurant.menus.length; i++) {
-      const menuName = this.restaurant.menus[i];
-      this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
-        if (i === this.currentMenu) {
-          this.restaurantPermissionService.setMenuName(menuName);
+
+    const setMenu = (i: number, menus: Menu[]) => {
+      this.currentMenu = i;
+      this.restaurantPermissionService.setMenuName(menus[i].name);
+      this.menus = menus;
+    };
+
+    forkJoin(
+      this.restaurant.menus.map( menu => {
+        return this.restaurantService.getMenus(this.slug, menu).pipe(take(1));
+      })
+    ).subscribe(
+      menus => {
+        const currentTime = this.getCurrentTime();
+        for (let i = 0; i < menus.length; i++) {
+          if (menus[i].start < currentTime && currentTime < menus[i].end){
+            setMenu(i, menus);
+            return;
+          }
         }
-        this.menus[i] = menu;
-      });
-    }
+        setMenu(0, menus);
+      }
+    );
   }
 
   scrollToSection(id: string): void {
@@ -78,6 +98,13 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       this.restaurant = restaurant;
       this.loadMenus();
     });
+  }
+
+  getCurrentTime(): number {
+    const today = new Date();
+    const [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
+    // convert hours:minutes:seconds to elapsed time in seconds
+    return h * 3600 + m * 60 + s;
   }
 
   sameDay(): boolean {

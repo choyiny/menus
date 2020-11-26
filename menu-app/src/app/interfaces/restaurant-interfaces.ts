@@ -69,6 +69,8 @@ export interface Section {
 export interface Menu {
   name: string;
   sections: Section[];
+  start: number;
+  end: number;
 }
 
 export interface MenuEditable {
