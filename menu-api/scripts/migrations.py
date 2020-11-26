@@ -138,3 +138,9 @@ def restaurant_migrations():
     for restaurant in Restaurant.objects():
         restaurant.public = True
         restaurant.save()
+
+
+def restaurant_permission_migrations():
+    for restaurant in Restaurant.objects():
+        restaurant.can_upload = True
+        restaurant.save()

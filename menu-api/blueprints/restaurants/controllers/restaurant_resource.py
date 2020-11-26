@@ -84,6 +84,8 @@ class RestaurantResource(RestaurantBaseResource):
                 restaurant.tracing_key = kwargs.get("tracing_key")
             if "qrcode_link" in kwargs:
                 restaurant.qrcode_link = kwargs.get("qrcode_link")
+            if "can_upload" in kwargs:
+                restaurant.can_upload = kwargs.get("can_upload")
 
         restaurant.save()
         return restaurant.to_dict()
@@ -135,6 +137,8 @@ class MenuResource(RestaurantBaseResource):
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
+        if not restaurant.can_upload:
+            menu.hide_images()
         return menu
 
     @doc(description="Edit menu details, checks for duplicate menus")
@@ -368,9 +372,13 @@ class ImageResource(RestaurantBaseResource):
         out_img = BytesIO()
         loaded_image.save(out_img, "PNG")
         out_img.seek(0)
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
+        if not restaurant.can_upload:
+            return FORBIDDEN
+
         menu = restaurant.get_menu(menu_name)
         item = menu.get_item(item_id)
         if item:

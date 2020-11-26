@@ -12,13 +12,11 @@ import * as firebase from 'firebase';
 })
 export class AuthService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
-  public currentUser: Observable<UserInterface>;
 
   constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
-    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): UserInterface {

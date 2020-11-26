@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import { SignupComponent } from '../register/signup/signup.component';
 import { RestaurantService } from '../../services/restaurant.service';
-import { Restaurant } from '../../interfaces/restaurant-interfaces';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,17 +11,27 @@ import { Restaurant } from '../../interfaces/restaurant-interfaces';
 })
 export class NavbarComponent implements OnInit {
   mobileIcon = faMobileAlt;
-  @Input() isPublic: boolean;
-  @Input() restaurantName: string;
-  @Input() slug: string;
   @Input() previewMode: boolean;
   @ViewChild(SignupComponent) signUp: SignupComponent;
-  @Output() restaurantEmitter = new EventEmitter<Restaurant>();
-
-  constructor(private restaurantService: RestaurantService) {}
   @Output() viewEmitter = new EventEmitter<boolean>();
+  restaurantName: string;
+  isPublic: boolean;
+  slug: string;
 
-  ngOnInit(): void {}
+  constructor(
+    private restaurantService: RestaurantService,
+    public restaurantPermissionService: RestaurantPermissionService
+  ) {}
+
+  ngOnInit(): void {
+    this.restaurantPermissionService.restaurantNameObservable.subscribe(
+      (restaurantName) => (this.restaurantName = restaurantName)
+    );
+    this.restaurantPermissionService.isRestaurantPublicObservable.subscribe(
+      (isPublic) => (this.isPublic = isPublic)
+    );
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+  }
 
   mobileView(): void {
     this.viewEmitter.emit(!this.previewMode);
@@ -31,7 +41,7 @@ export class NavbarComponent implements OnInit {
     this.restaurantService.editRestaurant(this.slug, { public: !this.isPublic }).subscribe(
       (restaurant) => {
         window.alert(`Your restaurant is now ${!this.isPublic ? 'public' : 'private'}`);
-        this.restaurantEmitter.emit(restaurant);
+        this.restaurantPermissionService.setRestaurantPermissions(restaurant);
       },
       (err) => {
         console.log(err);

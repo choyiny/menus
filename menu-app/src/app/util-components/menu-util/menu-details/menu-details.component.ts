@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuEditable } from '../../../interfaces/menus-interface';
 import { faPen } from '@fortawesome/pro-solid-svg-icons';
 import { faSave } from '@fortawesome/pro-solid-svg-icons';
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-menu-details',
@@ -11,14 +12,19 @@ import { faSave } from '@fortawesome/pro-solid-svg-icons';
 export class MenuDetailsComponent implements OnInit {
   editMode = false;
   @Input() description: string;
-  @Input() hasPermission: boolean;
   @Output() menuEmitter = new EventEmitter<MenuEditable>();
   editIcon = faPen;
   saveIcon = faSave;
 
-  constructor() {}
+  hasPermission: boolean;
 
-  ngOnInit(): void {}
+  constructor(private restaurantPermissionService: RestaurantPermissionService) {}
+
+  ngOnInit(): void {
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
+  }
 
   edit(): void {
     this.editMode = true;

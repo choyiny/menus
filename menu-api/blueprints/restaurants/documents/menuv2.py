@@ -134,5 +134,10 @@ class MenuV2(Document):
                     return item
         return None
 
+    def hide_images(self):
+        for section in self.sections:
+            for item in section.menu_items:
+                del item.image
+
     def __eq__(self, other):
         return type(self) == type(other) and self.name == other.name
