@@ -1,10 +1,6 @@
 <div *ngIf="viewable">
   <app-navbar
-    (restaurantEmitter)="updateRestaurant($event)"
     *ngIf="hasPermission && restaurant"
-    [slug]="slug"
-    [restaurantName]="restaurant.name"
-    [isPublic]="restaurant.public"
     [previewMode]="previewMode"
     (viewEmitter)="updatePreviewMode($event)"
   ></app-navbar>

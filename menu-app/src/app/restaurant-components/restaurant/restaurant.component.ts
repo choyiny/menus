@@ -10,6 +10,7 @@ import { SignupComponent } from '../../util-components/register/signup/signup.co
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import {forkJoin} from "rxjs";
 import {take} from "rxjs/operators";
+import {MenuModalComponent} from "../../util-components/menu-util/menu-modal/menu-modal.component";
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -26,6 +27,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
+  @ViewChild(MenuModalComponent) menuModal: MenuModalComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
