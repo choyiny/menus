@@ -106,6 +106,10 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     return h * 3600 + m * 60 + s;
   }
 
+  updateMenu(index: number): void {
+    this.currentMenu = index;
+  }
+
   sameDay(): boolean {
     if (localStorage.getItem('time_in')) {
       const timeIn: TimeInterface = JSON.parse(localStorage.getItem('time_in'));

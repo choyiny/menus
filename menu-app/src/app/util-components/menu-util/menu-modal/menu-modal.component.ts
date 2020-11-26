@@ -28,8 +28,7 @@ export class MenuModalComponent implements OnInit {
   }
 
   changeMenu(index: number, modal): void {
-    console.log(index);
-    // this.indexEmitter.emit(index);
     modal.close();
+    this.indexEmitter.emit(index);
   }
 }

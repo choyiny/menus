@@ -1,5 +1,5 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
-<app-menu-modal [menus]="menus"></app-menu-modal>
+<app-menu-modal [menus]="menus" (indexEmitter)="updateMenu($event)"></app-menu-modal>
 <div class="desktop-background">
   <app-mobile-image
     class="mobile"
