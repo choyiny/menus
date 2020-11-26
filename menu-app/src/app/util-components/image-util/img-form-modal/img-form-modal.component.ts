@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MenuService } from '../../../services/menu.service';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 

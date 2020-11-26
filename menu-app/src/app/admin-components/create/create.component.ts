@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MenuService } from '../../services/menu.service';
-import { CreateInterface } from '../../interfaces/menus-interface';
 import { AdminService } from '../../services/admin.service';
-import { Restaurant, RestaurantTemplate } from '../../interfaces/restaurant-interfaces';
+import { RestaurantTemplate } from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-create',
