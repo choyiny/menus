@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MenusInterface } from '../../interfaces/menus-interface';
-import { MenuService } from '../../services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestaurantPaginated } from '../../interfaces/restaurant-interfaces';
 import { AdminService } from '../../services/admin.service';
