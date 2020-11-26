@@ -406,13 +406,13 @@ class ImageResource(RestaurantBaseResource):
 
 class RestaurantHeaderImageResource(RestaurantBaseResource):
     @doc(description="""Update restaurant header image with uploaded image""")
-    # @firebase_login_required
+    @firebase_login_required
     @use_args(file_args, location="files")
     @marshal_with(GetRestaurantSchema)
     def patch(self, args, slug):
 
-        # if g.user is None:
-        #     return FORBIDDEN
+        if g.user is None:
+            return FORBIDDEN
 
         image_bytes = args["file"].read()
         loaded_image = Image.open(BytesIO(image_bytes))
