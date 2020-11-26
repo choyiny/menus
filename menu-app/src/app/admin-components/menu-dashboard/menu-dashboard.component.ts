@@ -150,11 +150,11 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   updateCanUpload(): void {
-    this.restaurantService.editRestaurant(this.slug, {can_upload: !this.restaurant.can_upload}).subscribe(
-      restaurant => {
+    this.restaurantService
+      .editRestaurant(this.slug, { can_upload: !this.restaurant.can_upload })
+      .subscribe((restaurant) => {
         this.restaurant = restaurant;
         window.alert(`Image upload ${restaurant.can_upload ? 'enabled' : 'disabled'}`);
-      }
-    );
+      });
   }
 }

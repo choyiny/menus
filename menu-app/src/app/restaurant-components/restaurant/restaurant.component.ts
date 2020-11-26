@@ -8,9 +8,9 @@ import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
-import {forkJoin} from "rxjs";
-import {take} from "rxjs/operators";
-import {MenuModalComponent} from "../../util-components/menu-util/menu-modal/menu-modal.component";
+import { forkJoin } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -65,7 +65,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   loadMenus(): void {
-
     const setMenu = (i: number, menus: Menu[]) => {
       this.currentMenu = i;
       this.restaurantPermissionService.setMenuName(menus[i].name);
@@ -73,21 +72,19 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     };
 
     forkJoin(
-      this.restaurant.menus.map( menu => {
+      this.restaurant.menus.map((menu) => {
         return this.restaurantService.getMenus(this.slug, menu).pipe(take(1));
       })
-    ).subscribe(
-      menus => {
-        const currentTime = this.getCurrentTime();
-        for (let i = 0; i < menus.length; i++) {
-          if (menus[i].start < currentTime && currentTime < menus[i].end){
-            setMenu(i, menus);
-            return;
-          }
+    ).subscribe((menus) => {
+      const currentTime = this.getCurrentTime();
+      for (let i = 0; i < menus.length; i++) {
+        if (menus[i].start < currentTime && currentTime < menus[i].end) {
+          setMenu(i, menus);
+          return;
         }
-        setMenu(0, menus);
       }
-    );
+      setMenu(0, menus);
+    });
   }
 
   scrollToSection(id: string): void {
