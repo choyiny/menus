@@ -18,8 +18,8 @@
       <app-change-background
         class="desktop"
         *ngIf="hasPermission"
-        [image]="restaurant.image"
-        (imageEmitter)="setValue($event)"
+        [slug]="slug"
+        (restaurantEmitter)="updateRestaurant($event)"
       ></app-change-background>
       <app-menu-name class="desktop" (menuEmitter)="setValue($event)" [name]="restaurant.name"></app-menu-name>
       <div class="menu-items section-background">

@@ -5,6 +5,7 @@ from .controllers import (
     ItemResource,
     MenuResource,
     OnboardingRestaurantResource,
+    RestaurantHeaderImageResource,
     RestaurantResource,
     RestaurantsResource,
     SectionResource,
@@ -50,6 +51,12 @@ resources = [
         OnboardingRestaurantResource,
         "restaurants/<string:slug>/onboard",
         "onboard_patch",
+        ["PATCH"],
+    ),
+    (
+        RestaurantHeaderImageResource,
+        "restaurants/<string:slug>/image",
+        "header_image",
         ["PATCH"],
     ),
 ]

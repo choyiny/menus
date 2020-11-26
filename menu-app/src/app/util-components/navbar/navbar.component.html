@@ -10,6 +10,6 @@
       <fa-icon [icon]="mobileIcon"></fa-icon>{{ !previewMode ? 'Mobile preview' : 'Back to editing' }}
     </button>
     <div class="vl"></div>
-    <button (click)="publish()" class="publish btn1 align-top">Publish</button>
+    <button (click)="publish()" class="publish btn1 align-top">{{ isPublic ? 'Un-publish' : 'Publish' }}</button>
   </div>
 </div>
