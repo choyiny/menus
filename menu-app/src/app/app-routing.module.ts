@@ -11,7 +11,7 @@ import { HomeComponent } from './restaurant-components/home/home.component';
 const routes: Routes = [
   {
     path: 'menu/:slug',
-    component: MenuComponent,
+    component: HomeComponent,
   },
   {
     path: '',
