@@ -137,6 +137,8 @@ class MenuResource(RestaurantBaseResource):
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
+        if not restaurant.can_upload:
+            menu.hide_images()
         return menu
 
     @doc(description="Edit menu details, checks for duplicate menus")
