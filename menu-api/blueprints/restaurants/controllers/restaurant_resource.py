@@ -1,3 +1,4 @@
+import datetime
 import random
 import string
 import uuid
@@ -169,6 +170,12 @@ class MenuResource(RestaurantBaseResource):
             menu.sections = [
                 Section(**section_dict) for section_dict in kwargs.get("sections")
             ]
+
+        if "start" in kwargs:
+            menu.start = kwargs.get("start")
+
+        if "end" in kwargs:
+            menu.end = kwargs.get("end")
 
         menu.save()
         return menu

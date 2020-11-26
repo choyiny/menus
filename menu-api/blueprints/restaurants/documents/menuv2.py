@@ -4,6 +4,7 @@ from mongoengine import (
     Document,
     EmbeddedDocument,
     EmbeddedDocumentField,
+    IntField,
     ListField,
     StringField,
     URLField,
@@ -117,6 +118,16 @@ class MenuV2(Document):
     sections = ListField(EmbeddedDocumentField(Section), default=list)
     """
     List of ordered sections
+    """
+
+    start = IntField()
+    """
+    Start interval for when this menu is the defaulted menu for its corresponding restaurant
+    """
+
+    end = IntField()
+    """
+    End interval for when this menu is the defaulted menu for its corresponding restaurant
     """
 
     def get_section(self, section_id: str) -> Optional[Section]:
