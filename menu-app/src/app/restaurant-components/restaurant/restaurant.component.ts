@@ -76,6 +76,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       this.restaurantService.getMenus(this.slug, menus[index].name).subscribe((menu) => {
         this.menus[index] = menu;
         this.currentMenu = index;
+        this.restaurantPermissionService.setMenuName(menu.name);
       });
     } else {
       this.currentMenu = index;

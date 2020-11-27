@@ -4,7 +4,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
 import { ContactInterface } from '../../interfaces/contact-interface';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
-import {RestaurantPermissionService} from "../../services/restaurantPermission.service";
+import {RestaurantPermissionService} from '../../services/restaurantPermission.service';
+
 
 @Component({
   selector: 'app-covid-modal',
