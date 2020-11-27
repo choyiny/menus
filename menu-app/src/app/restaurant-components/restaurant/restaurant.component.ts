@@ -67,18 +67,22 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   setMenu(index: number): void {
     const menus = this.restaurant.menus;
-    this.restaurantService.getMenus(this.slug, menus[index].menu).subscribe(
-      menu => {
-        this.menus[index] = menu;
-      }
-    );
+    if (!this.menus[index]) {
+      this.restaurantService.getMenus(this.slug, menus[index].menu).subscribe(
+        menu => {
+          this.menus[index] = menu;
+          this.currentMenu = index;
+        }
+      );
+    }
   }
 
   loadMenus(): void {
     const menus = this.restaurant.menus;
     for (let i = 0; i < menus.length; i++) {
       const currentTime = this.getCurrentTime();
-      if ( currentTime < menus[i].start && currentTime < menus[i].end) {
+      if ( menus[i].start < currentTime && currentTime < menus[i].end) {
+        console.log(i);
         this.setMenu(i);
         return;
       }
@@ -103,13 +107,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     const [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
     // convert hours:minutes:seconds to elapsed time in seconds
     return h * 3600 + m * 60 + s;
-  }
-
-  updateMenu(index: number): void {
-    this.currentMenu = index;
-    if (!this.menus[index]) {
-      this.setMenu(index);
-    }
   }
 
   sameDay(): boolean {
