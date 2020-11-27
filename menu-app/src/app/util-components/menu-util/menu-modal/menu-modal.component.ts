@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {LazyMenu, Menu} from '../../../interfaces/restaurant-interfaces';
+import { LazyMenu, Menu } from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-menu-modal',

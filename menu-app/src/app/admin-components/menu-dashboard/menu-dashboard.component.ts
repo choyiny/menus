@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TracingService } from '../../services/tracing.service';
-import {LazyMenu, Restaurant} from '../../interfaces/restaurant-interfaces';
+import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AdminService } from '../../services/admin.service';
 
@@ -18,7 +17,7 @@ export class MenuDashboardComponent implements OnInit {
     private restaurantService: RestaurantService,
     private adminService: AdminService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {}
 
   restaurant: Restaurant;
@@ -30,6 +29,14 @@ export class MenuDashboardComponent implements OnInit {
   menuBody: FormGroup;
   qrcodeLink: string;
   configureQrCodeLink = false;
+
+  // Constants
+  hours = [...Array(24).keys()];
+  minutes = [...Array(60).keys()];
+  startHour: number;
+  startMinute: number;
+  endHour: number;
+  endMinute: number;
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
@@ -52,12 +59,26 @@ export class MenuDashboardComponent implements OnInit {
     }
   }
 
+  initTime(): void {
+    const menu = this.restaurant.menus.find((lazyMenu) => lazyMenu.name === this.selectedMenu);
+    if (menu) {
+      if (menu.start) {
+        this.startHour = Math.floor(menu.start / 3600);
+        this.startMinute = Math.floor((menu.start - this.startHour * 3600) / 60);
+      }
+      if (menu.end) {
+        this.endHour = Math.floor(menu.end / 3600);
+        this.endMinute = Math.floor((menu.end - this.endHour * 3600) / 60);
+      }
+    }
+  }
+
   onChange(event): void {
     this.file = event.target.files[0];
   }
 
   menuOptions(): string[] {
-    return ['Make new menus', ...this.restaurant.menus.map( menu => menu.name)];
+    return ['Make new menus', ...this.restaurant.menus.map((menu) => menu.name)];
   }
 
   importCsv(): void {
@@ -146,6 +167,25 @@ export class MenuDashboardComponent implements OnInit {
 
   toggleConfigureQRCode(): void {
     this.configureQrCodeLink = !this.configureQrCodeLink;
+  }
+
+  getHours(): string[] {
+    const am = [...Array(12).keys()].map((time) => `${time} AM`);
+    const pm = [...Array(12).keys()].map((time) => `${time} PM`);
+    am[0] = '12 Am';
+    pm[0] = '12 Pm';
+    return [...am, ...pm];
+  }
+
+  saveTimes(): void {
+    const start = this.startHour * 3600 + this.startMinute * 60;
+    const end = this.endHour * 3600 + this.endMinute * 60;
+    this.restaurantService.editMenu(this.slug, this.selectedMenu, { start, end }).subscribe(() => {
+      const menu = this.restaurant.menus.find((menuElem) => menuElem.name === this.selectedMenu);
+      menu.start = start;
+      menu.end = end;
+      window.alert('Success');
+    });
   }
 
   updateCanUpload(): void {

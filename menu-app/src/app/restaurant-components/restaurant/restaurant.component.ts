@@ -1,5 +1,10 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import {LazyMenu, Menu, Restaurant, RestaurantEditable} from '../../interfaces/restaurant-interfaces';
+import {
+  LazyMenu,
+  Menu,
+  Restaurant,
+  RestaurantEditable,
+} from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -68,12 +73,10 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   setMenu(index: number): void {
     const menus = this.restaurant.menus;
     if (!this.menus[index]) {
-      this.restaurantService.getMenus(this.slug, menus[index].name).subscribe(
-        menu => {
-          this.menus[index] = menu;
-          this.currentMenu = index;
-        }
-      );
+      this.restaurantService.getMenus(this.slug, menus[index].name).subscribe((menu) => {
+        this.menus[index] = menu;
+        this.currentMenu = index;
+      });
     } else {
       this.currentMenu = index;
     }
@@ -83,7 +86,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     const menus = this.restaurant.menus;
     for (let i = 0; i < menus.length; i++) {
       const currentTime = this.getCurrentTime();
-      if ( menus[i].start < currentTime && currentTime < menus[i].end) {
+      if (menus[i].start < currentTime && currentTime < menus[i].end) {
         this.setMenu(i);
         return;
       }

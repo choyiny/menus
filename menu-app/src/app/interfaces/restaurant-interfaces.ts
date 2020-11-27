@@ -1,7 +1,7 @@
 export interface Restaurant {
   image?: string;
   name?: string;
-  menus: LazyMenu [];
+  menus: LazyMenu[];
   description?: string;
   tracing_key: string;
   enable_trace: boolean;
@@ -82,4 +82,6 @@ export interface Menu {
 export interface MenuEditable {
   name?: string;
   sections?: Section[];
+  start?: number;
+  end?: number;
 }
