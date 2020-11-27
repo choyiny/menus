@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Menu } from '../../../interfaces/restaurant-interfaces';
+import {LazyMenu, Menu} from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-menu-modal',
@@ -9,7 +9,7 @@ import { Menu } from '../../../interfaces/restaurant-interfaces';
 })
 export class MenuModalComponent implements OnInit {
   @ViewChild('menuModal') menuModal;
-  @Input() menus: Menu[];
+  @Input() menus: LazyMenu[];
   @Input() currentMenu;
   @Output() indexEmitter = new EventEmitter<number>();
   constructor(private modalService: NgbModal) {}

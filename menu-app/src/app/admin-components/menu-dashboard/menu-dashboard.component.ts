@@ -19,7 +19,6 @@ export class MenuDashboardComponent implements OnInit {
     private adminService: AdminService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private tracingService: TracingService
   ) {}
 
   restaurant: Restaurant;
@@ -58,7 +57,7 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   menuOptions(): string[] {
-    return ['Make new menus', ...this.restaurant.menus.map( menu => menu.menu)];
+    return ['Make new menus', ...this.restaurant.menus.map( menu => menu.name)];
   }
 
   importCsv(): void {

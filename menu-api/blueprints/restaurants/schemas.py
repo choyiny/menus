@@ -58,7 +58,7 @@ class EditMenuV2Schema(Schema):
 
 
 class LazyMenuSchema(Schema):
-    menu = fields.Str(example="Lunch", description="Name of menu")
+    name = fields.Str(example="Lunch", description="Name of menu")
     start = fields.Int(
         description="Start time for menu interval in the form of total seconds elapsed from 12:00 am",
         example=46500,

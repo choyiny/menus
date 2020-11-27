@@ -68,12 +68,14 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   setMenu(index: number): void {
     const menus = this.restaurant.menus;
     if (!this.menus[index]) {
-      this.restaurantService.getMenus(this.slug, menus[index].menu).subscribe(
+      this.restaurantService.getMenus(this.slug, menus[index].name).subscribe(
         menu => {
           this.menus[index] = menu;
           this.currentMenu = index;
         }
       );
+    } else {
+      this.currentMenu = index;
     }
   }
 
@@ -82,7 +84,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < menus.length; i++) {
       const currentTime = this.getCurrentTime();
       if ( menus[i].start < currentTime && currentTime < menus[i].end) {
-        console.log(i);
         this.setMenu(i);
         return;
       }

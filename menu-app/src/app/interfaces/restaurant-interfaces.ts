@@ -12,7 +12,7 @@ export interface Restaurant {
 }
 
 export interface LazyMenu {
-  menu: string;
+  name: string;
   start?: number;
   end?: number;
 }
