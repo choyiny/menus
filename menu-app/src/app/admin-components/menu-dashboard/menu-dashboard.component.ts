@@ -61,15 +61,23 @@ export class MenuDashboardComponent implements OnInit {
 
   initTime(): void {
     const menu = this.restaurant.menus.find((lazyMenu) => lazyMenu.name === this.selectedMenu);
+    const resetTime = () => {
+      this.startHour = 0;
+      this.startMinute = 0;
+      this.endHour = 0;
+      this.endMinute = 0;
+    };
     if (menu) {
-      if (menu.start) {
+      if (menu.start && menu.end) {
         this.startHour = Math.floor(menu.start / 3600);
         this.startMinute = Math.floor((menu.start - this.startHour * 3600) / 60);
-      }
-      if (menu.end) {
         this.endHour = Math.floor(menu.end / 3600);
         this.endMinute = Math.floor((menu.end - this.endHour * 3600) / 60);
+      } else {
+        resetTime();
       }
+    } else {
+      resetTime();
     }
   }
 
