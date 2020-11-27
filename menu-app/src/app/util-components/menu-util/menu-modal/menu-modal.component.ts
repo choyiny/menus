@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LazyMenu, Menu } from '../../../interfaces/restaurant-interfaces';
+import {faCheck} from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-menu-modal',
@@ -12,6 +13,9 @@ export class MenuModalComponent implements OnInit {
   @Input() menus: LazyMenu[];
   @Input() currentMenu;
   @Output() indexEmitter = new EventEmitter<number>();
+
+  // icons
+  checkIcon = faCheck;
   constructor(private modalService: NgbModal) {}
 
   ngOnInit(): void {}
