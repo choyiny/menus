@@ -1,7 +1,9 @@
+import random
+import string
 import uuid
 from io import BytesIO
 
-from auth.decorators import firebase_login_required
+from auth.decorators import firebase_login_preferred, firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from helpers import delete_file, upload_image
@@ -14,6 +16,7 @@ from utils.errors import (
     MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     NOT_AUTHENTICATED,
+    ONE_RESTAURANT_ONLY,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
 )
@@ -37,11 +40,14 @@ from .restaurant_base_resource import RestaurantBaseResource
 class RestaurantResource(RestaurantBaseResource):
     @doc(description="Get restaurants details")
     @marshal_with(GetRestaurantSchema)
+    @firebase_login_preferred
     def get(self, slug: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
-        return restaurant.to_dict()
+        if restaurant.public or (g.user and g.user.has_permission(restaurant.slug)):
+            return restaurant.to_dict()
+        return RESTAURANT_NOT_FOUND
 
     @doc(description="Edit restaurants details")
     @marshal_with(GetRestaurantSchema)
@@ -63,6 +69,12 @@ class RestaurantResource(RestaurantBaseResource):
         if "image" in kwargs:
             restaurant.image = kwargs.get("image")
 
+        if "public" in kwargs:
+            if g.user.is_anon:
+                return ANONYMOUS_USER_FORBIDDEN
+            else:
+                restaurant.public = kwargs.get("public")
+
         if g.user.is_admin:
             if "enable_trace" in kwargs:
                 restaurant.enable_trace = kwargs.get("enable_trace")
@@ -72,6 +84,8 @@ class RestaurantResource(RestaurantBaseResource):
                 restaurant.tracing_key = kwargs.get("tracing_key")
             if "qrcode_link" in kwargs:
                 restaurant.qrcode_link = kwargs.get("qrcode_link")
+            if "can_upload" in kwargs:
+                restaurant.can_upload = kwargs.get("can_upload")
 
         restaurant.save()
         return restaurant.to_dict()
@@ -123,6 +137,8 @@ class MenuResource(RestaurantBaseResource):
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
+        if not restaurant.can_upload:
+            menu.hide_images()
         return menu
 
     @doc(description="Edit menu details, checks for duplicate menus")
@@ -147,6 +163,9 @@ class MenuResource(RestaurantBaseResource):
             menu.name = name
 
         if "sections" in kwargs:
+            # temporary fix so db gets updated, not sure why changes aren't detected otherwise
+            menu.sections = []
+            menu.save()
             menu.sections = [
                 Section(**section_dict) for section_dict in kwargs.get("sections")
             ]
@@ -353,9 +372,13 @@ class ImageResource(RestaurantBaseResource):
         out_img = BytesIO()
         loaded_image.save(out_img, "PNG")
         out_img.seek(0)
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
+        if not restaurant.can_upload:
+            return FORBIDDEN
+
         menu = restaurant.get_menu(menu_name)
         item = menu.get_item(item_id)
         if item:
@@ -392,40 +415,79 @@ class ImageResource(RestaurantBaseResource):
         return ITEM_NOT_FOUND
 
 
-class PublishRestaurantResource(RestaurantBaseResource):
-    @doc(description="""Toggle restaurant visibility""")
-    @marshal_with(GetRestaurantSchema)
+class RestaurantHeaderImageResource(RestaurantBaseResource):
+    @doc(description="""Update restaurant header image with uploaded image""")
     @firebase_login_required
-    def patch(self, slug):
+    @use_args(file_args, location="files")
+    @marshal_with(GetRestaurantSchema)
+    def patch(self, args, slug):
 
         if g.user is None:
             return FORBIDDEN
 
-        if g.user.is_anon:
-            return ANONYMOUS_USER_FORBIDDEN
+        image_bytes = args["file"].read()
+        loaded_image = Image.open(BytesIO(image_bytes))
+        max_length = max(loaded_image.size)
+        if max_length > 1500:
+            ratio = 1500 / max_length
+            width, height = loaded_image.size
+            loaded_image = loaded_image.resize(
+                (int(width * ratio), int(height * ratio))
+            )
+        out_img = BytesIO()
+        loaded_image.save(out_img, "PNG")
+        out_img.seek(0)
 
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
 
-        restaurant.public = not restaurant.public
+        restaurant.image = upload_image(out_img)
         restaurant.save()
-
         return restaurant.to_dict()
 
 
 class OnboardingRestaurantResource(RestaurantBaseResource):
-    @doc(description="""Onboard user's first restaurant""")
-    @use_kwargs(OnboardingSchema)
+    @doc(description="""Generate random restaurant with menu 'Menu'""")
     @firebase_login_required
-    def post(self, **kwargs):
-
-        # temporary fix, not sure why multiple requests are send
-        if g.user.restaurants:
-            return FORBIDDEN
+    def post(self):
 
         if g.user is None:
             return FORBIDDEN
+
+        if g.user.restaurants:
+            return g.user.restaurants[0]
+
+        menu = MenuV2(name="Menu").save()
+
+        random_slug = "".join(
+            random.choices(string.ascii_uppercase + string.digits, k=7)
+        )
+        g.user.restaurants.append(random_slug)
+        g.user.save()
+        restaurant = Restaurant(
+            menus=[menu], slug=random_slug, name="Menu 1", public=False
+        ).save()
+
+        return restaurant.slug
+
+    @doc(description="""Onboard user's first restaurant""")
+    @use_kwargs(OnboardingSchema)
+    @firebase_login_required
+    @marshal_with(MenuV2Schema)
+    def patch(self, slug, **kwargs):
+
+        if g.user is None:
+            return FORBIDDEN
+
+        restaurant = Restaurant.objects(slug=slug).first()
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+
+        menu = restaurant.get_menu("Menu")
+
+        if menu is None:
+            return MENU_NOT_FOUND
 
         item = Item(_id=str(uuid.uuid4()))
 
@@ -443,16 +505,6 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         if kwargs.get("section_name"):
             section.name = kwargs.get("section_name")
 
-        menu = MenuV2(sections=[section], name="Menu")
+        menu.sections = [section]
         menu.save()
-
-        restaurant = Restaurant(menus=[menu], slug=str(uuid.uuid4()), public=False)
-
-        if kwargs.get("name"):
-            restaurant.name = kwargs.get("name")
-
-        restaurant.save()
-        g.user.restaurants.append(restaurant.slug)
-        g.user.save()
-
-        return restaurant.slug
+        return menu

@@ -4,6 +4,7 @@ import { Menu, Section } from '../../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { ManageSectionsComponent } from '../../../control-panel/manage-sections/manage-sections.component';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-scrolling-component',
@@ -14,18 +15,31 @@ export class ScrollingComponentComponent implements OnInit {
   @Input() sections: Section[];
   @Input() miniScroll: boolean;
   @Input() currentSection: number;
-  @Input() slug: string;
-  @Input() menuName: string;
-  @Input() hasPermission: boolean;
   @Output() menuEmitter = new EventEmitter<Menu>();
   @ViewChild(ManageSectionsComponent) controlPanel: ManageSectionsComponent;
 
   // Icons
   addIcon = faPlus;
 
-  constructor(public scrollService: ScrollService, private restaurantService: RestaurantService) {}
+  slug: string;
+  menuName: string;
+  hasPermission: boolean;
 
-  ngOnInit(): void {}
+  constructor(
+    public scrollService: ScrollService,
+    private restaurantService: RestaurantService,
+    private restaurantPermissionService: RestaurantPermissionService
+  ) {}
+
+  ngOnInit(): void {
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.menuNameObservable.subscribe(
+      (menuName) => (this.menuName = menuName)
+    );
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
+  }
 
   updateSections(sections: Section[]): void {
     this.restaurantService.editMenu(this.slug, this.menuName, { sections }).subscribe((menu) => {

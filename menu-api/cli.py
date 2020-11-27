@@ -1,7 +1,12 @@
 from auth.documents.user import User
 from click import argument
 from flask.cli import AppGroup
-from scripts.migrations import migrate, restaurant_migrations, user_migrations
+from scripts.migrations import (
+    migrate,
+    restaurant_migrations,
+    restaurant_permission_migrations,
+    user_migrations,
+)
 
 
 def register_commands(app):
@@ -35,6 +40,10 @@ def register_commands(app):
     @migration_cli.command("restaurants")
     def migrate_restaurants():
         restaurant_migrations()
+
+    @migration_cli.command("add_can_upload_to_all_restaurants")
+    def migrate_restaurant_permissions():
+        restaurant_permission_migrations()
 
     app.cli.add_command(auth_cli)
     app.cli.add_command(migration_cli)

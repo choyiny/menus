@@ -19,13 +19,21 @@
     <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
     <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
   </div>
-  <div class="row row-item" cdkDropList [cdkDropListDisabled]="!editMode" [cdkDropListData]="section.menu_items"
-    (cdkDropListDropped)="drop($event)">
-    <app-itemv2 cdkDrag *ngFor=" let item of section.menu_items" id="{{ item._id }}" [item]="item"
-      class="col-md-4 col-sm-6 col-12" [slug]="slug" [menuName]="menuName" [hasPermission]="hasPermission"
+  <div 
+    class="row row-item"
+    cdkDropList 
+    [cdkDropListDisabled]="!editMode" 
+    [cdkDropListData]="section.menu_items"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <app-itemv2 
+      cdkDrag 
+      *ngFor=" let item of section.menu_items" 
+      id="{{ item._id }}" 
+      [item]="item"
+      class="col-md-4 col-sm-6 col-12"
       (sectionEmitter)="updateSection($event)">
     </app-itemv2>
-
     <div *ngIf="hasPermission" class="col-md-4 col-sm-6 col-12 item-container desktop">
       <div class="new-item">
         <button (click)="addMenuItem()" class="btn2 new-button">

@@ -15,10 +15,6 @@ import { AuthenticationInterceptor } from './interceptor/authentication.intercep
 import { ImageFormComponent } from './util-components/image-util/image-form/image-form.component';
 import { LoginComponent } from './auth-components/login/login.component';
 import { DashboardComponent } from './auth-components/dashboard/dashboard.component';
-import { MenuComponent } from './menu-components/menu/menu.component';
-import { MenuItemComponent } from './menu-components/menu-item/menu-item.component';
-import { SectionComponent } from './menu-components/section/section.component';
-import { TagsComponent } from './menu-components/tags/tags.component';
 import { ScrollingComponentComponent } from './util-components/menu-util/scrolling-component/scrolling-component.component';
 import { MobileImageComponent } from './util-components/menu-util/mobile-image/mobile-image.component';
 import { CovidModalComponent } from './util-components/covid-modal/covid-modal.component';
@@ -35,6 +31,7 @@ import { Tagv2Component } from './restaurant-components/tagv2/tagv2.component';
 import { SignupComponent } from './util-components/register/signup/signup.component';
 import { FirstMenuComponent } from './util-components/register/first-menu/first-menu.component';
 import { RegisterComponent } from './register/register.component';
+import { PreviewComponent } from './restaurant-components/preview/preview.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -64,10 +61,6 @@ const DragConfig = {
     LoginComponent,
     ImageFormComponent,
     DashboardComponent,
-    MenuComponent,
-    MenuItemComponent,
-    SectionComponent,
-    TagsComponent,
     ScrollingComponentComponent,
     MobileImageComponent,
     CovidModalComponent,
@@ -90,6 +83,7 @@ const DragConfig = {
     CollapsedSectionComponent,
     NavbarComponent,
     HomeComponent,
+    PreviewComponent,
   ],
   imports: [
     BrowserModule,

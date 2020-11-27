@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuService } from '../../services/menu.service';
 import * as FileSaver from 'file-saver';
-import { MenuInterface } from '../../interfaces/menus-interface';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
@@ -119,7 +117,7 @@ export class MenuDashboardComponent implements OnInit {
 
     if (!this.restaurant.qrcode_link) {
       const url = `${window.location.origin}/restaurants/${this.slug}`;
-      this.restaurantService.editRestaurant(this.slug, {qrcode_link: url}).subscribe(() => {
+      this.restaurantService.editRestaurant(this.slug, { qrcode_link: url }).subscribe(() => {
         saveQrCode();
       });
     } else {
@@ -140,12 +138,23 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   configureQrCode(): void {
-    this.restaurantService.editRestaurant(this.slug, {qrcode_link: this.qrcodeLink}).subscribe(() => {
-      this.configureQrCodeLink = false;
-    });
+    this.restaurantService
+      .editRestaurant(this.slug, { qrcode_link: this.qrcodeLink })
+      .subscribe(() => {
+        this.configureQrCodeLink = false;
+      });
   }
 
   toggleConfigureQRCode(): void {
     this.configureQrCodeLink = !this.configureQrCodeLink;
+  }
+
+  updateCanUpload(): void {
+    this.restaurantService.editRestaurant(this.slug, {can_upload: !this.restaurant.can_upload}).subscribe(
+      restaurant => {
+        this.restaurant = restaurant;
+        window.alert(`Image upload ${restaurant.can_upload ? 'enabled' : 'disabled'}`);
+      }
+    );
   }
 }

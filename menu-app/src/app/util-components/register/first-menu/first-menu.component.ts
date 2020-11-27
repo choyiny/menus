@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { RestaurantService } from '../../../services/restaurant.service';
-import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Menu } from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-first-menu',
@@ -16,13 +15,18 @@ export class FirstMenuComponent implements OnInit {
   newMenu: FormGroup;
 
   @ViewChild('firstMenu') firstMenu;
+  @Input() slug: string;
+  modalOptions: NgbModalOptions = {
+    backdrop: 'static',
+    keyboard: false,
+  };
+
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
     private auth: AuthService,
     private angularAuth: AngularFireAuth,
-    private restaurantService: RestaurantService,
-    private router: Router
+    private restaurantService: RestaurantService
   ) {}
 
   ngOnInit(): void {
@@ -33,12 +37,10 @@ export class FirstMenuComponent implements OnInit {
       itemDescription: [''],
       itemPrice: [''],
     });
-    this.auth.anonymousSignIn().subscribe((user) => {});
   }
 
   next(modal): void {
     // sign in to get access to backend
-    const user = this.auth.currentUserValue;
     const onboarding = {
       name: this.newMenu.value.name,
       section_name: this.newMenu.value.sectionName,
@@ -46,15 +48,13 @@ export class FirstMenuComponent implements OnInit {
       item_description: this.newMenu.value.itemDescription,
       item_price: this.newMenu.value.itemPrice,
     };
-    this.restaurantService.onboardRestaurant(onboarding).subscribe((slug) => {
-      this.auth.reloadUser().subscribe((reloadedUser) => {
-        modal.close();
-        this.router.navigateByUrl(`restaurants/${slug}`);
-      });
+    this.restaurantService.onboard(this.slug, onboarding).subscribe((menu) => {
+      modal.close();
+      window.location.reload();
     });
   }
 
   open(): void {
-    this.modalService.open(this.firstMenu);
+    this.modalService.open(this.firstMenu, this.modalOptions);
   }
 }

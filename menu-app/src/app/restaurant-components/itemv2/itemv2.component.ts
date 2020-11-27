@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ImgViewModalComponent } from '../../util-components/image-util/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/image-util/img-form-modal/img-form-modal.component';
-import { faPlus, faPen, faTrash, faSave, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
-import { TagService } from '../../services/tag.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-itemv2',
@@ -16,23 +16,40 @@ export class Itemv2Component implements OnInit {
   itemOriginal: Item;
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
-  @Input() slug: string;
-  @Input() menuName: string;
-  @Input() hasPermission: boolean;
   @Output() sectionEmitter = new EventEmitter<Section>();
   @Input() editMode: boolean;
+
   // icons
   faPlus = faPlus;
   faPen = faPen;
   deleteIcon = faTrash;
 
-  constructor(private restaurantService: RestaurantService, private tagService: TagService) {}
+  slug: string;
+  menuName: string;
+  hasPermission: boolean;
+  canUpload: boolean;
 
-  ngOnInit(): void {}
+  constructor(
+    private restaurantService: RestaurantService,
+    public restaurantPermissionService: RestaurantPermissionService
+  ) {}
+
+  ngOnInit(): void {
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.menuNameObservable.subscribe(
+      (menuName) => (this.menuName = menuName)
+    );
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
+    this.restaurantPermissionService.canUploadObservable.subscribe(
+      (canUpload) => (this.canUpload = canUpload)
+    );
+  }
 
   addTag(): void {
     const newTag: Tag = {
-      text: 'New tag',
+      text: 'Edit tag',
       icon: '',
       background_color: 'black',
     };

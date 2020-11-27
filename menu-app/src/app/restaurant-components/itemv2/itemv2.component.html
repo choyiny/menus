@@ -1,10 +1,5 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
-<app-img-form-modal
-  [slug]="slug"
-  [itemId]="item._id"
-  (itemEmitter)="setImage($event)"
-  [menuName]="menuName"
-></app-img-form-modal>
+<app-img-form-modal [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 
 <div *ngIf="!editMode" class="menu-item">
   <div class="img-description">
@@ -30,12 +25,7 @@
   </div>
 
   <span class="tag-container">
-    <app-tagv2
-      *ngFor="let tag of item.tags; let i = index"
-      [tag]="tag"
-      [hasPermission]="hasPermission"
-      (outputTagText)="updateTags($event, i)"
-    >
+    <app-tagv2 *ngFor="let tag of item.tags; let i = index" [tag]="tag" (outputTagText)="updateTags($event, i)">
     </app-tagv2>
   </span>
 
@@ -46,7 +36,11 @@
 
 <div *ngIf="editMode" class="menu-item edit-body">
   <div class="item-top">
-    <button class="upload btn2" (click)="cropImage()"><fa-icon [icon]="faPlus"></fa-icon>Upload Image</button>
+    <div class="wrapper" [title]="canUpload ? 'Upload image' : 'Only available on paid plans' ">
+      <button class="upload btn2" [disabled]="!canUpload" (click)="cropImage() ">
+        <fa-icon [icon]="faPlus"></fa-icon>Upload Image
+      </button>
+    </div>
     <input class="edit-price" type="text" placeholder="Add Price" [(ngModel)]="item.price" />
   </div>
 
@@ -60,7 +54,7 @@
     <app-tagv2
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
-      [hasPermission]="hasPermission"
+      [editMode]="editMode"
       (outputTagText)="updateTags($event, i)"
     >
     </app-tagv2>

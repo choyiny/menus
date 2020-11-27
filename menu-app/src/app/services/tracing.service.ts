@@ -4,9 +4,6 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { ContactInterface } from '../interfaces/contact-interface';
 import { TimeInterface } from '../interfaces/time-interface';
-import { MenuInterface } from '../interfaces/menus-interface';
-import { TracingFormInterface } from '../interfaces/tracing-form-interface';
-import { Restaurant } from '../interfaces/restaurant-interfaces';
 
 @Injectable({
   providedIn: 'root',

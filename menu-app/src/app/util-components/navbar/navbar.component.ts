@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
+import { SignupComponent } from '../register/signup/signup.component';
+import { RestaurantService } from '../../services/restaurant.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,9 +11,44 @@ import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 })
 export class NavbarComponent implements OnInit {
   mobileIcon = faMobileAlt;
-  @Input() restaurantName;
+  @Input() previewMode: boolean;
+  @ViewChild(SignupComponent) signUp: SignupComponent;
+  @Output() viewEmitter = new EventEmitter<boolean>();
+  restaurantName: string;
+  isPublic: boolean;
+  slug: string;
 
-  constructor() {}
+  constructor(
+    private restaurantService: RestaurantService,
+    public restaurantPermissionService: RestaurantPermissionService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.restaurantPermissionService.restaurantNameObservable.subscribe(
+      (restaurantName) => (this.restaurantName = restaurantName)
+    );
+    this.restaurantPermissionService.isRestaurantPublicObservable.subscribe(
+      (isPublic) => (this.isPublic = isPublic)
+    );
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+  }
+
+  mobileView(): void {
+    this.viewEmitter.emit(!this.previewMode);
+  }
+
+  publish(): void {
+    this.restaurantService.editRestaurant(this.slug, { public: !this.isPublic }).subscribe(
+      (restaurant) => {
+        window.alert(`Your restaurant is now ${!this.isPublic ? 'public' : 'private'}`);
+        this.restaurantPermissionService.setRestaurantPermissions(restaurant);
+      },
+      (err) => {
+        console.log(err);
+        if (err.error.description === 'Please connect this account') {
+          this.signUp.open();
+        }
+      }
+    );
+  }
 }

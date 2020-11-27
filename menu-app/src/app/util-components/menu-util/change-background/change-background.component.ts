@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { faImage, faSave, faPlus } from '@fortawesome/pro-solid-svg-icons';
-import { MenuEditable } from '../../../interfaces/menus-interface';
+import {RestaurantService} from '../../../services/restaurant.service';
+import {Restaurant} from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-change-background',
@@ -8,17 +9,17 @@ import { MenuEditable } from '../../../interfaces/menus-interface';
   styleUrls: ['./change-background.component.scss'],
 })
 export class ChangeBackgroundComponent implements OnInit {
-  @Input() hasPermission: boolean;
-  @Input() image: any;
-  @Output() imageEmitter = new EventEmitter<MenuEditable>();
+  @Output() restaurantEmitter = new EventEmitter<Restaurant>();
+  @Input() slug: string;
   editMode: boolean;
+  file: File;
 
   // icons
   imageIcon = faImage;
   saveIcon = faSave;
   addIcon = faPlus;
 
-  constructor() {}
+  constructor(private restaurantService: RestaurantService) {}
 
   ngOnInit(): void {}
 
@@ -27,7 +28,19 @@ export class ChangeBackgroundComponent implements OnInit {
   }
 
   save(): void {
-    this.imageEmitter.emit({ image: this.image });
+    const formData = new FormData();
     this.editMode = false;
+    if (this.file) {
+      formData.append('file', this.file);
+      this.restaurantService.uploadHeader(this.slug, formData).subscribe(
+        restaurant => {
+          this.restaurantEmitter.emit(restaurant);
+        }
+      );
+    }
+  }
+
+  onChange(event): void {
+    this.file = event.target.files[0];
   }
 }

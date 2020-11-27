@@ -124,10 +124,17 @@
     padding-top: 10px;
     padding-bottom: 10px;
 
-    .upload {
-      margin: 0;
-      padding: 11px;
+    .wrapper {
       width: 40%;
+      display: inline-block;
+      .upload {
+        margin: 0;
+        padding: 11px;
+        &:disabled {
+          opacity: 50%;
+          cursor: not-allowed;
+        }
+      }
     }
 
     .edit-price {

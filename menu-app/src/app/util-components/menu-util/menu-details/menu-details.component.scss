@@ -1,19 +1,22 @@
 .menu-view {
   padding-left: 20px;
   padding-right: 20px;
-  margin-bottom: 3em;
   & button {
     margin-left: 2em;
     margin-top: 0.5em;
   }
 }
 
+.space {
+  margin-bottom: 3em;
+}
+
 .view {
-  padding-top: 2em;
+  padding-top: 1em;
 }
 
 ::ng-deep {
   .view .ql-editor{
-    font-size: 30px;
+    font-size: 16px;
   }
 }

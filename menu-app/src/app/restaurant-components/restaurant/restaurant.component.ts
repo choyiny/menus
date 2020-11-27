@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
@@ -7,20 +7,19 @@ import { ScrollService } from '../../services/scroll.service';
 import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
   styleUrls: ['./restaurant.component.scss'],
 })
-export class RestaurantComponent implements OnInit {
+export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() restaurant: Restaurant;
   @Input() selectedImage: string;
   menus = [];
   currentMenu = 0;
-  slug: string;
-  viewable: boolean;
 
-  // true if user has permission to edit this menuv2
+  slug: string;
   hasPermission: boolean;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
@@ -29,57 +28,44 @@ export class RestaurantComponent implements OnInit {
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private scrollService: ScrollService
+    private scrollService: ScrollService,
+    public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
+  ngAfterViewInit(): void {
+    if (this.sameDay()) {
+      return;
+    }
+    if (this.restaurant.force_trace) {
+      this.covid.open();
+      return;
+    }
+    this.route.queryParams.subscribe((params) => {
+      const trace: boolean = params.trace === 'true';
+      if (trace && this.restaurant.enable_trace) {
+        this.covid.open();
+      }
+    });
+  }
+
   ngOnInit(): void {
-    this.slug = this.route.snapshot.params.slug;
-    if (this.slug != null && !this.restaurant) {
-      this.getRestaurant();
-    }
-    const user = this.authService.currentUserValue;
-    if (user) {
-      this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
-    } else {
-      this.hasPermission = false;
-    }
+    this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
+    this.restaurantPermissionService.hasPermissionObservable.subscribe(
+      (hasPermission) => (this.hasPermission = hasPermission)
+    );
+    this.loadMenus();
   }
 
   loadMenus(): void {
     for (let i = 0; i < this.restaurant.menus.length; i++) {
       const menuName = this.restaurant.menus[i];
       this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
+        if (i === this.currentMenu) {
+          this.restaurantPermissionService.setMenuName(menuName);
+        }
         this.menus[i] = menu;
       });
     }
-  }
-
-  getRestaurant(): void {
-    this.restaurantService.getRestaurant(this.slug).subscribe(
-      (restaurant) => {
-        this.restaurant = restaurant;
-        this.viewable = this.restaurant.public || this.hasPermission;
-        this.loadMenus();
-        if (this.sameDay()) {
-          return;
-        }
-        if (this.restaurant.force_trace) {
-          this.covid.open();
-          return;
-        }
-        this.route.queryParams.subscribe((params) => {
-          const trace: boolean = params.trace === 'true';
-          if (trace && this.restaurant.enable_trace) {
-            this.covid.open();
-          }
-        });
-      },
-      (err) => {
-        if (err.error.description === 'Restaurant not found') {
-          this.viewable = false;
-        }
-      }
-    );
   }
 
   scrollToSection(id: string): void {
@@ -109,19 +95,5 @@ export class RestaurantComponent implements OnInit {
     } else {
       return false;
     }
-  }
-
-  publish(): void {
-    this.restaurantService.publishRestaurant(this.slug).subscribe(
-      (restaurant) => {
-        this.restaurant = restaurant;
-      },
-      (err) => {
-        console.log(err);
-        if (err.error.description === 'Please connect this account') {
-          this.signUp.open();
-        }
-      }
-    );
   }
 }

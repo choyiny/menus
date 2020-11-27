@@ -1,3 +1,4 @@
+<app-signup></app-signup>
 <div class="my-nav desktop">
   <img src="assets/group-2@3x.png" width="200" height="39" class="d-inline-block align-top" alt="" />
   <div class="vl"></div>
@@ -5,8 +6,10 @@
   <h1 class="d-inline-block align-top title">{{ restaurantName }}</h1>
 
   <div class="float-right d-inline-block">
-    <button class="align-top"><fa-icon [icon]="mobileIcon"></fa-icon>Mobile Preview</button>
+    <button (click)="mobileView()" class="align-top">
+      <fa-icon [icon]="mobileIcon"></fa-icon>{{ !previewMode ? 'Mobile preview' : 'Back to editing' }}
+    </button>
     <div class="vl"></div>
-    <button class="publish btn1 align-top">Publish</button>
+    <button (click)="publish()" class="publish btn1 align-top">{{ isPublic ? 'Un-publish' : 'Publish' }}</button>
   </div>
 </div>

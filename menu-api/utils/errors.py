@@ -23,4 +23,11 @@ NUMBER_ALREADY_EXISTS = (
 
 ANONYMOUS_USER_FORBIDDEN = {"description": "Please connect this account"}, 401
 
+
 NO_QR_CODE = {"description": "No qr-code found"}
+
+ONE_RESTAURANT_ONLY = {"description": "Only one restaurant per free user"}, 403
+
+INVALID_TOKEN = {"description": "Invalid token"}, 403
+
+USER_NOT_FOUND = {"description": "User not found"}, 404

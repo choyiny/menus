@@ -12,13 +12,11 @@ import * as firebase from 'firebase';
 })
 export class AuthService {
   private currentUserSubject: BehaviorSubject<UserInterface>;
-  public currentUser: Observable<UserInterface>;
 
   constructor(private http: HttpClient, private authFireBase: AngularFireAuth) {
     this.currentUserSubject = new BehaviorSubject<UserInterface>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
-    this.currentUser = this.currentUserSubject.asObservable();
   }
 
   public get currentUserValue(): UserInterface {
@@ -98,5 +96,24 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('currentUser');
+  }
+
+  sendEmail(email: string, location: string): Observable<string> {
+    console.log(email, location);
+    const url = `${environment.settings.endpoint}/verify`;
+    return this.http.post<string>(url, { email, location });
+  }
+
+  verifyEmail(email: string, token: string): Observable<UserInterface> {
+    const url = `${environment.settings.endpoint}/verify`;
+    return this.http
+      .patch<UserInterface>(url, { email, token })
+      .pipe(
+        mergeMap((user) => {
+          this.currentUserSubject = new BehaviorSubject<UserInterface>(user);
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          return of(user);
+        })
+      );
   }
 }
