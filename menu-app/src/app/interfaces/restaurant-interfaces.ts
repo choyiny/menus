@@ -1,7 +1,7 @@
 export interface Restaurant {
   image?: string;
   name?: string;
-  menus: string[];
+  menus: LazyMenu [];
   description?: string;
   tracing_key: string;
   enable_trace: boolean;
@@ -9,6 +9,12 @@ export interface Restaurant {
   public: boolean;
   qrcode_link: string;
   can_upload: boolean;
+}
+
+export interface LazyMenu {
+  menu: string;
+  start: number;
+  end: number;
 }
 
 export interface RestaurantOnboarding {

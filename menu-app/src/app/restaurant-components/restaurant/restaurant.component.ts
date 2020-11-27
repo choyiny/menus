@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
+import {LazyMenu, Menu, Restaurant, RestaurantEditable} from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -11,6 +11,7 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
 import { forkJoin } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
+import set = Reflect.set;
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -64,27 +65,25 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.loadMenus();
   }
 
-  loadMenus(): void {
-    const setMenu = (i: number, menus: Menu[]) => {
-      this.currentMenu = i;
-      this.restaurantPermissionService.setMenuName(menus[i].name);
-      this.menus = menus;
-    };
-
-    forkJoin(
-      this.restaurant.menus.map((menu) => {
-        return this.restaurantService.getMenus(this.slug, menu).pipe(take(1));
-      })
-    ).subscribe((menus) => {
-      const currentTime = this.getCurrentTime();
-      for (let i = 0; i < menus.length; i++) {
-        if (menus[i].start < currentTime && currentTime < menus[i].end) {
-          setMenu(i, menus);
-          return;
-        }
+  setMenu(index: number): void {
+    const menus = this.restaurant.menus;
+    this.restaurantService.getMenus(this.slug, menus[index].menu).subscribe(
+      menu => {
+        this.menus[index] = menu;
       }
-      setMenu(0, menus);
-    });
+    );
+  }
+
+  loadMenus(): void {
+    const menus = this.restaurant.menus;
+    for (let i = 0; i < menus.length; i++) {
+      const currentTime = this.getCurrentTime();
+      if ( currentTime < menus[i].start && currentTime < menus[i].end) {
+        this.setMenu(i);
+        return;
+      }
+    }
+    this.setMenu(0);
   }
 
   scrollToSection(id: string): void {
@@ -108,6 +107,9 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   updateMenu(index: number): void {
     this.currentMenu = index;
+    if (!this.menus[index]) {
+      this.setMenu(index);
+    }
   }
 
   sameDay(): boolean {
