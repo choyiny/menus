@@ -1,5 +1,5 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
-<app-menu-modal [menus]="restaurant.menus" (indexEmitter)="setMenu($event)"></app-menu-modal>
+<app-menu-modal [menus]="restaurant.menus" (indexEmitter)="setMenu($event)" [currentMenu]="currentMenu"></app-menu-modal>
 <div class="desktop-background">
   <app-mobile-image
     class="mobile"
@@ -29,7 +29,9 @@
           [description]="restaurant.description"
           (menuEmitter)="setValue($event)"
         ></app-menu-details>
-        <button *ngIf="menus[currentMenu]" (click)="menuModal.open()">Change Menu</button>
+        <button *ngIf="menus[currentMenu]" (click)="menuModal.open()">{{ menus[currentMenu].name}}
+          <fa-icon [icon]="downIcon"></fa-icon>
+        </button>
         <app-menuv2 *ngIf="menus[currentMenu]" [menu]="menus[currentMenu]"> </app-menuv2>
       </div>
     </div>

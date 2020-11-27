@@ -3,6 +3,7 @@
     *ngIf="hasPermission && restaurant"
     [previewMode]="previewMode"
     (viewEmitter)="updatePreviewMode($event)"
+    [restaurantName]="restaurant.name"
   ></app-navbar>
   <app-restaurant *ngIf="restaurant && !previewMode" [restaurant]="restaurant"></app-restaurant>
   <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>

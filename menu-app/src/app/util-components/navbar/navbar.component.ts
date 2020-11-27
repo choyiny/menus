@@ -12,9 +12,9 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
 export class NavbarComponent implements OnInit {
   mobileIcon = faMobileAlt;
   @Input() previewMode: boolean;
+  @Input() restaurantName: string;
   @ViewChild(SignupComponent) signUp: SignupComponent;
   @Output() viewEmitter = new EventEmitter<boolean>();
-  restaurantName: string;
   isPublic: boolean;
   slug: string;
 
@@ -24,9 +24,6 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.restaurantPermissionService.restaurantNameObservable.subscribe(
-      (restaurantName) => (this.restaurantName = restaurantName)
-    );
     this.restaurantPermissionService.isRestaurantPublicObservable.subscribe(
       (isPublic) => (this.isPublic = isPublic)
     );

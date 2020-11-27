@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
-  LazyMenu,
-  Menu,
   Restaurant,
   RestaurantEditable,
 } from '../../interfaces/restaurant-interfaces';
@@ -13,10 +11,9 @@ import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
-import { forkJoin } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
-import set = Reflect.set;
+import {faAngleDoubleDown} from '@fortawesome/pro-solid-svg-icons';
+
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -30,6 +27,9 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   slug: string;
   hasPermission: boolean;
+
+  // Icons
+  downIcon = faAngleDoubleDown;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
