@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
-import { Restaurant } from '../../interfaces/restaurant-interfaces';
+import {LazyMenu, Restaurant} from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AdminService } from '../../services/admin.service';
 
@@ -58,7 +58,7 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   menuOptions(): string[] {
-    return ['Make new menus', ...this.restaurant.menus];
+    return ['Make new menus', ...this.restaurant.menus.map( menu => menu.menu)];
   }
 
   importCsv(): void {

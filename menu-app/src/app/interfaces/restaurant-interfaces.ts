@@ -13,8 +13,8 @@ export interface Restaurant {
 
 export interface LazyMenu {
   menu: string;
-  start: number;
-  end: number;
+  start?: number;
+  end?: number;
 }
 
 export interface RestaurantOnboarding {
