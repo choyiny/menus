@@ -29,15 +29,15 @@ def register_commands(app):
 
     migration_cli = AppGroup("migrate")
 
-    @migration_cli.command("menus")
+    @migration_cli.command("move_menus_v1_to_v2")
     def migrate_menus():
         migrate()
 
-    @migration_cli.command("users")
+    @migration_cli.command("move_users_to_v2")
     def migrate_users():
         user_migrations()
 
-    @migration_cli.command("restaurants")
+    @migration_cli.command("make_restaurants_public")
     def migrate_restaurants():
         restaurant_migrations()
 
