@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
 import { ContactInterface } from '../../interfaces/contact-interface';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
+import {RestaurantPermissionService} from "../../services/restaurantPermission.service";
 
 @Component({
   selector: 'app-covid-modal',
@@ -16,11 +17,13 @@ export class CovidModalComponent implements OnInit {
   @Input() restaurant: Restaurant;
   nameError: string;
   phoneError: string;
+  slug: string;
 
   constructor(
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private tracingService: TracingService
+    private tracingService: TracingService,
+    private restaurantPermissionService: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +31,11 @@ export class CovidModalComponent implements OnInit {
       name: [''],
       phone_number: [''],
     });
+    this.restaurantPermissionService.getSlug().subscribe(
+      slug => {
+        this.slug = slug;
+      }
+    );
   }
 
   open(): void {
@@ -42,7 +50,7 @@ export class CovidModalComponent implements OnInit {
     };
     this.validate(contact);
     if (this.phoneError === '' && this.nameError === '') {
-      this.tracingService.traceCustomer(this.restaurant.name, contact).subscribe((timeIn) => {
+      this.tracingService.traceCustomer(this.slug, contact).subscribe((timeIn) => {
         localStorage.setItem('time_in', JSON.stringify(timeIn));
         this.modalService.dismissAll();
       });
