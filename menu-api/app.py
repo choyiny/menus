@@ -105,6 +105,11 @@ def register_blueprints(app: Flask):
     from blueprints.user_management import user_management_bp
     from blueprints.user_management.routes import resources as user_management_resources
 
+    # recognizer blueprint
+    from blueprints.recoginzer import bp_name as recognizer_bp_name
+    from blueprints.recoginzer import recognizer_bp
+    from blueprints.recoginzer.routes import resources as recognizer_resources
+
     set_routes(menu_resources, app, menus_bp, docs, menu_bp_name)
     set_routes(auth_resources, app, auth_bp, docs, auth_bp_name)
     set_routes(admin_resources, app, admin_bp, docs, admin_bp_name)
@@ -117,6 +122,7 @@ def register_blueprints(app: Flask):
     )
     set_routes(restaurant_resources, app, restaurant_bp, docs, restaurant_bp_name)
     set_routes(qr_resources, app, qr_bp, docs, qr_bp_name)
+    set_routes(recognizer_resources, app, recognizer_bp, docs, recognizer_bp_name)
 
 
 def register_external(skip_sentry=False):
