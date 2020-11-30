@@ -36,9 +36,6 @@ export class CollapsedSectionComponent implements OnInit {
 
   edit(): void {
     this.editMode = !this.editMode;
-    if (!this.section.name) {
-      this.section.name = 'Edit sections...';
-    }
     this.sectionOriginal = this.parse(this.section);
   }
 

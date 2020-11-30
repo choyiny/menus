@@ -41,7 +41,7 @@ class Item(EmbeddedDocument):
     image url of this menu item
     """
 
-    name = StringField(required=True, default="No name")
+    name = StringField(required=True, default="")
     """
     name of this menu item
     """
@@ -80,7 +80,7 @@ class Section(EmbeddedDocument):
     unique id of section object
     """
 
-    name = StringField(required=True, default="New Section")
+    name = StringField(required=True, default="")
     """
     name of this section
     """
