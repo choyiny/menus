@@ -9,7 +9,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
-import { faAngleDoubleDown } from '@fortawesome/pro-solid-svg-icons';
+import { faAngleDown} from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-restaurant',
@@ -26,7 +26,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   hasPermission: boolean;
 
   // Icons
-  downIcon = faAngleDoubleDown;
+  downIcon = faAngleDown;
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
