@@ -131,7 +131,7 @@
         margin: 0;
         padding: 11px;
         &:disabled {
-          opacity: 50%;
+          color: #cac3fc;
           cursor: not-allowed;
         }
       }
