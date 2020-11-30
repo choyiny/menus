@@ -36,6 +36,9 @@ export class CollapsedSectionComponent implements OnInit {
 
   edit(): void {
     this.editMode = !this.editMode;
+    if (!this.section.name) {
+      this.section.name = 'Edit sections...';
+    }
     this.sectionOriginal = this.parse(this.section);
   }
 
@@ -46,5 +49,10 @@ export class CollapsedSectionComponent implements OnInit {
   cancel(): void {
     this.section = this.parse(this.sectionOriginal);
     this.editMode = false;
+  }
+
+  setFocus(editor): void {
+    console.log(editor);
+    editor.focus();
   }
 }

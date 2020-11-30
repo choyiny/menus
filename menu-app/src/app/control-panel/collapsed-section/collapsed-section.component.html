@@ -11,7 +11,7 @@
 
 <div *ngIf="editMode" class="section-collapsed-edit" cdkDropList [cdkDropListDisabled]="true">
   <div class="section-title editor">
-    <quill-editor *ngIf="editMode" [(ngModel)]="section.name"></quill-editor>
+    <quill-editor  (onEditorCreated)="setFocus($event)" *ngIf="editMode" [(ngModel)]="section.name"></quill-editor>
   </div>
   <div class="btn-container">
     <button class="btn1" (click)="save()">Save</button>
