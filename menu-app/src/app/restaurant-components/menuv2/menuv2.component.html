@@ -16,8 +16,15 @@
   </app-sectionv2>
 
   <div class="footnote">
-    <quill-view-html class="d-inline-block" *ngIf="!editMode" [content]="menu.footnote" [style]="footnoteStyle"></quill-view-html>
-    <button *ngIf="!editMode && hasPermission" class="btn2 d-inline-block desktop"> <fa-icon [icon]="editIcon" (click)="toggleEditMode()"></fa-icon></button>
+    <quill-view-html
+      class="d-inline-block"
+      *ngIf="!editMode"
+      [content]="menu.footnote"
+      [style]="footnoteStyle"
+    ></quill-view-html>
+    <button *ngIf="!editMode && hasPermission" class="btn2 d-inline-block desktop">
+      <fa-icon [icon]="editIcon" (click)="toggleEditMode()"></fa-icon>
+    </button>
     <quill-editor *ngIf="editMode" [(ngModel)]="menu.footnote" class="editor"></quill-editor>
     <button *ngIf="editMode" class="btn4" (click)="saveFootnote()">Save</button>
   </div>

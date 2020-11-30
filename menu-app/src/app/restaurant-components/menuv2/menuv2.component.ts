@@ -3,7 +3,7 @@ import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
-import { faPencil} from '@fortawesome/pro-solid-svg-icons';
+import { faPencil } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-menuv2',
@@ -11,7 +11,6 @@ import { faPencil} from '@fortawesome/pro-solid-svg-icons';
   styleUrls: ['./menuv2.component.scss'],
 })
 export class Menuv2Component implements OnInit {
-
   // Model
   @Input() menu: Menu;
 
@@ -29,7 +28,7 @@ export class Menuv2Component implements OnInit {
   // Style
   footnoteStyle = {
     color: 'rgba(26, 24, 36, 0.5)',
-    margin: '2.5px 0px 2.5px 0px'
+    margin: '2.5px 0px 2.5px 0px',
   };
   editIcon = faPencil;
 
@@ -149,11 +148,9 @@ export class Menuv2Component implements OnInit {
 
   saveFootnote(): void {
     const menuEditable = { footnote: this.menu.footnote };
-    this.restaurantService.editMenu(this.slug, this.menu.name, menuEditable).subscribe(
-      menu => {
-        this.menu = menu;
-        this.toggleEditMode();
-      }
-    );
+    this.restaurantService.editMenu(this.slug, this.menu.name, menuEditable).subscribe((menu) => {
+      this.menu = menu;
+      this.toggleEditMode();
+    });
   }
 }
