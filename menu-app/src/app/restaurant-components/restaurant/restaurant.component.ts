@@ -1,8 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  Restaurant,
-  RestaurantEditable,
-} from '../../interfaces/restaurant-interfaces';
+import { Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +9,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
-import {faAngleDoubleDown} from '@fortawesome/pro-solid-svg-icons';
+import { faAngleDoubleDown } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-restaurant',

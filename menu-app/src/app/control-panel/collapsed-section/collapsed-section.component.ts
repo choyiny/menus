@@ -23,8 +23,7 @@ export class CollapsedSectionComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   parse(section: Section): Section {
     return (this.sectionOriginal = JSON.parse(JSON.stringify(section)));
