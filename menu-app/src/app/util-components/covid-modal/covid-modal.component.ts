@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { TracingService } from '../../services/tracing.service';
 import { ContactInterface } from '../../interfaces/contact-interface';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
-import {RestaurantPermissionService} from "../../services/restaurantPermission.service";
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-covid-modal',
@@ -31,11 +31,9 @@ export class CovidModalComponent implements OnInit {
       name: [''],
       phone_number: [''],
     });
-    this.restaurantPermissionService.getSlug().subscribe(
-      slug => {
-        this.slug = slug;
-      }
-    );
+    this.restaurantPermissionService.getSlug().subscribe((slug) => {
+      this.slug = slug;
+    });
   }
 
   open(): void {

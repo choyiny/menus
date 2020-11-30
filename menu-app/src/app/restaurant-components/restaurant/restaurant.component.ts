@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Menu, Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
+import { Restaurant, RestaurantEditable } from '../../interfaces/restaurant-interfaces';
 import { CovidModalComponent } from '../../util-components/covid-modal/covid-modal.component';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -8,6 +8,9 @@ import { TimeInterface } from '../../interfaces/time-interface';
 import { RestaurantService } from '../../services/restaurant.service';
 import { SignupComponent } from '../../util-components/register/signup/signup.component';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
+import { faAngleDown} from '@fortawesome/pro-solid-svg-icons';
+
 @Component({
   selector: 'app-restaurant',
   templateUrl: './restaurant.component.html',
@@ -17,13 +20,17 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() restaurant: Restaurant;
   @Input() selectedImage: string;
   menus = [];
-  currentMenu = 0;
+  currentMenu = -1;
 
   slug: string;
   hasPermission: boolean;
 
+  // Icons
+  downIcon = faAngleDown;
+
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
+  @ViewChild(MenuModalComponent) menuModal: MenuModalComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
@@ -48,6 +55,10 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     });
   }
 
+  updateRestaurant(restaurant: Restaurant): void {
+    this.restaurant = restaurant;
+  }
+
   ngOnInit(): void {
     this.restaurantPermissionService.slugObservable.subscribe((slug) => (this.slug = slug));
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
@@ -56,16 +67,29 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.loadMenus();
   }
 
-  loadMenus(): void {
-    for (let i = 0; i < this.restaurant.menus.length; i++) {
-      const menuName = this.restaurant.menus[i];
-      this.restaurantService.getMenus(this.slug, menuName).subscribe((menu) => {
-        if (i === this.currentMenu) {
-          this.restaurantPermissionService.setMenuName(menuName);
-        }
-        this.menus[i] = menu;
+  setMenu(index: number): void {
+    const menus = this.restaurant.menus;
+    if (!this.menus[index]) {
+      this.restaurantService.getMenus(this.slug, menus[index].name).subscribe((menu) => {
+        this.menus[index] = menu;
+        this.currentMenu = index;
+        this.restaurantPermissionService.setMenuName(menu.name);
       });
+    } else {
+      this.currentMenu = index;
     }
+  }
+
+  loadMenus(): void {
+    const menus = this.restaurant.menus;
+    for (let i = 0; i < menus.length; i++) {
+      const currentTime = this.getCurrentTime();
+      if (menus[i].start < currentTime && currentTime < menus[i].end) {
+        this.setMenu(i);
+        return;
+      }
+    }
+    this.setMenu(0);
   }
 
   scrollToSection(id: string): void {
@@ -78,6 +102,13 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       this.restaurant = restaurant;
       this.loadMenus();
     });
+  }
+
+  getCurrentTime(): number {
+    const today = new Date();
+    const [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
+    // convert hours:minutes:seconds to elapsed time in seconds
+    return h * 3600 + m * 60 + s;
   }
 
   sameDay(): boolean {

@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faImage, faSave, faPlus } from '@fortawesome/pro-solid-svg-icons';
-import {RestaurantService} from '../../../services/restaurant.service';
-import {Restaurant} from '../../../interfaces/restaurant-interfaces';
+import { RestaurantService } from '../../../services/restaurant.service';
+import { Restaurant } from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-change-background',
@@ -32,11 +32,9 @@ export class ChangeBackgroundComponent implements OnInit {
     this.editMode = false;
     if (this.file) {
       formData.append('file', this.file);
-      this.restaurantService.uploadHeader(this.slug, formData).subscribe(
-        restaurant => {
-          this.restaurantEmitter.emit(restaurant);
-        }
-      );
+      this.restaurantService.uploadHeader(this.slug, formData).subscribe((restaurant) => {
+        this.restaurantEmitter.emit(restaurant);
+      });
     }
   }
 

@@ -1,4 +1,3 @@
-
 export interface MenusInterface {
   menus: string[];
 }

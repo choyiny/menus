@@ -23,17 +23,47 @@
 
       <div>
         <p>Select Menu</p>
-        <select [(ngModel)]="selectedMenu">
+        <select [(ngModel)]="selectedMenu" (change)="initTime()">
           <option *ngFor="let menu of this.menuOptions()" [value]="menu">{{ menu }}</option>
         </select>
       </div>
 
       <form [formGroup]="menuBody">
-        <div *ngIf="selectedMenu !== 'Make new menus'" class="form-group">
+        <div *ngIf="selectedMenu !== 'Make new menus' && selectedMenu" class="form-group">
           <label for="csv-upload">Import menu csv</label>
           <input type="file" class="form-control-file" id="csv-append" (change)="onChange($event)" />
           <button (click)="appendCsv()">Append</button>
           <button (click)="deleteMenu()">Delete Menu</button>
+
+          <div>
+            <p class="d-inline-block">Start:</p>
+            <select [(ngModel)]="startHour" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
+              <option [selected]="hour === startHour" *ngFor="let hour of hours" [value]="hour">
+                {{ getHours()[hour] }}
+              </option>
+            </select>
+            <select [(ngModel)]="startMinute" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
+              <option [selected]="minute === startMinute" *ngFor="let minute of minutes" [value]="minute">
+                {{ minute }}
+              </option>
+            </select>
+          </div>
+
+          <div>
+            <p class="d-inline-block">End:</p>
+            <select [(ngModel)]="endHour" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
+              <option [selected]="hour === endHour" *ngFor="let hour of hours" [value]="hour">
+                {{ getHours()[hour] }}
+              </option>
+            </select>
+            <select [(ngModel)]="endMinute" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
+              <option [selected]="minute === endMinute" *ngFor="let minute of minutes" [value]="minute">
+                {{ minute }}
+              </option>
+            </select>
+          </div>
+
+          <button (click)="saveTimes()">Save</button>
         </div>
         <div *ngIf="selectedMenu === 'Make new menus'" class="form-group">
           <input type="text" formControlName="name" />
@@ -51,7 +81,7 @@
 
       <div>
         <p class="d-inline-block">Toggle restaurant image upload &#160;</p>
-        <input class="d-inline-block"type="checkbox" [checked]="restaurant.can_upload" (change)="updateCanUpload()">
+        <input class="d-inline-block" type="checkbox" [checked]="restaurant.can_upload" (change)="updateCanUpload()" />
       </div>
     </div>
   </div>

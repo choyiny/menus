@@ -10,7 +10,6 @@ export class RestaurantPermissionService {
   slugObservable = new BehaviorSubject<string>(null);
   canUploadObservable = new BehaviorSubject<boolean>(false);
   isRestaurantPublicObservable = new BehaviorSubject<boolean>(false);
-  restaurantNameObservable = new BehaviorSubject<string>(null);
   menuNameObservable = new BehaviorSubject<string>(null);
 
   constructor() {}
@@ -34,7 +33,6 @@ export class RestaurantPermissionService {
   setRestaurantPermissions(restaurant: Restaurant): void {
     this.canUploadObservable.next(restaurant.can_upload);
     this.isRestaurantPublicObservable.next(restaurant.public);
-    this.restaurantNameObservable.next(restaurant.name);
   }
 
   isPublic(): Observable<boolean> {
@@ -43,10 +41,6 @@ export class RestaurantPermissionService {
 
   canRestaurantUpload(): BehaviorSubject<boolean> {
     return this.canUploadObservable;
-  }
-
-  getRestaurantName(): BehaviorSubject<string> {
-    return this.restaurantNameObservable;
   }
 
   getMenuName(): BehaviorSubject<string> {

@@ -48,6 +48,7 @@ import { ManageSectionsComponent } from './control-panel/manage-sections/manage-
 import { CollapsedSectionComponent } from './control-panel/collapsed-section/collapsed-section.component';
 import { NavbarComponent } from './util-components/navbar/navbar.component';
 import { HomeComponent } from './restaurant-components/home/home.component';
+import { MenuModalComponent } from './util-components/menu-util/menu-modal/menu-modal.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -84,6 +85,7 @@ const DragConfig = {
     NavbarComponent,
     HomeComponent,
     PreviewComponent,
+    MenuModalComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,47 @@
+.menu-dropdown {
+  background: white;
+  position:fixed;
+  width: 100%;
+  bottom: 0px;
+  padding-bottom: 20px;
+  margin-left: 0px;
+}
+
+.menu-collapsed {
+  border-bottom: 1px solid #8c8b91;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  & h1 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  & h2 {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 100;
+    margin-bottom: 0;
+  }
+
+  & p {
+    font-size: 14px;
+    color: #8c8b91;
+    font-weight: 100;
+    margin-bottom: 0px;
+  }
+
+  & fa-icon {
+    float: right;
+    display: inline-block;
+    color: green;
+  }
+}
+
+::ng-deep {
+  .modal-dialog {
+    width: 100%;
+  }
+
+}
