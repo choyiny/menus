@@ -101,6 +101,11 @@ class Section(EmbeddedDocument):
     menu_items of this section
     """
 
+    footnote = StringField(default="")
+    """
+    Menu footnote at the bottom of the page
+    """
+
     def __eq__(self, other):
         return type(self) == type(other) and self._id == other._id
 

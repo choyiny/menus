@@ -163,6 +163,9 @@ class MenuResource(RestaurantBaseResource):
                 return MENU_ALREADY_EXISTS
             menu.name = name
 
+        if "footnote" in kwargs:
+            menu.footnote = kwargs.get("footnote")
+
         if "sections" in kwargs:
             # temporary fix so db gets updated, not sure why changes aren't detected otherwise
             menu.sections = []
