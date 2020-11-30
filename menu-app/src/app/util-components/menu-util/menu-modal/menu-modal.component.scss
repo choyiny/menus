@@ -1,8 +1,8 @@
 .menu-dropdown {
   background: white;
   position:fixed;
-  bottom: 0px;
   width: 100%;
+  bottom: 0px;
   padding-bottom: 20px;
   margin-left: 0px;
 }
@@ -39,3 +39,9 @@
   }
 }
 
+::ng-deep {
+  .modal-dialog {
+    width: 100%;
+  }
+
+}

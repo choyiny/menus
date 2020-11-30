@@ -29,7 +29,7 @@
           [description]="restaurant.description"
           (menuEmitter)="setValue($event)"
         ></app-menu-details>
-        <button *ngIf="menus[currentMenu]" (click)="menuModal.open()">{{ menus[currentMenu].name}}
+        <button  class="btn4" *ngIf="menus[currentMenu] && restaurant.menus.length > 1" (click)="menuModal.open()">{{ menus[currentMenu].name}}
           <fa-icon [icon]="downIcon"></fa-icon>
         </button>
         <app-menuv2 *ngIf="menus[currentMenu]" [menu]="menus[currentMenu]"> </app-menuv2>
