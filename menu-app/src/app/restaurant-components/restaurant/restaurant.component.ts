@@ -33,7 +33,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    if (this.sameDay()) {
+    if (this.sameDay() || this.hasPermission) {
       return;
     }
     if (this.restaurant.force_trace) {
