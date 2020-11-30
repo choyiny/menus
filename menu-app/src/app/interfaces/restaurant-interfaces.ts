@@ -77,6 +77,7 @@ export interface Menu {
   sections: Section[];
   start: number;
   end: number;
+  footnote: string;
 }
 
 export interface MenuEditable {
@@ -84,4 +85,5 @@ export interface MenuEditable {
   sections?: Section[];
   start?: number;
   end?: number;
+  footnote?: string;
 }
