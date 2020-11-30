@@ -3,6 +3,7 @@ import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import { faPencil} from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-menuv2',
@@ -10,14 +11,27 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
   styleUrls: ['./menuv2.component.scss'],
 })
 export class Menuv2Component implements OnInit {
+
+  // Model
   @Input() menu: Menu;
+
+  // State
   miniScroll = false;
   previousScroll = 0;
   selectedSection = 0;
   rearrangeMode = false;
+  editMode: boolean;
 
+  // Globals
   slug: string;
   hasPermission: boolean;
+
+  // Style
+  footnoteStyle = {
+    color: 'rgba(26, 24, 36, 0.5)',
+    margin: '2.5px 0px 2.5px 0px'
+  };
+  editIcon = faPencil;
 
   constructor(
     private restaurantService: RestaurantService,
@@ -116,7 +130,7 @@ export class Menuv2Component implements OnInit {
     this.rearrangeMode = true;
   }
 
-  save(): void {
+  saveSections(): void {
     this.restaurantService
       .editMenu(this.slug, this.menu.name, { sections: this.menu.sections })
       .subscribe((menu) => {
@@ -127,5 +141,19 @@ export class Menuv2Component implements OnInit {
 
   updateMenu(menu: Menu): void {
     this.menu = menu;
+  }
+
+  toggleEditMode(): void {
+    this.editMode = !this.editMode;
+  }
+
+  saveFootnote(): void {
+    const menuEditable = { footnote: this.menu.footnote };
+    this.restaurantService.editMenu(this.slug, this.menu.name, menuEditable).subscribe(
+      menu => {
+        this.menu = menu;
+        this.toggleEditMode();
+      }
+    );
   }
 }
