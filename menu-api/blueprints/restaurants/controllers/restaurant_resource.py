@@ -338,7 +338,7 @@ class GenerateSectionResource(RestaurantBaseResource):
     def get(self):
         if g.user is None:
             return FORBIDDEN
-        section = Section(_id=uuid.uuid4())
+        section = Section(_id=uuid.uuid4(), name="New section")
         return section
 
 
@@ -350,7 +350,7 @@ class GenerateItemResource(RestaurantBaseResource):
         if g.user is None:
             return FORBIDDEN
 
-        item = Item(_id=uuid.uuid4())
+        item = Item(_id=uuid.uuid4(), name="New item")
         return item
 
 
