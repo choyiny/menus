@@ -35,7 +35,7 @@ export class MenuModalComponent implements OnInit {
     // convert elapsed seconds to human readable time
     const h = Math.floor(time / 3600);
     const m = Math.floor((time - h * 3600) / 60);
-    return `${h % 12}:${m} ${h < 12 ? 'AM' : 'PM'}`;
+    return `${h % 12 === 0 ? 12 : h % 12}:${m < 10 ? `0${m}` : m} ${h < 12 ? 'AM' : 'PM'}`;
   }
 
   changeMenu(index: number): void {
