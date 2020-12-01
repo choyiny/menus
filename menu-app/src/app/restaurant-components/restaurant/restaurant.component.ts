@@ -71,7 +71,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
-    this.restaurantPermissionService.getMenuIndex().subscribe( index => {
+    this.restaurantPermissionService.getMenuIndex().subscribe((index) => {
       if (this.restaurant && index !== -1) {
         this.setMenu(index);
       }

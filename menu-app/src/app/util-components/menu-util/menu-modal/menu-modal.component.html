@@ -4,11 +4,12 @@
   </a>
 
   <a mat-list-item *ngFor="let menu of menus; let i = index" (click)="changeMenu(i)">
-    <span mat-line><h2>{{menu.name}}</h2>
+    <span mat-line
+      ><h2>{{ menu.name }}</h2>
       <fa-icon *ngIf="i === currentMenu" [icon]="checkIcon"></fa-icon>
     </span>
-    <span mat-line><p>{{ convertTime(menu.start) + ' - ' + convertTime(menu.end) }}</p></span>
+    <span mat-line
+      ><p>{{ convertTime(menu.start) + ' - ' + convertTime(menu.end) }}</p></span
+    >
   </a>
-
 </mat-nav-list>
-

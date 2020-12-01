@@ -59,4 +59,4 @@ export class RestaurantPermissionService {
   setMenuIndex(menuIndex): void {
     this.menuIndexObservable.next(menuIndex);
   }
- }
+}
