@@ -12,11 +12,11 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     resolve: {
-      url: 'externalUrlRedirectResolver'
+      url: 'externalUrlRedirectResolver',
     },
     data: {
-      externalUrl: 'https://pickeasy.ca'
-    }
+      externalUrl: 'https://pickeasy.ca',
+    },
   },
   {
     path: 'menu/:slug',
