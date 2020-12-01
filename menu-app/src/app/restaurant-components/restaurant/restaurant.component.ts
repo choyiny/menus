@@ -21,7 +21,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() restaurant: Restaurant;
   @Input() selectedImage: string;
   menus = [];
-  currentMenu = -1;
+  currentMenu: number;
 
   // Global
   slug: string;
@@ -37,7 +37,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
-  @ViewChild(MenuModalComponent) menuModal: MenuModalComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
@@ -72,6 +71,11 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
+    this.restaurantPermissionService.getMenuIndex().subscribe( index => {
+      if (this.restaurant && index !== -1) {
+        this.setMenu(index);
+      }
+    });
     this.loadMenus();
   }
 
@@ -80,10 +84,11 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     if (!this.menus[index]) {
       this.restaurantService.getMenus(this.slug, menus[index].name).subscribe((menu) => {
         this.menus[index] = menu;
-        this.currentMenu = index;
         this.restaurantPermissionService.setMenuName(menu.name);
+        this.currentMenu = index;
       });
     } else {
+      this.restaurantPermissionService.setMenuName(this.menus[index]);
       this.currentMenu = index;
     }
   }
@@ -93,11 +98,11 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < menus.length; i++) {
       const currentTime = this.getCurrentTime();
       if (menus[i].start < currentTime && currentTime < menus[i].end) {
-        this.setMenu(i);
+        this.restaurantPermissionService.setMenuIndex(i);
         return;
       }
     }
-    this.setMenu(0);
+    this.restaurantPermissionService.setMenuIndex(0);
   }
 
   scrollToSection(id: string): void {
@@ -123,7 +128,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.bottomSheet.open(MenuModalComponent, {
       data: {
         menus: this.restaurant.menus,
-        currentMenu: this.currentMenu,
       },
     });
   }

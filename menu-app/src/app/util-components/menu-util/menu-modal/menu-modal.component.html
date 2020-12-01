@@ -28,11 +28,13 @@
 
 <mat-nav-list class="dropdown">
   <a mat-list-item>
-    <span mat-line>Change menu</span>
+    <span mat-line>Change menu </span>
   </a>
 
-  <a mat-list-item *ngFor="let menu of menus; let i = index">
-    <span mat-line>{{menu.name}}</span>
+  <a mat-list-item *ngFor="let menu of menus; let i = index" (click)="changeMenu(i)">
+    <span mat-line>{{menu.name}}
+      <fa-icon *ngIf="i === currentMenu" [icon]="checkIcon"></fa-icon>
+    </span>
     <span mat-line>{{ convertTime(menu.start) + ' - ' + convertTime(menu.end) }}</span>
   </a>
 

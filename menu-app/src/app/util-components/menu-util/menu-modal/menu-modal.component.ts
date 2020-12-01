@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LazyMenu, Menu } from '../../../interfaces/restaurant-interfaces';
+import {Component, EventEmitter, Inject, OnInit, Output, ViewChild} from '@angular/core';
+import { LazyMenu } from '../../../interfaces/restaurant-interfaces';
 import { faCheck } from '@fortawesome/pro-solid-svg-icons';
-import {MAT_BOTTOM_SHEET_DATA} from "@angular/material/bottom-sheet";
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material/bottom-sheet';
+import {RestaurantPermissionService} from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-menu-modal',
@@ -17,13 +17,16 @@ export class MenuModalComponent implements OnInit {
 
   // icons
   checkIcon = faCheck;
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {menus: LazyMenu[], currentMenu: number}) {
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {menus: LazyMenu[]},
+    private restaurantPermissionService: RestaurantPermissionService,
+    private bottomSheetRef: MatBottomSheetRef<MenuModalComponent>
+  ) {
     this.menus = data.menus;
-    this.currentMenu = data.currentMenu;
   }
 
   ngOnInit(): void {
-    console.log('something');
+    this.restaurantPermissionService.getMenuIndex().subscribe(index => this.currentMenu = index);
   }
 
   convertTime(time: number): string {
@@ -34,6 +37,7 @@ export class MenuModalComponent implements OnInit {
   }
 
   changeMenu(index: number): void {
-    this.indexEmitter.emit(index);
+    this.bottomSheetRef.dismiss();
+    this.restaurantPermissionService.setMenuIndex(index);
   }
 }
