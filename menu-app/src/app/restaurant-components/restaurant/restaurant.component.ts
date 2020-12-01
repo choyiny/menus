@@ -10,6 +10,7 @@ import { SignupComponent } from '../../util-components/register/signup/signup.co
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
 import { faAngleDown } from '@fortawesome/pro-solid-svg-icons';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-restaurant',
@@ -42,7 +43,8 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private scrollService: ScrollService,
-    public restaurantPermissionService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   ngAfterViewInit(): void {
@@ -115,6 +117,15 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     const [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
     // convert hours:minutes:seconds to elapsed time in seconds
     return h * 3600 + m * 60 + s;
+  }
+
+  openMenuModal(): void {
+    this.bottomSheet.open(MenuModalComponent, {
+      data: {
+        menus: this.restaurant.menus,
+        currentMenu: this.currentMenu,
+      },
+    });
   }
 
   sameDay(): boolean {

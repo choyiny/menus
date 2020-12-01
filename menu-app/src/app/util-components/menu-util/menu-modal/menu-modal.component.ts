@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LazyMenu, Menu } from '../../../interfaces/restaurant-interfaces';
 import { faCheck } from '@fortawesome/pro-solid-svg-icons';
+import {MAT_BOTTOM_SHEET_DATA} from "@angular/material/bottom-sheet";
 
 @Component({
   selector: 'app-menu-modal',
@@ -10,18 +11,19 @@ import { faCheck } from '@fortawesome/pro-solid-svg-icons';
 })
 export class MenuModalComponent implements OnInit {
   @ViewChild('menuModal') menuModal;
-  @Input() menus: LazyMenu[];
-  @Input() currentMenu;
+  menus: LazyMenu[];
+  currentMenu;
   @Output() indexEmitter = new EventEmitter<number>();
 
   // icons
   checkIcon = faCheck;
-  constructor(private modalService: NgbModal) {}
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {menus: LazyMenu[], currentMenu: number}) {
+    this.menus = data.menus;
+    this.currentMenu = data.currentMenu;
+  }
 
-  ngOnInit(): void {}
-
-  open(): void {
-    this.modalService.open(this.menuModal);
+  ngOnInit(): void {
+    console.log('something');
   }
 
   convertTime(time: number): string {
@@ -31,8 +33,7 @@ export class MenuModalComponent implements OnInit {
     return `${h % 12}:${m} ${h < 12 ? 'AM' : 'PM'}`;
   }
 
-  changeMenu(index: number, modal): void {
-    modal.close();
+  changeMenu(index: number): void {
     this.indexEmitter.emit(index);
   }
 }
