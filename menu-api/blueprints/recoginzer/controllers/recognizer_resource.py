@@ -24,5 +24,6 @@ class RecognizerResource(BaseResource):
     def post(self, args, **kwargs):
         file = args.get("file")
         content = file.read()
-        x = detect_text(content)
-        return "hello"
+        result = detect_text(content)
+        print(result)
+        return "success"
