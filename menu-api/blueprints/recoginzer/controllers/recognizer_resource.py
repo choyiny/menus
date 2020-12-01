@@ -20,4 +20,6 @@ class RecognizerResource(BaseResource):
     @use_args(file_args, location="files")
     @use_kwargs(RecognizerSchema, location="form")
     def post(self, args, **kwargs):
-        pass
+        file = args.get("file")
+        content = file.read()
+        return "hello"
