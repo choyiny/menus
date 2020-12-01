@@ -107,3 +107,5 @@ venv.bak/
 .idea
 config.py
 .vscode/
+
+gcp_service_account.json

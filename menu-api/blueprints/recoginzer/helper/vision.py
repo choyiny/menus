@@ -8,7 +8,9 @@ def detect_text(content: bytes):
     Points that form the polygon.
     """
 
-    client = vision.ImageAnnotatorClient()
+    client = vision.ImageAnnotatorClient.from_service_account_json(
+        "gcp_service_account.json"
+    )
     image = vision.Image(content=content)
     response = client.text_detection(image=image)
     if response.error.message:

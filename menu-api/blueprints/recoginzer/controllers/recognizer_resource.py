@@ -5,6 +5,8 @@ from marshmallow import Schema
 from webargs import fields
 from webargs.flaskparser import use_args
 
+from ..helper.vision import detect_text
+
 
 @doc(tags=["Menu Recognizer"])
 @marshal_with(ErrorResponseSchema, code=401)
@@ -22,4 +24,5 @@ class RecognizerResource(BaseResource):
     def post(self, args, **kwargs):
         file = args.get("file")
         content = file.read()
+        x = detect_text(content)
         return "hello"
