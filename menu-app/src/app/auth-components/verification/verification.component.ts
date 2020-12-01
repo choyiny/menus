@@ -24,7 +24,7 @@ export class VerificationComponent implements OnInit {
       this.authService.verifyEmail(email, token).subscribe((user) => {
         if (user.restaurants) {
           const restaurant = user.restaurants[0];
-          this.router.navigateByUrl(`?restaurant=${restaurant}`).then((res) => {});
+          this.router.navigateByUrl(`/login?restaurant=${restaurant}`).then((res) => {});
         }
       });
     });

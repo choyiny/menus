@@ -49,7 +49,8 @@ import { CollapsedSectionComponent } from './control-panel/collapsed-section/col
 import { NavbarComponent } from './util-components/navbar/navbar.component';
 import { HomeComponent } from './restaurant-components/home/home.component';
 import { MenuModalComponent } from './util-components/menu-util/menu-modal/menu-modal.component';
-import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
+import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -118,7 +119,13 @@ const DragConfig = {
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
-    { provide: CDK_DRAG_CONFIG, useValue: DragConfig },
+    { provide: CDK_DRAG_CONFIG, useValue: DragConfig },        {
+      provide: 'externalUrlRedirectResolver',
+      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
+      {
+        window.location.href = (route.data as any).externalUrl;
+      }
+    }
   ],
   bootstrap: [AppComponent],
 })

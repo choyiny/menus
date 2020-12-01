@@ -9,11 +9,21 @@ import { HomeComponent } from './restaurant-components/home/home.component';
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomeComponent,
+    resolve: {
+      url: 'externalUrlRedirectResolver'
+    },
+    data: {
+      externalUrl: 'https://pickeasy.ca'
+    }
+  },
+  {
     path: 'menu/:slug',
     component: HomeComponent,
   },
   {
-    path: '',
+    path: 'login',
     component: LoginComponent,
   },
   {
