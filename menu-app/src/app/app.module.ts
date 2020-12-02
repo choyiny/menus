@@ -32,6 +32,7 @@ import { SignupComponent } from './util-components/register/signup/signup.compon
 import { FirstMenuComponent } from './util-components/register/first-menu/first-menu.component';
 import { RegisterComponent } from './register/register.component';
 import { PreviewComponent } from './restaurant-components/preview/preview.component';
+import { MenuRecognizerComponent } from './restaurant-components/menu-recognizer/menu-recognizer.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -99,6 +100,7 @@ const DragConfig = {
     RestaurantLoadingComponent,
     ItemLoadingComponent,
     PublishModalComponent,
+    MenuRecognizerComponent,
   ],
   imports: [
     BrowserModule,

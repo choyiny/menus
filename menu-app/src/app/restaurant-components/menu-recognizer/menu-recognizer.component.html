@@ -1,0 +1,13 @@
+<input type="file" (change)="uploadImage($event)" />
+<div>
+  <canvas
+    #canvas
+    width="1200"
+    height="800"
+    (mousedown)="isMouseDown = true"
+    (mouseup)="isMouseDown = false"
+    (mouseout)="isMouseDown = false"
+    (mousemove)="onMove($event)"
+    (wheel)="onWheel($event)"
+  ></canvas>
+</div>
