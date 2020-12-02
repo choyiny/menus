@@ -77,10 +77,10 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   setMenu(index: number): void {
     const menus = this.restaurant.menus;
     if (!this.menus[index]) {
+      this.currentMenu = index;
       this.restaurantService.getMenus(this.slug, menus[index].name).subscribe((menu) => {
         this.menus[index] = menu;
         this.restaurantPermissionService.setMenuName(menu.name);
-        this.currentMenu = index;
       });
     } else {
       this.restaurantPermissionService.setMenuName(this.menus[index]);
