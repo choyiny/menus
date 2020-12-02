@@ -43,7 +43,9 @@ class MenuV2Schema(Schema):
         example=51000,
     )
     footnote = fields.Str(
-        description="footnote at bottom of page", example="All items are peanut free"
+        description="footnote at bottom of page",
+        example="All items are peanut free",
+        allow_none=True,
     )
 
 
@@ -59,7 +61,9 @@ class EditMenuV2Schema(Schema):
         example=51000,
     )
     footnote = fields.Str(
-        description="footnote at bottom of page", example="All items are peanut free"
+        description="footnote at bottom of page",
+        example="All items are peanut free",
+        allow_none=True,
     )
 
 
