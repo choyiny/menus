@@ -89,7 +89,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   loadMenus(): void {
-
     const loadDefaultMenu = () => {
       const menus = this.restaurant.menus;
       for (let i = 0; i < menus.length; i++) {
@@ -102,22 +101,19 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       this.setMenu(0);
     };
 
-    this.route.queryParams.subscribe(
-      params => {
-        const menu = params.menu;
-        // Load menu from query params
-        if (menu) {
-          const lazyMenus = this.restaurant.menus.map(lazyMenu => lazyMenu.name);
-          if (lazyMenus.includes(menu)) {
-            const currentIndex = lazyMenus.indexOf(menu);
-            this.setMenu(currentIndex);
-            return;
-          }
+    this.route.queryParams.subscribe((params) => {
+      const menu = params.menu;
+      // Load menu from query params
+      if (menu) {
+        const lazyMenus = this.restaurant.menus.map((lazyMenu) => lazyMenu.name);
+        if (lazyMenus.includes(menu)) {
+          const currentIndex = lazyMenus.indexOf(menu);
+          this.setMenu(currentIndex);
+          return;
         }
-        loadDefaultMenu();
       }
-    );
-
+      loadDefaultMenu();
+    });
   }
 
   scrollToSection(id: string): void {
@@ -143,7 +139,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.bottomSheet.open(MenuModalComponent, {
       data: {
         menus: this.restaurant.menus,
-        currentMenu: this.currentMenu
+        currentMenu: this.currentMenu,
       },
     });
   }

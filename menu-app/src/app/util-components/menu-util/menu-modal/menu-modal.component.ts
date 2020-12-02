@@ -3,7 +3,7 @@ import { LazyMenu } from '../../../interfaces/restaurant-interfaces';
 import { faCheck } from '@fortawesome/pro-solid-svg-icons';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-modal',
@@ -20,17 +20,17 @@ export class MenuModalComponent implements OnInit {
   // icons
   checkIcon = faCheck;
   constructor(
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { menus: LazyMenu[], currentMenu: number },
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { menus: LazyMenu[]; currentMenu: number },
     private restaurantPermissionService: RestaurantPermissionService,
     private bottomSheetRef: MatBottomSheetRef<MenuModalComponent>,
-    private router: Router,
+    private router: Router
   ) {
     this.menus = data.menus;
     this.currentMenu = data.currentMenu;
   }
 
   ngOnInit(): void {
-    this.restaurantPermissionService.getSlug().subscribe(slug => this.slug = slug);
+    this.restaurantPermissionService.getSlug().subscribe((slug) => (this.slug = slug));
   }
 
   convertTime(time: number): string {
@@ -41,8 +41,9 @@ export class MenuModalComponent implements OnInit {
   }
 
   changeMenu(index: number): void {
-    this.bottomSheetRef.dismiss();
     const menu = this.menus[index].name;
-    this.router.navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`).then( () => {});
+    this.router
+      .navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`)
+      .then(() => this.bottomSheetRef.dismiss());
   }
 }
