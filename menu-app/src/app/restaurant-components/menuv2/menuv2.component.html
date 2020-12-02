@@ -5,7 +5,27 @@
   [currentSection]="selectedSection"
   (menuEmitter)="updateMenu($event)"
 ></app-scrolling-component>
-<button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="save()">Save</button>
-<div class="align" *ngFor="let section of menu.sections; let i = index">
-  <app-sectionv2 [section]="section" id="{{ section._id }}" (menuEmitter)="update($event)"> </app-sectionv2>
+<button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
+<div class="align">
+  <app-sectionv2
+    *ngFor="let section of menu.sections; let i = index"
+    [section]="section"
+    id="{{ section._id }}"
+    (menuEmitter)="update($event)"
+  >
+  </app-sectionv2>
+
+  <div class="footnote">
+    <quill-view-html
+      class="d-inline-block"
+      *ngIf="!editMode"
+      [content]="menu.footnote"
+      [style]="footnoteStyle"
+    ></quill-view-html>
+    <button *ngIf="!editMode && hasPermission" class="desktop btn2 d-inline-block">
+      <fa-icon [icon]="editIcon" (click)="toggleEditMode()"></fa-icon>
+    </button>
+    <quill-editor *ngIf="editMode" [(ngModel)]="menu.footnote" class="editor"></quill-editor>
+    <button *ngIf="editMode" class="btn4" (click)="saveFootnote()">Save</button>
+  </div>
 </div>

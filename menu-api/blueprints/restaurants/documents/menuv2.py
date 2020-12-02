@@ -130,6 +130,11 @@ class MenuV2(Document):
     End interval for when this menu is the defaulted menu for its corresponding restaurant
     """
 
+    footnote = StringField(default="")
+    """
+    Menu footnote at the bottom of the page
+    """
+
     def get_section(self, section_id: str) -> Optional[Section]:
         """ get section of this menu """
         for section in self.sections:
