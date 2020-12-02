@@ -22,11 +22,17 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   menus = [];
   currentMenu = -1;
 
+  // Global
   slug: string;
   hasPermission: boolean;
 
   // Icons
   downIcon = faAngleDown;
+
+  // Style
+  theme = {
+    height: '50px'
+  };
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
