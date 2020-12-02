@@ -96,6 +96,11 @@ def register_blueprints(app: Flask):
     from blueprints.qr import bp_name as qr_bp_name
     from blueprints.qr import qr_bp
     from blueprints.qr.routes import resources as qr_resources
+
+    # recognizer blueprint
+    from blueprints.recoginzer import bp_name as recognizer_bp_name
+    from blueprints.recoginzer import recognizer_bp
+    from blueprints.recoginzer.routes import resources as recognizer_resources
     from blueprints.restaurants import bp_name as restaurant_bp_name
     from blueprints.restaurants import restaurant_bp
     from blueprints.restaurants.routes import resources as restaurant_resources
@@ -104,11 +109,6 @@ def register_blueprints(app: Flask):
     from blueprints.user_management import bp_name as user_management_bp_name
     from blueprints.user_management import user_management_bp
     from blueprints.user_management.routes import resources as user_management_resources
-
-    # recognizer blueprint
-    from blueprints.recoginzer import bp_name as recognizer_bp_name
-    from blueprints.recoginzer import recognizer_bp
-    from blueprints.recoginzer.routes import resources as recognizer_resources
 
     set_routes(menu_resources, app, menus_bp, docs, menu_bp_name)
     set_routes(auth_resources, app, auth_bp, docs, auth_bp_name)
