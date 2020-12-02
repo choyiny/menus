@@ -21,7 +21,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   @Input() restaurant: Restaurant;
   @Input() selectedImage: string;
   menus = [];
-  currentMenu: number;
+  currentMenu = -1;
 
   // Global
   slug: string;
@@ -71,11 +71,6 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
-    this.restaurantPermissionService.getMenuIndex().subscribe((index) => {
-      if (this.restaurant && index !== -1) {
-        this.setMenu(index);
-      }
-    });
     this.loadMenus();
   }
 
@@ -94,15 +89,35 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   }
 
   loadMenus(): void {
-    const menus = this.restaurant.menus;
-    for (let i = 0; i < menus.length; i++) {
-      const currentTime = this.getCurrentTime();
-      if (menus[i].start < currentTime && currentTime < menus[i].end) {
-        this.restaurantPermissionService.setMenuIndex(i);
-        return;
+
+    const loadDefaultMenu = () => {
+      const menus = this.restaurant.menus;
+      for (let i = 0; i < menus.length; i++) {
+        const currentTime = this.getCurrentTime();
+        if (menus[i].start < currentTime && currentTime < menus[i].end) {
+          this.setMenu(i);
+          return;
+        }
       }
-    }
-    this.restaurantPermissionService.setMenuIndex(0);
+      this.setMenu(0);
+    };
+
+    this.route.queryParams.subscribe(
+      params => {
+        const menu = params.menu;
+        // Load menu from query params
+        if (menu) {
+          const lazyMenus = this.restaurant.menus.map(lazyMenu => lazyMenu.name);
+          if (lazyMenus.includes(menu)) {
+            const currentIndex = lazyMenus.indexOf(menu);
+            this.setMenu(currentIndex);
+            return;
+          }
+        }
+        loadDefaultMenu();
+      }
+    );
+
   }
 
   scrollToSection(id: string): void {
@@ -128,6 +143,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     this.bottomSheet.open(MenuModalComponent, {
       data: {
         menus: this.restaurant.menus,
+        currentMenu: this.currentMenu
       },
     });
   }

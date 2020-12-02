@@ -11,7 +11,6 @@ export class RestaurantPermissionService {
   canUploadObservable = new BehaviorSubject<boolean>(false);
   isRestaurantPublicObservable = new BehaviorSubject<boolean>(false);
   menuNameObservable = new BehaviorSubject<string>(null);
-  menuIndexObservable = new BehaviorSubject<number>(-1);
 
   constructor() {}
 
@@ -50,13 +49,5 @@ export class RestaurantPermissionService {
 
   setMenuName(menuName: string): void {
     this.menuNameObservable.next(menuName);
-  }
-
-  getMenuIndex(): BehaviorSubject<number> {
-    return this.menuIndexObservable;
-  }
-
-  setMenuIndex(menuIndex): void {
-    this.menuIndexObservable.next(menuIndex);
   }
 }
