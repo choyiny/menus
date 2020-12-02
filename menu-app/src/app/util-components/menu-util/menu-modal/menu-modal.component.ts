@@ -42,13 +42,9 @@ export class MenuModalComponent implements OnInit {
 
   changeMenu(index: number): void {
     this.bottomSheetRef.dismiss();
-    this.bottomSheetRef.afterDismissed().subscribe(
-      () => {
-        const menu = this.menus[index].name;
-        this.router
-          .navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`)
-          .then(() => {});
-      }
-    );
+    this.bottomSheetRef.afterDismissed().subscribe(() => {
+      const menu = this.menus[index].name;
+      this.router.navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`).then(() => {});
+    });
   }
 }

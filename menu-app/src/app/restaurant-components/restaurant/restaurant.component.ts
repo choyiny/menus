@@ -32,7 +32,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   // Style
   theme = {
-    height: '50px'
+    height: '50px',
   };
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;

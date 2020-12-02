@@ -49,11 +49,10 @@ import { CollapsedSectionComponent } from './control-panel/collapsed-section/col
 import { NavbarComponent } from './util-components/navbar/navbar.component';
 import { HomeComponent } from './restaurant-components/home/home.component';
 import { MenuModalComponent } from './util-components/menu-util/menu-modal/menu-modal.component';
-import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 const DragConfig = {
   dragStartThreshold: 0,

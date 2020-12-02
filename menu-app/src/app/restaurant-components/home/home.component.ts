@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   // Style
   theme = {
-    height: '50px'
+    height: '50px',
   };
 
   constructor(
