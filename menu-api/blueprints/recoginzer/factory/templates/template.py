@@ -5,8 +5,7 @@ from ...helper.vision import detect_text
 
 
 class BaseTemplate:
-    @staticmethod
-    def get_result() -> dict:
+    def get_result(self) -> dict:
         """Get json result s"""
         pass
 
@@ -25,7 +24,7 @@ class RowTemplate(BaseTemplate):
             """
         # Read
         nparr = np.fromstring(self.content.decode("utf-8"), np.uint8)
-        img = cv2.imdecode(nparr, cv2.CV_LOAD_IMAGE_COLOR)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # Threshold
         th, threshed = cv2.threshold(
@@ -105,3 +104,70 @@ class RowTemplate(BaseTemplate):
 
         if kwargs.get("line_error"):
             self.lines_error = kwargs.get("line_error")
+
+
+class GridTemplate(BaseTemplate):
+    def split_grids(self, points):
+        """
+        Split the given image into grids.
+        Return a dict as the result.
+        """
+        KSIZE = (1, 1)
+
+        # Load image, grayscale, Gaussian blur, Otsu's threshold
+        nparr = np.fromstring(self.content.decode("utf-8"), np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        blur = cv2.GaussianBlur(gray, KSIZE, 0)
+        thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+
+        # Create rectangular structuring element and dilate
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
+        dilate = cv2.dilate(thresh, kernel, iterations=4)
+
+        # Find contours and draw rectangle, also save them
+        foundRect = []
+        cnts = cv2.findContours(dilate, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cnts = cnts[0] if len(cnts) == 2 else cnts[1]
+        for c in cnts:
+            x, y, w, h = cv2.boundingRect(c)
+            # The two points of rectangle, top left and bottom right.
+            foundRect.append([(x, y), (x + w, y + h)])
+            cv2.rectangle(image, (x, y), (x + w, y + h), (36, 255, 12), 2)
+
+        # This is slow when there are a lot of text and polygons
+        result = [{"bound": r, "text": []} for r in foundRect]
+        for pIndex in range(len(points)):
+            p = points[pIndex]
+            text = p["text"]
+            textPoints = p["point"]
+            # Do not draw the big rectangle
+            if pIndex != 0:
+                cv2.polylines(
+                    image, np.array([p["point"]], np.int32), True, (255, 120, 255), 2
+                )
+            # For each foundRect, check what polygons belong to it
+            for index in range(len(foundRect)):
+                r = foundRect[index]
+                x_1, y_1 = r[0]
+                x_2, y_2 = r[1]
+                isInPoly = False
+                for tp in textPoints:
+                    x = tp[0]
+                    y = tp[1]
+                    if (x_1 <= x <= x_2) and (y_1 <= y <= y_2):
+                        isInPoly = True
+                    else:
+                        isInPoly = False
+                    if not isInPoly:
+                        break
+                if isInPoly:
+                    result[index]["text"].append(text)
+        return result
+
+    def get_result(self) -> dict:
+        data = detect_text(self.content)[1:]
+        return {"result": self.split_grids(data)}
+
+    def __init__(self, content, **kwargs):
+        self.content = content
