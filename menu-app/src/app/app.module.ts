@@ -52,6 +52,8 @@ import { MenuModalComponent } from './util-components/menu-util/menu-modal/menu-
 import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
+import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
+
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -123,6 +125,12 @@ const DragConfig = {
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
     { provide: CDK_DRAG_CONFIG, useValue: DragConfig },
+    {
+      provide: 'externalUrlRedirectResolver',
+      useValue: (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+        window.location.href = (route.data as any).externalUrl;
+      },
+    },
   ],
   bootstrap: [AppComponent],
   entryComponents: [MenuModalComponent],
