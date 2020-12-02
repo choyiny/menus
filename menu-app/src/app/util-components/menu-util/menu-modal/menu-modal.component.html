@@ -1,13 +1,15 @@
-<ng-template #menuModal let-modal>
-  <div class="menu-dropdown">
-    <div class="menu-collapsed">
-      <h1>Change Menu</h1>
-    </div>
+<mat-nav-list class="dropdown">
+  <a mat-list-item>
+    <span mat-line class="menu-title"><h1>Change Menu</h1></span>
+  </a>
 
-    <div class="menu-collapsed" *ngFor="let menu of menus; let i = index" (click)="changeMenu(i, modal)">
-      <h2>{{ menu.name }}</h2>
+  <a mat-list-item *ngFor="let menu of menus; let i = index" (click)="changeMenu(i)">
+    <span mat-line
+      ><h2>{{ menu.name }}</h2>
       <fa-icon *ngIf="i === currentMenu" [icon]="checkIcon"></fa-icon>
-      <p *ngIf="menu.end && menu.start">{{ convertTime(menu.start) + ' - ' + convertTime(menu.end) }}</p>
-    </div>
-  </div>
-</ng-template>
+    </span>
+    <span mat-line
+      ><p>{{ convertTime(menu.start) + ' - ' + convertTime(menu.end) }}</p></span
+    >
+  </a>
+</mat-nav-list>

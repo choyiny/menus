@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { LazyMenu, Menu } from '../../../interfaces/restaurant-interfaces';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { LazyMenu } from '../../../interfaces/restaurant-interfaces';
 import { faCheck } from '@fortawesome/pro-solid-svg-icons';
+import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu-modal',
@@ -10,29 +12,39 @@ import { faCheck } from '@fortawesome/pro-solid-svg-icons';
 })
 export class MenuModalComponent implements OnInit {
   @ViewChild('menuModal') menuModal;
-  @Input() menus: LazyMenu[];
-  @Input() currentMenu;
+  menus: LazyMenu[];
+  slug: string;
+  currentMenu: number;
   @Output() indexEmitter = new EventEmitter<number>();
 
   // icons
   checkIcon = faCheck;
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { menus: LazyMenu[]; currentMenu: number },
+    private restaurantPermissionService: RestaurantPermissionService,
+    private bottomSheetRef: MatBottomSheetRef<MenuModalComponent>,
+    private router: Router
+  ) {
+    this.menus = data.menus;
+    this.currentMenu = data.currentMenu;
+  }
 
-  ngOnInit(): void {}
-
-  open(): void {
-    this.modalService.open(this.menuModal);
+  ngOnInit(): void {
+    this.restaurantPermissionService.getSlug().subscribe((slug) => (this.slug = slug));
   }
 
   convertTime(time: number): string {
     // convert elapsed seconds to human readable time
     const h = Math.floor(time / 3600);
     const m = Math.floor((time - h * 3600) / 60);
-    return `${h % 12}:${m} ${h < 12 ? 'AM' : 'PM'}`;
+    return `${h % 12 === 0 ? 12 : h % 12}:${m < 10 ? `0${m}` : m} ${h < 12 ? 'AM' : 'PM'}`;
   }
 
-  changeMenu(index: number, modal): void {
-    modal.close();
-    this.indexEmitter.emit(index);
+  changeMenu(index: number): void {
+    this.bottomSheetRef.dismiss();
+    this.bottomSheetRef.afterDismissed().subscribe(() => {
+      const menu = this.menus[index].name;
+      this.router.navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`).then(() => {});
+    });
   }
 }

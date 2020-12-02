@@ -49,14 +49,15 @@ import { CollapsedSectionComponent } from './control-panel/collapsed-section/col
 import { NavbarComponent } from './util-components/navbar/navbar.component';
 import { HomeComponent } from './restaurant-components/home/home.component';
 import { MenuModalComponent } from './util-components/menu-util/menu-modal/menu-modal.component';
-import {NgxSkeletonLoaderModule} from 'ngx-skeleton-loader';
-import {ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 const DragConfig = {
   dragStartThreshold: 0,
   pointerDirectionChangeThreshold: 5,
-  zIndex: 10000,
+  zIndex: 1000,
 };
 
 @NgModule({
@@ -103,6 +104,7 @@ const DragConfig = {
     FormsModule,
     AngularFireModule.initializeApp(environment.settings.firebase),
     NgxSkeletonLoaderModule.forRoot(),
+    MatBottomSheetModule,
     DragDropModule,
     QuillModule.forRoot({
       modules: {
@@ -117,6 +119,7 @@ const DragConfig = {
         ],
       },
     }),
+    MatListModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true },
@@ -129,5 +132,6 @@ const DragConfig = {
     },
   ],
   bootstrap: [AppComponent],
+  entryComponents: [MenuModalComponent],
 })
 export class AppModule {}

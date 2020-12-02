@@ -1,47 +1,36 @@
-.menu-dropdown {
-  background: white;
-  position:fixed;
-  width: 100%;
-  bottom: 0px;
-  padding-bottom: 20px;
-  margin-left: 0px;
+fa-icon {
+  float: right;
+  display: inline-block;
+  color: green;
 }
 
-.menu-collapsed {
-  border-bottom: 1px solid #8c8b91;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
-  & h1 {
-    font-size: 16px;
-    font-weight: 500;
-  }
+h1 {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 0px;
+}
 
-  & h2 {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 100;
-    margin-bottom: 0;
-  }
+h2 {
+  font-size: 16px;
+  font-weight: 100;
+  margin-bottom: 0px;
+  display: inline-block;
+}
 
-  & p {
-    font-size: 14px;
-    color: #8c8b91;
-    font-weight: 100;
-    margin-bottom: 0px;
-  }
-
-  & fa-icon {
-    float: right;
-    display: inline-block;
-    color: green;
-  }
+p {
+  font-size: 16px;
+  font-weight: 100;
+  color: #8c8b91;
+  margin-bottom: 0px;
 }
 
 ::ng-deep {
-  .modal-dialog {
-    width: 100%;
+  div .mat-list-item-content {
+    padding: 4px 16px !important;
+    border-bottom: 1px solid #cdcdd2 !important;
   }
 
+  .mat-bottom-sheet-container {
+    padding: 8px 16px 0px 8px;
+  }
 }

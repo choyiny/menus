@@ -10,6 +10,7 @@ import { SignupComponent } from '../../util-components/register/signup/signup.co
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
 import { faAngleDown } from '@fortawesome/pro-solid-svg-icons';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-restaurant',
@@ -31,18 +32,18 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
 
   // Style
   theme = {
-    height: '50px'
+    height: '50px',
   };
 
   @ViewChild(CovidModalComponent) covid: CovidModalComponent;
   @ViewChild(SignupComponent) signUp: SignupComponent;
-  @ViewChild(MenuModalComponent) menuModal: MenuModalComponent;
   constructor(
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
     private authService: AuthService,
     private scrollService: ScrollService,
-    public restaurantPermissionService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService,
+    private bottomSheet: MatBottomSheet
   ) {}
 
   ngAfterViewInit(): void {
@@ -76,26 +77,43 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   setMenu(index: number): void {
     const menus = this.restaurant.menus;
     if (!this.menus[index]) {
+      this.currentMenu = index;
       this.restaurantService.getMenus(this.slug, menus[index].name).subscribe((menu) => {
         this.menus[index] = menu;
-        this.currentMenu = index;
         this.restaurantPermissionService.setMenuName(menu.name);
       });
     } else {
+      this.restaurantPermissionService.setMenuName(this.menus[index]);
       this.currentMenu = index;
     }
   }
 
   loadMenus(): void {
-    const menus = this.restaurant.menus;
-    for (let i = 0; i < menus.length; i++) {
-      const currentTime = this.getCurrentTime();
-      if (menus[i].start < currentTime && currentTime < menus[i].end) {
-        this.setMenu(i);
-        return;
+    const loadDefaultMenu = () => {
+      const menus = this.restaurant.menus;
+      for (let i = 0; i < menus.length; i++) {
+        const currentTime = this.getCurrentTime();
+        if (menus[i].start < currentTime && currentTime < menus[i].end) {
+          this.setMenu(i);
+          return;
+        }
       }
-    }
-    this.setMenu(0);
+      this.setMenu(0);
+    };
+
+    this.route.queryParams.subscribe((params) => {
+      const menu = params.menu;
+      // Load menu from query params
+      if (menu) {
+        const lazyMenus = this.restaurant.menus.map((lazyMenu) => lazyMenu.name);
+        if (lazyMenus.includes(menu)) {
+          const currentIndex = lazyMenus.indexOf(menu);
+          this.setMenu(currentIndex);
+          return;
+        }
+      }
+      loadDefaultMenu();
+    });
   }
 
   scrollToSection(id: string): void {
@@ -115,6 +133,15 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     const [h, m, s] = [today.getHours(), today.getMinutes(), today.getSeconds()];
     // convert hours:minutes:seconds to elapsed time in seconds
     return h * 3600 + m * 60 + s;
+  }
+
+  openMenuModal(): void {
+    this.bottomSheet.open(MenuModalComponent, {
+      data: {
+        menus: this.restaurant.menus,
+        currentMenu: this.currentMenu,
+      },
+    });
   }
 
   sameDay(): boolean {
