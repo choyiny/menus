@@ -13,9 +13,16 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
 export class HomeComponent implements OnInit {
   slug: string;
   restaurant: Restaurant;
+
+  // State
   hasPermission: boolean;
   viewable = true;
   previewMode = false;
+
+  // Style
+  theme = {
+    height: '50px'
+  };
 
   constructor(
     private route: ActivatedRoute,

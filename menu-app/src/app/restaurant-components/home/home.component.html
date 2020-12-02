@@ -1,12 +1,18 @@
 <div *ngIf="viewable">
-  <app-navbar
-    *ngIf="hasPermission && restaurant"
-    [previewMode]="previewMode"
-    (viewEmitter)="updatePreviewMode($event)"
-    [restaurantName]="restaurant.name"
-  ></app-navbar>
-  <app-restaurant *ngIf="restaurant && !previewMode" [restaurant]="restaurant"></app-restaurant>
-  <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>
+
+  <div *ngIf="restaurant">
+    <app-navbar
+      *ngIf="hasPermission"
+      [previewMode]="previewMode"
+      (viewEmitter)="updatePreviewMode($event)"
+      [restaurantName]="restaurant.name"
+    ></app-navbar>
+    <app-restaurant *ngIf="!previewMode" [restaurant]="restaurant"></app-restaurant>
+    <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>
+  </div>
+
+  <ngx-skeleton-loader count="10" [theme]="theme" animation="progress"></ngx-skeleton-loader>
+
 </div>
 <div *ngIf="!viewable">
   <h1>Restaurant is private or does not exist</h1>
