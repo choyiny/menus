@@ -49,6 +49,7 @@ import { CollapsedSectionComponent } from './control-panel/collapsed-section/col
 import { NavbarComponent } from './util-components/navbar/navbar.component';
 import { HomeComponent } from './restaurant-components/home/home.component';
 import { MenuModalComponent } from './util-components/menu-util/menu-modal/menu-modal.component';
+import {NgxSkeletonLoaderModule} from "ngx-skeleton-loader";
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -99,6 +100,7 @@ const DragConfig = {
     ImageCropperModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.settings.firebase),
+    NgxSkeletonLoaderModule.forRoot(),
     DragDropModule,
     QuillModule.forRoot({
       modules: {
