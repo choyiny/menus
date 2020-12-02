@@ -24,6 +24,7 @@ def detect_text(content: bytes):
         points = []
         for vertex in text.bounding_poly.vertices:
             points.append((vertex.x, vertex.y))
+        points.append(points[0])
         points_text.append({"text": des, "points": points})
 
     return {"points": points_text}
