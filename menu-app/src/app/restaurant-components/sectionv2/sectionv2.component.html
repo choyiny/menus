@@ -1,8 +1,8 @@
 <div class="section">
   <div class="view-edit inline" *ngIf="!editMode">
     <quill-view-html
-      [content]="section.name"
-      [style]="{
+    [content]="section.name"
+    [style]="{
         'font-size': '22px',
         'font-weight': '600'
       }"
@@ -14,7 +14,7 @@
   </div>
   <div class="view-edit" *ngIf="editMode">
     <quill-editor class="editor" [(ngModel)]="section.name"></quill-editor>
-    <button class="align-top btn4 desktop" (click)="editSection()">Save</button>
+    <button class="align-top btn1 desktop" (click)="editSection()">Save</button>
   </div>
   <div class="description-container">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
@@ -22,7 +22,7 @@
     <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
     <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
   </div>
-  <div
+  <div 
     class="row row-item"
     cdkDropList
     [cdkDropListDisabled]="!editMode"
