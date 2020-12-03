@@ -14,14 +14,15 @@
   </div>
   <div class="view-edit" *ngIf="editMode">
     <quill-editor class="editor" [(ngModel)]="section.name"></quill-editor>
+    <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
+    <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
     <button class="align-top btn1 desktop" (click)="editSection()">Save</button>
   </div>
-  <div class="description-container">
+  <div class="description-container" *ngIf="!editMode">
     <p *ngIf="!editMode">{{ section.subtitle }}</p>
-    <input *ngIf="editMode" type="text" [(ngModel)]="section.subtitle" />
     <quill-view-html *ngIf="!editMode" [content]="section.description" theme="snow"></quill-view-html>
-    <quill-editor *ngIf="editMode" class="editor" [(ngModel)]="section.description"></quill-editor>
   </div>
+
   <div 
     class="row row-item"
     cdkDropList
