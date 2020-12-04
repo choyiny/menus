@@ -22,7 +22,9 @@
   <div class="description-container" *ngIf="!editMode">
     <quill-view-html [content]="section.description" theme="snow"></quill-view-html>
   </div>
-
+  <div class="description-container" *ngIf="editMode">
+    <p><fa-icon [icon]="fa-bars"></fa-icon>Drag and drop to rearrange the items in this section.</p>
+  </div>
   <div 
     class="row row-item"
     cdkDropList
@@ -35,6 +37,7 @@
       *ngFor="let item of section.menu_items"
       id="{{ item._id }}"
       [item]="item"
+      [sectionEdit]="editMode"
       class="col-md-4 col-sm-6 col-12"
       (sectionEmitter)="updateSection($event)"
     >

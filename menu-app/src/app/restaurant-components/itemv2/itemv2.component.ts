@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ImgViewModalComponent } from '../../util-components/image-util/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/image-util/img-form-modal/img-form-modal.component';
-import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash, faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
@@ -18,11 +18,13 @@ export class Itemv2Component implements OnInit {
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   @Output() sectionEmitter = new EventEmitter<Section>();
   @Input() editMode: boolean;
+  @Input() sectionEdit: boolean;
 
   // icons
   faPlus = faPlus;
   faPen = faPen;
   deleteIcon = faTrash;
+  faGrip = faArrowsAlt;
 
   slug: string;
   menuName: string;
