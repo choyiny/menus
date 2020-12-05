@@ -1,12 +1,13 @@
 .tag {
   background: black;
   color: white;
-  border-radius: 20px;
+  border-radius: 18px;
   border-style: none;
-  padding: 5px 18px;
+  padding: 0.6em 0.9em;
+  min-width: 7em;
   font-size: 10px;
   text-align: center;
-  margin: 0px 5px 10px 0px;
+  margin: 0.2em 0.2em 0px 0px;
   display: inline-block;
 }
 
@@ -17,7 +18,7 @@
 }
 
 @media only screen and (min-width: 600px) {
-  .tag {
-    margin-bottom: 0px;
-  }
+  // .tag {
+    // margin-bottom: 0px;
+  // }
 }
