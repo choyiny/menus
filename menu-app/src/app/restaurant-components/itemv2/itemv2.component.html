@@ -2,8 +2,8 @@
 <app-img-form-modal [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 
 <div *ngIf="!editMode" class="menu-item">
-  <div *ngIf="sectionEdit" class="grip-bars" >
-    <button>
+  <div *ngIf="sectionEdit" class="grip-handle" >
+    <button class="btn3">
       <fa-icon [icon]="faGrip"></fa-icon>
     </button>
   </div>
@@ -56,7 +56,7 @@
 
   <span class="tag-container">
     <button class="add-tag btn2" (click)="addTag()"><fa-icon [icon]="faPlus"></fa-icon> Add Tag</button>
-    <app-tagv2
+    <app-tagv2 
       *ngFor="let tag of item.tags; let i = index"
       [tag]="tag"
       [editMode]="editMode"

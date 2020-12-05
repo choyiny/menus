@@ -14,7 +14,7 @@
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
-    height: 80%;
+    height: clamp(8em, 12vh, 12em);
   }
 
   .tag-container {
@@ -87,6 +87,17 @@
 }
 .no-logo-description {
   width: 100%;
+}
+
+.grip-handle {
+  float: right;
+	top: -9px;
+	right: -5px;
+  position: relative;
+  
+  & fa-icon {
+    color: #4c28ff;
+  }
 }
 
 // edit mode

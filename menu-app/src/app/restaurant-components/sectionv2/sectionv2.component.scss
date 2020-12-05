@@ -37,9 +37,18 @@
   margin-left: 0;
 }
 
-.section-description {
+.drag-prompt { 
   font-size: 16px;
-  margin: 2.5px 0px 2.5px 0px;
+  margin: 0px 2.5px 0px 2.5px;
+    
+  & p{
+    margin-bottom: 0;
+  }
+  & fa-icon {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+
 }
 
 .item-container {
@@ -48,7 +57,7 @@
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
     margin-top: 20px;
-    max-height: 12vh;
+    height: clamp(6em, 12vh, 11em);
     background-color:  #f0f3f5;
     display: flex;
     align-items: center;
@@ -56,12 +65,42 @@
   }
   .new-button {
     padding: 2%;
+    font-size: clamp(1vw, 15px, 2.5vw);
   }
 }
 
+.label {
+  color: #6d6d6d;
+  font-size: 14px;
+  margin: 1em 0 0 1em;
+	font-weight: 500;
+}
+
+input.editor {
+  width: 100%;
+  border-radius: 6px;
+  border: solid 2px #f0f3f5;
+  padding: 2px 15px;
+  font-weight: 600;
+  padding: 3px 15px;
+	font-weight: 600;
+
+  &::placeholder{
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  &:focus {
+    border: solid 2px #1a1824;
+  }
+}
+
+
+
 ::ng-deep {
   .view-edit .ql-container {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 600;
       & p {
         font-weight: 600;

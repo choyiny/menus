@@ -14,16 +14,30 @@
     <p>{{ section.subtitle }}</p>
   </div>
   <div class="view-edit" *ngIf="editMode">
-    <quill-editor class="editor" [(ngModel)]="section.name"></quill-editor>
-    <input type="text" [(ngModel)]="section.subtitle" />
-    <quill-editor class="editor" [(ngModel)]="section.description"></quill-editor>
+    <p class="label">Section Name*</p>
+    <quill-editor 
+      class="editor" 
+      [(ngModel)]="section.name" 
+      [placeholder]="''"
+    ></quill-editor>
+    <p class="label">Section Subtitle</p>
+    <input class="editor"
+      type="text"
+      [(ngModel)]="section.subtitle"
+    >
+    <p class="label">Section Description</p>
+    <quill-editor 
+      class="editor" 
+      [(ngModel)]="section.description"
+      [placeholder]="''"
+    ></quill-editor>
     <button class="align-top btn1 desktop" (click)="editSection()">Save</button>
   </div>
   <div class="description-container" *ngIf="!editMode">
     <quill-view-html [content]="section.description" theme="snow"></quill-view-html>
   </div>
-  <div class="description-container" *ngIf="editMode">
-    <p><fa-icon [icon]="fa-bars"></fa-icon>Drag and drop to rearrange the items in this section.</p>
+  <div class="drag-prompt" *ngIf="editMode">
+    <p><fa-icon [icon]="faGrip"></fa-icon>Drag and drop to rearrange the items in this section.</p>
   </div>
   <div 
     class="row row-item"
