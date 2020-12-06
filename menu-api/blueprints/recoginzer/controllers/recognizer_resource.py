@@ -23,14 +23,15 @@ class RecognizerResource(BaseResource):
     @use_args(file_args, location="files")
     @use_kwargs(RecognizerSchema, location="form")
     def post(self, args, **kwargs):
-        file = args.get("file")
-        content = file.read()
         template = kwargs.get('template')
-
         recognizer_class = recognizer_factory(template)
         if not recognizer_class:
             return { "description": "Invalid template name: " + template }, 400
         
+        if not args.get('file'):
+            return { "description": "Missing image"}, 400
+        file = args.get("file")
+        content = file.read()
         recognizer = recognizer_class({})
         result = recognizer.recognize(content)
         return {"data": result}

@@ -8,7 +8,7 @@ def to_cv2_image(image_bytes: bytes):
 
     `image_bytes`: Image in bytes format, from flask request
     """
-    return cv2.imdecode(np.fromstring(image_bytes, numpy.uint8), cv2.IMREAD_UNCHANGED)
+    return cv2.imdecode(np.fromstring(image_bytes, np.uint8), cv2.IMREAD_UNCHANGED)
 
 
 def img_dimension(image_bytes: bytes):

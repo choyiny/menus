@@ -58,15 +58,15 @@ class RowRecognizer(BaseRecognizer):
         super().__init__(config)
     
     def recognize(self, image):
-        data = self.detect_text(image)
+        # The first result returned by Google Vision is the big box, ignore it
+        data = self.detect_text(image)[1:]
         uppers, lowers = split_lines(image)
         img_width = img_dimension(image)[0]
 
         # Check if each detected word is between the line
-        cp_data = data[:]
         result = []
         lines_error = 10
-        img_width # TODO
+        lines = []
         for i in range(len(uppers)):
             upper_y = uppers[i] - lines_error
             if i >= len(lowers):
@@ -78,7 +78,7 @@ class RowRecognizer(BaseRecognizer):
                 rest_data = []
                 for points_text in data:
                     text = points_text['text']
-                    points = points_text['point']
+                    points = points_text['points']
                     inline = True
                     for p in points:
                         y = p[1]
@@ -100,16 +100,17 @@ class GridRecognizer(BaseRecognizer):
         super().__init__(config)
     
     def recognize(self, image):
-        data = self.detect_text(image)
-        grids = split_grids(image, data)
+        # The first result returned by Google Vision is the big box, ignore it
+        data = self.detect_text(image)[1:]
+        grids = split_grids(image)
         result = [{'bound': r, 'text': []} for r in grids]
         all_ = set()
         identified = set()
 
         # Check if each detected word is in the grid
         for pIndex in range(len(data)):
-            text = points[pIndex]['text']
-            textPoints = points[pIndex]['point']
+            text = data[pIndex]['text']
+            textPoints = data[pIndex]['points']
             all_.add(text)
             for index in range(len(grids)):
                 r = grids[index]
