@@ -9,8 +9,6 @@
     <app-restaurant *ngIf="!previewMode" [restaurant]="restaurant"></app-restaurant>
     <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>
   </div>
-
-  <ngx-skeleton-loader count="10" [theme]="theme" animation="progress"></ngx-skeleton-loader>
 </div>
 <div *ngIf="!viewable">
   <h1>Restaurant is private or does not exist</h1>
