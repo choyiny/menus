@@ -27,4 +27,4 @@ def detect_text(content: bytes):
         points.append(points[0])
         points_text.append({"text": des, "points": points})
 
-    return {"points": points_text}
+    return points_text

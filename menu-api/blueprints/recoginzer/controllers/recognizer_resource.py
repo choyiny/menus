@@ -5,7 +5,7 @@ from marshmallow import Schema
 from webargs import fields
 from webargs.flaskparser import use_args
 
-from ..helper.vision import detect_text
+from ..recognizer import recognizer_factory
 
 
 @doc(tags=["Menu Recognizer"])
@@ -14,8 +14,9 @@ from ..helper.vision import detect_text
 class RecognizerResource(BaseResource):
     class RecognizerSchema(Schema):
         template = fields.Str(
+            required=True,
             description="Template type for type of algorithm to parse image",
-            example="Row",
+            example="row",
         )
 
     @doc(description="""Scan an image and return recognized text""")
@@ -24,6 +25,12 @@ class RecognizerResource(BaseResource):
     def post(self, args, **kwargs):
         file = args.get("file")
         content = file.read()
-        result = detect_text(content)
-        print(result)
-        return "success"
+        template = kwargs.get('template')
+
+        recognizer_class = recognizer_factory(template)
+        if not recognizer_class:
+            return { "description": "Invalid template name: " + template }, 400
+        
+        recognizer = recognizer_class({})
+        result = recognizer.recognize(content)
+        return {"data": result}
