@@ -15,18 +15,6 @@
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
     height: clamp(8em, 12vh, 12em);
-
-    //Use this to allow scrolling but hide scrollbar.
-    // overflow: auto;
-    // &::-webkit-scrollbar{
-    //   width: 0;
-    // }
-    // OR just clip content
-    // overflow: hidden;
-    //#TODO: I recommend limiting content size in the menu
-    // item for height consistency. 
-    // Check uber eats or others. 
-    
   }
 
   .tag-container {
