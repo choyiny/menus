@@ -98,6 +98,10 @@
   & fa-icon {
     color: #4c28ff;
   }
+
+  &:hover {
+    cursor: grab;
+  }
 }
 
 // edit mode
