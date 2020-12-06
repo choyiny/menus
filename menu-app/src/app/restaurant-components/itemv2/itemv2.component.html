@@ -2,9 +2,9 @@
 <app-img-form-modal [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 
 <div *ngIf="!editMode" class="menu-item">
-    <button *ngIf="sectionEdit" class="btn0 desktop grip-handle">
-      <fa-icon [icon]="faGrip"></fa-icon>
-    </button>
+  <button *ngIf="sectionEdit" class="btn0 desktop grip-handle">
+    <fa-icon [icon]="faGrip"></fa-icon>
+  </button>
   <div class="img-description">
     <div class="logo" (click)="showImage()">
       <img class="img-fluid icon" src="{{ item.image }}" />
