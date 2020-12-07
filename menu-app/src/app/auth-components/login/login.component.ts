@@ -42,15 +42,14 @@ export class LoginComponent implements OnInit {
     if (user.is_admin) {
       this.router.navigate(['admin/menus'], { queryParams: { limit: 5, page: 1 } }).then(() => {});
     } else {
-      // Temporary fix, will add functionality to immediately redirect user to their restaurant in the future
-      // if (this.restaurant) {
-      //   this.router.navigate([`restaurants/${this.restaurant}`]).then(() => {
-      //     window.alert('Congratulations! Account verified');
-      //   });
-      // } else {
-      //   this.router.navigate(['dashboard']).then(() => {});
-      // }
-      this.router.navigate(['dashboard']).then(() => {});
+      if (this.restaurant) {
+        this.router.navigate([`restaurants/${this.restaurant}`]).then(() => {
+          window.alert('Congratulations! Account verified');
+        });
+      } else {
+        this.router.navigate(['dashboard']).then(() => {});
+      }
+
     }
   }
 

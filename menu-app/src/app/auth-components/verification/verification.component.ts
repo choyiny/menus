@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../services/auth.service';
 
+
 @Component({
   selector: 'app-verification',
   templateUrl: './verification.component.html',

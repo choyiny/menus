@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user-interface';
 import { BehaviorSubject, Observable, from, ReplaySubject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map, mergeMap } from 'rxjs/operators';
+import {map, mergeMap, take} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase';
@@ -91,7 +91,7 @@ export class AuthService {
           })
         );
       })
-    );
+    ).pipe(take(1));
   }
 
   logout(): void {
@@ -99,9 +99,8 @@ export class AuthService {
   }
 
   sendEmail(email: string, location: string): Observable<string> {
-    console.log(email, location);
     const url = `${environment.settings.endpoint}/verify`;
-    return this.http.post<string>(url, { email, location });
+    return this.http.post<string>(url, { email, location }).pipe(take(1));
   }
 
   verifyEmail(email: string, token: string): Observable<UserInterface> {
@@ -114,6 +113,6 @@ export class AuthService {
           localStorage.setItem('currentUser', JSON.stringify(user));
           return of(user);
         })
-      );
+      ).pipe(take(1));
   }
 }
