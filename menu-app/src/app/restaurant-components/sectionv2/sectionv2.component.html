@@ -15,22 +15,11 @@
   </div>
   <div class="view-edit" *ngIf="editMode">
     <p class="label">Section Name*</p>
-    <quill-editor
-      class="editor"
-      [(ngModel)]="section.name"
-      [placeholder]="''"
-    ></quill-editor>
+    <quill-editor class="editor" [(ngModel)]="section.name" [placeholder]="''"></quill-editor>
     <p class="label">Section Subtitle</p>
-    <input class="editor"
-      type="text"
-      [(ngModel)]="section.subtitle" 
-    >
+    <input class="editor" type="text" [(ngModel)]="section.subtitle" />
     <p class="label">Section Description</p>
-    <quill-editor
-      class="editor"
-      [(ngModel)]="section.description"
-      [placeholder]="''"
-    ></quill-editor>
+    <quill-editor class="editor" [(ngModel)]="section.description" [placeholder]="''"></quill-editor>
     <button class="align-top btn1 desktop" (click)="editSection()">Save</button>
   </div>
   <div class="description-container" *ngIf="!editMode">
