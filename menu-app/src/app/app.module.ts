@@ -57,7 +57,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 const DragConfig = {
   dragStartThreshold: 0,
   pointerDirectionChangeThreshold: 5,
-  zIndex: 1000,
+  zIndex: 10000,
 };
 
 @NgModule({
