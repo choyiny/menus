@@ -42,9 +42,7 @@ input:focus, textarea:focus, button:focus {
   }
 
   & .ql-editor {
-    color: #8c8b91;
     margin-left: 15px;
-
   }
 
   & .ql-container {
@@ -69,6 +67,14 @@ input:focus, textarea:focus, button:focus {
 
   & strong {
     font-weight: 700;
+  }
+
+  &.ql-blank::before {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    left: 0;
+    right: 0;
   }
 }
 
