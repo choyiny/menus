@@ -1,22 +1,28 @@
 iframe {
+  position: absolute;
+  top: 0;
   margin: 0 auto;
   display: block;
-  padding-top: 4em;
-  padding-bottom: 4em;
+  padding-top: calc(4em + 25px);
+  left: 0;
+  right: 0;
   border-radius: 20px;
+
 }
 .background {
   background-color: gray;
 }
 
 .rounded-corner {
-  width: 414px;
-  height: 800px;
-  //looks weird, try to make better
-  //-moz-border-radius: 50%;
-  //-webkit-border-radius: 50%;
-  //border-radius: 50%;
-  overflow:hidden;
-  position:relative;
+  position: relative;
+}
+
+img {
+  height: 975px;
+  width: 650px;
   margin: 0 auto;
+  display: block;
+  padding-top: 4em;
+  //padding-bottom: 4em;
+  border-radius: 20px;
 }
