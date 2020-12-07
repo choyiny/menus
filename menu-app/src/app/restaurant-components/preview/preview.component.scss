@@ -1,13 +1,14 @@
 iframe {
   position: absolute;
   top: 0;
-  margin: 0 auto;
   display: block;
-  padding-top: calc(4em + 25px);
+  margin: calc(4em + 20px) auto 0;
   left: 0;
   right: 0;
-  border-radius: 20px;
-
+  border: 4px solid #000;
+  -moz-border-radius: 30px;
+  border-radius: 42px;
+  overflow: hidden;
 }
 .background {
   background-color: gray;
@@ -18,11 +19,10 @@ iframe {
 }
 
 img {
-  height: 975px;
-  width: 650px;
+  height: 825px;
+  width: 550px;
   margin: 0 auto;
   display: block;
   padding-top: 4em;
-  //padding-bottom: 4em;
   border-radius: 20px;
 }
