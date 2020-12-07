@@ -237,7 +237,7 @@ class EmailUserResource(UserManagementBaseResource):
             sg = SendGridAPIClient(c.SENDGRID_API_KEY)
             sg.send(message)
         except Exception as e:
-            return {"description": e.message}
+            return {"description": str(e)}
 
         return {"verified": True}
 
@@ -263,6 +263,7 @@ class EmailUserResource(UserManagementBaseResource):
                 user.phone_number = firebase_user.phone_number
                 user.photo_url = firebase_user.photo_url
                 user.display_name = firebase_user.display_name
+                user.is_anon = False
                 if user.restaurants:
                     slug = user.restaurants[0]
                     restaurant = Restaurant.objects(slug=slug).first()

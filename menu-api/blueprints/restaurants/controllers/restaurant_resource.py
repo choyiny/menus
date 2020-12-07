@@ -508,7 +508,10 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
             item.price = kwargs.get("item_price")
 
         if kwargs.get("item_description"):
-            item.description = kwargs.get("description")
+            item.description = kwargs.get("item_description")
+
+        if kwargs.get("name"):
+            restaurant.name = kwargs.get("name")
 
         section = Section(_id=str(uuid.uuid4()), menu_items=[item])
 
@@ -517,4 +520,5 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
 
         menu.sections = [section]
         menu.save()
+        restaurant.save()
         return menu

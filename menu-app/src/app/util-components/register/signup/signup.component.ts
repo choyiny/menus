@@ -56,11 +56,11 @@ export class SignupComponent implements OnInit {
   }
 
   next(modal): void {
-    this.auth.user.subscribe((anonymousUser) => {
+    this.auth.user.pipe(take(1)).subscribe((anonymousUser) => {
       const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
       anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
         const location = window.location.origin;
-        this.authService.sendEmail(this.email, location).subscribe(() => {
+        this.authService.sendEmail(this.email, location).pipe(take(1)).subscribe(() => {
           window.alert('Email sent!');
           modal.close();
         });
