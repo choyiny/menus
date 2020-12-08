@@ -26,6 +26,8 @@ export class Itemv2Component implements OnInit {
   deleteIcon = faTrash;
   faGrip = faArrowsAlt;
 
+  expanded = false;
+
   slug: string;
   menuName: string;
   hasPermission: boolean;
@@ -120,5 +122,10 @@ export class Itemv2Component implements OnInit {
     this.editMode = true;
     // Save item state, also do not use spread does not deep copy
     this.itemOriginal = JSON.parse(JSON.stringify(this.item));
+  }
+
+  expandDetails(): void {
+    this.expanded = !this.expanded;
+    // alert(this.expanded);
   }
 }

@@ -14,7 +14,17 @@
     border-radius: 20px;
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
-    height: clamp(8em, 12vh, 12em);
+    height: clamp(8em, 13vh, 12em);
+  
+    &.expand {
+      height: auto;
+      min-height: 13vh;
+      padding-bottom: 3em;
+    }  
+
+    &:not(.edit-body) {
+      cursor: pointer;
+    }
   }
 
   .tag-container {
