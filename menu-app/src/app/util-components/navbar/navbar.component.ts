@@ -1,19 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { faMobileAlt } from '@fortawesome/pro-light-svg-icons';
 import { SignupComponent } from '../register/signup/signup.component';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import {PublishModalComponent} from "../register/publish-modal/publish-modal.component";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
   mobileIcon = faMobileAlt;
   @Input() previewMode: boolean;
   @Input() restaurantName: string;
   @ViewChild(SignupComponent) signUp: SignupComponent;
+  @ViewChild(PublishModalComponent) publishModal: PublishModalComponent;
   @Output() viewEmitter = new EventEmitter<boolean>();
   isPublic: boolean;
   slug: string;
@@ -47,5 +49,9 @@ export class NavbarComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngAfterViewInit(): void {
+    this.publishModal.open();
   }
 }
