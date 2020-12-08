@@ -53,6 +53,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -106,6 +107,7 @@ const DragConfig = {
     NgxSkeletonLoaderModule.forRoot(),
     MatBottomSheetModule,
     DragDropModule,
+    MatTooltipModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [
