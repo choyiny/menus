@@ -1,40 +1,13 @@
 <div class="item">
   <div class="first-section-wrapper">
     <div class="gravatar">
-      <ngx-skeleton-loader
-        appearance="circle"
-        [theme]="{ width: '60px', height: '60px' }"
-      >
-      </ngx-skeleton-loader>
+      <ngx-skeleton-loader appearance="circle" [theme]="{ width: '60px', height: '60px' }"> </ngx-skeleton-loader>
     </div>
     <div class="gravatar-title">
-      <ngx-skeleton-loader
-        class="d-inline-block float-left"
-        [theme]="{
-            width: '100px',
-            'border-radius': '0',
-            height: '15px',
-            'margin-bottom': '10px'
-          }"
-      ></ngx-skeleton-loader>
-      <ngx-skeleton-loader
-        class="d-inline-block float-right"
-        [theme]="{
-            width: '50px',
-            'border-radius': '0',
-            height: '15px',
-            'margin-bottom': '10px'
-          }"
-      ></ngx-skeleton-loader>
-      <ngx-skeleton-loader
-        class="d-block"
-        [theme]="{ width: '250px', 'border-radius': '0', height: '15px' }"
-      ></ngx-skeleton-loader>
-      <ngx-skeleton-loader
-        class="d-block"
-        [theme]="{ width: '250px', 'border-radius': '0', height: '15px' }"
-      ></ngx-skeleton-loader>
+      <ngx-skeleton-loader class="d-inline-block float-left" [theme]="itemTitle"></ngx-skeleton-loader>
+      <ngx-skeleton-loader class="d-inline-block float-right" [theme]="itemPrice"></ngx-skeleton-loader>
+      <ngx-skeleton-loader class="d-block" [theme]="itemDescription"></ngx-skeleton-loader>
+      <ngx-skeleton-loader class="d-block" [theme]="itemDescription"></ngx-skeleton-loader>
     </div>
   </div>
 </div>
-

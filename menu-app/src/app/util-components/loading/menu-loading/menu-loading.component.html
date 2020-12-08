@@ -1,16 +1,7 @@
 <div class="section">
-  <ngx-skeleton-loader
-    class="d-block"
-    [theme]="{ width: '125px', 'border-radius': '0', height: '25px' }"
-  ></ngx-skeleton-loader>
-  <ngx-skeleton-loader
-    class="d-block"
-    [theme]="{ width: '250px', 'border-radius': '0', height: '15px' }"
-  ></ngx-skeleton-loader>
-  <ngx-skeleton-loader
-    class="d-block"
-    [theme]="{ width: '250px', 'border-radius': '0', height: '15px' }"
-  ></ngx-skeleton-loader>
+  <ngx-skeleton-loader class="d-block" [theme]="sectionTitle"></ngx-skeleton-loader>
+  <ngx-skeleton-loader class="d-block" [theme]="sectionDescription"></ngx-skeleton-loader>
+  <ngx-skeleton-loader class="d-block" [theme]="sectionDescription"></ngx-skeleton-loader>
 </div>
 
-<app-item-loading *ngFor="let number of [0,1,2,3,4,5]"></app-item-loading>
+<app-item-loading *ngFor="let number of [0, 1, 2, 3, 4, 5]"></app-item-loading>
