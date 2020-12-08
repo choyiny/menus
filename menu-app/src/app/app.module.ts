@@ -54,6 +54,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PublishModalComponent } from './util-components/register/publish-modal/publish-modal.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -91,6 +92,7 @@ const DragConfig = {
     HomeComponent,
     PreviewComponent,
     MenuModalComponent,
+    PublishModalComponent,
   ],
   imports: [
     BrowserModule,
