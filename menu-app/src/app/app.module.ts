@@ -56,6 +56,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MenuLoadingComponent } from './util-components/loading/menu-loading/menu-loading.component';
 import { RestaurantLoadingComponent } from './util-components/loading/restaurant-loading/restaurant-loading.component';
+import { ItemLoadingComponent } from './util-components/loading/item-loading/item-loading.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -95,6 +96,7 @@ const DragConfig = {
     MenuModalComponent,
     MenuLoadingComponent,
     RestaurantLoadingComponent,
+    ItemLoadingComponent,
   ],
   imports: [
     BrowserModule,

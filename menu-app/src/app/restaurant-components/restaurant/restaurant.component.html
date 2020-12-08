@@ -33,7 +33,8 @@
           {{ menus[currentMenu].name }}
           <fa-icon [icon]="downIcon"></fa-icon>
         </button>
-        <app-menuv2 *ngIf="menus[currentMenu]" [menu]="menus[currentMenu]"> </app-menuv2>
+<!--        <app-menuv2 *ngIf="menus[currentMenu]" [menu]="menus[currentMenu]"> </app-menuv2>-->
+        <app-menu-loading></app-menu-loading>
       </div>
     </div>
   </div>
