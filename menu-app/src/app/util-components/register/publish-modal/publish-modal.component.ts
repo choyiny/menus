@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import * as confetti from 'canvas-confetti';
+import copy from 'copy-to-clipboard';
+import {RestaurantPermissionService} from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-publish-modal',
@@ -13,14 +15,25 @@ export class PublishModalComponent implements OnInit {
 
   // Icons
   qrIcon = faQrcode;
+  slug: string;
+  url: string;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private restaurantPermissionService: RestaurantPermissionService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.restaurantPermissionService.getSlug().subscribe(slug => {
+      this.slug = slug;
+      this.url = `${window.location.origin}/restaurants/${slug}`;
+    });
+  }
 
   open(): void {
     this.modalService.open(this.publishModal);
     this.launchFireworks();
+  }
+
+  copyMessage(): void {
+    copy(this.url);
   }
 
   launchFireworks(): void {

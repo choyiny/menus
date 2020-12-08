@@ -6,8 +6,8 @@
   <div class="container">
     <p>Congratulations, your menu is now live! copy the link below to view your menu and share with your customers</p>
 
-    <input class="url" type="text" value="https://menu.pickeasy.ca/restaurants/cha-kee-restaurant" readonly />
-    <button class="copy">Copy</button>
+    <input class="url" type="text" id="copy-url" [value]="url" readonly />
+    <button class="copy" (click)="copyMessage()">Copy</button>
 
     <p>To download your QR code template, click here:</p>
     <button class="qr">
