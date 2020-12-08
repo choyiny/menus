@@ -1,3 +1,4 @@
+import config as c
 from flask import redirect
 from flask_apispec import doc
 from utils.errors import RESTAURANT_NOT_FOUND
@@ -15,4 +16,4 @@ class DynamicQrResource(QrBaseResource):
         if restaurant.qrcode_link:
             return redirect(restaurant.qrcode_link, 302)
         else:
-            return redirect("https://pickeasy.ca", 302)
+            return redirect(f"{c.FRONTEND_URL}/restaurants/{slug}", 302)

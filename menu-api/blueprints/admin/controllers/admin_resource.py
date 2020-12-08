@@ -129,29 +129,28 @@ class QrRestaurantResource(AdminBaseResource):
     @firebase_login_required
     def get(self, slug):
         """Generate QR code in template"""
-        if g.user is None or not g.user.is_admin:
+        if g.user is None or not g.user.has_permission(slug):
             return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
-        if restaurant.qrcode_link:
-            qr = qrcode.QRCode(
-                version=1,
-                error_correction=qrcode.constants.ERROR_CORRECT_L,
-                box_size=10,
-                border=1,
-            )
-            if restaurant.enable_trace or restaurant.force_trace:
-                qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}?trace=true")
-            else:
-                qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}")
-            qr.make(fit=True)
-            img = qr.make_image(fill_color="white", back_color="black")
-            img = img.resize((950, 950))
-            template = Image.open("assets/print_template_huge.png")
-            for coord in qr_helper.generate_tuples():
-                template.paste(img, coord)
-            return qr_helper.serve_pil_image(template, "file.png")
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=1,
+        )
+        if restaurant.enable_trace or restaurant.force_trace:
+            qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}?trace=true")
+        else:
+            qr.add_data(f"{c.QR_CODE_ROOT_URL}/{slug}")
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="white", back_color="black")
+        img = img.resize((950, 950))
+        template = Image.open("assets/print_template_huge.png")
+        for coord in qr_helper.generate_tuples():
+            template.paste(img, coord)
+        return qr_helper.serve_pil_image(template, "file.png")
         return NO_QR_CODE
 
 

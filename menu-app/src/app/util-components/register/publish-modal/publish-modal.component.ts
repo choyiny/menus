@@ -4,6 +4,7 @@ import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import * as confetti from 'canvas-confetti';
 import copy from 'copy-to-clipboard';
 import {RestaurantPermissionService} from '../../../services/restaurantPermission.service';
+import {AdminService} from "../../../services/admin.service";
 
 @Component({
   selector: 'app-publish-modal',
@@ -18,7 +19,7 @@ export class PublishModalComponent implements OnInit {
   slug: string;
   url: string;
 
-  constructor(private modalService: NgbModal, private restaurantPermissionService: RestaurantPermissionService) {}
+  constructor(private modalService: NgbModal, private restaurantPermissionService: RestaurantPermissionService, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.restaurantPermissionService.getSlug().subscribe(slug => {
@@ -34,6 +35,10 @@ export class PublishModalComponent implements OnInit {
 
   copyMessage(): void {
     copy(this.url);
+  }
+
+  downloadQr(): void {
+    this.adminService.generateQR(this.slug);
   }
 
   launchFireworks(): void {

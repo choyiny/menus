@@ -10,13 +10,13 @@
     <button class="copy" (click)="copyMessage()">Copy</button>
 
     <p>To download your QR code template, click here:</p>
-    <button class="qr">
+    <button class="qr" (click)="downloadQr()">
       <fa-icon [icon]="qrIcon"></fa-icon>
       Download Qr code
     </button>
   </div>
 
   <div class="next-step">
-    <button class="btn1 done">Done</button>
+    <button class="btn1 done" (click)="modal.close()">Done</button>
   </div>
 </ng-template>
