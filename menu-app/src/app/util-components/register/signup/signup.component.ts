@@ -60,7 +60,6 @@ export class SignupComponent implements OnInit {
       const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
       anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
         const location = window.location.origin;
-        window.alert('before i send the email tho...');
         this.authService.sendEmail(this.email, location).subscribe(() => {
           window.alert('Email sent!');
           modal.close();
