@@ -10,13 +10,13 @@ export class MenuLoadingComponent implements OnInit {
   sectionTitle = {
     width: '125px',
     height: '25px',
-    'border-radius': 0,
+    'border-radius': '0',
   };
 
   sectionDescription = {
     width: '250px',
     height: '15px',
-    'border-radius': 0,
+    'border-radius': '0',
   };
 
   constructor() {}

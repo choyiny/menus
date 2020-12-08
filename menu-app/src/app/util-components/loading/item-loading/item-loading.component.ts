@@ -29,7 +29,7 @@ export class ItemLoadingComponent implements OnInit {
   itemDescription = {
     width: '250px',
     height: '15px',
-    'border-radius': 0,
+    'border-radius':'0',
   };
 
   constructor() {}
