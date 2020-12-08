@@ -3,8 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import * as confetti from 'canvas-confetti';
 import copy from 'copy-to-clipboard';
-import {RestaurantPermissionService} from '../../../services/restaurantPermission.service';
-import {AdminService} from "../../../services/admin.service";
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
   selector: 'app-publish-modal',
@@ -19,10 +19,14 @@ export class PublishModalComponent implements OnInit {
   slug: string;
   url: string;
 
-  constructor(private modalService: NgbModal, private restaurantPermissionService: RestaurantPermissionService, private adminService: AdminService) {}
+  constructor(
+    private modalService: NgbModal,
+    private restaurantPermissionService: RestaurantPermissionService,
+    private adminService: AdminService
+  ) {}
 
   ngOnInit(): void {
-    this.restaurantPermissionService.getSlug().subscribe(slug => {
+    this.restaurantPermissionService.getSlug().subscribe((slug) => {
       this.slug = slug;
       this.url = `${window.location.origin}/restaurants/${slug}`;
     });

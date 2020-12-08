@@ -8,7 +8,7 @@ import {
   RestaurantTemplate,
 } from '../interfaces/restaurant-interfaces';
 import { environment } from '../../environments/environment';
-import * as FileSaver from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @Injectable({
   providedIn: 'root',
@@ -38,11 +38,9 @@ export class AdminService {
 
   generateQR(slug): void {
     const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
-    this.http.get(url, { responseType: 'blob' }).subscribe(
-      (blob) => {
-        const fileName = `${slug}.${blob.type}`;
-        FileSaver.saveAs(blob, fileName);
-      }
-    );
+    this.http.get(url, { responseType: 'blob' }).subscribe((blob) => {
+      const fileName = `${slug}.${blob.type}`;
+      FileSaver.saveAs(blob, fileName);
+    });
   }
 }
