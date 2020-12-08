@@ -76,6 +76,27 @@ input:focus, textarea:focus, button:focus {
     left: 0;
     right: 0;
   }
+
+  //As a child of a Menu Item and not in edit mode
+  .menu-item:not(.edit-body) & {
+    overflow: hidden;
+    max-height: 2.95em; //specifically to accomodate Chinese char x height 
+    width: 90%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    * {
+      cursor: pointer;
+    }
+  }
+  
+  .menu-item.expand & {
+    max-height: unset;
+    overflow: unset;
+    display: block;
+  }
+  
 }
 
 .inline {
