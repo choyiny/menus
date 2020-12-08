@@ -18,7 +18,7 @@ import { PublishModalComponent } from '../register/publish-modal/publish-modal.c
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit, AfterViewInit {
+export class NavbarComponent implements OnInit {
   mobileIcon = faMobileAlt;
   @Input() previewMode: boolean;
   @Input() restaurantName: string;
@@ -47,7 +47,11 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   publish(): void {
     this.restaurantService.editRestaurant(this.slug, { public: !this.isPublic }).subscribe(
       (restaurant) => {
-        window.alert(`Your restaurant is now ${!this.isPublic ? 'public' : 'private'}`);
+        if (restaurant.public) {
+          this.publishModal.open();
+        } else {
+          window.alert('Your restaurant is now private');
+        }
         this.restaurantPermissionService.setRestaurantPermissions(restaurant);
       },
       (err) => {
@@ -59,7 +63,4 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    this.publishModal.open();
-  }
 }
