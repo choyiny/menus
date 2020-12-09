@@ -1,23 +1,37 @@
 <input type="file" (change)="uploadImage($event)" />
 <div class="flex-container">
-  <canvas
-    #canvas
-    class="menu-canvas"
-    (mousedown)="isMouseDown = true"
-    (mouseup)="isMouseDown = false"
-    (mouseout)="isMouseDown = false"
-    (mousemove)="onMove($event)"
-    (wheel)="onWheel($event)"
-  ></canvas>
-  <div class="menu-manager">
+  <div class="canvas-container">
+    <canvas
+      #canvas
+      class="menu-canvas"
+      (mousedown)="isMouseDown = true"
+      (mouseup)="isMouseDown = false"
+      (mouseout)="isMouseDown = false"
+      (mousemove)="onMove($event)"
+      (wheel)="onWheel($event)"
+    ></canvas>
 
+    <div class="toolbar"></div>
+  </div>
+
+  <div class="menu-manager">
     <div class="new-menu">
-      <input type="text" placeholder="Add menu title">
+      <input type="text" placeholder="Add menu title" />
       <div class="rich-editor">
         <quill-editor class="editor" [placeholder]="'Add Menu Description'"></quill-editor>
       </div>
-      <button class="btn2">Update background</button>
+      <button class="btn2">
+        <fa-icon [icon]="plusIcon"></fa-icon>
+        Update background
+      </button>
     </div>
 
+    <div class="section-manager">
+      <h1 class="section-header">Section Header</h1>
+      <button class="btn2 new-item">
+        <fa-icon [icon]="plusIcon"></fa-icon>
+        Add Menu Item
+      </button>
+    </div>
   </div>
 </div>

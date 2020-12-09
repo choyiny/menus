@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { faPlus } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -6,6 +7,9 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./menu-recognizer.component.scss'],
 })
 export class MenuRecognizerComponent implements AfterViewInit {
+  // Icons
+  plusIcon = faPlus;
+
   constructor() {}
 
   @ViewChild('canvas', { static: true })

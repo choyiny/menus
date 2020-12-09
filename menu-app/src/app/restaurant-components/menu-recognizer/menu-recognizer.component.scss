@@ -3,37 +3,65 @@
   background-color: #f0f3f5;
 
   .menu-manager {
-
     width: 40%;
-  }
 
-  .menu-canvas {
-    width: 60%;
-    height: 600px
-  }
-
-  .new-menu {
-    background-color: white;
-    margin: 20px;
-    border-radius: 10px;
-
-    input {
-      width: calc(100% - 20px);
-      margin: 10px;
-      padding: 11px 313px 11px 17px;
+    .new-menu {
+      background-color: white;
+      margin: 20px;
       border-radius: 10px;
-      border: solid 1.2px #f0f3f5;
+
+      input {
+        width: calc(100% - 20px);
+        margin: 10px;
+        padding: 11px 17px;
+        border-radius: 10px;
+        border: solid 1.2px #f0f3f5;
+      }
+
+      .rich-editor {
+        margin: 5px 10px;
+      }
+
+      button {
+        margin: 10px;
+        padding: 11px 25px 11px 26px;
+        border-radius: 8px;
+        border: solid 1.2px #f0f3f5;
+      }
     }
 
-    .rich-editor {
-      margin: 5px 10px;
-    }
+    .section-manager {
+      margin: 20px;
+      border: 5px solid white;
+      border-radius: 10px;
 
-    button {
-      margin: 10px;
-      padding: 11px 25px 11px 26px;
-      border-radius: 8px;
-      border: solid 1.2px #f0f3f5;
+      .section-header {
+        font-size: 30px;
+        font-weight: 600;
+        margin: 0 15px;
+        padding: 15px 0;
+        border-bottom: solid 1px rgba(196, 208, 217, 0.5);
+      }
+
+      .new-item {
+        margin: 5px 15px;
+        width: calc(100% - 30px);
+        padding: 10px 137px 9px 128px;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .canvas-container {
+    width: 60%;
+    margin: 15px 0 0 10%;
+    height: 100vh;
+    background-color: white;
+
+    canvas {
+      width: calc(100% - 62px);
+      height: calc(100% - 20px);
+      margin: 10px 31px;
     }
   }
 }
