@@ -1,7 +1,8 @@
-from abc import abstractmethod, ABC
-from .helper.vision import detect_text
+from abc import ABC, abstractmethod
+
 from .helper.cv import split_grids, split_lines
 from .helper.utils import img_dimension
+from .helper.vision import detect_text
 
 
 def recognizer_factory(name):
@@ -11,10 +12,7 @@ def recognizer_factory(name):
 
     `name`: Name of the recognizer
     """
-    recognizers = {
-        'row': RowRecognizer,
-        'grid': GridRecognizer
-    }
+    recognizers = {"row": RowRecognizer, "grid": GridRecognizer}
     return recognizers[name] if name in recognizers else None
 
 
@@ -27,7 +25,7 @@ class BaseRecognizer(ABC):
         might have different parameter, such as `error` that allows some error when processing the image.
         """
         self.config = config
-    
+
     def detect_text(self, image):
         """
         Detecing all texts in the given image using Google Cloud Vision. The return format will be an array of
@@ -56,7 +54,7 @@ class BaseRecognizer(ABC):
 class RowRecognizer(BaseRecognizer):
     def __init__(self, config):
         super().__init__(config)
-    
+
     def recognize(self, image):
         # The first result returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
@@ -74,11 +72,13 @@ class RowRecognizer(BaseRecognizer):
             else:
                 lower_y = lowers[i] + lines_error
                 inline_text = []
-                lines.append({ 'bound': [(0, upper_y), (img_width, lower_y)], 'text' : inline_text })
+                lines.append(
+                    {"bound": [(0, upper_y), (img_width, lower_y)], "text": inline_text}
+                )
                 rest_data = []
                 for points_text in data:
-                    text = points_text['text']
-                    points = points_text['points']
+                    text = points_text["text"]
+                    points = points_text["points"]
                     inline = True
                     for p in points:
                         y = p[1]
@@ -92,25 +92,25 @@ class RowRecognizer(BaseRecognizer):
                     else:
                         rest_data.append(points_text)
                 data = rest_data
-        return {'result': lines, 'unrecognized': data}
+        return {"result": lines, "unrecognized": data}
 
 
 class GridRecognizer(BaseRecognizer):
     def __init__(self, config):
         super().__init__(config)
-    
+
     def recognize(self, image):
         # The first result returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
         grids = split_grids(image)
-        result = [{'bound': r, 'text': []} for r in grids]
+        result = [{"bound": r, "text": []} for r in grids]
         all_ = set()
         identified = set()
 
         # Check if each detected word is in the grid
         for pIndex in range(len(data)):
-            text = data[pIndex]['text']
-            textPoints = data[pIndex]['points']
+            text = data[pIndex]["text"]
+            textPoints = data[pIndex]["points"]
             all_.add(text)
             for index in range(len(grids)):
                 r = grids[index]
@@ -128,6 +128,6 @@ class GridRecognizer(BaseRecognizer):
                         break
                 if isInPoly:
                     identified.add(text)
-                    result[index]['text'].append(text)
+                    result[index]["text"].append(text)
                     break
-        return {'result': result, 'unrecognized': list(all_.difference(identified))}
+        return {"result": result, "unrecognized": list(all_.difference(identified))}
