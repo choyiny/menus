@@ -20,7 +20,7 @@ def split_lines(image: bytes):
     th, threshed = cv2.threshold(
         gray, 127, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU
     )
-    ## MinAreaRect on the nozeros
+    # MinAreaRect on the nozeros
     pts = cv2.findNonZero(threshed)
     ret = cv2.minAreaRect(pts)
 
@@ -29,11 +29,11 @@ def split_lines(image: bytes):
         w, h = h, w
         ang += 90
 
-    ## Find rotated matrix, do rotation
+    # Find rotated matrix, do rotation
     M = cv2.getRotationMatrix2D((cx, cy), ang, 1.0)
     rotated = cv2.warpAffine(threshed, M, (img.shape[1], img.shape[0]))
 
-    ## find and draw the upper and lower boundary of each lines
+    # find and draw the upper and lower boundary of each lines
     hist = cv2.reduce(threshed, 1, cv2.REDUCE_AVG).reshape(-1)
 
     th = 2
