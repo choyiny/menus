@@ -1,0 +1,38 @@
+.container {
+  padding-bottom: 35%;
+  p {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .url {
+    width: 75%;
+    height: 52px;
+    padding: 16px 14px 16px 20px;
+    border-radius: 10px;
+    border: solid 1.2px #f0f3f5;
+    background-color: #ffffff;
+    font-size: 14px;
+    font-weight: 100;
+  }
+
+  .copy {
+    margin-left: 8px;
+    padding: 12px 21px 12px 20px;
+    border-radius: 10px;
+    border: solid 1.2px #f0f3f5;
+  }
+
+  .qr {
+    padding: 14px 37px 14px 20px;
+    border-radius: 8px;
+  }
+}
+
+.done {
+  width: 229px;
+  height: 42px;
+  margin: 11px 15px 0 4px;
+  float: right;
+}
+

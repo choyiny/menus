@@ -131,26 +131,7 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   generateQr(): void {
-    const saveQrCode = () => {
-      this.adminService.generateQR(this.slug).subscribe(
-        (blob) => {
-          const fileName = `${this.restaurant.name}.${blob.type}`;
-          FileSaver.saveAs(blob, fileName);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    };
-
-    if (!this.restaurant.qrcode_link) {
-      const url = `${window.location.origin}/restaurants/${this.slug}`;
-      this.restaurantService.editRestaurant(this.slug, { qrcode_link: url }).subscribe(() => {
-        saveQrCode();
-      });
-    } else {
-      saveQrCode();
-    }
+    this.adminService.generateQR(this.slug);
   }
 
   toggleContactTracing(): void {
