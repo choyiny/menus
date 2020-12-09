@@ -12,7 +12,7 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
 })
 export class HomeComponent implements OnInit {
   slug: string;
-  restaurant: Restaurant = null;
+  restaurant: Restaurant;
 
   // State
   hasPermission: boolean;

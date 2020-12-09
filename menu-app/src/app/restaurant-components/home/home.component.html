@@ -7,12 +7,12 @@
       [restaurantName]="restaurant.name"
     ></app-navbar>
 
-<!--    <app-restaurant *ngIf="!previewMode" [restaurant]="restaurant"></app-restaurant>-->
+    <app-restaurant *ngIf="!previewMode" [restaurant]="restaurant"></app-restaurant>
     <app-preview *ngIf="previewMode" [slug]="slug"></app-preview>
   </div>
 
-  <app-restaurant-loading *ngIf="restaurant"></app-restaurant-loading>
-  <app-menu-loading *ngIf="restaurant"></app-menu-loading>
+  <app-restaurant-loading *ngIf="!restaurant"></app-restaurant-loading>
+  <app-menu-loading *ngIf="!restaurant"></app-menu-loading>
 </div>
 <div *ngIf="!viewable">
   <h1>Restaurant is private or does not exist</h1>
