@@ -28,13 +28,13 @@ export class MenuRecognizerComponent implements AfterViewInit {
     [600, 380, 150, 30, 0],
   ];
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.context = this.canvasElement.nativeElement.getContext('2d');
     this.fileReader.onload = () => this.loadImage(<string>this.fileReader.result);
     setInterval(() => this.canvasRender(), 1000 / 30);
   }
 
-  loadImage(file: string) {
+  loadImage(file: string): void {
     this.image.src = file;
 
     this.image.onload = () => {
@@ -42,11 +42,11 @@ export class MenuRecognizerComponent implements AfterViewInit {
     };
   }
 
-  uploadImage(event: any) {
+  uploadImage(event: any): void {
     this.fileReader.readAsDataURL(event.target.files[0]);
   }
 
-  canvasRender() {
+  canvasRender(): void {
     // Draw background
     this.context.fillStyle = 'rgba(250, 250, 250)';
     this.context.fillRect(
@@ -66,7 +66,7 @@ export class MenuRecognizerComponent implements AfterViewInit {
     });
   }
 
-  onWheel(event: any) {
+  onWheel(event: any): void {
     // Adapted from https://stackoverflow.com/a/3151987
     event.preventDefault();
     const mouseX = event.clientX - this.canvasElement.nativeElement.offsetLeft;
@@ -81,7 +81,7 @@ export class MenuRecognizerComponent implements AfterViewInit {
     this.zoom *= zoomFactor;
   }
 
-  onMove(event: any) {
+  onMove(event: any): void {
     if (!this.isMouseDown) {
       this.onMouseOver(event);
       return;
@@ -93,7 +93,7 @@ export class MenuRecognizerComponent implements AfterViewInit {
     this.offsetY += y;
   }
 
-  onMouseOver(event: any) {
+  onMouseOver(event: any): void {
     const mouseX = event.clientX - this.canvasElement.nativeElement.offsetLeft;
     const mouseY = event.clientY - this.canvasElement.nativeElement.offsetTop;
 
