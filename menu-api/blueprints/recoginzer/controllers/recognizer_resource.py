@@ -4,7 +4,9 @@ from helpers import BaseResource, ErrorResponseSchema
 from marshmallow import Schema
 from webargs import fields
 from webargs.flaskparser import use_args
+from auth.decorators import firebase_login_required
 
+from ..schema import MenuRecognizeResponseSchema
 from ..recognizer import recognizer_factory
 
 
@@ -22,6 +24,8 @@ class RecognizerResource(BaseResource):
     @doc(description="""Scan an image and return recognized text""")
     @use_args(file_args, location="files")
     @use_kwargs(RecognizerSchema, location="form")
+    @marshal_with(MenuRecognizeResponseSchema)
+    @firebase_login_required
     def post(self, args, **kwargs):
         template = kwargs.get('template')
         recognizer_class = recognizer_factory(template)
