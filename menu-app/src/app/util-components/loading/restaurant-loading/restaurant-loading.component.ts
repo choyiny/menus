@@ -8,14 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class RestaurantLoadingComponent implements OnInit {
   descriptionTheme = {
     'border-radius': '0',
+    'margin-top': '5px',
     width: '200px',
-    height: '20px',
+    height: '25px',
   };
 
   headerTheme = {
     'border-radius': '0',
-    width: '123px',
-    height: '32px',
+    width: '300px',
+    height: '40px',
   };
   constructor() {}
 
