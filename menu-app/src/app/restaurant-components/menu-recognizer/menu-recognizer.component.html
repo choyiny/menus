@@ -1,4 +1,5 @@
-<input type="file" (change)="uploadImage($event)" />
+<!--<input type="file" (change)="uploadImage($event)" />-->
+<app-navbar [restaurantName]="'Menu'"></app-navbar>
 <div class="flex-container">
   <div class="canvas-container">
     <canvas
@@ -9,9 +10,13 @@
       (mouseout)="isMouseDown = false"
       (mousemove)="onMove($event)"
       (wheel)="onWheel($event)"
-    ></canvas>
+    >
+    </canvas>
 
-    <div class="toolbar"></div>
+    <div class="toolbar">
+      <button class="delete-button"><fa-icon [icon]="deleteIcon"></fa-icon></button>
+    </div>
+
   </div>
 
   <div class="menu-manager">

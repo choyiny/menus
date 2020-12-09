@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/pro-solid-svg-icons';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -9,6 +9,7 @@ import { faPlus } from '@fortawesome/pro-solid-svg-icons';
 export class MenuRecognizerComponent implements AfterViewInit {
   // Icons
   plusIcon = faPlus;
+  deleteIcon = faTrash;
 
   constructor() {}
 
