@@ -54,6 +54,9 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MenuLoadingComponent } from './util-components/loading/menu-loading/menu-loading.component';
+import { RestaurantLoadingComponent } from './util-components/loading/restaurant-loading/restaurant-loading.component';
+import { ItemLoadingComponent } from './util-components/loading/item-loading/item-loading.component';
 import { PublishModalComponent } from './util-components/register/publish-modal/publish-modal.component';
 
 const DragConfig = {
@@ -92,6 +95,9 @@ const DragConfig = {
     HomeComponent,
     PreviewComponent,
     MenuModalComponent,
+    MenuLoadingComponent,
+    RestaurantLoadingComponent,
+    ItemLoadingComponent,
     PublishModalComponent,
   ],
   imports: [
