@@ -41,7 +41,7 @@ class RowTemplate(BaseTemplate):
 
         # Find rotated matrix, do rotation
         M = cv2.getRotationMatrix2D((cx, cy), ang, 1.0)
-        rotated = cv2.warpAffine(threshed, M, (img.shape[1], img.shape[0]))
+        cv2.warpAffine(threshed, M, (img.shape[1], img.shape[0]))
 
         # find and draw the upper and lower boundary of each lines
         hist = cv2.reduce(threshed, 1, cv2.REDUCE_AVG).reshape(-1)

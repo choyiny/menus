@@ -62,7 +62,6 @@ class RowRecognizer(BaseRecognizer):
         img_width = img_dimension(image)[0]
 
         # Check if each detected word is between the line
-        result = []
         lines_error = 10
         lines = []
         for i in range(len(uppers)):
