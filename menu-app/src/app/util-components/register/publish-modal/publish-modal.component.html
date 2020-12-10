@@ -10,8 +10,11 @@
     <button class="copy" (click)="copyMessage()">Copy</button>
 
     <p>To download your QR code template, click here:</p>
-    <button class="qr" (click)="downloadQr()">
-      <fa-icon [icon]="qrIcon"></fa-icon>
+    <button class="qr" (click)="downloadQr()" [disabled]="downloading">
+      <fa-icon *ngIf="!downloading" [icon]="qrIcon"></fa-icon>
+      <div  *ngIf="downloading" class="d-inline-block">
+        <fa-icon class="fas fa-spinner fa-pulse d-block" [icon]="loadingIcon"></fa-icon>
+      </div>
       Download Qr code
     </button>
   </div>
