@@ -264,11 +264,6 @@ class EmailUserResource(UserManagementBaseResource):
                 user.photo_url = firebase_user.photo_url
                 user.display_name = firebase_user.display_name
                 user.is_anon = False
-                if user.restaurants:
-                    slug = user.restaurants[0]
-                    restaurant = Restaurant.objects(slug=slug).first()
-                    restaurant.public = True
-                    restaurant.save()
             except UserNotFoundError:
                 return USER_NOT_FOUND
             return user.save()
