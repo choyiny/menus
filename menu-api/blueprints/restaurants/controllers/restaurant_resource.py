@@ -17,7 +17,6 @@ from utils.errors import (
     MENU_ALREADY_EXISTS,
     MENU_NOT_FOUND,
     NOT_AUTHENTICATED,
-    ONE_RESTAURANT_ONLY,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
 )
@@ -57,6 +56,10 @@ class RestaurantResource(RestaurantBaseResource):
     def patch(self, slug, **kwargs):
         if g.user is None:
             return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
+            return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -97,7 +100,10 @@ class RestaurantResource(RestaurantBaseResource):
     @firebase_login_required
     def delete(self, slug):
 
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
@@ -148,7 +154,10 @@ class MenuResource(RestaurantBaseResource):
     @firebase_login_required
     def patch(self, slug: str, menu_name: str, **kwargs):
 
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
@@ -188,7 +197,10 @@ class MenuResource(RestaurantBaseResource):
     @firebase_login_required
     def delete(self, slug: str, menu_name: str):
 
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
@@ -208,7 +220,10 @@ class MenuResource(RestaurantBaseResource):
     @firebase_login_required
     def post(self, slug: str, **kwargs):
 
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
@@ -232,7 +247,11 @@ class SectionResource(RestaurantBaseResource):
     @firebase_login_required
     def patch(self, slug: str, menu_name: str, section_id: str, **kwargs):
         """Edit section details"""
-        if g.user is None or not g.user.has_permission(slug):
+
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -266,8 +285,12 @@ class SectionResource(RestaurantBaseResource):
     @firebase_login_required
     def delete(self, slug: str, menu_name: str, section_id: str):
         """Delete section"""
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
+
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -289,7 +312,10 @@ class ItemResource(RestaurantBaseResource):
     @marshal_with(ItemV2Schema)
     @firebase_login_required
     def patch(self, slug: str, menu_name: str, item_id: str, **kwargs):
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
@@ -322,7 +348,10 @@ class ItemResource(RestaurantBaseResource):
     @firebase_login_required
     def delete(self, slug: str, menu_name: str, item_id: str):
 
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
@@ -347,7 +376,7 @@ class GenerateSectionResource(RestaurantBaseResource):
     @firebase_login_required
     def get(self):
         if g.user is None:
-            return FORBIDDEN
+            return NOT_AUTHENTICATED
         section = Section(_id=uuid.uuid4(), name="New section")
         return section
 
@@ -358,7 +387,7 @@ class GenerateItemResource(RestaurantBaseResource):
     @firebase_login_required
     def get(self):
         if g.user is None:
-            return FORBIDDEN
+            return NOT_AUTHENTICATED
 
         item = Item(_id=uuid.uuid4(), name="New item")
         return item
@@ -369,7 +398,10 @@ class ImageResource(RestaurantBaseResource):
     @use_args(file_args, location="files")
     @firebase_login_required
     def patch(self, args, slug, menu_name, item_id):
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         image_bytes = args["file"].read()
@@ -402,7 +434,10 @@ class ImageResource(RestaurantBaseResource):
     @firebase_login_required
     def delete(self, slug, menu_name, item_id):
 
-        if g.user is None or not g.user.has_permission(slug):
+        if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
@@ -433,6 +468,9 @@ class RestaurantHeaderImageResource(RestaurantBaseResource):
     def patch(self, args, slug):
 
         if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         image_bytes = args["file"].read()
@@ -463,7 +501,7 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
     def post(self):
 
         if g.user is None:
-            return FORBIDDEN
+            return NOT_AUTHENTICATED
 
         if g.user.restaurants:
             return g.user.restaurants[0]
@@ -488,6 +526,9 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
     def patch(self, slug, **kwargs):
 
         if g.user is None:
+            return NOT_AUTHENTICATED
+
+        if not g.user.has_permission(slug):
             return FORBIDDEN
 
         restaurant = Restaurant.objects(slug=slug).first()
