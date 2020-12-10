@@ -40,7 +40,7 @@ class User(Document):
                     email=firebase_user.email,
                     phone_number=firebase_user.phone_number,
                     display_name=firebase_user.display_name,
-                    restaurants=[]
+                    restaurants=[],
                 ).save()
 
         return user

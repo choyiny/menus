@@ -5,8 +5,8 @@ import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
 import { take } from 'rxjs/operators';
 import { RestaurantService } from '../../../services/restaurant.service';
-import {PublishModalComponent} from "../publish-modal/publish-modal.component";
-import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
+import { PublishModalComponent } from '../publish-modal/publish-modal.component';
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,7 +19,7 @@ export class SignupComponent implements OnInit {
     private auth: AngularFireAuth,
     private authService: AuthService,
     private restaurantService: RestaurantService,
-    private restaurantPermissionsService: RestaurantPermissionService,
+    private restaurantPermissionsService: RestaurantPermissionService
   ) {}
   @ViewChild('signup') signup;
   @ViewChild(PublishModalComponent) publishModal: PublishModalComponent;
@@ -66,7 +66,9 @@ export class SignupComponent implements OnInit {
       anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
         const location = window.location.origin;
         this.authService.sendEmail(this.email, location).subscribe(() => {
-          window.alert('After verifying your email, menu is ready for publishing, click publish again to make menu public!');
+          window.alert(
+            'After verifying your email, menu is ready for publishing, click publish again to make menu public!'
+          );
           modal.close();
         });
       });
