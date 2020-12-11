@@ -238,3 +238,8 @@ button {
 .container {
   background: #f0f3f5;
 }
+
+.d-block.modal {
+  display: flex!important;
+	align-items: center;
+}
