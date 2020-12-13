@@ -1,45 +1,33 @@
 import csv
 import uuid
 
-import config as c
 import qrcode
-from auth.decorators import firebase_login_required
-from auth.documents.user import User
 from firebase_admin import auth
-from firebase_admin._auth_utils import (
-    EmailAlreadyExistsError,
-    PhoneNumberAlreadyExistsError,
-)
+from firebase_admin._auth_utils import (EmailAlreadyExistsError,
+                                        PhoneNumberAlreadyExistsError)
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from flask_marshmallow import Schema
 from marshmallow import fields
 from PIL import Image
-from utils.errors import (
-    FORBIDDEN,
-    MENU_ALREADY_EXISTS,
-    MENU_NOT_FOUND,
-    NO_QR_CODE,
-    NUMBER_ALREADY_EXISTS,
-    RESTAURANT_NOT_FOUND,
-    USER_ALREADY_EXISTS,
-)
 from webargs.flaskparser import use_args
+
+import config as c
+from auth.decorators import firebase_login_required
+from auth.documents.user import User
+from utils.errors import (FORBIDDEN, MENU_ALREADY_EXISTS, MENU_NOT_FOUND,
+                          NO_QR_CODE, NUMBER_ALREADY_EXISTS,
+                          RESTAURANT_NOT_FOUND, USER_ALREADY_EXISTS)
 
 from ...auth.schemas import UserSchema, UsersSchema
 from ...menus.documents import Menu
 from ...restaurants.documents.menuv2 import Item, MenuV2, Section
 from ...restaurants.documents.restaurant import Restaurant
-from ...restaurants.schemas import GetRestaurantSchema, MenuV2Schema, RestaurantSchema
+from ...restaurants.schemas import (GetRestaurantSchema, MenuV2Schema,
+                                    RestaurantSchema)
 from ..helpers import qr_helper
-from ..schemas import (
-    CreateRestaurantSchema,
-    CreateUserSchema,
-    PromoteUserSchema,
-    file_args,
-    pagination_args,
-    qr_args,
-)
+from ..schemas import (CreateRestaurantSchema, CreateUserSchema,
+                       PromoteUserSchema, file_args, pagination_args, qr_args)
 from .admin_base_resource import AdminBaseResource
 
 

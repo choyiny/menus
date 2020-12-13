@@ -1,13 +1,6 @@
-from .controllers import (
-    AllMenuResource,
-    ImageMenuResource,
-    ImportMenuResource,
-    ItemMenuResource,
-    MenuResource,
-    MenusResource,
-    QRMenuResource,
-    SectionMenuResource,
-)
+from .controllers import (AllMenuResource, ImageMenuResource,
+                          ImportMenuResource, ItemMenuResource, MenuResource,
+                          MenusResource, QRMenuResource, SectionMenuResource)
 
 resources = [
     (MenusResource, "/menus/", "users", ["POST"]),

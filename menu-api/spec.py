@@ -1,7 +1,8 @@
 # Apispec
-import docs
 from apispec import APISpec
 from apispec.ext.marshmallow import MarshmallowPlugin
+
+import docs
 
 
 def format_docstring(docstring):

@@ -1,5 +1,6 @@
-from extensions import logger
 from flask import request
+
+from extensions import logger
 
 
 def before_request():

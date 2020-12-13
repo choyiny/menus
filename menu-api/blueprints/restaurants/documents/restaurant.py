@@ -1,14 +1,9 @@
 from typing import Optional
 
+from mongoengine import (BooleanField, Document, ListField, ReferenceField,
+                         StringField, URLField)
+
 from blueprints.restaurants.documents.menuv2 import MenuV2
-from mongoengine import (
-    BooleanField,
-    Document,
-    ListField,
-    ReferenceField,
-    StringField,
-    URLField,
-)
 
 
 class Restaurant(Document):

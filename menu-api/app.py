@@ -1,17 +1,18 @@
 import os
 
-import config as c
-import loggers
 import mongoengine
 import sentry_sdk
-from cli import register_commands
-from extensions import logger
 from flask import Blueprint, Flask, jsonify
 from flask_apispec import FlaskApiSpec
 from flask_cors import CORS
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+
+import config as c
+import loggers
+from cli import register_commands
+from extensions import logger
 from spec import APISPEC_SPEC
 
 project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -81,17 +82,14 @@ def register_blueprints(app: Flask):
     from blueprints.admin import admin_bp
     from blueprints.admin import bp_name as admin_bp_name
     from blueprints.admin.routes import resources as admin_resources
-
     # auth blueprint
     from blueprints.auth import auth_bp
     from blueprints.auth import bp_name as auth_bp_name
     from blueprints.auth.routes import resources as auth_resources
-
     # menu [legacy] blueprints
     from blueprints.menus import bp_name as menu_bp_name
     from blueprints.menus import menus_bp
     from blueprints.menus.routes import resources as menu_resources
-
     # user dynamic-qr-code blueprint
     from blueprints.qr import bp_name as qr_bp_name
     from blueprints.qr import qr_bp
@@ -99,11 +97,11 @@ def register_blueprints(app: Flask):
     from blueprints.restaurants import bp_name as restaurant_bp_name
     from blueprints.restaurants import restaurant_bp
     from blueprints.restaurants.routes import resources as restaurant_resources
-
     # user management blueprint
     from blueprints.user_management import bp_name as user_management_bp_name
     from blueprints.user_management import user_management_bp
-    from blueprints.user_management.routes import resources as user_management_resources
+    from blueprints.user_management.routes import \
+        resources as user_management_resources
 
     set_routes(menu_resources, app, menus_bp, docs, menu_bp_name)
     set_routes(auth_resources, app, auth_bp, docs, auth_bp_name)

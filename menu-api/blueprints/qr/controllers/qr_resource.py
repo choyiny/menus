@@ -1,6 +1,7 @@
-import config as c
 from flask import redirect
 from flask_apispec import doc
+
+import config as c
 from utils.errors import RESTAURANT_NOT_FOUND
 
 from ...restaurants.documents.restaurant import Restaurant

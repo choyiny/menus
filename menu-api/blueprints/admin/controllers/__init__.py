@@ -1,1 +1,2 @@
-from .admin_resource import ImportMenuResource, QrRestaurantResource, RestaurantResource
+from .admin_resource import (ImportMenuResource, QrRestaurantResource,
+                             RestaurantResource)

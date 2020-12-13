@@ -2,22 +2,21 @@ import math
 import secrets
 from contextlib import closing
 
-import config as c
-from auth.decorators import firebase_login_required
-from auth.documents.user import User
-from extensions import r
 from firebase_admin import auth
-from firebase_admin._auth_utils import (
-    EmailAlreadyExistsError,
-    PhoneNumberAlreadyExistsError,
-    UserNotFoundError,
-)
+from firebase_admin._auth_utils import (EmailAlreadyExistsError,
+                                        PhoneNumberAlreadyExistsError,
+                                        UserNotFoundError)
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
 from marshmallow import Schema
 from sendgrid import SendGridAPIClient
-from utils.errors import FORBIDDEN, INVALID_TOKEN, USER_NOT_FOUND
 from webargs import fields
+
+import config as c
+from auth.decorators import firebase_login_required
+from auth.documents.user import User
+from extensions import r
+from utils.errors import FORBIDDEN, INVALID_TOKEN, USER_NOT_FOUND
 
 from ...auth.schemas import UserSchema, UsersWithPaginationSchema
 from ...restaurants.documents.restaurant import Restaurant

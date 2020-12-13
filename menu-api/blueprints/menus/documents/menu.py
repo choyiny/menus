@@ -2,15 +2,9 @@ import uuid
 from collections import defaultdict
 from typing import Optional
 
-from mongoengine import (
-    BooleanField,
-    Document,
-    EmbeddedDocument,
-    EmbeddedDocumentField,
-    ListField,
-    StringField,
-    URLField,
-)
+from mongoengine import (BooleanField, Document, EmbeddedDocument,
+                         EmbeddedDocumentField, ListField, StringField,
+                         URLField)
 
 
 class Tag(EmbeddedDocument):

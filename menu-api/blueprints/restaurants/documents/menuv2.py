@@ -1,14 +1,7 @@
 from typing import Optional
 
-from mongoengine import (
-    Document,
-    EmbeddedDocument,
-    EmbeddedDocumentField,
-    IntField,
-    ListField,
-    StringField,
-    URLField,
-)
+from mongoengine import (Document, EmbeddedDocument, EmbeddedDocumentField,
+                         IntField, ListField, StringField, URLField)
 
 
 class Tag(EmbeddedDocument):

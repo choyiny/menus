@@ -1,9 +1,5 @@
-from .controllers import (
-    AnonymousUserResource,
-    EmailUserResource,
-    UserResource,
-    UsersResource,
-)
+from .controllers import (AnonymousUserResource, EmailUserResource,
+                          UserResource, UsersResource)
 
 resources = [
     (UserResource, "users", "user", ["GET", "POST"]),
