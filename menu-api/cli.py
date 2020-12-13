@@ -1,10 +1,12 @@
+from auth.documents.user import User
 from click import argument
 from flask.cli import AppGroup
-
-from auth.documents.user import User
-from scripts.migrations import (migrate, restaurant_migrations,
-                                restaurant_permission_migrations,
-                                user_migrations)
+from scripts.migrations import (
+    migrate,
+    restaurant_migrations,
+    restaurant_permission_migrations,
+    user_migrations,
+)
 
 
 def register_commands(app):

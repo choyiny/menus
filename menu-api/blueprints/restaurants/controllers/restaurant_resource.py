@@ -4,24 +4,36 @@ import string
 import uuid
 from io import BytesIO
 
+from auth.decorators import firebase_login_preferred, firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
-from PIL import Image
-from webargs.flaskparser import use_args
-
-from auth.decorators import firebase_login_preferred, firebase_login_required
 from helpers import delete_file, upload_image
-from utils.errors import (ANONYMOUS_USER_FORBIDDEN, FORBIDDEN, IMAGE_NOT_FOUND,
-                          ITEM_NOT_FOUND, MENU_ALREADY_EXISTS, MENU_NOT_FOUND,
-                          NOT_AUTHENTICATED, RESTAURANT_NOT_FOUND,
-                          SECTION_NOT_FOUND)
+from PIL import Image
+from utils.errors import (
+    ANONYMOUS_USER_FORBIDDEN,
+    FORBIDDEN,
+    IMAGE_NOT_FOUND,
+    ITEM_NOT_FOUND,
+    MENU_ALREADY_EXISTS,
+    MENU_NOT_FOUND,
+    NOT_AUTHENTICATED,
+    RESTAURANT_NOT_FOUND,
+    SECTION_NOT_FOUND,
+)
+from webargs.flaskparser import use_args
 
 from ...admin.schemas import CreateRestaurantSchema, file_args
 from ..documents.menuv2 import Item, MenuV2, Section, Tag
 from ..documents.restaurant import Restaurant
-from ..schemas import (EditMenuV2Schema, GetRestaurantSchema, ItemV2Schema,
-                       MenuV2Schema, OnboardingSchema, RestaurantSchema,
-                       SectionV2Schema)
+from ..schemas import (
+    EditMenuV2Schema,
+    GetRestaurantSchema,
+    ItemV2Schema,
+    MenuV2Schema,
+    OnboardingSchema,
+    RestaurantSchema,
+    SectionV2Schema,
+)
 from .restaurant_base_resource import RestaurantBaseResource
 
 

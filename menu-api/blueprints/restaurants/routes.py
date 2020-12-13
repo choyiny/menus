@@ -1,8 +1,15 @@
-from .controllers import (GenerateItemResource, GenerateSectionResource,
-                          ImageResource, ItemResource, MenuResource,
-                          OnboardingRestaurantResource,
-                          RestaurantHeaderImageResource, RestaurantResource,
-                          RestaurantsResource, SectionResource)
+from .controllers import (
+    GenerateItemResource,
+    GenerateSectionResource,
+    ImageResource,
+    ItemResource,
+    MenuResource,
+    OnboardingRestaurantResource,
+    RestaurantHeaderImageResource,
+    RestaurantResource,
+    RestaurantsResource,
+    SectionResource,
+)
 
 resources = [
     (

@@ -1,5 +1,4 @@
 from flask_apispec import doc, marshal_with
-
 from helpers import BaseResource, ErrorResponseSchema
 
 

@@ -3,19 +3,25 @@ import uuid
 from io import BytesIO
 
 import qrcode
+from auth.decorators import firebase_login_required
 from flask import g
 from flask_apispec import doc, marshal_with, use_kwargs
+from helpers import ErrorResponseSchema, delete_file, upload_image
 from marshmallow import Schema, fields
 from PIL import Image
 from webargs.flaskparser import use_args
 
-from auth.decorators import firebase_login_required
-from helpers import ErrorResponseSchema, delete_file, upload_image
-
 from ..documents import Item, Menu, Section, Tag
 from ..helpers import csv_helper, qr_helper
-from ..schemas import (GetMenuSchema, ItemSchema, MenuSchema,
-                       SectionItemSchema, file_args, pagination_args, qr_args)
+from ..schemas import (
+    GetMenuSchema,
+    ItemSchema,
+    MenuSchema,
+    SectionItemSchema,
+    file_args,
+    pagination_args,
+    qr_args,
+)
 from .menus_base_resource import MenusBaseResource
 
 

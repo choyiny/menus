@@ -2,11 +2,10 @@
 import logging
 
 import boto3
+import config
 import firebase_admin
 import redis
 from firebase_admin import credentials
-
-import config
 
 cred = credentials.Certificate("firebase.json")
 firebase_admin.initialize_app(cred)

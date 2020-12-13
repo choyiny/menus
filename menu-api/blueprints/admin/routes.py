@@ -1,5 +1,4 @@
-from .controllers import (ImportMenuResource, QrRestaurantResource,
-                          RestaurantResource)
+from .controllers import ImportMenuResource, QrRestaurantResource, RestaurantResource
 
 # a list of resources
 

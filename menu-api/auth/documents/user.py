@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from firebase_admin import auth
-from mongoengine import (BooleanField, Document, EmailField, ListField,
-                         StringField)
+from mongoengine import BooleanField, Document, EmailField, ListField, StringField
 
 
 class User(Document):
