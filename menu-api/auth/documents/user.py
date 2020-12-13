@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from firebase_admin import auth
 from mongoengine import BooleanField, Document, EmailField, ListField, StringField
 
 
@@ -29,7 +30,17 @@ class User(Document):
         user = User.objects(firebase_id=firebase_id).first()
 
         if user is None:
-            user = User(firebase_id=firebase_id, is_anon=True)
-            user.save()
+            firebase_user = auth.get_user(firebase_id)
+            if not firebase_user.email and not firebase_user.phone_number:
+                user = User(firebase_id=firebase_id, is_anon=True).save()
+            else:
+                user = User(
+                    firebase_id=firebase_id,
+                    is_anon=False,
+                    email=firebase_user.email,
+                    phone_number=firebase_user.phone_number,
+                    display_name=firebase_user.display_name,
+                    restaurants=[],
+                ).save()
 
         return user

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
+import { faQrcode, faSpinner } from '@fortawesome/pro-solid-svg-icons';
 import * as confetti from 'canvas-confetti';
 import copy from 'copy-to-clipboard';
 import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
@@ -13,11 +13,14 @@ import { AdminService } from '../../../services/admin.service';
 })
 export class PublishModalComponent implements OnInit {
   @ViewChild('publish') publishModal;
+  downloading = false;
+
+  slug: string;
+  url: string;
 
   // Icons
   qrIcon = faQrcode;
-  slug: string;
-  url: string;
+  loadingIcon = faSpinner;
 
   constructor(
     private modalService: NgbModal,
@@ -42,7 +45,10 @@ export class PublishModalComponent implements OnInit {
   }
 
   downloadQr(): void {
-    this.adminService.generateQR(this.slug);
+    this.downloading = true;
+    this.adminService.generateQR(this.slug).subscribe(() => {
+      this.downloading = false;
+    });
   }
 
   launchFireworks(): void {

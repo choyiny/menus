@@ -5,6 +5,8 @@ import * as firebase from 'firebase';
 import { AuthService } from '../../../services/auth.service';
 import { take } from 'rxjs/operators';
 import { RestaurantService } from '../../../services/restaurant.service';
+import { PublishModalComponent } from '../publish-modal/publish-modal.component';
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,9 +18,11 @@ export class SignupComponent implements OnInit {
     private modalService: NgbModal,
     private auth: AngularFireAuth,
     private authService: AuthService,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private restaurantPermissionsService: RestaurantPermissionService
   ) {}
   @ViewChild('signup') signup;
+  @ViewChild(PublishModalComponent) publishModal: PublishModalComponent;
   email: string;
   password: string;
 
@@ -43,7 +47,8 @@ export class SignupComponent implements OnInit {
                 .editRestaurant(user.restaurants[0], { public: true })
                 .subscribe((restaurant) => {
                   modal.close();
-                  window.alert('Restaurant published!');
+                  this.restaurantPermissionsService.setRestaurantPermissions(restaurant);
+                  this.publishModal.open();
                 });
             }
           });
@@ -61,7 +66,9 @@ export class SignupComponent implements OnInit {
       anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
         const location = window.location.origin;
         this.authService.sendEmail(this.email, location).subscribe(() => {
-          window.alert('Email sent!');
+          window.alert(
+            'After verifying your email, menu is ready for publishing, click publish again to make menu public!'
+          );
           modal.close();
         });
       });

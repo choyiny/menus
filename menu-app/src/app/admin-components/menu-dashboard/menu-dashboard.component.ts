@@ -131,7 +131,7 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   generateQr(): void {
-    this.adminService.generateQR(this.slug);
+    this.adminService.generateQR(this.slug).subscribe(() => {});
   }
 
   toggleContactTracing(): void {
