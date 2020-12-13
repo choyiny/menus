@@ -1,12 +1,12 @@
 <ng-template #firstMenu let-modal data-keyboard="false" data-backdrop="static">
   <div class="title">
-    <h1>Start building your first Menu</h1>
+    <h1>Start Building Your First Menu</h1>
   </div>
 
   <div class="container">
     <div class="container-body">
       <p>
-        To create your first Menu, fill out the following information and click next to jump into our full menu editor
+        To create your first Menu, fill out the following information and click next to jump into our full menu editor.
       </p>
       <form [formGroup]="newMenu">
         <div class="form-group form-input">
@@ -41,7 +41,7 @@
   </div>
 
   <div class="next-step">
-    <button class="cancel-button" (click)="modal.close()">Cancel</button>
     <button class="next-button" (click)="next(modal)">Next step</button>
+    <button class="cancel-button" (click)="modal.close()">Cancel</button>
   </div>
 </ng-template>
