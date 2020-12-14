@@ -56,25 +56,71 @@
   .canvas-container {
     width: 60%;
     margin: 15px 0 0 10%;
-    height: 600px;
+    height: 100vh;
     position: relative;
+    background-color: white;
 
     canvas {
       width: calc(100% - 62px);
-      height: 100%;
+      height: 600px;
       margin: 10px 31px;
       background-color: white;
     }
 
     .toolbar {
-      position: absolute;
-      bottom: 20px;
-      background-color: #0b2e13;
-      .delete-button {
-        margin: 0 10px 0 0;
-        padding: 13px 14px;
+      background-color: #f0f3f5;
+      margin-left: 20px;
+      margin-right: 20px;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content:  space-between;
+      flex-wrap: wrap;
+
+      button{
+        margin: auto;
         border-radius: 8px;
+      }
+
+      .btn-gray-white {
+        background-color: white;
+        color: #59595a;
+      }
+
+      .delete-button {
+        padding: 11px 12px;
         background-color: #ee3253;
+      }
+
+      .separator {
+        display: inline-block;
+        width: 1px;
+        border-left: 1px solid rgba(196, 208, 217, 0.5);
+        height: 50px;
+      }
+
+      .upload-button {
+        padding: 11px 19px;
+      }
+
+      .drag{
+        padding: 11px 15px 11px 12px;
+      }
+
+      .copy {
+        padding: 11px 14px 11px 15px;
+      }
+
+      .angle {
+        padding: 10px 15px 11px 16px;
+      }
+
+      .page-of {
+        padding: 11px 12px 11px 14px;
+      }
+
+      .transfer {
+        padding: 8px 25px 7px 26.3px;
       }
     }
   }
