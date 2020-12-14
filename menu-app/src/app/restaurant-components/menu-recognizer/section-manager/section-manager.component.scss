@@ -1,7 +1,7 @@
 .section-manager {
-  margin: 20px;
-  border: 5px solid white;
+  margin: 5px;
   border-radius: 10px;
+  background-color: #f0f3f5;
 
   .header-container {
     position: relative;
@@ -18,7 +18,7 @@
     .pen {
       background-color: white;
       color:  #4c28ff;
-      margin-left: 1em;
+      margin: 0 0 0 1em;
       padding: 2px 5px;
       display: inline-block;
     }
@@ -42,7 +42,7 @@
   }
 
   .new-item {
-    margin: 5px 15px;
+    margin: 10px 15px 15px 15px;
     width: calc(100% - 30px);
     padding: 10px 137px 9px 128px;
     border-radius: 8px;

@@ -30,12 +30,27 @@
         border: solid 1.2px #f0f3f5;
       }
     }
+
+    .section-container {
+      background-color: white;
+      margin: 20px;
+      border-radius: 10px;
+      padding: 10px;
+
+      & .new-section {
+        margin: 5px 10px;
+        width: calc(100% - 10px);
+        padding: 28px 210px 17px;
+        border-radius: 10px;
+        background-color: #f0f3f5;
+        color: #4c28ff;
+      }
+    }
   }
 
   .canvas-container {
     width: 60%;
-    margin: 15px 0 15px 10%;
-    min-height: 100vh;
+    margin: 15px 0 15px 8%;
     border-radius: 10px;
     background-color: white;
     padding: 31px 21px 15px 21px;

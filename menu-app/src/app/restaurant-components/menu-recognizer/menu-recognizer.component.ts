@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   faPlus,
   faTrash,
@@ -7,12 +7,12 @@ import {
   faAngleRight,
   faReply,
   faPencil,
-  faCheck
+  faCheck,
 } from '@fortawesome/pro-solid-svg-icons';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
-import {Item} from '../../interfaces/restaurant-interfaces';
+import { Item } from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -64,7 +64,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => this.slug = params.slug);
+    this.route.params.subscribe((params) => (this.slug = params.slug));
   }
 
   loadImage(file: string): void {

@@ -1,40 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  faAngleLeft,
-  faAngleRight, faCheck,
-  faPencil,
-  faPlus,
-  faReply,
-  faTrash,
-  faUpload
-} from "@fortawesome/pro-solid-svg-icons";
-import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
-import {RestaurantService} from "../../../services/restaurant.service";
-import {ActivatedRoute} from "@angular/router";
-import {Item} from "../../../interfaces/restaurant-interfaces";
+import { faCheck, faPencil, faPlus } from '@fortawesome/pro-solid-svg-icons';
+import { RestaurantService } from '../../../services/restaurant.service';
+import { Item, Section } from '../../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-section-manager',
   templateUrl: './section-manager.component.html',
-  styleUrls: ['./section-manager.component.scss']
+  styleUrls: ['./section-manager.component.scss'],
 })
 export class SectionManagerComponent implements OnInit {
-
   plusIcon = faPlus;
   checkIcon = faCheck;
+  editIcon = faPencil;
 
   item: Item;
+  section: Section;
 
-  constructor(
-    private restaurantService: RestaurantService,
-  ) {}
+  // State
+  editMode = false;
 
-  ngOnInit(): void {
-  }
+  constructor(private restaurantService: RestaurantService) {}
 
-  // Menu logic
+  ngOnInit(): void {}
+
   addMenuItem(): void {
-    this.restaurantService.newItem().subscribe(item => this.item = item);
+    this.restaurantService.newItem().subscribe((item) => (this.item = item));
   }
 
+  toggleEditMode(): void {
+    this.editMode = !this.editMode;
+  }
 }
