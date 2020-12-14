@@ -79,6 +79,10 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     this.fileReader.readAsDataURL(event.target.files[0]);
   }
 
+  clickUpload(): void {
+    document.getElementById('upload-file').click();
+  }
+
   canvasRender(): void {
     // Draw background
     this.context.fillStyle = 'rgba(250, 250, 250)';

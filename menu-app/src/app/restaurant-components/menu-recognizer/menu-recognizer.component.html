@@ -15,7 +15,8 @@
 
     <div class="toolbar">
       <button class="delete-button"><fa-icon [icon]="deleteIcon"></fa-icon></button>
-      <button class="upload-button btn2"><fa-icon [icon]="uploadIcon"></fa-icon>Upload</button>
+      <button class="upload-button btn2" (click)="clickUpload()"><fa-icon [icon]="uploadIcon"></fa-icon>Upload</button>
+      <input type="file" id="upload-file" (change)="uploadImage($event)" hidden />
       <button class="drag">Drag</button>
       <button class="copy btn-gray-white">Copy</button>
       <button class="btn-gray-white angle"><fa-icon [icon]="leftIcon"></fa-icon></button>
