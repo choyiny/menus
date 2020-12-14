@@ -39,18 +39,6 @@
         Update background
       </button>
     </div>
-
-    <div class="section-manager">
-      <div class="header-container">
-<!--        <h1 class="section-header">Section Header</h1>-->
-<!--        <button class="pen"><fa-icon class="fa-xs"[icon]="editIcon"></fa-icon></button>-->
-        <input class="header-edit" type="text" placeholder="Add Section Title">
-        <button class="check btn1"><fa-icon [icon]="checkIcon"></fa-icon></button>
-      </div>
-      <button class="btn2 new-item" (click)="addMenuItem()">
-        <fa-icon [icon]="plusIcon"></fa-icon>
-        Add Menu Item
-      </button>
-    </div>
+    <app-section-manager></app-section-manager>
   </div>
 </div>

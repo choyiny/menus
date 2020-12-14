@@ -28,10 +28,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   rightIcon = faAngleRight;
   transferIcon = faReply;
   editIcon = faPencil;
-  checkIcon = faCheck;
 
   slug: string;
-  item: Item;
 
   constructor(
     private rPS: RestaurantPermissionService,
@@ -146,10 +144,5 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
       this.boxes[index][4] = withinX && withinY ? 1 : 0;
     });
-  }
-
-  // Menu logic
-  addMenuItem(): void {
-    this.restaurantService.newItem().subscribe(item => this.item = item);
   }
 }
