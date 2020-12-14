@@ -1,4 +1,3 @@
-<!--<input type="file" (change)="uploadImage($event)" />-->
 <app-navbar [restaurantName]="'Menu'"></app-navbar>
 <div class="flex-container">
   <div class="canvas-container">
@@ -31,7 +30,7 @@
 
   <div class="menu-manager">
     <div class="new-menu">
-      <input type="text" placeholder="Add menu title" />
+      <input type="text" placeholder="Add menu title" [(ngModel)]="menu.name" />
       <div class="rich-editor">
         <quill-editor class="editor" [placeholder]="'Add Menu Description'"></quill-editor>
       </div>
@@ -40,9 +39,9 @@
         Update background
       </button>
     </div>
-    <div class="section-container">
-      <app-section-manager></app-section-manager>
-      <button class="new-section"><fa-icon [icon]="plusIcon"></fa-icon></button>
+    <div class="section-container" *ngIf="menu">
+      <app-section-manager *ngFor="let section of menu.sections" [section]="section"></app-section-manager>
+      <button class="new-section" (click)="addSection()"><fa-icon [icon]="plusIcon"></fa-icon></button>
     </div>
   </div>
 </div>

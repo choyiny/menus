@@ -1,13 +1,22 @@
 <div class="section-manager">
   <div class="header-container">
-    <h1 *ngIf="!editMode" class="section-header">Section Header</h1>
-    <button *ngIf="!editMode"  (click)="toggleEditMode()" class="pen"><fa-icon class="fa-xs" [icon]="editIcon"></fa-icon></button>
-    <input *ngIf="editMode" class="header-edit" type="text" placeholder="Add Section Title" />
-    <button *ngIf="editMode" (click)="toggleEditMode()" class="check btn1"><fa-icon [icon]="checkIcon"></fa-icon></button>
+    <h1 *ngIf="!editMode" class="section-header">{{ section.name }}</h1>
+    <button *ngIf="!editMode" (click)="toggleEditMode()" class="pen">
+      <fa-icon class="fa-xs" [icon]="editIcon"></fa-icon>
+    </button>
+    <input
+      *ngIf="editMode"
+      class="header-edit"
+      type="text"
+      placeholder="Add Section Title"
+      [(ngModel)]="section.name"
+    />
+    <button *ngIf="editMode" (click)="toggleEditMode()" class="check btn1">
+      <fa-icon [icon]="checkIcon"></fa-icon>
+    </button>
   </div>
   <button class="btn2 new-item" (click)="addMenuItem()">
     <fa-icon [icon]="plusIcon"></fa-icon>
     Add Menu Item
   </button>
 </div>
-

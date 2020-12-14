@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { faCheck, faPencil, faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { Item, Section } from '../../../interfaces/restaurant-interfaces';
@@ -14,7 +14,7 @@ export class SectionManagerComponent implements OnInit {
   editIcon = faPencil;
 
   item: Item;
-  section: Section;
+  @Input() section: Section;
 
   // State
   editMode = false;

@@ -12,7 +12,7 @@ import {
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
-import { Item } from '../../interfaces/restaurant-interfaces';
+import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -30,6 +30,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   editIcon = faPencil;
 
   slug: string;
+
+  menu: Menu;
 
   constructor(
     private rPS: RestaurantPermissionService,
@@ -65,6 +67,16 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => (this.slug = params.slug));
+    this.menu = {
+      name: 'Menu',
+      sections: [],
+    };
+  }
+
+  addSection(): void {
+    this.restaurantService.newSection().subscribe((section) => {
+      this.menu.sections.push(section);
+    });
   }
 
   loadImage(file: string): void {
