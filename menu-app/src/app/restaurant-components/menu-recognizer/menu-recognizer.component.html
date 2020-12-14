@@ -22,11 +22,10 @@
       <button class="btn-gray-white page-of">1 of 3</button>
       <button class="btn-gray-white angle"><fa-icon [icon]="rightIcon"></fa-icon></button>
       <button class="transfer btn1">
-       <fa-icon class="fa-rotate-180 d-inline-block" [icon]="transferIcon"></fa-icon>
+        <fa-icon class="fa-rotate-180 d-inline-block" [icon]="transferIcon"></fa-icon>
         Transfer
       </button>
     </div>
-
   </div>
 
   <div class="menu-manager">
@@ -42,8 +41,13 @@
     </div>
 
     <div class="section-manager">
-      <h1 class="section-header">Section Header</h1>
-      <button class="btn2 new-item">
+      <div class="header-container">
+<!--        <h1 class="section-header">Section Header</h1>-->
+<!--        <button class="pen"><fa-icon class="fa-xs"[icon]="editIcon"></fa-icon></button>-->
+        <input class="header-edit" type="text" placeholder="Add Section Title">
+        <button class="check btn1"><fa-icon [icon]="checkIcon"></fa-icon></button>
+      </div>
+      <button class="btn2 new-item" (click)="addMenuItem()">
         <fa-icon [icon]="plusIcon"></fa-icon>
         Add Menu Item
       </button>

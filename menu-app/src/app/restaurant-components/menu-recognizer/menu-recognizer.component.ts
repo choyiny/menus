@@ -1,12 +1,25 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { faPlus, faTrash, faUpload, faAngleLeft, faAngleRight, faReply } from '@fortawesome/pro-solid-svg-icons';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {
+  faPlus,
+  faTrash,
+  faUpload,
+  faAngleLeft,
+  faAngleRight,
+  faReply,
+  faPencil,
+  faCheck
+} from '@fortawesome/pro-solid-svg-icons';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import { RestaurantService } from '../../services/restaurant.service';
+import { ActivatedRoute } from '@angular/router';
+import {Item} from '../../interfaces/restaurant-interfaces';
 
 @Component({
   selector: 'app-menu-recognizer',
   templateUrl: './menu-recognizer.component.html',
   styleUrls: ['./menu-recognizer.component.scss'],
 })
-export class MenuRecognizerComponent implements AfterViewInit {
+export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   // Icons
   plusIcon = faPlus;
   deleteIcon = faTrash;
@@ -14,8 +27,17 @@ export class MenuRecognizerComponent implements AfterViewInit {
   leftIcon = faAngleLeft;
   rightIcon = faAngleRight;
   transferIcon = faReply;
+  editIcon = faPencil;
+  checkIcon = faCheck;
 
-  constructor() {}
+  slug: string;
+  item: Item;
+
+  constructor(
+    private rPS: RestaurantPermissionService,
+    private restaurantService: RestaurantService,
+    private route: ActivatedRoute
+  ) {}
 
   @ViewChild('canvas', { static: true })
   canvasElement: ElementRef<HTMLCanvasElement>;
@@ -39,8 +61,12 @@ export class MenuRecognizerComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.context = this.canvasElement.nativeElement.getContext('2d');
-    this.fileReader.onload = () => this.loadImage(<string>this.fileReader.result);
+    this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
     setInterval(() => this.canvasRender(), 1000 / 30);
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => this.slug = params.slug);
   }
 
   loadImage(file: string): void {
@@ -120,5 +146,10 @@ export class MenuRecognizerComponent implements AfterViewInit {
 
       this.boxes[index][4] = withinX && withinY ? 1 : 0;
     });
+  }
+
+  // Menu logic
+  addMenuItem(): void {
+    this.restaurantService.newItem().subscribe(item => this.item = item);
   }
 }
