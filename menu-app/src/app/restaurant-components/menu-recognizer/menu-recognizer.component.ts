@@ -95,6 +95,14 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     document.getElementById('upload-file').click();
   }
 
+  transfer(): void {
+    this.restaurantService.addMenu(this.slug, this.menu.name).subscribe(() => {
+      this.restaurantService.editMenu(this.slug, this.menu.name, this.menu).subscribe((menu) => {
+        this.menu = menu;
+      });
+    });
+  }
+
   canvasRender(): void {
     // Draw background
     this.context.fillStyle = 'rgba(250, 250, 250)';
