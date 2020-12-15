@@ -41,8 +41,8 @@ class BaseRecognizer(ABC):
         """
         Override this for each recognizer to implement different recognize logic.
 
-        Return format should be a dict with format `{result: [{ bound: [...], text: [...] }], unrecognized: [...]}`.
-        Where `result` is the recognized result that contains `bound`: The bound of the polygon, each element
+        Return format should be a dict with format `{results: [{ bound: [...], text: [...] }], unrecognized: [...]}`.
+        Where `results` is the recognized result that contains `bound`: The bound of the polygon, each element
         should be a point `(x, y)`, `text`: An array of texts that are inside the polygon.
         `unrecognized` is an array of texts that are detected but not in any polygons.
 
@@ -56,7 +56,7 @@ class RowRecognizer(BaseRecognizer):
         super().__init__(config)
 
     def recognize(self, image):
-        # The first result returned by Google Vision is the big box, ignore it
+        # The first results returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
         uppers, lowers = split_lines(image)
         img_width = img_dimension(image)[0]
@@ -91,7 +91,7 @@ class RowRecognizer(BaseRecognizer):
                     else:
                         rest_data.append(points_text)
                 data = rest_data
-        return {"result": lines, "unrecognized": data}
+        return {"results": lines, "unrecognized": data}
 
 
 class GridRecognizer(BaseRecognizer):
@@ -99,10 +99,10 @@ class GridRecognizer(BaseRecognizer):
         super().__init__(config)
 
     def recognize(self, image):
-        # The first result returned by Google Vision is the big box, ignore it
+        # The first results returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
         grids = split_grids(image)
-        result = [{"bound": r, "text": []} for r in grids]
+        results = [{"bound": r, "text": []} for r in grids]
         all_ = set()
         identified = set()
 
@@ -127,6 +127,6 @@ class GridRecognizer(BaseRecognizer):
                         break
                 if isInPoly:
                     identified.add(text)
-                    result[index]["text"].append(text)
+                    results[index]["text"].append(text)
                     break
-        return {"result": result, "unrecognized": list(all_.difference(identified))}
+        return {"results": results, "unrecognized": list(all_.difference(identified))}

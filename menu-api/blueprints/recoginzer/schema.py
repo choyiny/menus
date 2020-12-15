@@ -9,7 +9,3 @@ class MenuItemRecognizeSchema(Schema):
 
 class MenuRecognizeSchema(Schema):
     results = fields.List(fields.Nested(MenuItemRecognizeSchema))
-
-
-class MenuRecognizeResponseSchema(Schema):
-    data = fields.Nested(MenuRecognizeSchema)

@@ -7,7 +7,7 @@ from webargs import fields
 from webargs.flaskparser import use_args
 
 from ..recognizer import recognizer_factory
-from ..schema import MenuRecognizeResponseSchema
+from ..schema import MenuRecognizeSchema
 
 
 @doc(tags=["Menu Recognizer"])
@@ -24,7 +24,7 @@ class RecognizerResource(BaseResource):
     @doc(description="""Scan an image and return recognized text""")
     @use_args(file_args, location="files")
     @use_kwargs(RecognizerSchema, location="form")
-    @marshal_with(MenuRecognizeResponseSchema)
+    @marshal_with(MenuRecognizeSchema)
     def post(self, args, **kwargs):
         template = kwargs.get("template")
         recognizer_class = recognizer_factory(template)
@@ -36,6 +36,6 @@ class RecognizerResource(BaseResource):
         file = args.get("file")
         content = file.read()
         recognizer = recognizer_class({})
-        result = recognizer.recognize(content)
-        print(result)
-        return {"data": result}
+        recognizer.recognize(content)
+        print(recognizer.recognize(content))
+        return recognizer.recognize(content)
