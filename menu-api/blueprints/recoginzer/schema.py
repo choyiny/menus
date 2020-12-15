@@ -3,12 +3,12 @@ from webargs import fields
 
 
 class MenuItemRecognizeSchema(Schema):
-    bound = fields.List(fields.List(fields.Number()))
-    text = fields.List(fields.Str())
+    bound = fields.List(fields.List(fields.Number()), example=[[0, 0], [1028, 700]])
+    text = fields.List(fields.Str(), example=["Double", "smoked", "bacon", "lardon,"])
 
 
 class MenuRecognizeSchema(Schema):
-    result = fields.List(fields.Nested(MenuItemRecognizeSchema))
+    results = fields.List(fields.Nested(MenuItemRecognizeSchema))
 
 
 class MenuRecognizeResponseSchema(Schema):

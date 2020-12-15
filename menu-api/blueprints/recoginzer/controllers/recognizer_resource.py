@@ -25,7 +25,6 @@ class RecognizerResource(BaseResource):
     @use_args(file_args, location="files")
     @use_kwargs(RecognizerSchema, location="form")
     @marshal_with(MenuRecognizeResponseSchema)
-    @firebase_login_required
     def post(self, args, **kwargs):
         template = kwargs.get("template")
         recognizer_class = recognizer_factory(template)
@@ -38,4 +37,5 @@ class RecognizerResource(BaseResource):
         content = file.read()
         recognizer = recognizer_class({})
         result = recognizer.recognize(content)
+        print(result)
         return {"data": result}
