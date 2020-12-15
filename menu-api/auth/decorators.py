@@ -14,6 +14,10 @@ def firebase_login_required(f):
 
     @wraps(f)
     def wrapped(*args, **kwargs):
+        # Uncomment this for local development
+        # g.user = User.objects.first()
+        # return f(*args, **kwargs)
+
         # Check for Authorization header in the form of "Bearer <token>"
         if "Authorization" not in request.headers:
             return {"description": "Missing Authorization header"}, 401

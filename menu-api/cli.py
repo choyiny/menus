@@ -17,15 +17,15 @@ def register_commands(app):
     auth_cli = AppGroup("auth")
 
     @auth_cli.command("add_user")
-    @argument("username")
-    @argument("password")
-    def create_user(username, password):
+    @argument("is_admin")
+    @argument("email")
+    def create_user(is_admin, email):
         """
         Example:
-        $ flask auth add_user support@verto.ca temppass
+        $ flask auth add_user True pick@easy.com
         """
-        User.create(username, password)
-        print(f"Created user with username: {username}")
+        User.create(is_admin=is_admin, email=email)
+        print(f"Created user with email: {email}")
 
     migration_cli = AppGroup("migrate")
 

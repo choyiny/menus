@@ -5,7 +5,7 @@ SECRET_KEY = "replace_this"
 ORIGINS = ['*']
 
 # MongoDB
-MONGODB_URL = "mongodb://example:password@localhost:27018/starter"
+MONGODB_URL = "mongodb://admin:password@localhost:27018/menu?authSource=admin"
 TEST_MONGODB_URL = "mongomock://localhost/test"
 
 # CORS
