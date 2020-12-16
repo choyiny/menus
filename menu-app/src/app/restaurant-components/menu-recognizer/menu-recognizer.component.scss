@@ -56,10 +56,12 @@
     padding: 31px 21px 15px 21px;
 
     canvas {
-      width: calc(100% - 62px);
+      display: block;
+      width: 700px;
       height: 600px;
-      margin: 10px 31px;
+      margin: 10px auto;
       background-color: white;
+      position: relative;
     }
 
     .toolbar {

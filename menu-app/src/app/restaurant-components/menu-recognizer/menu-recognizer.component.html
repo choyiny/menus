@@ -8,7 +8,9 @@
       (mouseup)="isMouseDown = false"
       (mouseout)="isMouseDown = false"
       (mousemove)="onMove($event)"
-      (wheel)="onWheel($event)"
+      (click)="canvasOnClick($event)"
+      width="600px"
+      height="600px"
     >
     </canvas>
 

@@ -70,6 +70,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   loadImageIfExists(): void {
+    this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     if (this.data[this.currentImage]) {
       this.fileReader.readAsDataURL(this.files[this.currentImage]);
       this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
@@ -104,6 +105,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   loadImage(file: string): void {
     this.image.src = file;
     this.image.onload = () => {
+      window.alert(`Width: ${this.image.width}, Height: ${this.image.height}`);
       this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
     };
   }
@@ -157,6 +159,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   canvasRender(): void {
     // Draw background
     this.context.fillStyle = 'rgba(250, 250, 250)';
+    this.context.imageSmoothingEnabled = false;
     this.context.fillRect(
       -this.offsetX,
       -this.offsetY,
@@ -169,12 +172,14 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
       this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
     }
 
+    this.context.strokeRect(0, 0, 100, 150);
+
     // Draw boxes
     if (this.data[this.currentImage]) {
       this.data[this.currentImage].results.forEach(
         result => {
           const [x, y, w, h] = [...result.bounds[0], ...result.bounds[1]];
-          this.context.fillStyle = `rgba(${200}, ${50}, 256, 0.3)`;
+          this.context.strokeStyle = `rgba(${200}, ${50}, 256, 0.3)`;
           this.context.strokeRect(x, y, w, h);
         }
       );
@@ -226,5 +231,30 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
       this.boxes[index][4] = withinX && withinY ? 1 : 0;
     });
+  }
+
+  canvasOnClick(event): void {
+
+    const isIntersect = ( position: number[], bound: number[][]) => {
+      const [x, y] = position;
+      const [[x1, y1], [w, h]] = [bound[0], bound[1]];
+      return (x > x1 && x < x1 + w) && (y > y1 && y < y1 + h);
+    };
+
+    const rect = this.context.canvas.getBoundingClientRect();
+
+    const posX = event.clientX - rect.left;
+    const posY = event.clientY - rect.top;
+
+    console.log(posX, posY);
+
+    if (this.data[this.currentImage]) {
+      for (const result of this.data[this.currentImage].results) {
+        if (isIntersect([posX, posY], result.bounds)){
+          window.alert(result.text);
+          break;
+        }
+      }
+    }
   }
 }
