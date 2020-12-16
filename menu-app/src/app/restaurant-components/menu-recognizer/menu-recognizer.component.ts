@@ -36,6 +36,9 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
   menu: Menu;
 
+  templates = ['grid', 'row'];
+  template = 'grid';
+
   constructor(
     private rPS: RestaurantPermissionService,
     private restaurantService: RestaurantService,
@@ -67,9 +70,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   loadImageIfExists(): void {
-    console.log(this.data[this.currentImage]);
     if (this.data[this.currentImage]) {
-      console.log('loading');
       this.fileReader.readAsDataURL(this.files[this.currentImage]);
       this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
     }
@@ -107,14 +108,13 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     };
   }
 
-  uploadImage(event: any): void {
-    this.files = [...event.target.files];
-    console.log(this.files);
+  annotateImage(): void {
     this.files.forEach((file, i) => {
       const formData = new FormData();
       formData.append('file', this.files[0]);
-      formData.append('template', 'grid');
+      formData.append('template', this.template);
       this.ocrService.recognizeImage(formData).subscribe((data) => {
+        console.log(data.results);
         data.results = data.results.map((result) => {
           result.bounds = [
             result.bounds[0],
@@ -129,6 +129,17 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
         }
       });
     });
+  }
+
+  changeTemplate(): void {
+    this.data = [];
+    this.image.src = '';
+    this.annotateImage();
+  }
+
+  uploadImage(event: any): void {
+    this.files = [...event.target.files];
+    this.annotateImage();
   }
 
   clickUpload(): void {
@@ -154,13 +165,20 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     );
 
     // Draw image
-    this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
+    if (this.image.src) {
+      this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
+    }
 
     // Draw boxes
-    this.boxes.forEach(([x, y, w, h]) => {
-      this.context.fillStyle = `rgba(${200}, ${50}, 256, 0.3)`;
-      this.context.fillRect(x, y, w, h);
-    });
+    if (this.data[this.currentImage]) {
+      this.data[this.currentImage].results.forEach(
+        result => {
+          const [x, y, w, h] = [...result.bounds[0], ...result.bounds[1]];
+          this.context.fillStyle = `rgba(${200}, ${50}, 256, 0.3)`;
+          this.context.strokeRect(x, y, w, h);
+        }
+      );
+    }
   }
 
   onWheel(event: any): void {
