@@ -41,8 +41,8 @@ class BaseRecognizer(ABC):
         """
         Override this for each recognizer to implement different recognize logic.
 
-        Return format should be a dict with format `{results: [{ bound: [...], text: [...] }], unrecognized: [...]}`.
-        Where `results` is the recognized result that contains `bound`: The bound of the polygon, each element
+        Return format should be a dict with format `{results: [{ bounds: [...], text: [...] }], unrecognized: [...]}`.
+        Where `results` is the recognized result that contains `bounds`: The bound of the polygon, each element
         should be a point `(x, y)`, `text`: An array of texts that are inside the polygon.
         `unrecognized` is an array of texts that are detected but not in any polygons.
 
@@ -72,7 +72,7 @@ class RowRecognizer(BaseRecognizer):
                 lower_y = lowers[i] + lines_error
                 inline_text = []
                 lines.append(
-                    {"bound": [(0, upper_y), (img_width, lower_y)], "text": inline_text}
+                    {"bounds": [(0, upper_y), (img_width, lower_y)], "text": inline_text}
                 )
                 rest_data = []
                 for points_text in data:
@@ -102,7 +102,7 @@ class GridRecognizer(BaseRecognizer):
         # The first results returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
         grids = split_grids(image)
-        results = [{"bound": r, "text": []} for r in grids]
+        results = [{"bounds": r, "text": []} for r in grids]
         all_ = set()
         identified = set()
 

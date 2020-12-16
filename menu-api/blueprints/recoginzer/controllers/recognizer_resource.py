@@ -37,5 +37,4 @@ class RecognizerResource(BaseResource):
         content = file.read()
         recognizer = recognizer_class({})
         recognizer.recognize(content)
-        print(recognizer.recognize(content))
         return recognizer.recognize(content)
