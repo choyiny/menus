@@ -108,10 +108,17 @@
 
       .angle {
         padding: 10px 15px 11px 16px;
+
+        &:disabled {
+          opacity: 50%;
+          cursor: not-allowed;
+        }
       }
 
       .page-of {
         padding: 11px 12px 11px 14px;
+        margin: auto;
+        border-radius: 8px;
       }
 
       .transfer {

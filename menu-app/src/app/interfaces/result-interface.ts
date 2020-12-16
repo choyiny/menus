@@ -1,8 +1,8 @@
-export interface AnnotatedImage {
-  data: Results [];
+export interface Results {
+  results: Result[];
 }
 
-export interface Results {
-  bound: number[][];
+export interface Result {
+  bounds: number[][];
   text: string[];
 }

@@ -7,12 +7,13 @@ import {
   faAngleRight,
   faReply,
   faPencil,
-  faCheck,
 } from '@fortawesome/pro-solid-svg-icons';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { RestaurantService } from '../../services/restaurant.service';
 import { ActivatedRoute } from '@angular/router';
-import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
+import { Menu } from '../../interfaces/restaurant-interfaces';
+import { OcrService } from '../../services/ocr.service';
+import { Results } from '../../interfaces/result-interface';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -30,13 +31,16 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   editIcon = faPencil;
 
   slug: string;
+  files: File[] = [];
+  data: Results[] = [];
 
   menu: Menu;
 
   constructor(
     private rPS: RestaurantPermissionService,
     private restaurantService: RestaurantService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private ocrService: OcrService
   ) {}
 
   @ViewChild('canvas', { static: true })
@@ -53,11 +57,28 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
   boxes = [
     /* x, y, w, h, isMouseOver */
-    [0, 0, 20, 20, 0],
-    [120, 130, 20, 200, 0],
-    [60, 80, 50, 320, 0],
-    [600, 380, 150, 30, 0],
   ];
+
+  currentImage = 0;
+
+  nextImage(): void {
+    this.currentImage++;
+    this.loadImageIfExists();
+  }
+
+  loadImageIfExists(): void {
+    console.log(this.data[this.currentImage]);
+    if (this.data[this.currentImage]) {
+      console.log('loading');
+      this.fileReader.readAsDataURL(this.files[this.currentImage]);
+      this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
+    }
+  }
+
+  previousImage(): void {
+    this.currentImage--;
+    this.loadImageIfExists();
+  }
 
   ngAfterViewInit(): void {
     this.context = this.canvasElement.nativeElement.getContext('2d');
@@ -81,14 +102,33 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
   loadImage(file: string): void {
     this.image.src = file;
-
     this.image.onload = () => {
       this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
     };
   }
 
   uploadImage(event: any): void {
-    this.fileReader.readAsDataURL(event.target.files[0]);
+    this.files = [...event.target.files];
+    console.log(this.files);
+    this.files.forEach((file, i) => {
+      const formData = new FormData();
+      formData.append('file', this.files[0]);
+      formData.append('template', 'grid');
+      this.ocrService.recognizeImage(formData).subscribe((data) => {
+        data.results = data.results.map((result) => {
+          result.bounds = [
+            result.bounds[0],
+            [result.bounds[1][0] - result.bounds[0][0], result.bounds[1][1] - result.bounds[0][1]],
+          ];
+          return result;
+        });
+        this.data[i] = data;
+        if (i === this.currentImage) {
+          this.fileReader.readAsDataURL(file);
+          this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
+        }
+      });
+    });
   }
 
   clickUpload(): void {
@@ -117,8 +157,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
 
     // Draw boxes
-    this.boxes.forEach(([x, y, w, h, c]) => {
-      this.context.fillStyle = `rgba(${200 * c}, ${50 * c}, 256, 0.3)`;
+    this.boxes.forEach(([x, y, w, h]) => {
+      this.context.fillStyle = `rgba(${200}, ${50}, 256, 0.3)`;
       this.context.fillRect(x, y, w, h);
     });
   }
