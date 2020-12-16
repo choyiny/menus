@@ -72,7 +72,10 @@ class RowRecognizer(BaseRecognizer):
                 lower_y = lowers[i] + lines_error
                 inline_text = []
                 lines.append(
-                    {"bounds": [(0, upper_y), (img_width, lower_y)], "text": inline_text}
+                    {
+                        "bounds": [(0, upper_y), (img_width, lower_y)],
+                        "text": inline_text,
+                    }
                 )
                 rest_data = []
                 for points_text in data:
