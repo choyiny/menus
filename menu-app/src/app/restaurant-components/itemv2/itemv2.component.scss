@@ -3,8 +3,8 @@
   font-size: 12px;
   margin-top: 5px;
   margin-left: 0px;
+  padding-bottom: 5px;
   position: relative;
-  min-height: 12vh;
 }
 
 //desktop
@@ -15,12 +15,12 @@
     border: solid 0.5px #dfe0e3;
     margin: 20px 0px 0px 0px;
     height: clamp(8em, 13vh, 12em);
-  
+
     &.expand {
       height: auto;
       min-height: 13vh;
       padding-bottom: 3em;
-    }  
+    }
 
     &:not(.edit-body) {
       cursor: pointer;
@@ -28,9 +28,8 @@
   }
 
   .tag-container {
-    bottom: 5px;
+    bottom: 0;
     position: absolute;
-    padding-bottom: 8px;
 
     & .add-tag {
       border-radius: 18px;

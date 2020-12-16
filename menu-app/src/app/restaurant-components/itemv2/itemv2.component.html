@@ -10,7 +10,7 @@
       <img class="img-fluid icon" src="{{ item.image }}" />
     </div>
 
-    <div class="description" [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
+    <div [ngClass]="item.image ? 'logo-description' : 'no-logo-description'">
       <div class="menu-price">
         <h1 class="item">{{ item.name }}</h1>
         <h1 class="price">{{ item.price }}</h1>
@@ -36,6 +36,8 @@
     <fa-icon [icon]="faPen"></fa-icon>
   </button>
 </div>
+
+<!--Edit mode-->
 
 <div *ngIf="editMode" class="menu-item edit-body">
   <div class="item-top">
