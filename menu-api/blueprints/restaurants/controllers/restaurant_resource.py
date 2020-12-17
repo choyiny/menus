@@ -229,11 +229,29 @@ class MenuResource(RestaurantBaseResource):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
+
         name = kwargs.get("name")
-        # serialize restaurant menus to string
         if name in restaurant.to_dict()["menus"]:
             return MENU_ALREADY_EXISTS
+
         menu = MenuV2(name=name)
+
+        if kwargs.get("sections"):
+            menu.sections = [
+                Section(**section_dict) for section_dict in kwargs.get("sections")
+            ]
+
+        if "start" in kwargs:
+            menu.start = kwargs.get("start")
+
+        if "end" in kwargs:
+            menu.end = kwargs.get("end")
+
+        if "footnote" in kwargs:
+            menu.footnote = kwargs.get("footnote")
+
+        print(menu.to_json(), kwargs)
+
         menu.save()
         restaurant.menus.append(menu)
         restaurant.save()
@@ -277,7 +295,6 @@ class SectionResource(RestaurantBaseResource):
         if "description" in kwargs:
             section.description = kwargs.get("description")
 
-        menu.save()
         return section
 
     @doc(description="Delete section from menu")
