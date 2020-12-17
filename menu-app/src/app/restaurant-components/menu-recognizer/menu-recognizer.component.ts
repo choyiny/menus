@@ -71,7 +71,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   loadImageIfExists(): void {
-    this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     if (this.data[this.currentImage]) {
       this.fileReader.readAsDataURL(this.files[this.currentImage]);
       this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
@@ -114,7 +113,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   annotateImage(): void {
     this.files.forEach((file, i) => {
       const formData = new FormData();
-      formData.append('file', this.files[0]);
+      formData.append('file', this.files[i]);
       formData.append('template', this.template);
       this.ocrService.recognizeImage(formData).subscribe((data) => {
         data.results = data.results.map((result) => {
@@ -125,6 +124,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
           return result;
         });
         this.data[i] = data;
+        console.log(this.data);
         if (i === this.currentImage) {
           this.fileReader.readAsDataURL(file);
           this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
@@ -182,8 +182,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     if (this.image.src) {
       this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
     }
-
-    this.context.strokeRect(0, 0, 100, 150);
 
     // Draw boxes
     if (this.data[this.currentImage]) {
@@ -243,6 +241,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   canvasOnClick(event): void {
+
     const isIntersect = (position: number[], bound: number[][]) => {
       const [x, y] = position;
       const [[x1, y1], [w, h]] = [bound[0], bound[1]];
@@ -254,8 +253,20 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     const posX = event.clientX - rect.left - this.offsetX;
     const posY = event.clientY - rect.top - this.offsetY;
 
+    // Sort results based on area, so inner bounding-box is clicked first
+    this.data[this.currentImage].results.sort(
+      (result1, result2) => {
+       const  [, [w1, h1]] = result1.bounds;
+       const  [, [w2, h2]] = result1.bounds;
+       return w1 * h1 - w2 * h2;
+      }
+    );
+
     if (this.data[this.currentImage]) {
       for (const result of this.data[this.currentImage].results) {
+        if (result.text.join(' ') === '$34') {
+          console.log(posX, posY, result.bounds);
+        }
         if (isIntersect([posX, posY], result.bounds)) {
           window.alert(result.text.join(' '));
           copy(result.text.join(' '));
@@ -290,7 +301,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     this.context.fillRect(posX, posY, 10, 10);
 
     if (this.data[this.currentImage]) {
-      console.log('start');
       for (const result of this.data[this.currentImage].results) {
         console.log(normalizeBounds(result.bounds));
         if (isIntersect([posX, posY], normalizeBounds(result.bounds))) {
