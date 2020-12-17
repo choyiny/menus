@@ -31,7 +31,7 @@
       <button class="btn-gray-white angle" [disabled]="currentImage + 2 > files.length" (click)="nextImage()">
         <fa-icon [icon]="rightIcon"></fa-icon>
       </button>
-      <button class="transfer btn1">
+      <button class="transfer btn1" (click)="transfer()">
         <fa-icon class="fa-rotate-180 d-inline-block" [icon]="transferIcon"></fa-icon>
         Transfer
       </button>

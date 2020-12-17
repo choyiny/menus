@@ -158,11 +158,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   transfer(): void {
-    this.restaurantService.addMenu(this.slug, this.menu.name).subscribe(() => {
-      this.restaurantService.editMenu(this.slug, this.menu.name, this.menu).subscribe((menu) => {
-        this.menu = menu;
-      });
-    });
+    console.log(this.menu.sections);
+    this.restaurantService.addMenu(this.slug, this.menu).subscribe(menu => this.menu = menu);
   }
 
   canvasRender(): void {
