@@ -34,7 +34,7 @@ class BaseRecognizer(ABC):
 
         `image`: The image in bytes format
         """
-        return detect_text(image)
+        pass
 
     @abstractmethod
     def recognize(self, image):
@@ -112,23 +112,23 @@ class GridRecognizer(BaseRecognizer):
         # Check if each detected word is in the grid
         for pIndex in range(len(data)):
             text = data[pIndex]["text"]
-            textPoints = data[pIndex]["points"]
+            text_points = data[pIndex]["points"]
             all_.add(text)
             for index in range(len(grids)):
                 r = grids[index]
                 x_1, y_1 = r[0]
                 x_2, y_2 = r[1]
-                isInPoly = False
+                is_in_poly = False
                 # Check if every point of the text is inside the grid
-                for tp in textPoints:
+                for tp in text_points:
                     x = tp[0]
                     y = tp[1]
                     if (x_1 <= x <= x_2) and (y_1 <= y <= y_2):
-                        isInPoly = True
+                        is_in_poly = True
                     else:
-                        isInPoly = False
+                        is_in_poly = False
                         break
-                if isInPoly:
+                if is_in_poly:
                     identified.add(text)
                     results[index]["text"].append(text)
                     break
