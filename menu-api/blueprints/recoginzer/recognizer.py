@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
+from .helper import vision
 from .helper.cv import split_grids, split_lines
 from .helper.utils import img_dimension
-from .helper import vision
 
 
 def recognizer_factory(name):
