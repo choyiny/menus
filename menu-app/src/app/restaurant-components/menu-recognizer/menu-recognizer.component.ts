@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Menu } from '../../interfaces/restaurant-interfaces';
 import { OcrService } from '../../services/ocr.service';
 import { Results } from '../../interfaces/result-interface';
+import copy from 'copy-to-clipboard';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -116,7 +117,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
       formData.append('file', this.files[0]);
       formData.append('template', this.template);
       this.ocrService.recognizeImage(formData).subscribe((data) => {
-        console.log(data.results);
         data.results = data.results.map((result) => {
           result.bounds = [
             result.bounds[0],
@@ -140,12 +140,23 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   uploadImage(event: any): void {
-    this.files = [...event.target.files];
+    this.files = [...this.files, ...event.target.files];
     this.annotateImage();
   }
 
   clickUpload(): void {
     document.getElementById('upload-file').click();
+  }
+
+  deleteCurrentFile(): void {
+    if (this.files) {
+      this.files.splice(this.currentImage, 1);
+      this.currentImage =
+        this.currentImage === this.files.length && this.currentImage !== 0
+          ? this.currentImage - 1
+          : this.currentImage;
+      this.loadImageIfExists();
+    }
   }
 
   transfer(): void {
@@ -176,13 +187,11 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
     // Draw boxes
     if (this.data[this.currentImage]) {
-      this.data[this.currentImage].results.forEach(
-        result => {
-          const [x, y, w, h] = [...result.bounds[0], ...result.bounds[1]];
-          this.context.strokeStyle = `rgba(${200}, ${50}, 256, 0.3)`;
-          this.context.strokeRect(x, y, w, h);
-        }
-      );
+      this.data[this.currentImage].results.forEach((result) => {
+        const [x, y, w, h] = [...result.bounds[0], ...result.bounds[1]];
+        this.context.strokeStyle = `rgba(${200}, ${50}, 256, 0.3)`;
+        this.context.strokeRect(x, y, w, h);
+      });
     }
   }
 
@@ -234,23 +243,57 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   canvasOnClick(event): void {
-
-    const isIntersect = ( position: number[], bound: number[][]) => {
+    const isIntersect = (position: number[], bound: number[][]) => {
       const [x, y] = position;
       const [[x1, y1], [w, h]] = [bound[0], bound[1]];
-      return (x > x1 && x < x1 + w) && (y > y1 && y < y1 + h);
+      return x > x1 && x < x1 + w && y > y1 && y < y1 + h;
     };
 
     const rect = this.context.canvas.getBoundingClientRect();
 
-    const posX = event.clientX - rect.left;
-    const posY = event.clientY - rect.top;
-
-    console.log(posX, posY);
+    const posX = event.clientX - rect.left - this.offsetX;
+    const posY = event.clientY - rect.top - this.offsetY;
 
     if (this.data[this.currentImage]) {
       for (const result of this.data[this.currentImage].results) {
-        if (isIntersect([posX, posY], result.bounds)){
+        if (isIntersect([posX, posY], result.bounds)) {
+          window.alert(result.text.join(' '));
+          copy(result.text.join(' '));
+          break;
+        }
+      }
+    }
+  }
+
+  // Currently unused, show bounding box text on click with zoom enabled
+  testOnClick(event): void {
+    const isIntersect = (position: number[], bound: number[]) => {
+      const [x, y] = position;
+      const [x1, y1, x2, y2] = bound;
+      return x > x1 && x < x2 && y > y1 && y < y2;
+    };
+
+    const normalizeBounds = (bounds: number[][]) => {
+      let [[x1, y1], [w, h]] = [bounds[0], bounds[1]];
+      x1 = (x1 + this.offsetX) * this.zoom;
+      y1 = (y1 + this.offsetY) * this.zoom;
+      w = w * this.zoom;
+      h = h * this.zoom;
+      return [x1, y1, x1 + w, y1 + h];
+    };
+
+    const rect = this.context.canvas.getBoundingClientRect();
+
+    const posX = event.clientX;
+    const posY = event.clientY;
+
+    this.context.fillRect(posX, posY, 10, 10);
+
+    if (this.data[this.currentImage]) {
+      console.log('start');
+      for (const result of this.data[this.currentImage].results) {
+        console.log(normalizeBounds(result.bounds));
+        if (isIntersect([posX, posY], normalizeBounds(result.bounds))) {
           window.alert(result.text);
           break;
         }

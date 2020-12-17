@@ -15,12 +15,12 @@
     </canvas>
 
     <div class="toolbar">
-      <button class="delete-button"><fa-icon [icon]="deleteIcon"></fa-icon></button>
-      <button class="upload-button btn2" (click)="clickUpload()"><fa-icon [icon]="uploadIcon"></fa-icon>Upload</button>
+      <button class="delete-button"  matTooltip="Delete current menu picture" (click)="deleteCurrentFile()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
+      <button class="upload-button btn2" matTooltip="Upload Menu pictures" (click)="clickUpload()"><fa-icon [icon]="uploadIcon"></fa-icon>Upload</button>
       <input type="file" id="upload-file" (change)="uploadImage($event)" hidden multiple />
       <button class="drag">Drag</button>
-      <select class="template-selector" [(ngModel)]="template" (ngModelChange)="changeTemplate()">
-        <option *ngFor="let temp of templates" [value]="temp">{{temp}}</option>
+      <select class="template-selector" matTooltip="Change Scanning template" [(ngModel)]="template" (ngModelChange)="changeTemplate()">
+        <option *ngFor="let temp of templates" [value]="temp">{{ temp }}</option>
       </select>
       <button class="btn-gray-white angle" [disabled]="currentImage <= 0" (click)="previousImage()">
         <fa-icon [icon]="leftIcon"></fa-icon>
