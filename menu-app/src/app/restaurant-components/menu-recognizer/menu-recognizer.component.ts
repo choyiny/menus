@@ -105,7 +105,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   loadImage(file: string): void {
     this.image.src = file;
     this.image.onload = () => {
-      window.alert(`Width: ${this.image.width}, Height: ${this.image.height}`);
       this.context.drawImage(this.image, 0, 0, this.image.width, this.image.height);
     };
   }
@@ -124,7 +123,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
           return result;
         });
         this.data[i] = data;
-        console.log(this.data);
         if (i === this.currentImage) {
           this.fileReader.readAsDataURL(file);
           this.fileReader.onload = () => this.loadImage(this.fileReader.result as string);
@@ -264,11 +262,7 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
     if (this.data[this.currentImage]) {
       for (const result of this.data[this.currentImage].results) {
-        if (result.text.join(' ') === '$34') {
-          console.log(posX, posY, result.bounds);
-        }
         if (isIntersect([posX, posY], result.bounds)) {
-          window.alert(result.text.join(' '));
           copy(result.text.join(' '));
           break;
         }
@@ -277,37 +271,35 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   // Currently unused, show bounding box text on click with zoom enabled
-  testOnClick(event): void {
-    const isIntersect = (position: number[], bound: number[]) => {
-      const [x, y] = position;
-      const [x1, y1, x2, y2] = bound;
-      return x > x1 && x < x2 && y > y1 && y < y2;
-    };
-
-    const normalizeBounds = (bounds: number[][]) => {
-      let [[x1, y1], [w, h]] = [bounds[0], bounds[1]];
-      x1 = (x1 + this.offsetX) * this.zoom;
-      y1 = (y1 + this.offsetY) * this.zoom;
-      w = w * this.zoom;
-      h = h * this.zoom;
-      return [x1, y1, x1 + w, y1 + h];
-    };
-
-    const rect = this.context.canvas.getBoundingClientRect();
-
-    const posX = event.clientX;
-    const posY = event.clientY;
-
-    this.context.fillRect(posX, posY, 10, 10);
-
-    if (this.data[this.currentImage]) {
-      for (const result of this.data[this.currentImage].results) {
-        console.log(normalizeBounds(result.bounds));
-        if (isIntersect([posX, posY], normalizeBounds(result.bounds))) {
-          window.alert(result.text);
-          break;
-        }
-      }
-    }
-  }
+  // testOnClick(event): void {
+  //   const isIntersect = (position: number[], bound: number[]) => {
+  //     const [x, y] = position;
+  //     const [x1, y1, x2, y2] = bound;
+  //     return x > x1 && x < x2 && y > y1 && y < y2;
+  //   };
+  //
+  //   const normalizeBounds = (bounds: number[][]) => {
+  //     let [[x1, y1], [w, h]] = [bounds[0], bounds[1]];
+  //     x1 = (x1 + this.offsetX) * this.zoom;
+  //     y1 = (y1 + this.offsetY) * this.zoom;
+  //     w = w * this.zoom;
+  //     h = h * this.zoom;
+  //     return [x1, y1, x1 + w, y1 + h];
+  //   };
+  //
+  //   const rect = this.context.canvas.getBoundingClientRect();
+  //
+  //   const posX = event.clientX;
+  //   const posY = event.clientY;
+  //
+  //   this.context.fillRect(posX, posY, 10, 10);
+  //
+  //   if (this.data[this.currentImage]) {
+  //     for (const result of this.data[this.currentImage].results) {
+  //       if (isIntersect([posX, posY], normalizeBounds(result.bounds))) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 }
