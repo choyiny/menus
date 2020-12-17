@@ -15,6 +15,9 @@
       <fa-icon [icon]="checkIcon"></fa-icon>
     </button>
   </div>
+  <div class="item-container">
+    <app-itemv2 *ngFor="let item of section.menu_items" [item]="item" [editMode]="true"></app-itemv2>
+  </div>
   <button class="btn2 new-item" (click)="addMenuItem()">
     <fa-icon [icon]="plusIcon"></fa-icon>
     Add Menu Item

@@ -13,7 +13,6 @@ export class SectionManagerComponent implements OnInit {
   checkIcon = faCheck;
   editIcon = faPencil;
 
-  item: Item;
   @Input() section: Section;
 
   // State
@@ -24,7 +23,9 @@ export class SectionManagerComponent implements OnInit {
   ngOnInit(): void {}
 
   addMenuItem(): void {
-    this.restaurantService.newItem().subscribe((item) => (this.item = item));
+    this.restaurantService.newItem().subscribe((item) => {
+      this.section.menu_items.push(item);
+    });
   }
 
   toggleEditMode(): void {
