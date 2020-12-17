@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from .helper.cv import split_grids, split_lines
 from .helper.utils import img_dimension
-from .helper.vision import detect_text
+from .helper import vision
 
 
 def recognizer_factory(name):
@@ -26,7 +26,8 @@ class BaseRecognizer(ABC):
         """
         self.config = config
 
-    def detect_text(self, image):
+    @staticmethod
+    def detect_text(image):
         """
         Detecing all texts in the given image using Google Cloud Vision. The return format will be an array of
         `{text: [...], points: [...]}` where `text` are the text identified and `points` are the points that form
@@ -34,7 +35,7 @@ class BaseRecognizer(ABC):
 
         `image`: The image in bytes format
         """
-        pass
+        return vision.detect_text(image)
 
     @abstractmethod
     def recognize(self, image):
