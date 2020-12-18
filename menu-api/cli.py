@@ -1,7 +1,9 @@
 from auth.documents.user import User
 from click import argument
 from flask.cli import AppGroup
-from scripts.dumps import dump_menus, dump_description_title
+from scripts.dumps import (
+    dump_menus, dump_description_title
+)
 from scripts.migrations import (
     migrate,
     restaurant_migrations,

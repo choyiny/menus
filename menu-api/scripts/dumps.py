@@ -1,8 +1,8 @@
-from bson.json_util import dumps
 import json
 
 from blueprints.restaurants.documents.menuv2 import MenuV2
 from blueprints.restaurants.documents.restaurant import Restaurant
+from bson.json_util import dumps
 
 
 def dump_menus():
