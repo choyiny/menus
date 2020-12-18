@@ -1,13 +1,13 @@
 from auth.documents.user import User
 from click import argument
 from flask.cli import AppGroup
+from scripts.dumps import dump_menus, dump_description_title
 from scripts.migrations import (
     migrate,
     restaurant_migrations,
     restaurant_permission_migrations,
     user_migrations,
 )
-from scripts.dumps import dump_menus, dump_description_title
 
 
 def register_commands(app):
