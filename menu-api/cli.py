@@ -7,6 +7,7 @@ from scripts.migrations import (
     restaurant_permission_migrations,
     user_migrations,
 )
+from scripts.dumps import dump_menus, dump_description_title
 
 
 def register_commands(app):
@@ -45,5 +46,17 @@ def register_commands(app):
     def migrate_restaurant_permissions():
         restaurant_permission_migrations()
 
+    dump_cli = AppGroup("dump")
+
+    @dump_cli.command("menus")
+    def dump_menus_as_json():
+        dump_menus()
+
+    @dump_cli.command("description_title")
+    @argument("slug")
+    def dump_description_and_title(slug: str):
+        dump_description_title(slug)
+
     app.cli.add_command(auth_cli)
     app.cli.add_command(migration_cli)
+    app.cli.add_command(dump_cli)
