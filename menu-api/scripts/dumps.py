@@ -25,7 +25,6 @@ def dump_description_title(slug: str):
             output.append(f"{item.name}\n")
             output.append(f"{item.description}\n")
 
-    f = open("output.txt", "w")
-    for out in output:
-        f.write(out)
-    f.close()
+    with open("output.txt", "w") as f:
+        for out in output:
+            f.write(out)
