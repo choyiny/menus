@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { Menu, Section } from '../../interfaces/restaurant-interfaces';
+import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
@@ -18,7 +18,6 @@ export class Menuv2Component implements OnInit {
   miniScroll = false;
   previousScroll = 0;
   selectedSection = 0;
-  rearrangeMode = false;
   editMode: boolean;
 
   // Globals
@@ -51,6 +50,10 @@ export class Menuv2Component implements OnInit {
     });
   }
 
+  getSectionLists(): string[] {
+    return this.menu.sections.map((section) => 'd-list-' + section._id);
+  }
+
   newSection(i: number): void {
     this.restaurantService.newSection().subscribe((section) => {
       this.menu.sections.splice(i + 1, 0, section);
@@ -64,19 +67,6 @@ export class Menuv2Component implements OnInit {
 
   update(menu: Menu): void {
     this.menu = menu;
-  }
-
-  drop(event: CdkDragDrop<Section[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -125,17 +115,12 @@ export class Menuv2Component implements OnInit {
     }
   }
 
-  rearrange(): void {
-    this.rearrangeMode = true;
-  }
-
   saveSections(): void {
     this.restaurantService
       .editMenu(this.slug, this.menu.name, { sections: this.menu.sections })
       .subscribe((menu) => {
         this.menu = menu;
       });
-    this.rearrangeMode = false;
   }
 
   updateMenu(menu: Menu): void {
@@ -152,5 +137,30 @@ export class Menuv2Component implements OnInit {
       this.menu = menu;
       this.toggleEditMode();
     });
+  }
+
+  drop(event: CdkDragDrop<Item[]>): void {
+    const sectionId1 = event.previousContainer.id.slice('d-list-'.length);
+    const sectionId2 = event.container.id.slice('d-list-'.length);
+    if (event.previousContainer.id === event.container.id) {
+      const section = this.menu.sections.find(
+        (currentSection) => currentSection._id === sectionId1
+      );
+      moveItemInArray(section.menu_items, event.previousIndex, event.currentIndex);
+    } else {
+      const section1 = this.menu.sections.find((section) => section._id === sectionId1);
+      const section2 = this.menu.sections.find((section) => section._id === sectionId2);
+      transferArrayItem(
+        section1.menu_items,
+        section2.menu_items,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+    this.saveSections();
+  }
+
+  get dropFunc(): any {
+    return this.drop.bind(this);
   }
 }

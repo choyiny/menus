@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { ScrollService } from '../../services/scroll.service';
 import { faPlus, faPen, faTrash, faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
-import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
+import { Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
@@ -17,6 +15,8 @@ export class Sectionv2Component implements OnInit {
   deleteIcon = faTrash;
   faGrip = faArrowsAlt;
   @Input() section: Section;
+  @Input() sectionLists: string[];
+  @Input() drop;
   @Output() menuEmitter = new EventEmitter<Menu>();
   editMode: boolean;
 
@@ -26,7 +26,6 @@ export class Sectionv2Component implements OnInit {
 
   constructor(
     private restaurantService: RestaurantService,
-    private scrollService: ScrollService,
     public restaurantPermissionService: RestaurantPermissionService
   ) {}
 
@@ -66,19 +65,6 @@ export class Sectionv2Component implements OnInit {
 
   updateSection(section: Section): void {
     this.section = section;
-  }
-
-  drop(event: CdkDragDrop<Item[]>): void {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
   }
 
   addMenuItem(): void {
