@@ -1,7 +1,10 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
 <app-img-form-modal [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 
-<div *ngIf="!editMode" class="menu-item">
+<div *ngIf="!editMode" class="menu-item" (click)="expandDetails()" [ngClass]="{ expand: expanded }">
+  <button *ngIf="sectionEdit" class="btn0 desktop grip-handle">
+    <fa-icon [icon]="faGrip"></fa-icon>
+  </button>
   <div class="img-description">
     <div class="logo" (click)="showImage()">
       <img class="img-fluid icon" src="{{ item.image }}" />
@@ -29,14 +32,14 @@
     </app-tagv2>
   </span>
 
-  <button *ngIf="hasPermission" class="btn0 desktop" (click)="edit()">
+  <button *ngIf="hasPermission && !sectionEdit" class="btn0 desktop" (click)="edit()">
     <fa-icon [icon]="faPen"></fa-icon>
   </button>
 </div>
 
 <div *ngIf="editMode" class="menu-item edit-body">
   <div class="item-top">
-    <div class="wrapper" [title]="canUpload ? 'Upload image' : 'Only available on paid plans'">
+    <div class="wrapper" matTooltip="{{ canUpload ? 'Upload image' : 'Only available on paid plans' }}">
       <button class="upload btn2" [disabled]="!canUpload" (click)="cropImage()">
         <fa-icon [icon]="faPlus"></fa-icon>Upload Image
       </button>
@@ -46,7 +49,12 @@
 
   <div class="item-body">
     <input class="item-title" type="text" placeholder="Enter title" [(ngModel)]="item.name" />
-    <quill-editor class="editor" *ngIf="editMode" [(ngModel)]="item.description"> </quill-editor>
+    <quill-editor
+      class="editor"
+      *ngIf="editMode"
+      [(ngModel)]="item.description"
+      placeholder="Enter Item Description"
+    ></quill-editor>
   </div>
 
   <span class="tag-container">

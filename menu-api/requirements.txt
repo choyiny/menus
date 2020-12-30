@@ -39,3 +39,12 @@ firebase-admin==4.0.1
 
 # sengrid
 sendgrid==6.4.7
+
+# gcp
+google-cloud-vision==2.0.0
+
+# OpenCV
+opencv-python
+
+# Numpy
+numpy==1.19.3

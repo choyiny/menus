@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ScrollService } from '../../services/scroll.service';
-import { faPlus, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faPen, faTrash, faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
@@ -15,6 +15,7 @@ export class Sectionv2Component implements OnInit {
   faPlus = faPlus;
   editIcon = faPen;
   deleteIcon = faTrash;
+  faGrip = faArrowsAlt;
   @Input() section: Section;
   @Output() menuEmitter = new EventEmitter<Menu>();
   editMode: boolean;

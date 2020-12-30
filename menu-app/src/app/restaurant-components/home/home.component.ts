@@ -32,6 +32,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   updatePreviewMode(previewMode: boolean): void {
+    if (!previewMode) {
+      this.loadRestaurant();
+    }
     this.previewMode = previewMode;
   }
 
@@ -39,14 +42,7 @@ export class HomeComponent implements OnInit {
     this.restaurant = restaurant;
   }
 
-  ngOnInit(): void {
-    this.slug = this.route.snapshot.params.slug;
-    const user = this.authService.currentUserValue;
-    if (user) {
-      this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
-    } else {
-      this.hasPermission = false;
-    }
+  loadRestaurant(): void {
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe(
         (restaurant) => {
@@ -61,5 +57,20 @@ export class HomeComponent implements OnInit {
         }
       );
     }
+  }
+
+  loadUser(): void {
+    const user = this.authService.currentUserValue;
+    if (user) {
+      this.hasPermission = user.is_admin || user.restaurants.includes(this.slug);
+    } else {
+      this.hasPermission = false;
+    }
+  }
+
+  ngOnInit(): void {
+    this.slug = this.route.snapshot.params.slug;
+    this.loadUser();
+    this.loadRestaurant();
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import {
   Menu,
@@ -8,6 +8,8 @@ import {
   RestaurantTemplate,
 } from '../interfaces/restaurant-interfaces';
 import { environment } from '../../environments/environment';
+import * as FileSaver from 'file-saver';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +37,14 @@ export class AdminService {
     return this.http.patch<Menu>(url, formData);
   }
 
-  generateQR(slug): Observable<Blob> {
+  generateQR(slug): Observable<any> {
     const url = `${environment.settings.endpoint}/admin/generate/${slug}`;
-    return this.http.get(url, { responseType: 'blob' });
+    return this.http.get(url, { responseType: 'blob' }).pipe(
+      mergeMap((blob) => {
+        const fileName = `${slug}.${blob.type}`;
+        FileSaver.saveAs(blob, fileName);
+        return of(blob);
+      })
+    );
   }
 }

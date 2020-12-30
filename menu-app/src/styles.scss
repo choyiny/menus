@@ -11,28 +11,30 @@ $tint-color: #ee3353;
   line-height: normal;
 }
 
-input:focus, textarea:focus, button:focus {
+input:focus,
+textarea:focus,
+button:focus {
   outline: none;
 }
 
 .ql-container {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  height: auto;
 }
 
 .ql-toolbar {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-   & .ql-snow {
-     border-top: solid 1.2px #f0f3f5;
-     border-left: solid 1.2px #f0f3f5;
-     border-right: solid 1.2px #f0f3f5;
-     border-bottom: none;
-   }
+  & .ql-snow {
+    border-top: solid 1.2px #f0f3f5;
+    border-left: solid 1.2px #f0f3f5;
+    border-right: solid 1.2px #f0f3f5;
+    border-bottom: none;
+  }
 }
 
 .editor {
-
   & .ql-toolbar {
     background-color: white;
     border-top: solid 1.2px #f0f3f5;
@@ -42,9 +44,7 @@ input:focus, textarea:focus, button:focus {
   }
 
   & .ql-editor {
-    color: #8c8b91;
     margin-left: 15px;
-
   }
 
   & .ql-container {
@@ -52,6 +52,7 @@ input:focus, textarea:focus, button:focus {
     border-right: solid 1.2px #f0f3f5;
     border-bottom: solid 1.2px #f0f3f5;
     background-color: white;
+    padding-bottom: 15px;
   }
 }
 
@@ -70,15 +71,42 @@ input:focus, textarea:focus, button:focus {
   & strong {
     font-weight: 700;
   }
+
+  &.ql-blank::before {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    left: 0;
+    right: 0;
+  }
+
+  //As a child of a Menu Item and not in edit mode
+  .menu-item:not(.edit-body) & {
+    overflow: hidden;
+    max-height: 2.95em; //specifically to accomodate Chinese char x height
+    width: 90%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    * {
+      cursor: pointer;
+    }
+  }
+
+  .menu-item.expand & {
+    max-height: unset;
+    overflow: unset;
+    display: block;
+  }
 }
 
 .inline {
-
   & .ql-editor {
     display: inline-block;
   }
 
-  & .ql-container{
+  & .ql-container {
     display: inline-block;
   }
 }
@@ -119,7 +147,7 @@ button {
   }
 
   &.bg2-tint {
-    background-color: #4c28ff;;
+    background-color: #4c28ff;
   }
 
   &.round {
@@ -176,8 +204,8 @@ button {
 
 .title {
   background: white;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   & h1 {
     margin-top: 3%;
     margin-bottom: 3%;
@@ -190,8 +218,8 @@ button {
   padding-top: 2%;
   padding-bottom: 2%;
   background-color: white;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .next-button {
@@ -210,4 +238,9 @@ button {
 
 .container {
   background: #f0f3f5;
+}
+
+.d-block.modal {
+  display: flex !important;
+  align-items: center;
 }

@@ -1,0 +1,25 @@
+<ng-template #publish let-modal>
+  <div class="title">
+    <h1>Successfully Published!</h1>
+  </div>
+
+  <div class="container">
+    <p>Congratulations, your menu is now live! copy the link below to view your menu and share with your customers</p>
+
+    <input class="url" type="text" id="copy-url" [value]="url" readonly />
+    <button class="copy" (click)="copyMessage()">Copy</button>
+
+    <p>To download your QR code template, click here:</p>
+    <button class="qr" (click)="downloadQr()" [disabled]="downloading">
+      <fa-icon *ngIf="!downloading" [icon]="qrIcon"></fa-icon>
+      <div *ngIf="downloading" class="d-inline-block">
+        <fa-icon class="fas fa-spinner fa-pulse d-block" [icon]="loadingIcon"></fa-icon>
+      </div>
+      Download Qr code
+    </button>
+  </div>
+
+  <div class="next-step">
+    <button class="btn1 done" (click)="modal.close()">Done</button>
+  </div>
+</ng-template>

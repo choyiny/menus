@@ -1,13 +1,66 @@
-<input type="file" (change)="uploadImage($event)" />
-<div>
-  <canvas
-    #canvas
-    width="1200"
-    height="800"
-    (mousedown)="isMouseDown = true"
-    (mouseup)="isMouseDown = false"
-    (mouseout)="isMouseDown = false"
-    (mousemove)="onMove($event)"
-    (wheel)="onWheel($event)"
-  ></canvas>
+<app-navbar [restaurantName]="'Menu'"></app-navbar>
+<div class="flex-container">
+  <div class="canvas-container">
+    <canvas
+      #canvas
+      class="menu-canvas"
+      (mousedown)="isMouseDown = true"
+      (mouseup)="isMouseDown = false"
+      (mouseout)="isMouseDown = false"
+      (mousemove)="onMove($event)"
+      (click)="canvasOnClick($event)"
+      width="600px"
+      height="600px"
+    >
+    </canvas>
+
+    <div class="toolbar">
+      <button class="delete-button" matTooltip="Delete current menu picture" (click)="deleteCurrentFile()">
+        <fa-icon [icon]="deleteIcon"></fa-icon>
+      </button>
+      <button class="upload-button btn2" matTooltip="Upload Menu pictures" (click)="clickUpload()">
+        <fa-icon [icon]="uploadIcon"></fa-icon>Upload
+      </button>
+      <input type="file" id="upload-file" (change)="uploadImage($event)" hidden multiple />
+      <button class="drag">Drag</button>
+      <select
+        class="template-selector"
+        matTooltip="Change Scanning template"
+        [(ngModel)]="template"
+        (ngModelChange)="changeTemplate()"
+      >
+        <option *ngFor="let temp of templates" [value]="temp">{{ temp }}</option>
+      </select>
+      <button class="btn-gray-white angle" [disabled]="currentImage <= 0" (click)="previousImage()">
+        <fa-icon [icon]="leftIcon"></fa-icon>
+      </button>
+      <label class="btn-gray-white page-of">{{
+        this.files.length ? currentImage + 1 + ' of ' + this.files.length : '0 of 0'
+      }}</label>
+      <button class="btn-gray-white angle" [disabled]="currentImage + 2 > files.length" (click)="nextImage()">
+        <fa-icon [icon]="rightIcon"></fa-icon>
+      </button>
+      <button class="transfer btn1" (click)="transfer()">
+        <fa-icon class="fa-rotate-180 d-inline-block" [icon]="transferIcon"></fa-icon>
+        Transfer
+      </button>
+    </div>
+  </div>
+
+  <div class="menu-manager">
+    <div class="new-menu">
+      <input type="text" placeholder="Add menu title" [(ngModel)]="menu.name" />
+      <div class="rich-editor">
+        <quill-editor class="editor" [placeholder]="'Add Menu Description'"></quill-editor>
+      </div>
+      <button class="btn2">
+        <fa-icon [icon]="plusIcon"></fa-icon>
+        Update background
+      </button>
+    </div>
+    <div class="section-container" *ngIf="menu">
+      <app-section-manager *ngFor="let section of menu.sections" [section]="section"></app-section-manager>
+      <button class="new-section" (click)="addSection()"><fa-icon [icon]="plusIcon"></fa-icon></button>
+    </div>
+  </div>
 </div>

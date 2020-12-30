@@ -1,9 +1,4 @@
 <app-covid-modal [restaurant]="restaurant"></app-covid-modal>
-<!--<app-menu-modal-->
-<!--  [menus]="restaurant.menus"-->
-<!--  (indexEmitter)="setMenu($event)"-->
-<!--  [currentMenu]="currentMenu"-->
-<!--&gt;</app-menu-modal>-->
 <div class="desktop-background">
   <app-mobile-image
     class="mobile"
@@ -13,7 +8,8 @@
   ></app-mobile-image>
   <div
     [ngStyle]="{
-      background: 'url(' + restaurant.image + ')',
+      background: 'linear-gradient(rgb(0 0 0 / 45%), rgb(0 0 0)),
+                    url(' + restaurant.image + ')',
       backgroundSize: '100%',
       backgroundRepeat: 'no repeat'
     }"
@@ -38,7 +34,7 @@
           <fa-icon [icon]="downIcon"></fa-icon>
         </button>
         <app-menuv2 *ngIf="menus[currentMenu]" [menu]="menus[currentMenu]"> </app-menuv2>
-        <ngx-skeleton-loader count="10" [theme]="theme" animation="progress"></ngx-skeleton-loader>
+        <app-menu-loading *ngIf="!menus[currentMenu]"></app-menu-loading>
       </div>
     </div>
   </div>

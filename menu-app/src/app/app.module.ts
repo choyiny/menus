@@ -54,11 +54,17 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MenuLoadingComponent } from './util-components/loading/menu-loading/menu-loading.component';
+import { RestaurantLoadingComponent } from './util-components/loading/restaurant-loading/restaurant-loading.component';
+import { ItemLoadingComponent } from './util-components/loading/item-loading/item-loading.component';
+import { PublishModalComponent } from './util-components/register/publish-modal/publish-modal.component';
+import { SectionManagerComponent } from './restaurant-components/menu-recognizer/section-manager/section-manager.component';
 
 const DragConfig = {
   dragStartThreshold: 0,
   pointerDirectionChangeThreshold: 5,
-  zIndex: 1000,
+  zIndex: 10000,
 };
 
 @NgModule({
@@ -91,7 +97,12 @@ const DragConfig = {
     HomeComponent,
     PreviewComponent,
     MenuModalComponent,
+    MenuLoadingComponent,
+    RestaurantLoadingComponent,
+    ItemLoadingComponent,
+    PublishModalComponent,
     MenuRecognizerComponent,
+    SectionManagerComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +119,7 @@ const DragConfig = {
     NgxSkeletonLoaderModule.forRoot(),
     MatBottomSheetModule,
     DragDropModule,
+    MatTooltipModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [

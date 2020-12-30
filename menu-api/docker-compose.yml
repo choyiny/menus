@@ -1,0 +1,23 @@
+# Docker Compose for development only
+version: "3.7"
+services:
+  # MongoDB
+  pickeasy-mongo:
+    image: mongo
+    ports:
+      - 27020:27017
+    volumes:
+      - pickeasy-mongo-volume:/data/db/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: menu
+  # Redis cache
+  pickeasy-redis:
+    restart: always
+    image: redis
+    ports:
+      - 6380:6379
+
+volumes:
+  pickeasy-mongo-volume:
