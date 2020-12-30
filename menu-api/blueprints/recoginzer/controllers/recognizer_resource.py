@@ -24,6 +24,7 @@ class RecognizerResource(BaseResource):
     @doc(description="""Scan an image and return recognized text""")
     @use_args(file_args, location="files")
     @use_kwargs(RecognizerSchema, location="form")
+    @firebase_login_required
     @marshal_with(MenuRecognizeSchema)
     def post(self, args, **kwargs):
         template = kwargs.get("template")
