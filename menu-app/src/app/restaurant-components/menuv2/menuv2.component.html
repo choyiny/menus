@@ -5,11 +5,12 @@
   [currentSection]="selectedSection"
   (menuEmitter)="updateMenu($event)"
 ></app-scrolling-component>
-<button class="align desktop" *ngIf="rearrangeMode && hasPermission" (click)="saveSections()">Save</button>
 <div class="align">
   <app-sectionv2
     *ngFor="let section of menu.sections; let i = index"
     [section]="section"
+    [sectionLists]="getSectionLists()"
+    [drop]="dropFunc"
     id="{{ section._id }}"
     (menuEmitter)="update($event)"
   >
