@@ -48,7 +48,7 @@
   </div>
 
   <div class="menu-manager">
-    <div class="new-menu">
+    <div class="new-menu" *ngIf="menu">
       <input type="text" placeholder="Add menu title" [(ngModel)]="menu.name" />
       <div class="rich-editor">
         <quill-editor class="editor" [placeholder]="'Add Menu Description'"></quill-editor>

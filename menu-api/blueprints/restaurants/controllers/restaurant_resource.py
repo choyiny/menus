@@ -231,14 +231,15 @@ class MenuResource(RestaurantBaseResource):
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
 
+        # If menu name is already used, add (n) to it
+        # Lunch -> Lunch (1)
         name = kwargs.get("name")
-        if name in restaurant.to_dict()["menus"]:
-            m = re.search("\(\d+\)$", name)
-            if m:
-                n = m.group()[1:-1]
-                name = f"{name[:len(m.group())]} ({n + 1})"
-            else:
-                name = f"{name} (1)"
+        name_set = set(menu["name"] for menu in restaurant.to_dict()["menus"])
+        if name in name_set:
+            names = [elem for elem in name_set if re.match(f"{name} \(\d+\)", elem)]
+            n = max([int(re.search("\(\d+\)$", elem).group()[1:-1]) for elem in names])
+            name = f"{name} ({n + 1})"
+
         menu = MenuV2(name=name)
 
         if kwargs.get("sections"):

@@ -97,14 +97,17 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
       });
     });
     this.restaurantService.addMenu(this.slug, { name: 'Menu', sections: [] }).subscribe((menu) => {
-      this.rPS.setMenuName(menu.name);
       this.menu = menu;
+      this.rPS.setMenuName(menu.name);
     });
   }
 
   addSection(): void {
     this.restaurantService.newSection().subscribe((section) => {
       this.menu.sections.push(section);
+      this.restaurantService
+        .editMenu(this.slug, this.menu.name, this.menu)
+        .subscribe((menu) => (this.menu = menu));
     });
   }
 
