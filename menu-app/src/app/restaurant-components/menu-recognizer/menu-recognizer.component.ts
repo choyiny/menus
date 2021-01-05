@@ -89,11 +89,17 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => (this.slug = params.slug));
-    this.menu = {
-      name: 'Menu',
-      sections: [],
-    };
+    this.route.params.subscribe((params) => {
+      this.slug = params.slug;
+      this.rPS.setSlug(this.slug);
+      this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
+        this.rPS.setRestaurantPermissions(restaurant);
+      });
+    });
+    this.restaurantService.addMenu(this.slug, { name: 'Menu', sections: [] }).subscribe((menu) => {
+      this.rPS.setMenuName(menu.name);
+      this.menu = menu;
+    });
   }
 
   addSection(): void {
@@ -158,7 +164,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
   }
 
   transfer(): void {
-    console.log(this.menu.sections);
     this.restaurantService.addMenu(this.slug, this.menu).subscribe((menu) => (this.menu = menu));
   }
 
