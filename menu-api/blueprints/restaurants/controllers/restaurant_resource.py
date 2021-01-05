@@ -3,6 +3,7 @@ import random
 import string
 import uuid
 from io import BytesIO
+import re
 
 from auth.decorators import firebase_login_preferred, firebase_login_required
 from flask import g
@@ -232,8 +233,12 @@ class MenuResource(RestaurantBaseResource):
 
         name = kwargs.get("name")
         if name in restaurant.to_dict()["menus"]:
-            return MENU_ALREADY_EXISTS
-
+            m = re.search("\(\d+\)$", name)
+            if m:
+                n = m.group()[1:-1]
+                name = f"{name[:len(m.group())]} ({n + 1})"
+            else:
+                name = f"{name} (1)"
         menu = MenuV2(name=name)
 
         if kwargs.get("sections"):
