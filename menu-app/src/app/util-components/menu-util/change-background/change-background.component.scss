@@ -9,4 +9,17 @@
     padding: 8px 24px 8px 24px;
   }
 }
+.no-file {
+    background: #f0f3f5;
+    color:#4c28ff;
+    display: inline-block;
+    border: 0;
+    border-radius: 8px;
+    margin: 2px;
+    padding: 8px 24px 8px 24px;
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-flex;
+}
 

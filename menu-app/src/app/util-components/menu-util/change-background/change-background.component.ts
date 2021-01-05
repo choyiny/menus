@@ -37,8 +37,8 @@ export class ChangeBackgroundComponent implements OnInit {
       });
     }
   }
-
   onChange(event): void {
     this.file = event.target.files[0];
+    document.getElementById('file-label').innerText = event.target.files[0].name;
   }
 }
