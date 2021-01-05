@@ -41,7 +41,7 @@
 
 <div *ngIf="editMode" class="menu-item edit-body" cdkDrag>
   <div class="item-top">
-    <div class="wrapper" matTooltip="{{ canUpload ? 'Upload image' : 'Only available on paid plans' }}">
+    <div class="wrapper" matTooltip="{{ canUpload ? 'Upload image' : 'Please email info@pickeasy.ca for this functionality' }}">
       <button class="upload btn2" [disabled]="!canUpload" (click)="cropImage()">
         <fa-icon [icon]="faPlus"></fa-icon>Upload Image
       </button>
