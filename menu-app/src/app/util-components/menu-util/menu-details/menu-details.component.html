@@ -8,9 +8,12 @@
         'font-size': '30px'
       }"
     ></quill-view-html>
-    <button class="btn0 align-top" *ngIf="!editMode && hasPermission" (click)="edit()">
-      <fa-icon [icon]="editIcon"></fa-icon>
-    </button>
+    <div class = menu-descr>
+      <button class="btn0 align-top" *ngIf="!editMode && hasPermission" (click)="edit()">
+        <fa-icon [icon]="editIcon"></fa-icon>
+      </button>
+      <p class = menu-text>Edit menu description/opening hours, etc</p>
+    </div>
   </div>
   <quill-editor
     *ngIf="editMode"
