@@ -1,9 +1,9 @@
 import datetime
 import random
+import re
 import string
 import uuid
 from io import BytesIO
-import re
 
 from auth.decorators import firebase_login_preferred, firebase_login_required
 from flask import g
