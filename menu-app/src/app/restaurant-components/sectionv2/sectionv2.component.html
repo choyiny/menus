@@ -31,12 +31,11 @@
   <div
     class="row row-item"
     cdkDropList
-    [cdkDropListDisabled]="!editMode"
-    [cdkDropListData]="section.menu_items"
+    id="{{ 'd-list-' + section._id }}"
+    [cdkDropListConnectedTo]="sectionLists"
     (cdkDropListDropped)="drop($event)"
   >
     <app-itemv2
-      cdkDrag
       *ngFor="let item of section.menu_items"
       id="{{ item._id }}"
       [item]="item"
