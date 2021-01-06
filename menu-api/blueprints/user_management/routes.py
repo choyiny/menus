@@ -3,6 +3,7 @@ from .controllers import (
     EmailUserResource,
     UserResource,
     UsersResource,
+    EmailCheckResource,
 )
 
 resources = [
@@ -10,4 +11,5 @@ resources = [
     (UsersResource, "users/<string:firebase_id>", "users", ["GET", "PATCH"]),
     (AnonymousUserResource, "anonymous", "anonymous", ["POST", "PATCH"]),
     (EmailUserResource, "verify", "verify", ["PATCH", "POST"]),
+    (EmailCheckResource, "email/<string:email>", "email", ["GET"]),
 ]

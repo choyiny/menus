@@ -269,3 +269,14 @@ class EmailUserResource(UserManagementBaseResource):
             return user.save()
 
         return INVALID_TOKEN
+
+
+class EmailCheckResource(UserManagementBaseResource):
+    @doc(description="""Get information about a user by email address""")
+    @marshal_with(UserSchema)
+    @firebase_login_required
+    def get(self, email):
+        if not g.user.is_admin:
+            return FORBIDDEN
+        result = User.objects(email=email).first()
+        return result
