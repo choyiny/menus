@@ -256,8 +256,6 @@ class MenuResource(RestaurantBaseResource):
         if "footnote" in kwargs:
             menu.footnote = kwargs.get("footnote")
 
-        print(menu.to_json(), kwargs)
-
         menu.save()
         restaurant.menus.append(menu)
         restaurant.save()
@@ -301,6 +299,7 @@ class SectionResource(RestaurantBaseResource):
         if "description" in kwargs:
             section.description = kwargs.get("description")
 
+        menu.save()
         return section
 
     @doc(description="Delete section from menu")

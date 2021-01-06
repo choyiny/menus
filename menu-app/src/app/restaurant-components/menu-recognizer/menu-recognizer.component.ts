@@ -15,6 +15,7 @@ import { Menu } from '../../interfaces/restaurant-interfaces';
 import { OcrService } from '../../services/ocr.service';
 import { Results } from '../../interfaces/result-interface';
 import copy from 'copy-to-clipboard';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -44,7 +45,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     private rPS: RestaurantPermissionService,
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
-    private ocrService: OcrService
+    private ocrService: OcrService,
+    private authService: AuthService
   ) {}
 
   @ViewChild('canvas', { static: true })
@@ -95,6 +97,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
       this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
         this.rPS.setRestaurantPermissions(restaurant);
       });
+      const user = this.authService.currentUserValue;
+      this.rPS.setPermission(user.is_admin || user.restaurants.includes(this.slug));
     });
     this.restaurantService.addMenu(this.slug, { name: 'Menu', sections: [] }).subscribe((menu) => {
       this.menu = menu;

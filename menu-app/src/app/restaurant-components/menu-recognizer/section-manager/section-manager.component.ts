@@ -40,6 +40,7 @@ export class SectionManagerComponent implements OnInit {
       this.restaurantService
         .editSection(this.slug, this.menuName, this.section)
         .subscribe((section) => {
+          console.log(section);
           this.section = section;
         });
     });
