@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { PublishModalComponent } from '../publish-modal/publish-modal.component';
 import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-signup',
@@ -19,12 +20,14 @@ export class SignupComponent implements OnInit {
     private auth: AngularFireAuth,
     private authService: AuthService,
     private restaurantService: RestaurantService,
-    private restaurantPermissionsService: RestaurantPermissionService
+    private restaurantPermissionsService: RestaurantPermissionService,
+    private userService: UserService
   ) {}
   @ViewChild('signup') signup;
   @ViewChild(PublishModalComponent) publishModal: PublishModalComponent;
   email: string;
   password: string;
+  errorMessage: string;
 
   ngOnInit(): void {}
 
@@ -61,18 +64,24 @@ export class SignupComponent implements OnInit {
   }
 
   next(modal): void {
-    this.auth.user.pipe(take(1)).subscribe((anonymousUser) => {
-      const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
-      anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
-        // check exisitng user here
-        const location = window.location.origin;
-        this.authService.sendEmail(this.email, location).subscribe(() => {
-          window.alert(
-            'After verifying your email, menu is ready for publishing, click publish again to make menu public!'
-          );
-          modal.close();
+    this.userService.getUserByEmail(this.email).subscribe((res) => {
+      if (res.email !== undefined) {
+        this.errorMessage = 'User already in use, please login to access existing account';
+      } else {
+        this.errorMessage = '';
+        this.auth.user.pipe(take(1)).subscribe((anonymousUser) => {
+          const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
+          anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
+            const location = window.location.origin;
+            this.authService.sendEmail(this.email, location).subscribe(() => {
+              window.alert(
+                'After verifying your email, menu is ready for publishing, click publish again to make menu public!'
+              );
+              modal.close();
+            });
+          });
         });
-      });
+      }
     });
   }
 }
