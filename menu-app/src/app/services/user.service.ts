@@ -33,9 +33,4 @@ export class UserService {
     const url = `${environment.settings.endpoint}/users`;
     return this.http.post<UserInterface>(url, info);
   }
-
-  getUserByEmail(email: string): Observable<UserInterface> {
-    const url = `${environment.settings.endpoint}/email/${email}`;
-    return this.http.get<UserInterface>(url);
-  }
 }

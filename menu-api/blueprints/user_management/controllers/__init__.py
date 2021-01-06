@@ -3,5 +3,4 @@ from .user_management_resource import (
     EmailUserResource,
     UserResource,
     UsersResource,
-    EmailCheckResource,
 )
