@@ -237,9 +237,7 @@ class MenuResource(RestaurantBaseResource):
         name_set = set(menu["name"] for menu in restaurant.to_dict()["menus"])
         if name in name_set:
             names = [elem for elem in name_set if re.match(rf"^{name} \(\d+\)$", elem)]
-            n = max(
-                [int(re.search(rf"\(\d+\)$", elem).group()[1:-1]) for elem in names]
-            )
+            n = max([int(re.search(r"\(\d+\)$", elem).group()[1:-1]) for elem in names])
             name = f"{name} ({n + 1})"
 
         menu = MenuV2(name=name)
