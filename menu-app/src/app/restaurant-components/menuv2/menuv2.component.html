@@ -24,7 +24,7 @@
       [style]="footnoteStyle"
     ></quill-view-html>
     <div class="menu-footnote">
-      <p class="textfoot">Edit foot note</p>
+      <p *ngIf="!editMode && hasPermission" class="textfoot">Edit foot note</p>
       <button *ngIf="!editMode && hasPermission" class="align-top desktop btn0">
         <fa-icon [icon]="editIcon" (click)="toggleEditMode()"></fa-icon>
       </button>
