@@ -8,11 +8,23 @@ Note: This project *requires* Python 3.7+ installed. For Mac users, ensure you a
 
 1. Clone this repo or create a new one with this as a template.
 
-1. Create a virtual environment for the project and activate it. Run `pip3 install virtualenv` if virtualenv is not installed on Python3.7+
+2. Ensure Python 3.7.x is installed on your machine, use pyenv
+
     ```
+    $ brew install pyenv
+    $ pyenv install 3.7.x
+    $ eval "$(pyenv init -)"
+    ```
+
+3. Create a virtual environment with pyenv virtualenv 
+
+    ```
+    $ brew install pyenv-virtualenv
     $ cd flask-api-starter  # or your repo name
-    $ virtualenv venv --python=python
-    $ source venv/bin/activate
+    $ eval "$(pyenv init -)"
+    $ eval "$(pyenv virtualenv-init -)"
+    $ pyenv virtualenv 3.7.x <my-virtual-env-name>
+    $ pyenv activate <my-virtual-env-name>
     ```
 
 4. Install the required dependencies, and setup automatic code quality checking with `black`.
