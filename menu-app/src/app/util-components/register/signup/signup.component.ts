@@ -19,13 +19,14 @@ export class SignupComponent implements OnInit {
     private auth: AngularFireAuth,
     private authService: AuthService,
     private restaurantService: RestaurantService,
-    private restaurantPermissionsService: RestaurantPermissionService,
+    private restaurantPermissionsService: RestaurantPermissionService
   ) {}
 
   @ViewChild('signup') signup;
   @ViewChild(PublishModalComponent) publishModal: PublishModalComponent;
   email: string;
   password: string;
+  errorMessage: string;
 
   ngOnInit(): void {}
 
@@ -64,15 +65,21 @@ export class SignupComponent implements OnInit {
   next(modal): void {
     this.auth.user.pipe(take(1)).subscribe((anonymousUser) => {
       const credentials = firebase.auth.EmailAuthProvider.credential(this.email, this.password);
-      anonymousUser.linkWithCredential(credentials).then((userCredentials) => {
-        const location = window.location.origin;
-        this.authService.sendEmail(this.email, location).subscribe(() => {
-          window.alert(
-            'After verifying your email, menu is ready for publishing, click publish again to make menu public!'
-          );
-          modal.close();
-        });
-      });
+      anonymousUser.linkWithCredential(credentials).then(
+        (userCredentials) => {
+          this.errorMessage = '';
+          const location = window.location.origin;
+          this.authService.sendEmail(this.email, location).subscribe(() => {
+            window.alert(
+              'After verifying your email, menu is ready for publishing, click publish again to make menu public!'
+            );
+            modal.close();
+          });
+        },
+        (err) => {
+          this.errorMessage = 'User already in use, please login to access existing account';
+        }
+      );
     });
   }
 }
