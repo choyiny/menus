@@ -44,7 +44,7 @@ Note: This project *requires* Python 3.7+ installed. For Mac users, ensure you a
 Remember to fill any necessary fields in `config.py`.
 1. Make sure you are in your virtualenv that you setup
     ```
-    $ source flask-starter-venv/bin/activate
+    $ pyenv activate  <my-virtual-env-name>
     ```
 2. Start server
     ```
