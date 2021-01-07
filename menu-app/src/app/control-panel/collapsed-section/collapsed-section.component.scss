@@ -9,6 +9,9 @@
 .drag {
   margin-right: 2em;
 }
+.hide-overflow {
+  overflow: hidden
+}
 
 ::ng-deep {
    .section-title .ql-editor {

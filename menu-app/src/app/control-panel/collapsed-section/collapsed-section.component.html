@@ -1,5 +1,5 @@
 <div *ngIf="!editMode" class="section-collapsed" cdkDrag>
-  <div class="section-title inline" style="overflow: hidden">
+  <div class="section-title inline hide-overflow">
     <fa-icon class="align-top drag" [icon]="dragIcon"></fa-icon>
     <quill-view-html *ngIf="!editMode" [content]="section.name"></quill-view-html>
   </div>
