@@ -72,6 +72,17 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       (hasPermission) => (this.hasPermission = hasPermission)
     );
     this.loadMenus();
+    this.route.queryParams.subscribe(params => {
+      const exit_popup = params.exit_popup
+      if (exit_popup) {
+        window.addEventListener('beforeunload', function (e) {
+          e.preventDefault();
+          e.returnValue = '';
+        });
+      }
+    });
+
+
   }
 
   setMenu(index: number): void {
