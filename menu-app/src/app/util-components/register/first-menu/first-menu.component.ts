@@ -51,12 +51,14 @@ export class FirstMenuComponent implements OnInit {
     this.restaurantService.onboard(this.slug, onboarding).subscribe((menu) => {
       modal.close();
       // window.location.reload();
-      window.location.href = window.location.pathname+"?exit_popup=true"
-
-
+      window.location.href = window.location.pathname + '?exit_popup=true';
     });
   }
-
+  cancel(modal): void {
+    // closes modal
+    modal.close();
+    window.location.href = window.location.pathname + '?exit_popup=true';
+  }
   open(): void {
     this.modalService.open(this.firstMenu, this.modalOptions);
   }
