@@ -1,7 +1,14 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
 <app-img-form-modal [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 
-<div *ngIf="!editMode" class="menu-item" (click)="expandDetails()" [ngClass]="{ expand: expanded }" cdkDrag>
+<div
+  *ngIf="!editMode"
+  class="menu-item"
+  (click)="expandDetails()"
+  [ngClass]="{ expand: expanded }"
+  cdkDrag
+  [cdkDragDisabled]="!hasPermission"
+>
   <button *ngIf="sectionEdit" class="btn0 desktop grip-handle">
     <fa-icon [icon]="faGrip"></fa-icon>
   </button>
