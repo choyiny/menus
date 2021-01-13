@@ -9,12 +9,16 @@
 .drag {
   margin-right: 2em;
 }
+.hide-overflow {
+  overflow: hidden
+}
 
 ::ng-deep {
    .section-title .ql-editor {
         font-size: 30px;
         font-weight: 600;
         color: black;
+        overflow: hidden;
         & p {
           font-weight: 600;
         }

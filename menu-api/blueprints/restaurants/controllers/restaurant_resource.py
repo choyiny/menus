@@ -389,7 +389,7 @@ class GenerateItemResource(RestaurantBaseResource):
         if g.user is None:
             return NOT_AUTHENTICATED
 
-        item = Item(_id=uuid.uuid4(), name="New item")
+        item = Item(_id=uuid.uuid4(), name="")
         return item
 
 

@@ -21,3 +21,19 @@
   margin-top: 0.5em;
   float: right;
 }
+
+.menu-footnote {
+  display: flex;
+}
+
+.textfoot {
+  transform: translateY(0.35rem);
+  padding-left: 0.4rem;
+  padding-right: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .textfoot {
+    display: none;
+  }
+}

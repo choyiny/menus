@@ -1,5 +1,6 @@
 <div class="button-container">
   <button class="btn0" *ngIf="!editMode" (click)="edit()"><fa-icon [icon]="addIcon"></fa-icon>Upload Image</button>
-  <input *ngIf="editMode" type="file" class="btn0" (change)="onChange($event)" />
+  <input type="file" (change)="onChange($event)" [hidden]="true" id="files" />
+  <label *ngIf="editMode" class="no-file" for="files" id="file-label">Click here to upload pdf, jpg, jpeg image</label>
   <button *ngIf="editMode" class="btn0" (click)="save()"><fa-icon [icon]="saveIcon"></fa-icon></button>
 </div>

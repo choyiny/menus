@@ -20,3 +20,13 @@
     font-size: 16px;
   }
 }
+
+.menu-descr {
+  display: flex;
+  padding-left: -10rem;
+}
+
+.menu-text {
+  padding-left: 0.5rem;
+  transform:translateY(1rem)
+}

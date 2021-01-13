@@ -23,9 +23,12 @@
       [content]="menu.footnote"
       [style]="footnoteStyle"
     ></quill-view-html>
-    <button *ngIf="!editMode && hasPermission" class="align-top desktop btn0">
-      <fa-icon [icon]="editIcon" (click)="toggleEditMode()"></fa-icon>
-    </button>
+    <div class="menu-footnote">
+      <p *ngIf="!editMode && hasPermission" class="textfoot">Edit foot note</p>
+      <button *ngIf="!editMode && hasPermission" class="align-top desktop btn0">
+        <fa-icon [icon]="editIcon" (click)="toggleEditMode()"></fa-icon>
+      </button>
+    </div>
     <p class="label" *ngIf="editMode">Footnote</p>
     <quill-editor *ngIf="editMode" [(ngModel)]="menu.footnote" class="editor"></quill-editor>
     <button *ngIf="editMode" class="btn1" (click)="saveFootnote()">Save</button>
