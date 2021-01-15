@@ -5,6 +5,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { Menu } from '../../../interfaces/restaurant-interfaces';
+import {Router} from "@angular/router";
+import {RestaurantPermissionService} from "../../../services/restaurantPermission.service";
 
 @Component({
   selector: 'app-first-menu',
@@ -26,7 +28,9 @@ export class FirstMenuComponent implements OnInit {
     private modalService: NgbModal,
     private auth: AuthService,
     private angularAuth: AngularFireAuth,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router,
+    private rPS: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
@@ -56,5 +60,16 @@ export class FirstMenuComponent implements OnInit {
 
   open(): void {
     this.modalService.open(this.firstMenu, this.modalOptions);
+  }
+
+  importNewMenu(modal): void {
+    this.rPS.getSlug().subscribe(
+      slug => {
+        console.log(`${window.location.origin}/menu/${slug}/import`);
+        this.router.navigate([`menu/${slug}/import`]).then(() => {
+          modal.close();
+        });
+      }
+    );
   }
 }
