@@ -92,7 +92,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
         this.restaurantPermissionService.setMenuName(menu.name);
       });
     } else {
-      this.restaurantPermissionService.setMenuName(this.menus[index]);
+      this.restaurantPermissionService.setMenuName(this.menus[index].name);
       this.currentMenu = index;
     }
   }
