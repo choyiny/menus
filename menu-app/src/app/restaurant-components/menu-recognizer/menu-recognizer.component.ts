@@ -16,7 +16,7 @@ import { OcrService } from '../../services/ocr.service';
 import { Results } from '../../interfaces/result-interface';
 import copy from 'copy-to-clipboard';
 import { AuthService } from '../../services/auth.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menu-recognizer',
