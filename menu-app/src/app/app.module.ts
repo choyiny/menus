@@ -60,6 +60,7 @@ import { RestaurantLoadingComponent } from './util-components/loading/restaurant
 import { ItemLoadingComponent } from './util-components/loading/item-loading/item-loading.component';
 import { PublishModalComponent } from './util-components/register/publish-modal/publish-modal.component';
 import { SectionManagerComponent } from './restaurant-components/menu-recognizer/section-manager/section-manager.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -120,6 +121,7 @@ const DragConfig = {
     MatBottomSheetModule,
     DragDropModule,
     MatTooltipModule,
+    MatSnackBarModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [

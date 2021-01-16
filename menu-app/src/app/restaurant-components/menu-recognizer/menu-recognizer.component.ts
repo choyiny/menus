@@ -16,6 +16,7 @@ import { OcrService } from '../../services/ocr.service';
 import { Results } from '../../interfaces/result-interface';
 import copy from 'copy-to-clipboard';
 import { AuthService } from '../../services/auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -46,7 +47,8 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     private restaurantService: RestaurantService,
     private route: ActivatedRoute,
     private ocrService: OcrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {}
 
   @ViewChild('canvas', { static: true })
@@ -287,7 +289,11 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
     if (this.data[this.currentImage]) {
       for (const result of this.data[this.currentImage].results) {
         if (isIntersect([posX, posY], result.bounds)) {
-          copy(result.text.join(' '));
+          const msg = result.text.join(' ');
+          copy(msg);
+          this.snackBar.open(msg, 'copy', {
+            duration: 2000,
+          });
           break;
         }
       }
