@@ -15,7 +15,7 @@ import { Menu } from '../../interfaces/restaurant-interfaces';
 import { OcrService } from '../../services/ocr.service';
 import { Results } from '../../interfaces/result-interface';
 import copy from 'copy-to-clipboard';
-import {AuthService} from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu-recognizer',
@@ -92,7 +92,6 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-
       // Update restaurant details
       this.slug = params.slug;
       this.rPS.setSlug(this.slug);
@@ -105,17 +104,20 @@ export class MenuRecognizerComponent implements AfterViewInit, OnInit {
       this.rPS.setPermission(user.is_admin || user.restaurants.includes(this.slug));
 
       // Get menu from params or create a new one
-      this.route.queryParams.subscribe(queryParams => {
+      this.route.queryParams.subscribe((queryParams) => {
         const menuName = queryParams.menu;
         this.restaurantService.getMenus(this.slug, menuName).subscribe(
-          menu => {
-            this.menu = menuName;
+          (menu) => {
+            this.menu = menu;
+            this.rPS.setMenuName(this.menu.name);
           },
-          err => {
-            this.restaurantService.addMenu(this.slug, { name: 'Menu', sections: [] }).subscribe((newMenu) => {
-              this.menu = newMenu;
-              this.rPS.setMenuName(this.menu.name);
-            });
+          () => {
+            this.restaurantService
+              .addMenu(this.slug, { name: 'Menu', sections: [] })
+              .subscribe((newMenu) => {
+                this.menu = newMenu;
+                this.rPS.setMenuName(this.menu.name);
+              });
           }
         );
       });
