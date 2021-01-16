@@ -60,16 +60,27 @@ button:focus {
   padding: 0 0 0 0;
   position: relative;
 
+  & strong {
+    font-weight: 700;
+  }
+
+  & u {
+    text-decoration: underline;
+    font-style: inherit;
+  }
+
   & p {
     font-weight: 100;
   }
 
   & em {
     font-style: italic;
+    text-decoration: inherit;
   }
 
-  & strong {
-    font-weight: 700;
+  & s {
+    text-decoration: line-through;
+    font-style: inherit;
   }
 
   &.ql-blank::before {

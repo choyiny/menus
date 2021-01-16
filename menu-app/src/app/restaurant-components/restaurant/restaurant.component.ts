@@ -72,6 +72,15 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
       (hasPermission) => (this.hasPermission = hasPermission)
     );
     this.loadMenus();
+    this.route.queryParams.subscribe((params) => {
+      const exit_popup = params.exit_popup;
+      if (exit_popup) {
+        window.addEventListener('beforeunload', function (e) {
+          e.preventDefault();
+          e.returnValue = 'abcs';
+        });
+      }
+    });
   }
 
   setMenu(index: number): void {
@@ -83,7 +92,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
         this.restaurantPermissionService.setMenuName(menu.name);
       });
     } else {
-      this.restaurantPermissionService.setMenuName(this.menus[index]);
+      this.restaurantPermissionService.setMenuName(this.menus[index].name);
       this.currentMenu = index;
     }
   }

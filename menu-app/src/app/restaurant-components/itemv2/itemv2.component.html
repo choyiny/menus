@@ -1,7 +1,14 @@
 <app-img-view-modal image="{{ item.image }}"></app-img-view-modal>
 <app-img-form-modal [itemId]="item._id" (itemEmitter)="setImage($event)"></app-img-form-modal>
 
-<div *ngIf="!editMode" class="menu-item" (click)="expandDetails()" [ngClass]="{ expand: expanded }" cdkDrag>
+<div
+  *ngIf="!editMode"
+  class="menu-item"
+  (click)="expandDetails()"
+  [ngClass]="{ expand: expanded }"
+  cdkDrag
+  [cdkDragDisabled]="!hasPermission"
+>
   <button *ngIf="sectionEdit" class="btn0 desktop grip-handle">
     <fa-icon [icon]="faGrip"></fa-icon>
   </button>
@@ -39,9 +46,12 @@
 
 <!--Edit mode-->
 
-<div *ngIf="editMode" class="menu-item edit-body" cdkDrag>
+<div *ngIf="editMode" class="menu-item edit-body">
   <div class="item-top">
-    <div class="wrapper" matTooltip="{{ canUpload ? 'Upload image' : 'Only available on paid plans' }}">
+    <div
+      class="wrapper"
+      matTooltip="{{ canUpload ? 'Upload image' : 'Please email info@pickeasy.ca for this functionality' }}"
+    >
       <button class="upload btn2" [disabled]="!canUpload" (click)="cropImage()">
         <fa-icon [icon]="faPlus"></fa-icon>Upload Image
       </button>
