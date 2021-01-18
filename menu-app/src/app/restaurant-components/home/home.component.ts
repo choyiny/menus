@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { AuthService } from '../../services/auth.service';
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private restaurantService: RestaurantService,
     private authService: AuthService,
     private restaurantPermissionService: RestaurantPermissionService
@@ -70,6 +71,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
+    if (String(this.route.snapshot.routeConfig.path).substring(0, 4) === 'menu') {
+      this.router.navigateByUrl(`/restaurants/${this.slug}?from=legacy`);
+    }
     this.loadUser();
     this.loadRestaurant();
   }
