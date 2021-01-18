@@ -4,6 +4,7 @@ import { Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { RestaurantService } from '../../services/restaurant.service';
+import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
 @Component({
   selector: 'app-manage-sections',
@@ -18,8 +19,14 @@ export class ManageSectionsComponent implements OnInit {
 
   // icons
   addIcon = faPlus;
+  slug: string;
+  menuName: string;
 
-  constructor(private modalService: NgbModal, private restaurantService: RestaurantService) {}
+  constructor(
+    private modalService: NgbModal,
+    private restaurantService: RestaurantService,
+    private restaurantPermissionService: RestaurantPermissionService
+  ) {}
 
   parse(sections: Section[]): Section[] {
     return JSON.parse(JSON.stringify(sections));
@@ -27,9 +34,18 @@ export class ManageSectionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.originalSections = this.parse(this.sections);
+    this.restaurantPermissionService.getSlug().subscribe((slug) => {
+      this.slug = slug;
+    });
+    this.restaurantPermissionService.getMenuName().subscribe((menuName) => {
+      this.menuName = menuName;
+    });
   }
 
   open(): void {
+    this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {
+      this.originalSections = menu.sections;
+    });
     this.modalService.open(this.modal);
   }
 
