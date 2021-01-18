@@ -30,6 +30,9 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   open(): void {
+    if(this.originalSections !== this.parse(this.sections)){
+      this.originalSections=this.parse(this.sections);
+    }
     this.modalService.open(this.modal);
   }
 
