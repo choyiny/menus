@@ -71,9 +71,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.slug = this.route.snapshot.params.slug;
-    if (String(this.route.snapshot.routeConfig.path).substring(0, 4) === 'menu') {
-      this.router.navigateByUrl(`/restaurants/${this.slug}?from=legacy`);
-    }
     this.loadUser();
     this.loadRestaurant();
   }
