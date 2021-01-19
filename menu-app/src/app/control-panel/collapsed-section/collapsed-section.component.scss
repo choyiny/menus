@@ -1,22 +1,38 @@
 .section-collapsed {
-  margin: 10px 10px 20px 10px;
+  margin: 10px 10px 10px 10px;
   padding: 4px 13px 9px 10px;
   border-radius: 8px;
   background-color: #ffffff;
   position: relative;
+  display: flex;
 }
 
-.drag {
-  margin-right: 2em;
+.grip-handle {
+  margin-right: 1em;
+
+  & fa-icon {
+    color: #4c28ff;
+  }
+
+  &:hover {
+    cursor: grab;
+  }
 }
+
 .hide-overflow {
   overflow: hidden
 }
 
+.section-title {
+  display: flex;
+  align-items: center;
+}
+
 ::ng-deep {
    .section-title .ql-editor {
-        font-size: 30px;
+        font-size: 20px;
         font-weight: 600;
+        vertical-align: middle;
         color: black;
         overflow: hidden;
         & p {
@@ -25,10 +41,9 @@
       }
 }
 
+
 .icons {
-  position: absolute;
-  right: 0;
-  top: 0;
+  margin-left: auto;
 }
 
 .section-collapsed-edit {
