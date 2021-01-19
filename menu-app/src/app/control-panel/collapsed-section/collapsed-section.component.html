@@ -1,7 +1,9 @@
 <div *ngIf="!editMode" class="section-collapsed" cdkDrag>
   <div class="section-title inline hide-overflow">
-    <fa-icon class="align-top drag" [icon]="dragIcon"></fa-icon>
-    <quill-view-html *ngIf="!editMode" [content]="section.name"></quill-view-html>
+    <button class="btn0 desktop grip-handle">
+      <fa-icon class="align-top drag" [icon]="dragIcon"></fa-icon>
+    </button>
+    <quill-view-html class="section-name" *ngIf="!editMode" [content]="section.name"></quill-view-html>
   </div>
   <div class="icons">
     <button class="bg-tint" (click)="delete()"><fa-icon [icon]="deleteIcon"></fa-icon></button>
