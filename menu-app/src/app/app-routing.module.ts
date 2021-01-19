@@ -21,7 +21,8 @@ const routes: Routes = [
   },
   {
     path: 'menu/:slug',
-    component: HomeComponent,
+    redirectTo: '/restaurants/:slug' + '?from=legacy',
+    pathMatch: 'full',
   },
   {
     path: 'menu/:slug/import',
