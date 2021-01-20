@@ -254,10 +254,17 @@ button {
 .d-block.modal {
   display: flex!important;
   align-items: center;
+
   .modal-dialog {
-    max-width: 50vw;
+    margin: auto;
   }
-  .modal-content {
-    width: 40vw;
+  
+  @media screen and (min-width: 600px) {    
+    .modal-dialog {
+      max-width: 50vw;
+    }
+    .modal-content {
+      width: 40vw;
+    }
   }
 }
