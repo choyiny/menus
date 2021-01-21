@@ -31,6 +31,25 @@ class SectionV2Schema(Schema):
     subtitle = fields.Str(description="Headers for section anchors", allow_none=True)
 
 
+class MenuVersionSchema(Schema):
+    name = fields.Str(description="Name of the menu", example="lunch", required=True)
+    sections = fields.List(fields.Nested(SectionV2Schema, required=True))
+    start = fields.Int(
+        description="Start time for menu interval in the form of total seconds elapsed from 12:00 am",
+        example=46500,
+    )
+    end = fields.Int(
+        description="End time for menu interval in the form of total seconds elapsed from 12:00 am",
+        example=51000,
+    )
+    footnote = fields.Str(
+        description="footnote at bottom of page",
+        example="All items are peanut free",
+        allow_none=True,
+    )
+    save_time = fields.DateTime(format="%d/%m/%Y %H:%M:%S")
+
+
 class MenuV2Schema(Schema):
     name = fields.Str(description="Name of the menu", example="lunch", required=True)
     sections = fields.List(fields.Nested(SectionV2Schema, required=True))
@@ -47,6 +66,7 @@ class MenuV2Schema(Schema):
         example="All items are peanut free",
         allow_none=True,
     )
+    versions = fields.List(fields.Nested(MenuVersionSchema))
 
 
 class EditMenuV2Schema(Schema):

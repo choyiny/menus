@@ -1,7 +1,8 @@
-import datetime
 import random
 import string
+import sys
 import uuid
+from datetime import datetime
 from io import BytesIO
 
 from auth.decorators import firebase_login_preferred, firebase_login_required
@@ -23,7 +24,7 @@ from utils.errors import (
 from webargs.flaskparser import use_args
 
 from ...admin.schemas import CreateRestaurantSchema, file_args
-from ..documents.menuv2 import Item, MenuV2, Section, Tag
+from ..documents.menuv2 import Item, MenuV2, MenuVersion, Section, Tag
 from ..documents.restaurant import Restaurant
 from ..schemas import (
     EditMenuV2Schema,
@@ -173,8 +174,8 @@ class MenuResource(RestaurantBaseResource):
             menu.name = name
 
         if "footnote" in kwargs:
-            menu.footnote = kwargs.get("footnote")
-
+            footnote = kwargs.get("footnote")
+            menu.footnote = footnote
         if "sections" in kwargs:
             # temporary fix so db gets updated, not sure why changes aren't detected otherwise
             menu.sections = []
@@ -184,11 +185,26 @@ class MenuResource(RestaurantBaseResource):
             ]
 
         if "start" in kwargs:
-            menu.start = kwargs.get("start")
+            start = kwargs.get("start")
+            menu.start = start
 
         if "end" in kwargs:
-            menu.end = kwargs.get("end")
+            end = kwargs.get("end")
+            menu.start = end
 
+        version = MenuVersion(
+            save_time=datetime.now(),
+            name=menu.name,
+            footnote=menu.footnote,
+            sections=menu.sections,
+            start=menu.start,
+            end=menu.end,
+        )
+        # if menu.versions[-1] != version:
+        #     version.save()
+        #     menu.versions.append(version)
+        version.save()
+        menu.versions.append(version)
         menu.save()
         return menu
 
@@ -209,7 +225,11 @@ class MenuResource(RestaurantBaseResource):
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
+
         restaurant.menus.remove(menu)
+        for version in menu.versions:
+            version.delete()
+
         menu.delete()
         restaurant.save()
         return restaurant.to_dict()
@@ -234,7 +254,9 @@ class MenuResource(RestaurantBaseResource):
         if name in restaurant.to_dict()["menus"]:
             return MENU_ALREADY_EXISTS
         menu = MenuV2(name=name)
+
         menu.save()
+
         restaurant.menus.append(menu)
         restaurant.save()
         return menu
@@ -276,7 +298,19 @@ class SectionResource(RestaurantBaseResource):
 
         if "description" in kwargs:
             section.description = kwargs.get("description")
-
+        version = MenuVersion(
+            save_time=datetime.now(),
+            name=menu.name,
+            footnote=menu.footnote,
+            sections=menu.sections,
+            start=menu.start,
+            end=menu.end,
+        )
+        # if menu.versions[-1] != version:
+        #     version.save()
+        #     menu.versions.append(version)
+        version.save()
+        menu.versions.append(version)
         menu.save()
         return section
 
@@ -302,6 +336,19 @@ class SectionResource(RestaurantBaseResource):
             return SECTION_NOT_FOUND
 
         menu.sections.remove(section)
+        version = MenuVersion(
+            save_time=datetime.now(),
+            name=menu.name,
+            footnote=menu.footnote,
+            sections=menu.sections,
+            start=menu.start,
+            end=menu.end,
+        )
+        # if menu.versions[-1] != version:
+        #     version.save()
+        #     menu.versions.append(version)
+        version.save()
+        menu.versions.append(version)
         menu.save()
         return menu
 
@@ -340,6 +387,19 @@ class ItemResource(RestaurantBaseResource):
         if "tags" in kwargs:
             item.tags = [Tag(**tag) for tag in kwargs["tags"]]
 
+        version = MenuVersion(
+            save_time=datetime.now(),
+            name=menu.name,
+            footnote=menu.footnote,
+            sections=menu.sections,
+            start=menu.start,
+            end=menu.end,
+        )
+        # if menu.versions[-1] != version:
+        #     version.save()
+        #     menu.versions.append(version)
+        version.save()
+        menu.versions.append(version)
         menu.save()
         return item
 
@@ -365,6 +425,19 @@ class ItemResource(RestaurantBaseResource):
             for item in section.menu_items:
                 if item._id == item_id:
                     section.menu_items.remove(item)
+                    version = MenuVersion(
+                        save_time=datetime.now(),
+                        name=menu.name,
+                        footnote=menu.footnote,
+                        sections=menu.sections,
+                        start=menu.start,
+                        end=menu.end,
+                    )
+                    # if menu.versions[-1] != version:
+                    #     version.save()
+                    #     menu.versions.append(version)
+                    version.save()
+                    menu.versions.append(version)
                     menu.save()
                     return section
         return ITEM_NOT_FOUND
@@ -506,7 +579,11 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         if g.user.restaurants:
             return g.user.restaurants[0]
 
-        menu = MenuV2(name="Menu").save()
+        menu = MenuV2(name="Menu")
+        version = MenuVersion(name="Menu", save_time=datetime.now())
+        version.save()
+        menu.versions.append(version)
+        menu.save()
 
         random_slug = "".join(
             random.choices(string.ascii_uppercase + string.digits, k=7)
@@ -563,3 +640,31 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
         menu.save()
         restaurant.save()
         return menu
+
+
+# class MenuVersionResource(RestaurantBaseResource):
+#     @doc(description="revert menu")
+#     @marshal_with(MenuV2Schema)
+#     @firebase_login_required
+#     def patch(self, slug: str, menu_name: str, version):
+#
+#         if g.user is None:
+#             return NOT_AUTHENTICATED
+#
+#         if not g.user.has_permission(slug):
+#             return FORBIDDEN
+#
+#         restaurant = Restaurant.objects(slug=slug).first()
+#         if restaurant is None:
+#             return RESTAURANT_NOT_FOUND
+#         menu = restaurant.get_menu(menu_name)
+#         if menu is None:
+#             return MENU_NOT_FOUND
+#
+#         restaurant.menus.remove(menu)
+#         for version in menu.versions:
+#             version.delete()
+#
+#         menu.delete()
+#         restaurant.save()
+#         return restaurant.to_dict()

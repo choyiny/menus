@@ -1,11 +1,14 @@
+from datetime import datetime
 from typing import Optional
 
 from mongoengine import (
+    DateTimeField,
     Document,
     EmbeddedDocument,
     EmbeddedDocumentField,
     IntField,
     ListField,
+    ReferenceField,
     StringField,
     URLField,
 )
@@ -135,6 +138,11 @@ class MenuV2(Document):
     Menu footnote at the bottom of the page
     """
 
+    versions = ListField(ReferenceField("MenuVersion"), default=list)
+    """
+    List of versions for this menu
+    """
+
     def get_section(self, section_id: str) -> Optional[Section]:
         """ get section of this menu """
         for section in self.sections:
@@ -157,3 +165,60 @@ class MenuV2(Document):
 
     def __eq__(self, other):
         return type(self) == type(other) and self.name == other.name
+
+
+class MenuVersion(Document):
+    """
+    A version of the menu.
+    """
+
+    name = StringField()
+    """
+    name of this menu 
+    """
+    sections = ListField(EmbeddedDocumentField(Section), default=list)
+    """
+    List of ordered sections
+    """
+
+    start = IntField()
+    """
+    Start interval for when this menu is the defaulted menu for its corresponding restaurant
+    """
+
+    end = IntField()
+    """
+    End interval for when this menu is the defaulted menu for its corresponding restaurant
+    """
+
+    footnote = StringField(default="")
+    """
+    Menu footnote at the bottom of the page
+    """
+
+    save_time = DateTimeField(required=True)
+    """
+    Time of version creation
+    """
+    # def sections_equal(self, other):
+    #     if self.sections.length != other.sections.length:
+    #         return False
+    #     for i in range(len(self.sections)):
+    #         if self.sections[i] != other.sections.length
+
+    def revert(self, menu: MenuV2):
+        menu.name = self.name
+        menu.sections = self.sections
+        menu.start = self.start
+        menu.end = self.end
+        menu.footnote = self.footnote
+
+    def __eq__(self, other):
+        return (
+            type(self) == type(other)
+            and self.name == other.name
+            and self.sections == other.sections
+            and self.start == other.start
+            and self.end == other.end
+            and self.footnote == other.footnote
+        )
