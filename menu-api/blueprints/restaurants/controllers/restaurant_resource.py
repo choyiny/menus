@@ -347,9 +347,9 @@ class SectionResource(RestaurantBaseResource):
         # if menu.versions[-1] != version:
         #     version.save()
         #     menu.versions.append(version)
-        version.save()
-        menu.versions.append(version)
-        menu.save()
+        # version.save()
+        # menu.versions.append(version)
+        # menu.save()
         return menu
 
 

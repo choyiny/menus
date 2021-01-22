@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
+import {Item, Menu, MenuEditable, Section} from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
@@ -13,9 +13,14 @@ import { faPencil } from '@fortawesome/pro-solid-svg-icons';
 export class Menuv2Component implements OnInit {
   // Model
   @Input() menu: Menu;
+  @Input() sections: Section[];
+  @Input() section: Section;
+
 
   // State
   miniScroll = false;
+  menuEditable: MenuEditable = {};
+  edited = false;
   previousScroll = 0;
   selectedSection = 0;
   editMode: boolean;
@@ -67,6 +72,7 @@ export class Menuv2Component implements OnInit {
 
   update(menu: Menu): void {
     this.menu = menu;
+    console.log('update')
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -115,12 +121,17 @@ export class Menuv2Component implements OnInit {
     }
   }
 
-  saveSections(): void {
-    this.restaurantService
-      .editMenu(this.slug, this.menu.name, { sections: this.menu.sections })
-      .subscribe((menu) => {
-        this.menu = menu;
-      });
+  saveSections(sections: Section[]): void {
+    console.log('saved sections')
+    this.menuEditable.sections = sections;
+    this.menu.sections = sections;
+    this.edited = true;
+  }
+
+  saveSection(): void {
+    console.log('saved section')
+    this.menuEditable.sections = this.menu.sections;
+    this.edited = true;
   }
 
   updateMenu(menu: Menu): void {
@@ -132,11 +143,10 @@ export class Menuv2Component implements OnInit {
   }
 
   saveFootnote(): void {
-    const menuEditable = { footnote: this.menu.footnote };
-    this.restaurantService.editMenu(this.slug, this.menu.name, menuEditable).subscribe((menu) => {
-      this.menu = menu;
-      this.toggleEditMode();
-    });
+    this.toggleEditMode();
+
+    this.menuEditable.footnote = this.menu.footnote;
+    this.edited = true;
   }
 
   drop(event: CdkDragDrop<Item[]>): void {
@@ -157,7 +167,16 @@ export class Menuv2Component implements OnInit {
         event.currentIndex
       );
     }
-    this.saveSections();
+  }
+  savePage(): void {
+    console.log(this.edited)
+    if (this.edited) {
+      this.restaurantService.editMenu(this.slug, this.menu.name, this.menuEditable).subscribe((menu) => {
+        window.alert('SAVED')
+        console.log('saved')
+        this.edited = false
+      })
+    }
   }
 
   get dropFunc(): any {

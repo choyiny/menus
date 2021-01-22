@@ -39,9 +39,12 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   newSection(): void {
+    console.log('adding new section')
     this.restaurantService.newSection().subscribe((section) => {
       this.originalSections.push(section);
+      // this.sectionEmitter.emit(this.originalSections);
     });
+
   }
 
   deleteSection(i): void {

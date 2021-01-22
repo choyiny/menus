@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus, faPen, faTrash, faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
-import { Menu, Section } from '../../interfaces/restaurant-interfaces';
+import {Item, Menu, Section} from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
@@ -17,7 +17,9 @@ export class Sectionv2Component implements OnInit {
   @Input() section: Section;
   @Input() sectionLists: string[];
   @Input() drop;
+  @Input() item: Item;
   @Output() menuEmitter = new EventEmitter<Menu>();
+  @Output() sectionEmitter2 = new EventEmitter<Section>();
   editMode: boolean;
 
   slug: string;
@@ -48,14 +50,16 @@ export class Sectionv2Component implements OnInit {
   }
 
   editSection(): void {
-    this.restaurantService.editSection(this.slug, this.menuName, this.section).subscribe(
-      (section) => {
-        this.section = section;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    console.log('edited a section')
+    this.sectionEmitter2.emit()
+    // this.restaurantService.editSection(this.slug, this.menuName, this.section).subscribe(
+    //   (section) => {
+    //     this.section = section;
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
     this.editMode = false;
   }
 
@@ -64,6 +68,7 @@ export class Sectionv2Component implements OnInit {
   }
 
   updateSection(section: Section): void {
+    console.log('updating section')
     this.section = section;
   }
 

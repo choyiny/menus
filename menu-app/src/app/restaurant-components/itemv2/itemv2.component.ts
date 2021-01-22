@@ -17,6 +17,7 @@ export class Itemv2Component implements OnInit {
   @ViewChild(ImgViewModalComponent) imgView: ImgViewModalComponent;
   @ViewChild(ImgFormModalComponent) imgForm: ImgFormModalComponent;
   @Output() sectionEmitter = new EventEmitter<Section>();
+  @Output() itemEmitter = new EventEmitter<Item>();
   @Input() editMode: boolean;
   @Input() sectionEdit: boolean;
 
@@ -99,7 +100,9 @@ export class Itemv2Component implements OnInit {
   }
 
   save(): void {
-    this.editItem();
+    this.edit();
+    console.log("save item")
+    this.itemEmitter.emit();
     this.editMode = false;
   }
 
