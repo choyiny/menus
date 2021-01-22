@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Restaurant } from '../../interfaces/restaurant-interfaces';
+import { Restaurant, Menu, MenuVersion } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AdminService } from '../../services/admin.service';
 
@@ -22,6 +22,7 @@ export class MenuDashboardComponent implements OnInit {
 
   restaurant: Restaurant;
   file: File;
+  menu: Menu;
   slug: string;
   configureContactTracing = false;
   contactTracingForm: FormGroup;
@@ -29,6 +30,7 @@ export class MenuDashboardComponent implements OnInit {
   menuBody: FormGroup;
   qrcodeLink: string;
   configureQrCodeLink = false;
+  selectedVersion: MenuVersion;
 
   // Constants
   hours = [...Array(24).keys()];
@@ -45,7 +47,6 @@ export class MenuDashboardComponent implements OnInit {
       name: [''],
     });
   }
-
   load(): void {
     if (this.slug != null) {
       this.restaurantService.getRestaurant(this.slug).subscribe((restaurant) => {
@@ -61,6 +62,9 @@ export class MenuDashboardComponent implements OnInit {
 
   initTime(): void {
     const menu = this.restaurant.menus.find((lazyMenu) => lazyMenu.name === this.selectedMenu);
+    this.restaurantService.getMenus(this.slug, this.selectedMenu).subscribe((res) => {
+      this.menu = res;
+    });
     const resetTime = () => {
       this.startHour = 0;
       this.startMinute = 0;
@@ -177,6 +181,19 @@ export class MenuDashboardComponent implements OnInit {
     });
   }
 
+  revertMenu(): void {
+    const name = this.selectedVersion.name;
+    const sections = this.selectedVersion.sections;
+    //Start & End times not working ATM
+    // const start = this.selectedVersion.start
+    // const end = this.selectedVersion.end
+    const footnote = this.selectedVersion.footnote;
+    this.restaurantService
+      .editMenu(this.slug, this.selectedMenu, { sections, footnote, name })
+      .subscribe(() => {
+        window.alert('Reverted');
+      });
+  }
   updateCanUpload(): void {
     this.restaurantService
       .editRestaurant(this.slug, { can_upload: !this.restaurant.can_upload })
@@ -185,4 +202,15 @@ export class MenuDashboardComponent implements OnInit {
         window.alert(`Image upload ${restaurant.can_upload ? 'enabled' : 'disabled'}`);
       });
   }
+
+  // getVersions(): string[] {
+  //   this.selectedMenu
+  //   pm[0] = '12 Pm';
+  //   return [...am, ...pm];
+  // }
+  // versionOptions(): string[] {
+  //   this.menu = this.restaurantService.getMenus(this.slug, this.selectedMenu)
+  //
+  //   return ['Make new menus', ...this.restaurant.menus.map((menu) => menu.name)];
+  // }
 }
