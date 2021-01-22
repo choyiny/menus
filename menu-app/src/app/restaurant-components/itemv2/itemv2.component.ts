@@ -107,11 +107,14 @@ export class Itemv2Component implements OnInit {
   }
 
   remove(): void {
-    this.restaurantService
-      .deleteItem(this.slug, this.menuName, this.item._id)
-      .subscribe((section) => {
-        this.sectionEmitter.emit(section);
-      });
+    try {
+      this.restaurantService
+        .deleteItem(this.slug, this.menuName, this.item._id)
+        .subscribe((section) => {
+          this.sectionEmitter.emit(section);
+        });
+    } catch {
+    }
   }
 
   editItem(): void {

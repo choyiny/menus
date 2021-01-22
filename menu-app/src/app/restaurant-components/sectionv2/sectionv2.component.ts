@@ -70,28 +70,30 @@ export class Sectionv2Component implements OnInit {
   updateSection(section: Section): void {
     console.log('updating section')
     this.section = section;
+    this.sectionEmitter2.emit()
   }
 
   addMenuItem(): void {
     this.restaurantService.newItem().subscribe((item) => {
       this.section.menu_items.push(item);
-      this.restaurantService
-        .editSection(this.slug, this.menuName, this.section)
-        .subscribe((section) => {
-          this.section = section;
-          const observer = new MutationObserver((mutations, self) => {
-            const newItem = document.getElementById(item._id);
-            if (newItem) {
-              // find component and then manually set editMode to True
-              self.disconnect();
-              return;
-            }
-          });
-          observer.observe(document, {
-            childList: true,
-            subtree: true,
-          });
-        });
+      this.sectionEmitter2.emit(this.section)
+      // this.restaurantService
+      //   .editSection(this.slug, this.menuName, this.section)
+      //   .subscribe((section) => {
+      //     this.section = section;
+      //     const observer = new MutationObserver((mutations, self) => {
+      //       const newItem = document.getElementById(item._id);
+      //       if (newItem) {
+      //         // find component and then manually set editMode to True
+      //         self.disconnect();
+      //         return;
+      //       }
+      //     });
+      //     observer.observe(document, {
+      //       childList: true,
+      //       subtree: true,
+      //     });
+      //   });
     });
   }
 }

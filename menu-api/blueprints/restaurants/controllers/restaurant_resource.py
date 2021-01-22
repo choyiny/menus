@@ -436,9 +436,9 @@ class ItemResource(RestaurantBaseResource):
                     # if menu.versions[-1] != version:
                     #     version.save()
                     #     menu.versions.append(version)
-                    version.save()
-                    menu.versions.append(version)
-                    menu.save()
+                    # version.save()
+                    # menu.versions.append(version)
+                    # menu.save()
                     return section
         return ITEM_NOT_FOUND
 
