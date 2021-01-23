@@ -130,6 +130,7 @@ export class Menuv2Component implements OnInit {
 
   saveSection(): void {
     console.log('saved section')
+    console.log( this.menu.sections)
     this.menuEditable.sections = this.menu.sections;
     this.edited = true;
   }

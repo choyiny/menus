@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ImgViewModalComponent } from '../../util-components/image-util/img-view-modal/img-view-modal.component';
 import { ImgFormModalComponent } from '../../util-components/image-util/img-form-modal/img-form-modal.component';
 import { faPlus, faPen, faTrash, faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
-import { Item, Section, Tag } from '../../interfaces/restaurant-interfaces';
+import {Item, MenuEditable, Section, Tag} from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
@@ -33,6 +33,7 @@ export class Itemv2Component implements OnInit {
   menuName: string;
   hasPermission: boolean;
   canUpload: boolean;
+  menuEditable: MenuEditable = {};
 
   constructor(
     private restaurantService: RestaurantService,
@@ -107,14 +108,18 @@ export class Itemv2Component implements OnInit {
   }
 
   remove(): void {
-    try {
-      this.restaurantService
-        .deleteItem(this.slug, this.menuName, this.item._id)
-        .subscribe((section) => {
-          this.sectionEmitter.emit(section);
-        });
-    } catch {
-    }
+    this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {
+      for (let i=0; i<menu.sections.length;i++) {
+        for (let j=0; j<menu.sections[i].menu_items.length;j++) {
+          if (menu.sections[i].menu_items[j]._id === this.item._id) {
+            console.log(menu.sections[i])
+            menu.sections[i].menu_items.splice(j,1)
+            this.sectionEmitter.emit(menu.sections[i]);
+            return;
+          }
+        }
+      }
+    });
   }
 
   editItem(): void {

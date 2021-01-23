@@ -51,7 +51,7 @@ export class Sectionv2Component implements OnInit {
 
   editSection(): void {
     console.log('edited a section')
-    this.sectionEmitter2.emit()
+    this.sectionEmitter2.emit(this.section)
     // this.restaurantService.editSection(this.slug, this.menuName, this.section).subscribe(
     //   (section) => {
     //     this.section = section;
@@ -70,7 +70,8 @@ export class Sectionv2Component implements OnInit {
   updateSection(section: Section): void {
     console.log('updating section')
     this.section = section;
-    this.sectionEmitter2.emit()
+    console.log(section)
+    this.sectionEmitter2.emit(this.section)
   }
 
   addMenuItem(): void {
