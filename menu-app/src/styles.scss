@@ -11,7 +11,9 @@ $tint-color: #ee3353;
   line-height: normal;
 }
 
-input:focus, textarea:focus, button:focus {
+input:focus,
+textarea:focus,
+button:focus {
   outline: none;
 }
 
@@ -24,16 +26,15 @@ input:focus, textarea:focus, button:focus {
 .ql-toolbar {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-   & .ql-snow {
-     border-top: solid 1.2px #f0f3f5;
-     border-left: solid 1.2px #f0f3f5;
-     border-right: solid 1.2px #f0f3f5;
-     border-bottom: none;
-   }
+  & .ql-snow {
+    border-top: solid 1.2px #f0f3f5;
+    border-left: solid 1.2px #f0f3f5;
+    border-right: solid 1.2px #f0f3f5;
+    border-bottom: none;
+  }
 }
 
 .editor {
-
   & .ql-toolbar {
     background-color: white;
     border-top: solid 1.2px #f0f3f5;
@@ -51,6 +52,7 @@ input:focus, textarea:focus, button:focus {
     border-right: solid 1.2px #f0f3f5;
     border-bottom: solid 1.2px #f0f3f5;
     background-color: white;
+    padding-bottom: 15px;
   }
 }
 
@@ -108,16 +110,14 @@ input:focus, textarea:focus, button:focus {
     overflow: unset;
     display: block;
   }
-
 }
 
 .inline {
-
   & .ql-editor {
     display: inline-block;
   }
 
-  & .ql-container{
+  & .ql-container {
     display: inline-block;
   }
 }
@@ -158,7 +158,7 @@ button {
   }
 
   &.bg2-tint {
-    background-color: #4c28ff;;
+    background-color: #4c28ff;
   }
 
   &.round {
@@ -252,7 +252,7 @@ button {
 }
 
 .d-block.modal {
-  display: flex!important;
+  display: flex !important;
   align-items: center;
 
   .modal-dialog {

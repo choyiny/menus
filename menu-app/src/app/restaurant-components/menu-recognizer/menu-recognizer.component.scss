@@ -1,0 +1,138 @@
+.flex-container {
+  display: flex;
+  background-color: #f0f3f5;
+  min-height: 100vh;
+
+  .menu-manager {
+    width: 40%;
+
+    .new-menu {
+      background-color: white;
+      margin: 20px;
+      border-radius: 10px;
+
+      input {
+        width: calc(100% - 20px);
+        margin: 10px;
+        padding: 11px 17px;
+        border-radius: 10px;
+        border: solid 1.2px #f0f3f5;
+      }
+
+      .rich-editor {
+        margin: 5px 10px;
+      }
+
+      button {
+        margin: 10px;
+        padding: 11px 25px 11px 26px;
+        border-radius: 8px;
+        border: solid 1.2px #f0f3f5;
+      }
+    }
+
+    .section-container {
+      background-color: white;
+      margin: 20px;
+      border-radius: 10px;
+      padding: 10px;
+
+      & .new-section {
+        margin: 15px 10px;
+        width: calc(100% - 20px);
+        padding: 28px 210px 17px;
+        border-radius: 10px;
+        background-color: #f0f3f5;
+        color: #4c28ff;
+      }
+    }
+  }
+
+  .canvas-container {
+    width: 60%;
+    margin: 15px 0 15px 8%;
+    border-radius: 10px;
+    background-color: white;
+    padding: 31px 21px 15px 21px;
+
+    canvas {
+      display: block;
+      width: 700px;
+      height: 600px;
+      margin: 10px auto;
+      background-color: white;
+      position: relative;
+    }
+
+    .toolbar {
+      background-color: #f0f3f5;
+      margin-left: 20px;
+      margin-right: 20px;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+
+      button {
+        margin: auto;
+        border-radius: 8px;
+      }
+
+      .btn-gray-white {
+        background-color: white;
+        color: #59595a;
+      }
+
+      .delete-button {
+        padding: 11px 12px;
+        background-color: #ee3253;
+      }
+
+      .separator {
+        display: inline-block;
+        width: 1px;
+        border-left: 1px solid rgba(196, 208, 217, 0.5);
+        height: 50px;
+      }
+
+      .upload-button {
+        padding: 11px 19px;
+      }
+
+      .template-selector {
+        padding: 11px 23px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+      }
+
+      .drag {
+        padding: 11px 15px 11px 12px;
+      }
+
+      .copy {
+        padding: 11px 14px 11px 15px;
+      }
+
+      .angle {
+        padding: 10px 15px 11px 16px;
+
+        &:disabled {
+          opacity: 50%;
+          cursor: not-allowed;
+        }
+      }
+
+      .page-of {
+        padding: 11px 12px 11px 14px;
+        margin: auto;
+        border-radius: 8px;
+      }
+
+      .transfer {
+        padding: 8px 25px 7px 26.3px;
+      }
+    }
+  }
+}

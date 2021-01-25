@@ -20,7 +20,7 @@
 }
 
 .hide-overflow {
-  overflow: hidden
+  overflow: hidden;
 }
 
 .section-title {
@@ -29,18 +29,17 @@
 }
 
 ::ng-deep {
-   .section-title .ql-editor {
-        font-size: 20px;
-        font-weight: 600;
-        vertical-align: middle;
-        color: black;
-        overflow: hidden;
-        & p {
-          font-weight: 600;
-        }
-      }
+  .section-title .ql-editor {
+    font-size: 20px;
+    font-weight: 600;
+    vertical-align: middle;
+    color: black;
+    overflow: hidden;
+    & p {
+      font-weight: 600;
+    }
+  }
 }
-
 
 .icons {
   margin-left: auto;

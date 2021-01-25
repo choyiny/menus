@@ -55,10 +55,12 @@ class EditMenuV2Schema(Schema):
     start = fields.Int(
         description="Start time for menu interval in the form of total seconds elapsed from 12:00 am",
         example=46500,
+        allow_none=True,
     )
     end = fields.Int(
         description="End time for menu interval in the form of total seconds elapsed from 12:00 am",
         example=51000,
+        allow_none=True,
     )
     footnote = fields.Str(
         description="footnote at bottom of page",
