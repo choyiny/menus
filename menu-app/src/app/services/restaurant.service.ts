@@ -4,6 +4,7 @@ import {
   Item,
   Menu,
   MenuEditable,
+  MenuVersion,
   Restaurant,
   RestaurantEditable,
   RestaurantOnboarding,
@@ -41,7 +42,15 @@ export class RestaurantService {
 
   getMenus(slug: string, menuName: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
+
     return this.http.get<Menu>(url);
+  }
+
+  // Not Working Use to get a List of MenuVersions for a given menu
+  getMenuVersions(slug: string, menuName: string): Observable<MenuVersion> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/versions`;
+
+    return this.http.get<MenuVersion>(url);
   }
 
   editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu> {

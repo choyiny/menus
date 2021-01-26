@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Restaurant, Menu, MenuVersion } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AdminService } from '../../services/admin.service';
-
 @Component({
   selector: 'app-menu-dashboard',
   templateUrl: './menu-dashboard.component.html',
@@ -23,6 +22,7 @@ export class MenuDashboardComponent implements OnInit {
   restaurant: Restaurant;
   file: File;
   menu: Menu;
+  versions: MenuVersion[];
   slug: string;
   configureContactTracing = false;
   contactTracingForm: FormGroup;

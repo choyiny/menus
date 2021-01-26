@@ -7,6 +7,7 @@ from mongoengine import (
     EmbeddedDocument,
     EmbeddedDocumentField,
     IntField,
+    LazyReferenceField,
     ListField,
     ReferenceField,
     StringField,
@@ -139,6 +140,11 @@ class MenuV2(Document):
     """
 
     versions = ListField(ReferenceField("MenuVersion"), default=list)
+
+    # Lazy Reference not working (Substitute when fixed)
+
+    # versions = ListField(LazyReferenceField("MenuVersion"), default=list)
+
     """
     List of versions for this menu
     """
@@ -172,7 +178,7 @@ class MenuVersion(Document):
     A version of the menu.
     """
 
-    name = StringField()
+    name = StringField(require=True)
     """
     name of this menu 
     """
@@ -200,18 +206,13 @@ class MenuVersion(Document):
     """
     Time of version creation
     """
-    # def sections_equal(self, other):
-    #     if self.sections.length != other.sections.length:
-    #         return False
-    #     for i in range(len(self.sections)):
-    #         if self.sections[i] != other.sections.length
 
-    def revert(self, menu: MenuV2):
-        menu.name = self.name
-        menu.sections = self.sections
-        menu.start = self.start
-        menu.end = self.end
-        menu.footnote = self.footnote
+    def menu_to_version(self, menu):
+        self.name = menu.name
+        self.sections = menu.sections
+        self.start = menu.start
+        self.end = menu.end
+        self.footnote = menu.footnote
 
     def __eq__(self, other):
         return (

@@ -52,6 +52,10 @@ class MenuVersionSchema(Schema):
     save_time = fields.DateTime(format="%d/%m/%Y %H:%M:%S")
 
 
+class ListMenuVersionSchema(Schema):
+    versions = fields.List(fields.Nested(MenuVersionSchema))
+
+
 class MenuV2Schema(Schema):
     name = fields.Str(description="Name of the menu", example="lunch", required=True)
     sections = fields.List(fields.Nested(SectionV2Schema, required=True))

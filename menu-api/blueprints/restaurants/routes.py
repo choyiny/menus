@@ -4,6 +4,7 @@ from .controllers import (
     ImageResource,
     ItemResource,
     MenuResource,
+    MenuVersionResource,
     OnboardingRestaurantResource,
     RestaurantHeaderImageResource,
     RestaurantResource,
@@ -58,5 +59,12 @@ resources = [
         "restaurants/<string:slug>/image",
         "header_image",
         ["PATCH"],
+    ),
+    # Not Working
+    (
+        MenuVersionResource,
+        "restaurants/<string:slug>/menus/<string:menu_name>/versions",
+        "versions",
+        ["GET"],
     ),
 ]
