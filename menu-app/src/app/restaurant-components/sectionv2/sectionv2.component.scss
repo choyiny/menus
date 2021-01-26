@@ -1,4 +1,4 @@
-.row-item{
+.row-item {
   align-items: flex-start;
   min-height: 15vh;
 }
@@ -11,7 +11,6 @@
   .section {
     padding-top: 4em;
   }
-
 }
 
 @media only screen and (min-width: 600px) {
@@ -25,7 +24,8 @@
       margin-left: 1em;
     }
 
-    & .btn4, .btn1 {
+    & .btn4,
+    .btn1 {
       margin-top: 0.5em;
       float: right;
     }
@@ -37,18 +37,17 @@
   margin-left: 0;
 }
 
-.drag-prompt { 
+.drag-prompt {
   font-size: 16px;
   margin: 0px 2.5px 0px 2.5px;
-    
-  & p{
+
+  & p {
     margin-bottom: 0;
   }
   & fa-icon {
     margin-right: 5px;
     margin-left: 5px;
   }
-
 }
 
 .item-container {
@@ -58,7 +57,7 @@
     border: solid 0.5px #dfe0e3;
     margin-top: 20px;
     height: clamp(6em, 13vh, 11em);
-    background-color:  #f0f3f5;
+    background-color: #f0f3f5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +72,7 @@
   color: #6d6d6d;
   font-size: 14px;
   margin: 1em 0 0 1em;
-	font-weight: 500;
+  font-weight: 500;
 }
 
 input.editor {
@@ -83,9 +82,9 @@ input.editor {
   padding: 2px 15px;
   font-weight: 600;
   padding: 3px 15px;
-	font-weight: 600;
+  font-weight: 600;
 
-  &::placeholder{
+  &::placeholder {
     font-size: 14px;
     font-weight: normal;
     font-style: normal;
@@ -96,14 +95,12 @@ input.editor {
   }
 }
 
-
-
 ::ng-deep {
   .view-edit .ql-container {
-      font-size: 18px;
+    font-size: 18px;
+    font-weight: 600;
+    & p {
       font-weight: 600;
-      & p {
-        font-weight: 600;
-      }
     }
+  }
 }

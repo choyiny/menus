@@ -6,6 +6,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { RegisterComponent } from './register/register.component';
 import { VerificationComponent } from './auth-components/verification/verification.component';
 import { HomeComponent } from './restaurant-components/home/home.component';
+import { MenuRecognizerComponent } from './restaurant-components/menu-recognizer/menu-recognizer.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,12 @@ const routes: Routes = [
   },
   {
     path: 'menu/:slug',
-    component: HomeComponent,
+    redirectTo: '/restaurants/:slug' + '?from=legacy',
+    pathMatch: 'full',
+  },
+  {
+    path: 'menu/:slug/import',
+    component: MenuRecognizerComponent,
   },
   {
     path: 'login',

@@ -1,4 +1,5 @@
 import random
+import re
 import string
 import uuid
 from datetime import datetime
@@ -239,12 +240,34 @@ class MenuResource(RestaurantBaseResource):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
+
+        # If menu name is already used, add (n) to it
+        # Lunch -> Lunch (1)
         name = kwargs.get("name")
-        # serialize restaurant menus to string
-        if name in restaurant.to_dict()["menus"]:
-            return MENU_ALREADY_EXISTS
+        name_set = set(menu["name"] for menu in restaurant.to_dict()["menus"])
+        if name in name_set:
+            names = [elem for elem in name_set if re.match(rf"^{name} \(\d+\)$", elem)]
+            n_list = [
+                int(re.search(r"\(\d+\)$", elem).group()[1:-1]) for elem in names
+            ] + [0]
+            n = max(n_list)
+            name = f"{name} ({n + 1})"
+
         menu = MenuV2(name=name)
 
+        if kwargs.get("sections"):
+            menu.sections = [
+                Section(**section_dict) for section_dict in kwargs.get("sections")
+            ]
+
+        if "start" in kwargs:
+            menu.start = kwargs.get("start")
+
+        if "end" in kwargs:
+            menu.end = kwargs.get("end")
+
+        if "footnote" in kwargs:
+            menu.footnote = kwargs.get("footnote")
         menu.save()
 
         restaurant.menus.append(menu)

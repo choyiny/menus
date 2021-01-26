@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
+from .helper import vision
 from .helper.cv import split_grids, split_lines
 from .helper.utils import img_dimension
-from .helper.vision import detect_text
 
 
 def recognizer_factory(name):
@@ -26,7 +26,8 @@ class BaseRecognizer(ABC):
         """
         self.config = config
 
-    def detect_text(self, image):
+    @staticmethod
+    def detect_text(image):
         """
         Detecing all texts in the given image using Google Cloud Vision. The return format will be an array of
         `{text: [...], points: [...]}` where `text` are the text identified and `points` are the points that form
@@ -34,15 +35,15 @@ class BaseRecognizer(ABC):
 
         `image`: The image in bytes format
         """
-        return detect_text(image)
+        return vision.detect_text(image)
 
     @abstractmethod
     def recognize(self, image):
         """
         Override this for each recognizer to implement different recognize logic.
 
-        Return format should be a dict with format `{result: [{ bound: [...], text: [...] }], unrecognized: [...]}`.
-        Where `result` is the recognized result that contains `bound`: The bound of the polygon, each element
+        Return format should be a dict with format `{results: [{ bounds: [...], text: [...] }], unrecognized: [...]}`.
+        Where `results` is the recognized result that contains `bounds`: The bound of the polygon, each element
         should be a point `(x, y)`, `text`: An array of texts that are inside the polygon.
         `unrecognized` is an array of texts that are detected but not in any polygons.
 
@@ -56,7 +57,7 @@ class RowRecognizer(BaseRecognizer):
         super().__init__(config)
 
     def recognize(self, image):
-        # The first result returned by Google Vision is the big box, ignore it
+        # The first results returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
         uppers, lowers = split_lines(image)
         img_width = img_dimension(image)[0]
@@ -72,7 +73,10 @@ class RowRecognizer(BaseRecognizer):
                 lower_y = lowers[i] + lines_error
                 inline_text = []
                 lines.append(
-                    {"bound": [(0, upper_y), (img_width, lower_y)], "text": inline_text}
+                    {
+                        "bounds": [(0, upper_y), (img_width, lower_y)],
+                        "text": inline_text,
+                    }
                 )
                 rest_data = []
                 for points_text in data:
@@ -91,7 +95,7 @@ class RowRecognizer(BaseRecognizer):
                     else:
                         rest_data.append(points_text)
                 data = rest_data
-        return {"result": lines, "unrecognized": data}
+        return {"results": lines, "unrecognized": data}
 
 
 class GridRecognizer(BaseRecognizer):
@@ -99,34 +103,34 @@ class GridRecognizer(BaseRecognizer):
         super().__init__(config)
 
     def recognize(self, image):
-        # The first result returned by Google Vision is the big box, ignore it
+        # The first results returned by Google Vision is the big box, ignore it
         data = self.detect_text(image)[1:]
         grids = split_grids(image)
-        result = [{"bound": r, "text": []} for r in grids]
+        results = [{"bounds": r, "text": []} for r in grids]
         all_ = set()
         identified = set()
 
         # Check if each detected word is in the grid
         for pIndex in range(len(data)):
             text = data[pIndex]["text"]
-            textPoints = data[pIndex]["points"]
+            text_points = data[pIndex]["points"]
             all_.add(text)
             for index in range(len(grids)):
                 r = grids[index]
                 x_1, y_1 = r[0]
                 x_2, y_2 = r[1]
-                isInPoly = False
+                is_in_poly = False
                 # Check if every point of the text is inside the grid
-                for tp in textPoints:
+                for tp in text_points:
                     x = tp[0]
                     y = tp[1]
                     if (x_1 <= x <= x_2) and (y_1 <= y <= y_2):
-                        isInPoly = True
+                        is_in_poly = True
                     else:
-                        isInPoly = False
+                        is_in_poly = False
                         break
-                if isInPoly:
+                if is_in_poly:
                     identified.add(text)
-                    result[index]["text"].append(text)
+                    results[index]["text"].append(text)
                     break
-        return {"result": result, "unrecognized": list(all_.difference(identified))}
+        return {"results": results, "unrecognized": list(all_.difference(identified))}

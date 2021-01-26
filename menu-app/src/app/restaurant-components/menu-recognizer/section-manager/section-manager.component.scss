@@ -1,0 +1,54 @@
+.section-manager {
+  margin: 5px;
+  border-radius: 10px;
+  background-color: #f0f3f5;
+
+  .header-container {
+    position: relative;
+    margin: 0 15px;
+    padding: 15px 0;
+    border-bottom: solid 1px rgba(196, 208, 217, 0.5);
+
+    .section-header {
+      font-size: 30px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .pen {
+      background-color: white;
+      color: #4c28ff;
+      margin: 0 0 0 1em;
+      padding: 2px 5px;
+      display: inline-block;
+    }
+
+    .header-edit {
+      padding: 8px 4px 8px 13px;
+      border-radius: 10px;
+      border: solid 1.2px #f0f3f5;
+      background-color: #ffffff;
+      width: 100%;
+    }
+
+    .check {
+      position: absolute;
+      display: inline-block;
+      padding: 3px 4px;
+      border-radius: 8px;
+      margin-top: 7px;
+      right: 5px;
+    }
+  }
+
+  .new-item {
+    margin: 15px;
+    width: calc(100% - 30px);
+    padding: 10px 137px 9px 128px;
+    border-radius: 8px;
+  }
+
+  .item-container {
+    margin: 0 20px;
+  }
+}

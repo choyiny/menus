@@ -32,6 +32,7 @@ import { SignupComponent } from './util-components/register/signup/signup.compon
 import { FirstMenuComponent } from './util-components/register/first-menu/first-menu.component';
 import { RegisterComponent } from './register/register.component';
 import { PreviewComponent } from './restaurant-components/preview/preview.component';
+import { MenuRecognizerComponent } from './restaurant-components/menu-recognizer/menu-recognizer.component';
 
 // NPM packages
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -58,6 +59,8 @@ import { MenuLoadingComponent } from './util-components/loading/menu-loading/men
 import { RestaurantLoadingComponent } from './util-components/loading/restaurant-loading/restaurant-loading.component';
 import { ItemLoadingComponent } from './util-components/loading/item-loading/item-loading.component';
 import { PublishModalComponent } from './util-components/register/publish-modal/publish-modal.component';
+import { SectionManagerComponent } from './restaurant-components/menu-recognizer/section-manager/section-manager.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const DragConfig = {
   dragStartThreshold: 0,
@@ -99,6 +102,8 @@ const DragConfig = {
     RestaurantLoadingComponent,
     ItemLoadingComponent,
     PublishModalComponent,
+    MenuRecognizerComponent,
+    SectionManagerComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,6 +121,7 @@ const DragConfig = {
     MatBottomSheetModule,
     DragDropModule,
     MatTooltipModule,
+    MatSnackBarModule,
     QuillModule.forRoot({
       modules: {
         toolbar: [
