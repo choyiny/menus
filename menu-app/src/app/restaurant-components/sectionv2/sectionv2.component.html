@@ -41,7 +41,7 @@
       [item]="item"
       [sectionEdit]="editMode"
       class="col-md-4 col-sm-6 col-12"
-      (sectionEmitter)="updateSection($event)"
+      (itemDeleteEmitter)="deleteItem($event)"
       (itemEmitter)="this.sectionEmitter2.emit()"
     >
     </app-itemv2>

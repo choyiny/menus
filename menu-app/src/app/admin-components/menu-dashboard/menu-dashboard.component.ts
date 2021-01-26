@@ -202,15 +202,4 @@ export class MenuDashboardComponent implements OnInit {
         window.alert(`Image upload ${restaurant.can_upload ? 'enabled' : 'disabled'}`);
       });
   }
-
-  // getVersions(): string[] {
-  //   this.selectedMenu
-  //   pm[0] = '12 Pm';
-  //   return [...am, ...pm];
-  // }
-  // versionOptions(): string[] {
-  //   this.menu = this.restaurantService.getMenus(this.slug, this.selectedMenu)
-  //
-  //   return ['Make new menus', ...this.restaurant.menus.map((menu) => menu.name)];
-  // }
 }

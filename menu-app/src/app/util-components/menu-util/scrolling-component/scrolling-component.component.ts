@@ -42,10 +42,7 @@ export class ScrollingComponentComponent implements OnInit {
   }
 
   updateSections(sections: Section[]): void {
-    this.sectionEmitter.emit(sections)
-    // this.restaurantService.editMenu(this.slug, this.menuName, { sections }).subscribe((menu) => {
-    //   this.menuEmitter.emit(menu);
-    // });
+    this.sectionEmitter.emit(sections);
   }
 
   manageSections(): void {

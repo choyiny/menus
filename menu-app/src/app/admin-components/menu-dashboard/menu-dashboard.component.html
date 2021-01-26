@@ -68,6 +68,14 @@
               </option>
             </select>
           </div>
+          <div>
+            <p class="d-inline-block">Revert:</p>
+            <select [(ngModel)]="endHour" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
+              <option [selected]="hour === endHour" *ngFor="let hour of hours" [value]="hour">
+                {{ getHours()[hour] }}
+              </option>
+            </select>
+          </div>
           <button (click)="saveTimes()">Save</button>
         </div>
         <div *ngIf="selectedMenu === 'Make new menus'" class="form-group">

@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import {Item, Menu, MenuEditable, Section} from '../../interfaces/restaurant-interfaces';
+import { Item, Menu, MenuEditable, Section } from '../../interfaces/restaurant-interfaces';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
@@ -15,7 +15,6 @@ export class Menuv2Component implements OnInit {
   @Input() menu: Menu;
   @Input() sections: Section[];
   @Input() section: Section;
-
 
   // State
   miniScroll = false;
@@ -72,7 +71,6 @@ export class Menuv2Component implements OnInit {
 
   update(menu: Menu): void {
     this.menu = menu;
-    console.log('update')
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -122,15 +120,12 @@ export class Menuv2Component implements OnInit {
   }
 
   saveSections(sections: Section[]): void {
-    console.log('saved sections')
     this.menuEditable.sections = sections;
     this.menu.sections = sections;
     this.edited = true;
   }
 
   saveSection(): void {
-    console.log('saved section')
-    console.log( this.menu.sections)
     this.menuEditable.sections = this.menu.sections;
     this.edited = true;
   }
@@ -170,13 +165,13 @@ export class Menuv2Component implements OnInit {
     }
   }
   savePage(): void {
-    console.log(this.edited)
     if (this.edited) {
-      this.restaurantService.editMenu(this.slug, this.menu.name, this.menuEditable).subscribe((menu) => {
-        window.alert('SAVED')
-        console.log('saved')
-        this.edited = false
-      })
+      this.restaurantService
+        .editMenu(this.slug, this.menu.name, this.menuEditable)
+        .subscribe((menu) => {
+          window.alert('SAVED');
+          this.edited = false;
+        });
     }
   }
 
