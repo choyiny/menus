@@ -60,9 +60,9 @@ export class RestaurantService {
     return this.http.delete<Menu>(url);
   }
 
-  addMenu(slug: string, name: string): Observable<Menu> {
+  addMenu(slug: string, menu: Menu): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus`;
-    return this.http.post<Menu>(url, { name });
+    return this.http.post<Menu>(url, menu);
   }
 
   editItem(slug: string, menuName: string, item: Item): Observable<Item> {

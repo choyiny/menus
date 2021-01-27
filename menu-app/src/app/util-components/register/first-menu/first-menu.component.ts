@@ -1,10 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AuthService } from '../../../services/auth.service';
 import { RestaurantService } from '../../../services/restaurant.service';
-import { Menu } from '../../../interfaces/restaurant-interfaces';
+import { Router } from '@angular/router';
+import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
+import { forkJoin } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-first-menu',
@@ -26,7 +29,9 @@ export class FirstMenuComponent implements OnInit {
     private modalService: NgbModal,
     private auth: AuthService,
     private angularAuth: AngularFireAuth,
-    private restaurantService: RestaurantService
+    private restaurantService: RestaurantService,
+    private router: Router,
+    private rPS: RestaurantPermissionService
   ) {}
 
   ngOnInit(): void {
@@ -61,5 +66,19 @@ export class FirstMenuComponent implements OnInit {
   }
   open(): void {
     this.modalService.open(this.firstMenu, this.modalOptions);
+  }
+
+  importNewMenu(modal): void {
+    // Promise.all , get slug and menu at the same time
+    forkJoin({
+      slug: this.rPS.getSlug().pipe(take(1)),
+      menuName: this.rPS.getMenuName().pipe(take(1)),
+    }).subscribe((res) => {
+      console.log(res);
+      const { slug, menuName } = res;
+      this.router.navigateByUrl(`menu/${slug}/import?menu=${menuName}`).then(() => {
+        modal.close();
+      });
+    });
   }
 }
