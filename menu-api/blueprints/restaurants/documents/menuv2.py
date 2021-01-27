@@ -176,7 +176,7 @@ class MenuVersion(Document):
 
     name = StringField(require=True)
     """
-    name of this menu 
+    name of this menu
     """
     sections = ListField(EmbeddedDocumentField(Section), default=list)
     """
