@@ -57,20 +57,16 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   newSection(): void {
-    console.log('add');
     this.restaurantService.newSection().subscribe((section) => {
       this.originalSections.push(section);
     });
   }
 
   deleteSection(i): void {
-    console.log('delete');
     this.originalSections.splice(i, 1);
   }
 
   cancel(modal): void {
-    console.log('cancel');
-
     this.originalSections = this.parse(this.sections);
     modal.close();
   }
