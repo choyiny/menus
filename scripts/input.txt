@@ -1,5 +1,37 @@
+粥 Congee
 1. 招牌雞粥 Chef Style Chicken Congee $7.95
 2. 生滾龍蝦窩粥 Lobster Congee $28
 3. 皮蛋芥菜蜆粥 Clam & Preserved Egg Congee $15.95
 4. 海皇大粥 Seafood Congee $15.95
 5. 帶子蝦球粥 Scallop & Shrimp Congee $9.45
+6. 帶子魚片粥 Scallop & Fish Congee $9.45
+7. 三文魚粥 Salmon Congee $7.95
+8. 皮蛋魚片粥 Fish & Preserved Egg Congee $6.95
+9. 鮑貝雞絲粥 Abalone Clam & Chicken Congee $7.95
+10. 魚片豬潤粥 Fish and Pork Liver Congee $7.95
+11. 荔灣艇仔粥 Lai Wan Style Congee $7.95
+12. 果皮魚容粥 Minced Fish Congee $6.95
+13. 生菜鯪魚球粥 Minced Fish Ball & Lettuce Congee $6.95
+14. 皮蛋瘦肉粥 Lean Pork & Preserved Egg Congee $6.95
+15. 狀元及第粥 Pork Internal Delicacy Congee $7.45
+16. 生滾牛肉/免治牛肉粥 Sliced Beef or Minced Beef Congee $6.95
+17. 豬潤粥 Pork Liver Congee $7.45
+18. 肉丸粥 Meat Ball Congee $6.95
+19. 豆腐粟米粥 Corn and Tofu Congee $6.95
+20. 芥菜咸豬骨粥 Pork Bone & Green Mustard Congee Small-$8.45 Large-$14.45
+21. 白粥 Plain Congee $3.75
+湯麵 Noodle in Soup 可改河粉或米粉 （粗麵/瀨粉/烏冬/伊麵 + $1，加底 +$3.95）
+31. 招牌大碗麵 House Super Bowl Noodle in Soup $15.50
+32. 薑蔥雞陽春麵 Chicken w/Ginger & Scallions Noodle in Soup $10.50
+33. 客家滑滑粉 Shredded Duck Rice Noodle in Soup $9.45
+34. 桂林肉碎米線 Guilin Style Rice Noodle in Soup w/Minced Pork $9.45
+35. 走地雞麵 Chicken w/Noodle in Soup $9.45
+36. 牛筋/牛腩麵 Beef Brisket or Tendon w/Noodle is Soup $8.50
+37. 鼎湖上湯麵 Vegetable Noodle in Soup$8.95
+38. 雲吞/水餃麵 Wonton or Dumpling w/Noodle in Soup $8.45
+39. 豬扒麵 Fried Pork Chop w/Noodle in Soup $8.95
+40. 雞扒麵 Crispy Chicken w/Noodle in Soup $8.95
+41. 肉丸麵 Meat Balls w/Noodle I Soup $7.95
+42. 薑蔥牛肉麵 Beef w/Ginger & Scallion Noodle in Soup $7.95
+43. 潮州魚蛋麵 Fish Ball Noodle in Soup $7.95
+44. 上湯全蛋麵 Plain Noodle in Soup $4.95

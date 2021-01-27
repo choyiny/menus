@@ -1,31 +1,33 @@
 #!/bin/sh
 
 # loops over file
+section=""
+echo "Name,Description,Price,Sections,Section Subtitle,Section Description,Tags,Section Image"
 while read line; do
   i=0
   title=""
   description=""
   amount=""
-  for word in $line
-  do
-    if [ $i -lt 2 ]; then
-        if [ $i -eq 0 ]; then
-            title=${word}" " 
+  if ! [[ ${line::1} =~ ^[0-9]+$ ]]; then
+    section=${line}
+  else 
+    for word in $line
+    do
+        if [ $i -lt 2 ]; then
+            if [ $i -eq 0 ]; then
+                title=${word}" " 
+            else
+                title="${title}"${word}
+            fi  
+            true $(( i++ ))
         else
-            title="${title}"${word}
-        fi  
-        true $(( i++ ))
-    else
-        if [[ ${word::1} == "$" ]] ; then
-            amount=${word}
-        else 
-            description=${description}" "${word}
+            if [[ ${word::1} == "$" ]] ; then
+                amount=${word}
+            else 
+                description=${description}" "${word}
+            fi
         fi
-    fi
-  done
-  echo "-------------"
-  echo "Menu item"
-  echo $title
-  echo $description
-  echo $amount
-done < input.txt
+    done
+      echo ${title}','${description}','${amount}','${section}',,,'
+  fi
+done < realinput.txt
