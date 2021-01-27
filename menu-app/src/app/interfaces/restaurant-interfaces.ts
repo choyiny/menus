@@ -78,7 +78,7 @@ export interface Menu {
   start?: number;
   end?: number;
   footnote?: string;
-  versions: MenuVersion[];
+  versions?: MenuVersion[];
 }
 
 export interface MenuEditable {
