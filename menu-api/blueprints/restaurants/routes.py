@@ -60,7 +60,6 @@ resources = [
         "header_image",
         ["PATCH"],
     ),
-    # Not Working
     (
         MenuVersionResource,
         "restaurants/<string:slug>/menus/<string:menu_name>/versions",

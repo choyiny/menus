@@ -410,21 +410,26 @@ class GenerateItemResource(RestaurantBaseResource):
         return item
 
 
-# Not Working used to get List of Menu versions
 class MenuVersionResource(RestaurantBaseResource):
     @doc(description="Get menu with versions")
     @marshal_with(ListMenuVersionSchema)
+    @firebase_login_required
     def get(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
+        if g.user is None:
+            return NOT_AUTHENTICATED
+        if not g.user.is_admin:
+            return FORBIDDEN
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
         menu = restaurant.get_menu(menu_name)
         if menu is None:
             return MENU_NOT_FOUND
+
         versions = []
         for i in range(len(menu.versions)):
             versions.append(menu.versions[i].fetch())
-        return versions
+        return {"versions": versions}
 
 
 class ImageResource(RestaurantBaseResource):

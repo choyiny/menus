@@ -35,7 +35,7 @@
           <div>
             <button (click)="revertMenu()">Revert</button>
             <select [(ngModel)]="selectedVersion" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
-              <option *ngFor="let version of this.menu.versions" [ngValue]="version">{{ version.save_time }}</option>
+              <option *ngFor="let version of versions" [ngValue]="version">{{ version.save_time }}</option>
             </select>
           </div>
           <button (click)="appendCsv()">Append</button>

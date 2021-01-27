@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Restaurant, Menu, MenuVersion } from '../../interfaces/restaurant-interfaces';
+import {
+  Restaurant,
+  Menu,
+  MenuVersion,
+  MenuVersionList,
+} from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AdminService } from '../../services/admin.service';
 @Component({
@@ -62,8 +67,8 @@ export class MenuDashboardComponent implements OnInit {
 
   initTime(): void {
     const menu = this.restaurant.menus.find((lazyMenu) => lazyMenu.name === this.selectedMenu);
-    this.restaurantService.getMenus(this.slug, this.selectedMenu).subscribe((res) => {
-      this.menu = res;
+    this.restaurantService.getMenuVersions(this.slug, this.selectedMenu).subscribe((res) => {
+      this.versions = res.versions;
     });
     const resetTime = () => {
       this.startHour = 0;

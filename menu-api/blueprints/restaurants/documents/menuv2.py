@@ -139,11 +139,7 @@ class MenuV2(Document):
     Menu footnote at the bottom of the page
     """
 
-    versions = ListField(ReferenceField("MenuVersion"), default=list)
-
-    # Lazy Reference not working (Substitute when fixed)
-
-    # versions = ListField(LazyReferenceField("MenuVersion"), default=list)
+    versions = ListField(LazyReferenceField("MenuVersion"), default=list)
 
     """
     List of versions for this menu

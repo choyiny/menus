@@ -97,3 +97,7 @@ export interface MenuVersion {
   footnote: string;
   save_time: string;
 }
+
+export interface MenuVersionList {
+  versions: MenuVersion[];
+}
