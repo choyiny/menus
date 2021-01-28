@@ -43,9 +43,7 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   open(): void {
-    this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {
-      this.originalSections = menu.sections;
-    });
+    this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {});
     this.modalService.open(this.modal);
   }
 

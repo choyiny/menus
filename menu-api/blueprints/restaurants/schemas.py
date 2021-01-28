@@ -49,11 +49,16 @@ class MenuVersionSchema(Schema):
         example="All items are peanut free",
         allow_none=True,
     )
-    save_time = fields.DateTime(format="%d/%m/%Y %H:%M:%S")
+    save_time = fields.DateTime(required=True, format="%d/%m/%Y %H:%M:%S")
+
+
+class MenuVersionSummarySchema(Schema):
+    id = fields.Str(required=True, description="id of menu version")
+    save_time = fields.DateTime(required=True, format="%d/%m/%Y %H:%M:%S")
 
 
 class ListMenuVersionSchema(Schema):
-    versions = fields.List(fields.Nested(MenuVersionSchema))
+    versions = fields.List(fields.Nested(MenuVersionSummarySchema))
 
 
 class MenuV2Schema(Schema):
@@ -74,7 +79,7 @@ class MenuV2Schema(Schema):
         example="All items are peanut free",
         allow_none=True,
     )
-    versions = fields.List(fields.Nested(MenuVersionSchema))
+    versions = fields.List(fields.Nested(MenuVersionSummarySchema))
 
 
 class EditMenuV2Schema(Schema):
@@ -95,7 +100,7 @@ class EditMenuV2Schema(Schema):
         example="All items are peanut free",
         allow_none=True,
     )
-    versions = fields.List(fields.Nested(MenuVersionSchema))
+    versions = fields.List(fields.Nested(MenuVersionSummarySchema))
 
 
 class LazyMenuSchema(Schema):

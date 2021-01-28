@@ -9,7 +9,6 @@ from mongoengine import (
     IntField,
     LazyReferenceField,
     ListField,
-    ReferenceField,
     StringField,
     URLField,
 )
@@ -109,6 +108,63 @@ class Section(EmbeddedDocument):
         return type(self) == type(other) and self._id == other._id
 
 
+class MenuVersion(Document):
+    """
+    A version of the menu.
+    """
+
+    name = StringField(required=True)
+    """
+    name of this menu
+    """
+    sections = ListField(EmbeddedDocumentField(Section), default=list)
+    """
+    List of ordered sections
+    """
+
+    start = IntField()
+    """
+    Start interval for when this menu is shown to customers for the corresponding restaurant
+    """
+
+    end = IntField()
+    """
+    End interval for when this menu is shown to customers for the corresponding restaurant
+    """
+
+    footnote = StringField(default="")
+    """
+    Menu footnote at the bottom of the page
+    """
+
+    save_time = DateTimeField(required=True)
+    """
+    Time of version creation
+    """
+
+    @classmethod
+    def create(cls, menu):
+        version = MenuVersion(save_time=datetime.utcnow())
+        version.name = menu.name
+        version.sections = menu.sections
+        version.start = menu.start
+        version.end = menu.end
+        version.footnote = menu.footnote
+        version.save()
+        menu.versions.append(version)
+        menu.save()
+
+    def __eq__(self, other):
+        return (
+            type(self) == type(other)
+            and self.name == other.name
+            and self.sections == other.sections
+            and self.start == other.start
+            and self.end == other.end
+            and self.footnote == other.footnote
+        )
+
+
 class MenuV2(Document):
     """
     A menu object.
@@ -160,6 +216,13 @@ class MenuV2(Document):
                     return item
         return None
 
+    def get_version(self, version_id: str) -> Optional[MenuVersion]:
+        """ get menu-version from this menu """
+        for version in self.versions:
+            if version_id == str(version.pk):
+                return version
+        return None
+
     def hide_images(self):
         for section in self.sections:
             for item in section.menu_items:
@@ -167,55 +230,3 @@ class MenuV2(Document):
 
     def __eq__(self, other):
         return type(self) == type(other) and self.name == other.name
-
-
-class MenuVersion(Document):
-    """
-    A version of the menu.
-    """
-
-    name = StringField(require=True)
-    """
-    name of this menu
-    """
-    sections = ListField(EmbeddedDocumentField(Section), default=list)
-    """
-    List of ordered sections
-    """
-
-    start = IntField()
-    """
-    Start interval for when this menu is the defaulted menu for its corresponding restaurant
-    """
-
-    end = IntField()
-    """
-    End interval for when this menu is the defaulted menu for its corresponding restaurant
-    """
-
-    footnote = StringField(default="")
-    """
-    Menu footnote at the bottom of the page
-    """
-
-    save_time = DateTimeField(required=True)
-    """
-    Time of version creation
-    """
-
-    def menu_to_version(self, menu):
-        self.name = menu.name
-        self.sections = menu.sections
-        self.start = menu.start
-        self.end = menu.end
-        self.footnote = menu.footnote
-
-    def __eq__(self, other):
-        return (
-            type(self) == type(other)
-            and self.name == other.name
-            and self.sections == other.sections
-            and self.start == other.start
-            and self.end == other.end
-            and self.footnote == other.footnote
-        )

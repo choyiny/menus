@@ -19,8 +19,7 @@ export class Sectionv2Component implements OnInit {
   @Input() drop;
   @Input() item: Item;
   @Output() menuEmitter = new EventEmitter<Menu>();
-  @Output() sectionEmitter2 = new EventEmitter<Section>();
-  @Output() sectionsEmitter = new EventEmitter<Section[]>();
+  @Output() saveSectionEmitter = new EventEmitter<Section>();
   editMode: boolean;
 
   slug: string;
@@ -51,7 +50,7 @@ export class Sectionv2Component implements OnInit {
   }
 
   editSection(): void {
-    this.sectionEmitter2.emit(this.section);
+    this.saveSectionEmitter.emit(this.section);
     this.editMode = false;
   }
 
@@ -61,14 +60,14 @@ export class Sectionv2Component implements OnInit {
 
   updateSection(section: Section): void {
     this.section = section;
-    this.sectionEmitter2.emit(this.section);
+    this.saveSectionEmitter.emit(this.section);
   }
 
   deleteItem(item: Item): void {
     for (let j = 0; j < this.section.menu_items.length; j++) {
       if (this.section.menu_items[j]._id === item._id) {
         this.section.menu_items.splice(j, 1);
-        this.sectionEmitter2.emit();
+        this.saveSectionEmitter.emit();
         return;
       }
     }
@@ -77,7 +76,7 @@ export class Sectionv2Component implements OnInit {
   addMenuItem(): void {
     this.restaurantService.newItem().subscribe((item) => {
       this.section.menu_items.push(item);
-      this.sectionEmitter2.emit(this.section);
+      this.saveSectionEmitter.emit(this.section);
       const observer = new MutationObserver((mutations, self) => {
         const newItem = document.getElementById(item._id);
         if (newItem) {

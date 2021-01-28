@@ -98,6 +98,11 @@ export interface MenuVersion {
   save_time: string;
 }
 
+export interface MenuVersionSummary {
+  id: string;
+  save_time: string;
+}
+
 export interface MenuVersionList {
-  versions: MenuVersion[];
+  versions: MenuVersionSummary[];
 }

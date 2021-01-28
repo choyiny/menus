@@ -1,5 +1,7 @@
 MENU_NOT_FOUND = {"description": "Menu not found."}, 404
 
+VERSION_NOT_FOUND = {"description": "Version not found."}, 404
+
 SECTION_NOT_FOUND = {"description": "Section not found."}, 404
 
 ITEM_NOT_FOUND = {"description": "Item not found."}, 404

@@ -42,7 +42,7 @@
       [sectionEdit]="editMode"
       class="col-md-4 col-sm-6 col-12"
       (itemDeleteEmitter)="deleteItem($event)"
-      (itemEmitter)="this.sectionEmitter2.emit()"
+      (itemEmitter)="this.saveSectionEmitter.emit()"
     >
     </app-itemv2>
     <div *ngIf="hasPermission" class="col-md-4 col-sm-6 col-12 item-container desktop">

@@ -6,7 +6,7 @@ import {
   Restaurant,
   Menu,
   MenuVersion,
-  MenuVersionList,
+  MenuVersionSummary,
 } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { AdminService } from '../../services/admin.service';
@@ -27,7 +27,7 @@ export class MenuDashboardComponent implements OnInit {
   restaurant: Restaurant;
   file: File;
   menu: Menu;
-  versions: MenuVersion[];
+  versions: MenuVersionSummary[];
   slug: string;
   configureContactTracing = false;
   contactTracingForm: FormGroup;
@@ -35,7 +35,7 @@ export class MenuDashboardComponent implements OnInit {
   menuBody: FormGroup;
   qrcodeLink: string;
   configureQrCodeLink = false;
-  selectedVersion: MenuVersion;
+  selectedVersion: MenuVersionSummary;
 
   // Constants
   hours = [...Array(24).keys()];
@@ -68,6 +68,7 @@ export class MenuDashboardComponent implements OnInit {
   initTime(): void {
     const menu = this.restaurant.menus.find((lazyMenu) => lazyMenu.name === this.selectedMenu);
     this.restaurantService.getMenuVersions(this.slug, this.selectedMenu).subscribe((res) => {
+      console.log(res);
       this.versions = res.versions;
     });
     const resetTime = () => {
@@ -187,16 +188,23 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   revertMenu(): void {
-    const name = this.selectedVersion.name;
-    const sections = this.selectedVersion.sections;
-    //Start & End times not working ATM
-    // const start = this.selectedVersion.start
-    // const end = this.selectedVersion.end
-    const footnote = this.selectedVersion.footnote;
+    console.log(this.selectedVersion);
     this.restaurantService
-      .editMenu(this.slug, this.selectedMenu, { sections, footnote, name })
-      .subscribe(() => {
-        window.alert('Reverted');
+      .getVersion(this.slug, this.selectedMenu, this.selectedVersion)
+      .subscribe((res) => {
+        console.log(res);
+        const version = res;
+        const name = version.name;
+        const sections = version.sections;
+        //Start & End times not working ATM
+        // const start = this.selectedVersion.start
+        // const end = this.selectedVersion.end
+        const footnote = version.footnote;
+        this.restaurantService
+          .editMenu(this.slug, this.selectedMenu, { sections, footnote, name })
+          .subscribe(() => {
+            window.alert('Reverted');
+          });
       });
   }
   updateCanUpload(): void {

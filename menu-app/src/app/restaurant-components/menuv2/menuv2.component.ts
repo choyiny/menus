@@ -4,6 +4,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { faPencil } from '@fortawesome/pro-solid-svg-icons';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menuv2',
@@ -37,7 +38,8 @@ export class Menuv2Component implements OnInit {
 
   constructor(
     private restaurantService: RestaurantService,
-    public restaurantPermissionService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -169,7 +171,9 @@ export class Menuv2Component implements OnInit {
       this.restaurantService
         .editMenu(this.slug, this.menu.name, this.menuEditable)
         .subscribe((menu) => {
-          window.alert('SAVED');
+          this.snackBar.open('Saved', '', {
+            duration: 2000,
+          });
           this.edited = false;
         });
     }

@@ -20,6 +20,7 @@ from utils.errors import (
     NOT_AUTHENTICATED,
     RESTAURANT_NOT_FOUND,
     SECTION_NOT_FOUND,
+    VERSION_NOT_FOUND,
 )
 from webargs.flaskparser import use_args
 
@@ -32,6 +33,7 @@ from ..schemas import (
     ItemV2Schema,
     ListMenuVersionSchema,
     MenuV2Schema,
+    MenuVersionSchema,
     OnboardingSchema,
     RestaurantSchema,
     SectionV2Schema,
@@ -139,7 +141,7 @@ class RestaurantsResource(RestaurantBaseResource):
 class MenuResource(RestaurantBaseResource):
     @doc(description="Get menu details")
     @marshal_with(MenuV2Schema)
-    def get(self, slug: str, menu_name: str, load_versions=False):
+    def get(self, slug: str, menu_name: str):
         restaurant = Restaurant.objects(slug=slug).first()
         if restaurant is None:
             return RESTAURANT_NOT_FOUND
@@ -148,8 +150,6 @@ class MenuResource(RestaurantBaseResource):
             return MENU_NOT_FOUND
         if not restaurant.can_upload:
             menu.hide_images()
-        if load_versions:
-            menu.versions.fetch()
         return menu
 
     @doc(description="Edit menu details, checks for duplicate menus")
@@ -177,8 +177,7 @@ class MenuResource(RestaurantBaseResource):
             menu.name = name
 
         if "footnote" in kwargs:
-            footnote = kwargs.get("footnote")
-            menu.footnote = footnote
+            menu.footnote = kwargs.get("footnote")
         if "sections" in kwargs:
             # temporary fix so db gets updated, not sure why changes aren't detected otherwise
             menu.sections = []
@@ -188,17 +187,12 @@ class MenuResource(RestaurantBaseResource):
             ]
 
         if "start" in kwargs:
-            start = kwargs.get("start")
-            menu.start = start
+            menu.start = kwargs.get("start")
 
         if "end" in kwargs:
-            end = kwargs.get("end")
-            menu.start = end
-        version = MenuVersion(save_time=datetime.utcnow())
-        version.menu_to_version(menu)
-        version.save()
-        menu.versions.append(version)
-        menu.save()
+            menu.start = kwargs.get("end")
+        # create saves menu for you at the end so no need to save again
+        MenuVersion.create(menu)
         return menu
 
     @doc(description="Delete menu")
@@ -311,11 +305,7 @@ class SectionResource(RestaurantBaseResource):
 
         if "description" in kwargs:
             section.description = kwargs.get("description")
-        version = MenuVersion(save_time=datetime.utcnow())
-        version.menu_to_version(menu)
-        version.save()
-        menu.versions.append(version)
-        menu.save()
+        MenuVersion.create(menu)
         return section
 
     @doc(description="Delete section from menu")
@@ -377,11 +367,7 @@ class ItemResource(RestaurantBaseResource):
         if "tags" in kwargs:
             item.tags = [Tag(**tag) for tag in kwargs["tags"]]
 
-        version = MenuVersion(save_time=datetime.utcnow())
-        version.menu_to_version(menu)
-        version.save()
-        menu.versions.append(version)
-        menu.save()
+        MenuVersion.create(menu)
         return item
 
     @doc(description="Delete item from menu")
@@ -433,8 +419,8 @@ class GenerateItemResource(RestaurantBaseResource):
         return item
 
 
-class MenuVersionResource(RestaurantBaseResource):
-    @doc(description="Get menu with versions")
+class MenuVersionSummaryResource(RestaurantBaseResource):
+    @doc(description="get a list of version summaries")
     @marshal_with(ListMenuVersionSchema)
     @firebase_login_required
     def get(self, slug: str, menu_name: str):
@@ -453,6 +439,29 @@ class MenuVersionResource(RestaurantBaseResource):
         for i in range(len(menu.versions)):
             versions.append(menu.versions[i].fetch())
         return {"versions": versions}
+
+
+class MenuVersionResource(RestaurantBaseResource):
+    @doc(description="get version details")
+    @marshal_with(MenuVersionSchema)
+    @firebase_login_required
+    def get(self, slug: str, menu_name: str, version_id: str):
+        restaurant = Restaurant.objects(slug=slug).first()
+        if g.user is None:
+            return NOT_AUTHENTICATED
+        if not g.user.is_admin:
+            return FORBIDDEN
+        if restaurant is None:
+            return RESTAURANT_NOT_FOUND
+        menu = restaurant.get_menu(menu_name)
+        if menu is None:
+            return MENU_NOT_FOUND
+        version = menu.get_version(version_id)
+
+        if version is None:
+            return VERSION_NOT_FOUND
+
+        return version.fetch()
 
 
 class ImageResource(RestaurantBaseResource):
@@ -569,10 +578,8 @@ class OnboardingRestaurantResource(RestaurantBaseResource):
             return g.user.restaurants[0]
 
         menu = MenuV2(name="Menu")
-        version = MenuVersion(name="Menu", save_time=datetime.utcnow())
-        version.save()
-        menu.versions.append(version)
-        menu.save()
+        # create saves menu for you at the end so no need to save again
+        MenuVersion.create(menu)
 
         random_slug = "".join(
             random.choices(string.ascii_uppercase + string.digits, k=7)
