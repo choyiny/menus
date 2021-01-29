@@ -3,7 +3,7 @@ import uuid
 import config as c
 from auth.documents.user import User
 from blueprints.menus.documents.menu import Menu
-from blueprints.restaurants.documents.menuv2 import Item, MenuV2, Section
+from blueprints.restaurants.documents.menuv2 import Item, MenuV2, MenuVersion, Section
 from blueprints.restaurants.documents.restaurant import Restaurant
 from mongoengine.errors import ValidationError
 from pymongo import MongoClient
@@ -144,3 +144,10 @@ def restaurant_permission_migrations():
     for restaurant in Restaurant.objects():
         restaurant.can_upload = True
         restaurant.save()
+
+
+def restaurant_version_migrations():
+    for restaurant in Restaurant.objects():
+        for menu in restaurant.menus:
+            if not menu.versions:
+                MenuVersion.create(menu)
