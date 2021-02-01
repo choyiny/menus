@@ -68,7 +68,6 @@ export class MenuDashboardComponent implements OnInit {
   initTime(): void {
     const menu = this.restaurant.menus.find((lazyMenu) => lazyMenu.name === this.selectedMenu);
     this.restaurantService.getMenuVersions(this.slug, this.selectedMenu).subscribe((res) => {
-      console.log(res);
       this.versions = res.versions;
     });
     const resetTime = () => {
@@ -188,11 +187,9 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   revertMenu(): void {
-    console.log(this.selectedVersion);
     this.restaurantService
       .getVersion(this.slug, this.selectedMenu, this.selectedVersion)
       .subscribe((res) => {
-        console.log(res);
         const version = res;
         const name = version.name;
         const sections = version.sections;

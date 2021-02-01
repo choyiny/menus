@@ -109,16 +109,6 @@ export class Itemv2Component implements OnInit {
     this.itemDeleteEmitter.emit(this.itemOriginal);
   }
 
-  editItem(): void {
-    this.restaurantService.editItem(this.slug, this.menuName, this.item).subscribe(
-      (item) => {
-        this.item = item;
-        this.itemOriginal = JSON.parse(JSON.stringify(item));
-      },
-      (err) => {}
-    );
-  }
-
   edit(): void {
     this.editMode = true;
     // Save item state, also do not use spread does not deep copy

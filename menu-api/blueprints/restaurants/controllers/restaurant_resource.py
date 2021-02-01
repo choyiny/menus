@@ -190,7 +190,7 @@ class MenuResource(RestaurantBaseResource):
             menu.start = kwargs.get("start")
 
         if "end" in kwargs:
-            menu.start = kwargs.get("end")
+            menu.end = kwargs.get("end")
         # create saves menu for you at the end so no need to save again
         MenuVersion.create(menu)
         return menu
@@ -330,6 +330,7 @@ class SectionResource(RestaurantBaseResource):
             return SECTION_NOT_FOUND
 
         menu.sections.remove(section)
+        MenuVersion.create(menu)
         return menu
 
 
@@ -366,7 +367,6 @@ class ItemResource(RestaurantBaseResource):
 
         if "tags" in kwargs:
             item.tags = [Tag(**tag) for tag in kwargs["tags"]]
-
         MenuVersion.create(menu)
         return item
 
@@ -392,6 +392,7 @@ class ItemResource(RestaurantBaseResource):
             for item in section.menu_items:
                 if item._id == item_id:
                     section.menu_items.remove(item)
+                    MenuVersion.create(menu)
                     return section
         return ITEM_NOT_FOUND
 
@@ -435,10 +436,7 @@ class MenuVersionSummaryResource(RestaurantBaseResource):
         if menu is None:
             return MENU_NOT_FOUND
 
-        versions = []
-        for i in range(len(menu.versions)):
-            versions.append(menu.versions[i].fetch())
-        return {"versions": versions}
+        return {"versions": [v.fetch() for v in menu.versions]}
 
 
 class MenuVersionResource(RestaurantBaseResource):
@@ -461,7 +459,7 @@ class MenuVersionResource(RestaurantBaseResource):
         if version is None:
             return VERSION_NOT_FOUND
 
-        return version.fetch()
+        return version
 
 
 class ImageResource(RestaurantBaseResource):

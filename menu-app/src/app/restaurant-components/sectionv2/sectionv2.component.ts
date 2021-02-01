@@ -41,14 +41,6 @@ export class Sectionv2Component implements OnInit {
     );
   }
 
-  delete(): void {
-    this.restaurantService
-      .deleteSection(this.slug, this.menuName, this.section._id)
-      .subscribe((menu) => {
-        this.menuEmitter.emit(menu);
-      });
-  }
-
   editSection(): void {
     this.saveSectionEmitter.emit(this.section);
     this.editMode = false;

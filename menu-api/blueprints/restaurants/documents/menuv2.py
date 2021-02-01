@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 from typing import Optional
 
@@ -143,7 +145,7 @@ class MenuVersion(Document):
     """
 
     @classmethod
-    def create(cls, menu):
+    def create(cls, menu: MenuV2) -> MenuVersion:
         version = MenuVersion(save_time=datetime.utcnow())
         version.name = menu.name
         version.sections = menu.sections
@@ -153,6 +155,7 @@ class MenuVersion(Document):
         version.save()
         menu.versions.append(version)
         menu.save()
+        return version
 
     def __eq__(self, other):
         return (
@@ -216,11 +219,11 @@ class MenuV2(Document):
                     return item
         return None
 
-    def get_version(self, version_id: str) -> Optional[MenuVersion]:
+    def get_version(self, version_id: str) -> MenuVersion:
         """ get menu-version from this menu """
         for version in self.versions:
             if version_id == str(version.pk):
-                return version
+                return version.fetch()
         return None
 
     def hide_images(self):
