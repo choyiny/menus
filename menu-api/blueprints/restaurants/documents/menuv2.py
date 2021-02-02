@@ -221,10 +221,7 @@ class MenuV2(Document):
 
     def get_version(self, version_id: str) -> MenuVersion:
         """ get menu-version from this menu """
-        for version in self.versions:
-            if version_id == str(version.pk):
-                return version.fetch()
-        return None
+        return MenuVersion.objects(id=version_id).first()
 
     def hide_images(self):
         for section in self.sections:
