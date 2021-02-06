@@ -33,7 +33,7 @@ export class AdminService {
   }
 
   appendMenu(slug: string, selectedMenu: string, formData: FormData): Observable<Menu> {
-    const url = `${environment.settings.endpoint}/admin/restaurants`;
+    const url = `${environment.settings.endpoint}/admin/restaurants/${slug}/menus/${selectedMenu}/import`;
     return this.http.patch<Menu>(url, formData);
   }
 

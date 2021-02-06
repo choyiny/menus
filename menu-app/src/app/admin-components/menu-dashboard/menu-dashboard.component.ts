@@ -112,9 +112,15 @@ export class MenuDashboardComponent implements OnInit {
   appendCsv(): void {
     const formData = new FormData();
     formData.append('file', this.file);
-    this.adminService.appendMenu(this.slug, this.selectedMenu, formData).subscribe((menu) => {
-      window.alert('Success!');
-    });
+    this.adminService.appendMenu(this.slug, this.selectedMenu, formData).subscribe(
+      (menu) => {
+        window.alert('Success!');
+      },
+      (err) => {
+        console.log('Something went wrong!');
+        console.log(err);
+      }
+    );
   }
 
   deleteMenu(): void {
