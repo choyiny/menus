@@ -4,11 +4,14 @@ import {
   Item,
   Menu,
   MenuEditable,
+  MenuVersionList,
   Restaurant,
   RestaurantEditable,
   RestaurantOnboarding,
   RestaurantTemplate,
   Section,
+  MenuVersionSummary,
+  MenuVersion,
 } from '../interfaces/restaurant-interfaces';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -42,6 +45,20 @@ export class RestaurantService {
   getMenus(slug: string, menuName: string): Observable<Menu> {
     const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}`;
     return this.http.get<Menu>(url);
+  }
+
+  getMenuVersions(slug: string, menuName: string): Observable<MenuVersionList> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/versions`;
+    return this.http.get<MenuVersionList>(url);
+  }
+
+  getVersion(
+    slug: string,
+    menuName: string,
+    versionSummary: MenuVersionSummary
+  ): Observable<MenuVersion> {
+    const url = `${environment.settings.apiv2}/restaurants/${slug}/menus/${menuName}/versions/${versionSummary.id}`;
+    return this.http.get<MenuVersion>(url);
   }
 
   editMenu(slug: string, menuName: string, menuEditable: MenuEditable): Observable<Menu> {

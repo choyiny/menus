@@ -1,10 +1,15 @@
+from __future__ import annotations
+
+from datetime import datetime
 from typing import Optional
 
 from mongoengine import (
+    DateTimeField,
     Document,
     EmbeddedDocument,
     EmbeddedDocumentField,
     IntField,
+    LazyReferenceField,
     ListField,
     StringField,
     URLField,
@@ -105,6 +110,64 @@ class Section(EmbeddedDocument):
         return type(self) == type(other) and self._id == other._id
 
 
+class MenuVersion(Document):
+    """
+    A version of the menu.
+    """
+
+    name = StringField(required=True)
+    """
+    name of this menu
+    """
+    sections = ListField(EmbeddedDocumentField(Section), default=list)
+    """
+    List of ordered sections
+    """
+
+    start = IntField()
+    """
+    Start interval for when this menu is shown to customers for the corresponding restaurant
+    """
+
+    end = IntField()
+    """
+    End interval for when this menu is shown to customers for the corresponding restaurant
+    """
+
+    footnote = StringField(default="")
+    """
+    Menu footnote at the bottom of the page
+    """
+
+    save_time = DateTimeField(required=True)
+    """
+    Time of version creation
+    """
+
+    @classmethod
+    def create(cls, menu: MenuV2) -> MenuVersion:
+        version = MenuVersion(save_time=datetime.utcnow())
+        version.name = menu.name
+        version.sections = menu.sections
+        version.start = menu.start
+        version.end = menu.end
+        version.footnote = menu.footnote
+        version.save()
+        menu.versions.append(version)
+        menu.save()
+        return version
+
+    def __eq__(self, other):
+        return (
+            type(self) == type(other)
+            and self.name == other.name
+            and self.sections == other.sections
+            and self.start == other.start
+            and self.end == other.end
+            and self.footnote == other.footnote
+        )
+
+
 class MenuV2(Document):
     """
     A menu object.
@@ -135,6 +198,12 @@ class MenuV2(Document):
     Menu footnote at the bottom of the page
     """
 
+    versions = ListField(LazyReferenceField("MenuVersion"), default=list)
+
+    """
+    List of versions for this menu
+    """
+
     def get_section(self, section_id: str) -> Optional[Section]:
         """ get section of this menu """
         for section in self.sections:
@@ -149,6 +218,10 @@ class MenuV2(Document):
                 if item._id == item_id:
                     return item
         return None
+
+    def get_version(self, version_id: str) -> MenuVersion:
+        """ get menu-version from this menu """
+        return MenuVersion.objects(id=version_id).first()
 
     def hide_images(self):
         for section in self.sections:

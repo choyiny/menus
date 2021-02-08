@@ -27,7 +27,7 @@ jobs:
           FLASK_ENV=testing pre-commit run --verbose --all-files --show-diff-on-failure
       - name: Lint with flake8
         run: |
-          flake8 . --count --show-source --statistics --max-line-length=120 --ignore=F401,F811,E203,E231
+          flake8 . --count --show-source --statistics --max-line-length=120 --ignore=F401,F811,E203,E231,W503
       - name: Run pytest
         run: |
           FLASK_ENV=testing pytest .

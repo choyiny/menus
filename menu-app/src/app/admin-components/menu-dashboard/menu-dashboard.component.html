@@ -32,6 +32,12 @@
         <div *ngIf="selectedMenu !== 'Make new menus' && selectedMenu" class="form-group">
           <label for="csv-upload">Import menu csv</label>
           <input type="file" class="form-control-file" id="csv-append" (change)="onChange($event)" />
+          <div>
+            <button (click)="revertMenu()">Revert</button>
+            <select [(ngModel)]="selectedVersion" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
+              <option *ngFor="let version of versions" [ngValue]="version">{{ version.save_time }}</option>
+            </select>
+          </div>
           <button (click)="appendCsv()">Append</button>
           <button (click)="deleteMenu()">Delete Menu</button>
 
@@ -62,7 +68,6 @@
               </option>
             </select>
           </div>
-
           <button (click)="saveTimes()">Save</button>
         </div>
         <div *ngIf="selectedMenu === 'Make new menus'" class="form-group">

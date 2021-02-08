@@ -6,6 +6,7 @@ from scripts.migrations import (
     migrate,
     restaurant_migrations,
     restaurant_permission_migrations,
+    restaurant_version_migrations,
     user_migrations,
 )
 
@@ -45,6 +46,10 @@ def register_commands(app):
     @migration_cli.command("add_can_upload_to_all_restaurants")
     def migrate_restaurant_permissions():
         restaurant_permission_migrations()
+
+    @migration_cli.command("add_versions")
+    def migrate_versions():
+        restaurant_version_migrations()
 
     dump_cli = AppGroup("dump")
 

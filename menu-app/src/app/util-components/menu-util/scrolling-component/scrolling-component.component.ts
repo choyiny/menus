@@ -15,7 +15,7 @@ export class ScrollingComponentComponent implements OnInit {
   @Input() sections: Section[];
   @Input() miniScroll: boolean;
   @Input() currentSection: number;
-  @Output() menuEmitter = new EventEmitter<Menu>();
+  @Output() sectionEmitter = new EventEmitter<Section[]>();
   @ViewChild(ManageSectionsComponent) controlPanel: ManageSectionsComponent;
 
   // Icons
@@ -42,9 +42,7 @@ export class ScrollingComponentComponent implements OnInit {
   }
 
   updateSections(sections: Section[]): void {
-    this.restaurantService.editMenu(this.slug, this.menuName, { sections }).subscribe((menu) => {
-      this.menuEmitter.emit(menu);
-    });
+    this.sectionEmitter.emit(sections);
   }
 
   manageSections(): void {

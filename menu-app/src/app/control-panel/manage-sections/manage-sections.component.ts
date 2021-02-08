@@ -43,14 +43,14 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   open(): void {
-    this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {
-      this.originalSections = menu.sections;
-    });
+    this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {});
     this.modalService.open(this.modal);
   }
 
   save(modal): void {
     this.sectionEmitter.emit(this.originalSections);
+    this.sections = this.parse(this.originalSections);
+    this.originalSections = this.parse(this.sections);
     modal.close();
   }
 
@@ -65,7 +65,7 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   cancel(modal): void {
-    this.originalSections = this.sections;
+    this.originalSections = this.parse(this.sections);
     modal.close();
   }
 

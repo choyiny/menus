@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faPlus, faPen, faTrash, faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
-import { Menu, Section } from '../../interfaces/restaurant-interfaces';
+import { Item, Menu, Section } from '../../interfaces/restaurant-interfaces';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 
@@ -17,7 +17,9 @@ export class Sectionv2Component implements OnInit {
   @Input() section: Section;
   @Input() sectionLists: string[];
   @Input() drop;
+  @Input() item: Item;
   @Output() menuEmitter = new EventEmitter<Menu>();
+  @Output() saveSectionEmitter = new EventEmitter<Section>();
   editMode: boolean;
 
   slug: string;
@@ -39,23 +41,8 @@ export class Sectionv2Component implements OnInit {
     );
   }
 
-  delete(): void {
-    this.restaurantService
-      .deleteSection(this.slug, this.menuName, this.section._id)
-      .subscribe((menu) => {
-        this.menuEmitter.emit(menu);
-      });
-  }
-
   editSection(): void {
-    this.restaurantService.editSection(this.slug, this.menuName, this.section).subscribe(
-      (section) => {
-        this.section = section;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.saveSectionEmitter.emit(this.section);
     this.editMode = false;
   }
 
@@ -65,28 +52,35 @@ export class Sectionv2Component implements OnInit {
 
   updateSection(section: Section): void {
     this.section = section;
+    this.saveSectionEmitter.emit(this.section);
+  }
+
+  deleteItem(item: Item): void {
+    for (let j = 0; j < this.section.menu_items.length; j++) {
+      if (this.section.menu_items[j]._id === item._id) {
+        this.section.menu_items.splice(j, 1);
+        this.saveSectionEmitter.emit();
+        return;
+      }
+    }
   }
 
   addMenuItem(): void {
     this.restaurantService.newItem().subscribe((item) => {
       this.section.menu_items.push(item);
-      this.restaurantService
-        .editSection(this.slug, this.menuName, this.section)
-        .subscribe((section) => {
-          this.section = section;
-          const observer = new MutationObserver((mutations, self) => {
-            const newItem = document.getElementById(item._id);
-            if (newItem) {
-              // find component and then manually set editMode to True
-              self.disconnect();
-              return;
-            }
-          });
-          observer.observe(document, {
-            childList: true,
-            subtree: true,
-          });
-        });
+      this.saveSectionEmitter.emit(this.section);
+      const observer = new MutationObserver((mutations, self) => {
+        const newItem = document.getElementById(item._id);
+        if (newItem) {
+          // find component and then manually set editMode to True
+          self.disconnect();
+          return;
+        }
+      });
+      observer.observe(document, {
+        childList: true,
+        subtree: true,
+      });
     });
   }
 }

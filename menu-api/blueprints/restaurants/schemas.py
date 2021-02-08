@@ -31,22 +31,55 @@ class SectionV2Schema(Schema):
     subtitle = fields.Str(description="Headers for section anchors", allow_none=True)
 
 
-class MenuV2Schema(Schema):
+class MenuVersionSchema(Schema):
     name = fields.Str(description="Name of the menu", example="lunch", required=True)
     sections = fields.List(fields.Nested(SectionV2Schema, required=True))
     start = fields.Int(
         description="Start time for menu interval in the form of total seconds elapsed from 12:00 am",
         example=46500,
+        allow_none=True,
     )
     end = fields.Int(
         description="End time for menu interval in the form of total seconds elapsed from 12:00 am",
         example=51000,
+        allow_none=True,
     )
     footnote = fields.Str(
         description="footnote at bottom of page",
         example="All items are peanut free",
         allow_none=True,
     )
+    save_time = fields.DateTime(required=True, format="%d/%m/%Y %H:%M:%S")
+
+
+class MenuVersionSummarySchema(Schema):
+    id = fields.Str(required=True, description="id of menu version")
+    save_time = fields.DateTime(required=True, format="%d/%m/%Y %H:%M:%S")
+
+
+class ListMenuVersionSchema(Schema):
+    versions = fields.List(fields.Nested(MenuVersionSummarySchema))
+
+
+class MenuV2Schema(Schema):
+    name = fields.Str(description="Name of the menu", example="lunch", required=True)
+    sections = fields.List(fields.Nested(SectionV2Schema, required=True))
+    start = fields.Int(
+        description="Start time for menu interval in the form of total seconds elapsed from 12:00 am",
+        example=46500,
+        allow_none=True,
+    )
+    end = fields.Int(
+        description="End time for menu interval in the form of total seconds elapsed from 12:00 am",
+        example=51000,
+        allow_none=True,
+    )
+    footnote = fields.Str(
+        description="footnote at bottom of page",
+        example="All items are peanut free",
+        allow_none=True,
+    )
+    versions = fields.List(fields.Nested(MenuVersionSummarySchema))
 
 
 class EditMenuV2Schema(Schema):
@@ -67,6 +100,7 @@ class EditMenuV2Schema(Schema):
         example="All items are peanut free",
         allow_none=True,
     )
+    versions = fields.List(fields.Nested(MenuVersionSummarySchema))
 
 
 class LazyMenuSchema(Schema):
