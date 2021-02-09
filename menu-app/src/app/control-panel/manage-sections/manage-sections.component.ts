@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { faPlus } from '@fortawesome/pro-solid-svg-icons';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import { EditService } from '../../services/edit.service';
 
 @Component({
   selector: 'app-manage-sections',
@@ -25,7 +26,8 @@ export class ManageSectionsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private restaurantService: RestaurantService,
-    private restaurantPermissionService: RestaurantPermissionService
+    private restaurantPermissionService: RestaurantPermissionService,
+    private editService: EditService
   ) {}
 
   parse(sections: Section[]): Section[] {
@@ -51,6 +53,8 @@ export class ManageSectionsComponent implements OnInit {
     this.sectionEmitter.emit(this.originalSections);
     this.sections = this.parse(this.originalSections);
     this.originalSections = this.parse(this.sections);
+    this.editService.edited = true;
+    this.editService.saveVersion();
     modal.close();
   }
 

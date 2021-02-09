@@ -4,7 +4,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { AuthService } from '../../services/auth.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
-import { EditService } from '../../services/edit.service'
+import { EditService } from '../../services/edit.service';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
     private restaurantService: RestaurantService,
     private authService: AuthService,
     private restaurantPermissionService: RestaurantPermissionService,
-    private editService: EditService,
+    private editService: EditService
   ) {}
 
   updatePreviewMode(previewMode: boolean): void {

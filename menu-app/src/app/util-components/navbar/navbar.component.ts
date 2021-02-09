@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
     private restaurantService: RestaurantService,
     public restaurantPermissionService: RestaurantPermissionService,
     private editService: EditService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class NavbarComponent implements OnInit {
             duration: 2000,
           });
           window.removeEventListener('beforeunload', this.editService.handler);
-          this.editService.edited = false;          
+          this.editService.edited = false;
         });
     }
   }

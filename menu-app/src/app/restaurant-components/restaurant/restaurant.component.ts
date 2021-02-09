@@ -45,7 +45,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private scrollService: ScrollService,
     public restaurantPermissionService: RestaurantPermissionService,
     private bottomSheet: MatBottomSheet,
-    private editService: EditService,
+    private editService: EditService
   ) {}
 
   ngAfterViewInit(): void {
