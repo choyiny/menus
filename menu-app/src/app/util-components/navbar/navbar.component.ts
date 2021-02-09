@@ -74,8 +74,8 @@ export class NavbarComponent implements OnInit {
           this.snackBar.open('Saved', '', {
             duration: 2000,
           });
-          // this.edited = false;
-          this.editService.edited = false;
+          window.removeEventListener('beforeunload', this.editService.handler);
+          this.editService.edited = false;          
         });
     }
   }

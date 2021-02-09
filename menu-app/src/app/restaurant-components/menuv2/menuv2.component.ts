@@ -124,16 +124,12 @@ export class Menuv2Component implements OnInit {
   saveSections(sections: Section[]): void {
     this.menuEditable.sections = sections;
     this.menu.sections = sections;
-    this.editService.edited = true;
-    this.editService.menuName = this.menu.name;
-    this.editService.menuEditable = this.menuEditable
+    this.setEdited();
   }
 
   saveSection(): void {
     this.menuEditable.sections = this.menu.sections;
-    this.editService.edited = true;
-    this.editService.menuName = this.menu.name;
-    this.editService.menuEditable = this.menuEditable
+    this.setEdited();
   }
 
   updateMenu(menu: Menu): void {
@@ -148,9 +144,14 @@ export class Menuv2Component implements OnInit {
     this.toggleEditMode();
 
     this.menuEditable.footnote = this.menu.footnote;
+    this.setEdited();
+  }
+
+  setEdited() {
     this.editService.edited = true;
     this.editService.menuName = this.menu.name;
     this.editService.menuEditable = this.menuEditable
+    window.addEventListener('beforeunload', this.editService.handler);
   }
 
   drop(event: CdkDragDrop<Item[]>): void {

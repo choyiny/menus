@@ -11,6 +11,7 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
 import { MenuModalComponent } from '../../util-components/menu-util/menu-modal/menu-modal.component';
 import { faAngleDown } from '@fortawesome/pro-solid-svg-icons';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { EditService } from '../../services/edit.service';
 
 @Component({
   selector: 'app-restaurant',
@@ -43,7 +44,8 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private scrollService: ScrollService,
     public restaurantPermissionService: RestaurantPermissionService,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private editService: EditService,
   ) {}
 
   ngAfterViewInit(): void {

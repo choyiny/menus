@@ -31,4 +31,9 @@ export class EditService {
   set menuName(menuName: any) {
     this._menuName = menuName;
   }
+
+  handler = function(e) {
+    e.preventDefault();
+    e.returnValue = 'abcs';
+  };
 }
