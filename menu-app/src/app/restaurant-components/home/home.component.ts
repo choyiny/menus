@@ -52,9 +52,6 @@ export class HomeComponent implements OnInit {
           this.restaurantPermissionService.setPermission(this.hasPermission);
           this.restaurantPermissionService.setRestaurantPermissions(restaurant);
           this.restaurantPermissionService.setSlug(this.slug);
-          // change this.restaurant to be the edtiable restaurant
-          // it refreshes so it messes the edited info 
-          console.log(this.editService.edited);
           this.restaurant = restaurant;
         },
         (err) => {

@@ -45,6 +45,7 @@ export class NavbarComponent implements OnInit {
   }
 
   mobileView(): void {
+    this.savePage();
     this.viewEmitter.emit(!this.previewMode);
   }
 
