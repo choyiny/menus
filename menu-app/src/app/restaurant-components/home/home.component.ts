@@ -4,6 +4,7 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { Restaurant } from '../../interfaces/restaurant-interfaces';
 import { AuthService } from '../../services/auth.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
+import { EditService } from '../../services/edit.service'
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private restaurantService: RestaurantService,
     private authService: AuthService,
-    private restaurantPermissionService: RestaurantPermissionService
+    private restaurantPermissionService: RestaurantPermissionService,
+    private editService: EditService,
   ) {}
 
   updatePreviewMode(previewMode: boolean): void {
@@ -50,6 +52,9 @@ export class HomeComponent implements OnInit {
           this.restaurantPermissionService.setPermission(this.hasPermission);
           this.restaurantPermissionService.setRestaurantPermissions(restaurant);
           this.restaurantPermissionService.setSlug(this.slug);
+          // change this.restaurant to be the edtiable restaurant
+          // it refreshes so it messes the edited info 
+          console.log(this.editService.edited);
           this.restaurant = restaurant;
         },
         (err) => {

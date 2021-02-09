@@ -6,6 +6,9 @@ import { RestaurantPermissionService } from '../../services/restaurantPermission
 import { faPencil } from '@fortawesome/pro-solid-svg-icons';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditService } from '../../services/edit.service';
+import { interval } from 'rxjs';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-menuv2',
@@ -24,7 +27,7 @@ export class Menuv2Component implements OnInit {
   previousScroll = 0;
   selectedSection = 0;
   editMode: boolean;
-
+  
   // Globals
   slug: string;
   hasPermission: boolean;
@@ -36,10 +39,14 @@ export class Menuv2Component implements OnInit {
   };
   editIcon = faPencil;
 
+  subscription: Subscription;
+  source = interval(30000);
+
   constructor(
     private restaurantService: RestaurantService,
     public restaurantPermissionService: RestaurantPermissionService,
     private editService: EditService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +54,7 @@ export class Menuv2Component implements OnInit {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
+    this.subscription = this.source.subscribe(x => this.autoSave());
   }
 
   updateSections(sections: Section[]): void {
@@ -145,6 +153,21 @@ export class Menuv2Component implements OnInit {
 
     this.menuEditable.footnote = this.menu.footnote;
     this.setEdited();
+  }
+
+  // method called after ever 30 seconds
+  autoSave(): void {
+    if (this.editService.edited) {
+      this.restaurantService
+        .editMenu(this.slug, this.menu.name, this.menuEditable)
+        .subscribe((menu) => {
+          this.snackBar.open('Saved', '', {
+            duration: 2000,
+          });
+          window.removeEventListener('beforeunload', this.editService.handler);
+          this.editService.edited = false;          
+        });
+    }
   }
 
   setEdited() {
