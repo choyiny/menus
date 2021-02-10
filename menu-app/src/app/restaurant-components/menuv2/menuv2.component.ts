@@ -5,6 +5,9 @@ import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { faPencil } from '@fortawesome/pro-solid-svg-icons';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EditService } from '../../services/edit.service';
+import { interval } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menuv2',
@@ -20,7 +23,6 @@ export class Menuv2Component implements OnInit {
   // State
   miniScroll = false;
   menuEditable: MenuEditable = {};
-  edited = false;
   previousScroll = 0;
   selectedSection = 0;
   editMode: boolean;
@@ -36,9 +38,13 @@ export class Menuv2Component implements OnInit {
   };
   editIcon = faPencil;
 
+  subscription: Subscription;
+  source = interval(30000);
+
   constructor(
     private restaurantService: RestaurantService,
     public restaurantPermissionService: RestaurantPermissionService,
+    private editService: EditService,
     private snackBar: MatSnackBar
   ) {}
 
@@ -47,6 +53,10 @@ export class Menuv2Component implements OnInit {
     this.restaurantPermissionService.hasPermissionObservable.subscribe(
       (hasPermission) => (this.hasPermission = hasPermission)
     );
+    this.subscription = this.source.subscribe((x) => this.saveVersion());
+    this.editService.menuName = this.menu.name;
+    this.editService.menuEditable = this.menuEditable;
+    this.editService.slug = this.slug;
   }
 
   updateSections(sections: Section[]): void {
@@ -124,12 +134,12 @@ export class Menuv2Component implements OnInit {
   saveSections(sections: Section[]): void {
     this.menuEditable.sections = sections;
     this.menu.sections = sections;
-    this.edited = true;
+    this.setEdited();
   }
 
   saveSection(): void {
     this.menuEditable.sections = this.menu.sections;
-    this.edited = true;
+    this.setEdited();
   }
 
   updateMenu(menu: Menu): void {
@@ -144,7 +154,17 @@ export class Menuv2Component implements OnInit {
     this.toggleEditMode();
 
     this.menuEditable.footnote = this.menu.footnote;
-    this.edited = true;
+    this.setEdited();
+  }
+
+  // method called after ever 30 seconds
+  saveVersion(): void {
+    this.editService.saveVersion();
+  }
+
+  setEdited() {
+    this.editService.edited = true;
+    window.addEventListener('beforeunload', this.editService.handler);
   }
 
   drop(event: CdkDragDrop<Item[]>): void {
@@ -164,18 +184,6 @@ export class Menuv2Component implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
-    }
-  }
-  savePage(): void {
-    if (this.edited) {
-      this.restaurantService
-        .editMenu(this.slug, this.menu.name, this.menuEditable)
-        .subscribe((menu) => {
-          this.snackBar.open('Saved', '', {
-            duration: 2000,
-          });
-          this.edited = false;
-        });
     }
   }
 

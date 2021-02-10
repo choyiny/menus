@@ -12,6 +12,8 @@ import { SignupComponent } from '../register/signup/signup.component';
 import { RestaurantService } from '../../services/restaurant.service';
 import { RestaurantPermissionService } from '../../services/restaurantPermission.service';
 import { PublishModalComponent } from '../register/publish-modal/publish-modal.component';
+import { EditService } from '../../services/edit.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-navbar',
@@ -30,7 +32,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private restaurantService: RestaurantService,
-    public restaurantPermissionService: RestaurantPermissionService
+    public restaurantPermissionService: RestaurantPermissionService,
+    private editService: EditService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +45,7 @@ export class NavbarComponent implements OnInit {
   }
 
   mobileView(): void {
+    this.savePage();
     this.viewEmitter.emit(!this.previewMode);
   }
 
@@ -61,5 +66,18 @@ export class NavbarComponent implements OnInit {
         }
       }
     );
+  }
+  savePage(): void {
+    if (this.editService.edited) {
+      this.restaurantService
+        .editMenu(this.slug, this.editService.menuName, this.editService.menuEditable)
+        .subscribe((menu) => {
+          this.snackBar.open('Saved', '', {
+            duration: 2000,
+          });
+          window.removeEventListener('beforeunload', this.editService.handler);
+          this.editService.edited = false;
+        });
+    }
   }
 }
