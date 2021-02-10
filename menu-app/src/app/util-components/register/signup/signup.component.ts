@@ -41,7 +41,9 @@ export class SignupComponent implements OnInit {
 
   signInWithGoogle(modal): void {
     this.auth.user.pipe(take(1)).subscribe((anonymousUser) => {
-      anonymousUser.linkWithPopup(new firebase.auth.GoogleAuthProvider()).then(
+      var provider = new firebase.auth.GoogleAuthProvider()
+      provider.addScope('email');
+      anonymousUser.linkWithPopup(provider).then(
         (userCred) => {
           this.authService.upgradeUser().subscribe((user) => {
             if (user.restaurants) {
