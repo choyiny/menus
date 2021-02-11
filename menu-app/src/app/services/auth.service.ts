@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, mergeMap, take } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',

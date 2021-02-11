@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 import { AuthService } from '../../../services/auth.service';
 import { take } from 'rxjs/operators';
 import { RestaurantService } from '../../../services/restaurant.service';
