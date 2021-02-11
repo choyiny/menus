@@ -170,8 +170,12 @@ class AnonymousUserResource(UserManagementBaseResource):
 
         firebase_user = auth.get_user(g.user.firebase_id)
 
-        g.user.is_anon = firebase_user.email is None
-        g.user.email = firebase_user.email
+        if firebase_user.email is None:
+            g.user.is_anon = firebase_user.provider_data[0].email is None
+            g.user.email = firebase_user.provider_data[0].email
+        else:
+            g.user.is_anon = firebase_user.email is None
+            g.user.email = firebase_user.email
         g.user.phone_number = firebase_user.phone_number
         g.user.photo_url = firebase_user.photo_url
         g.user.display_name = firebase_user.display_name
