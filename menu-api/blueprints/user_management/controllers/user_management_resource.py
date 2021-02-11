@@ -172,7 +172,6 @@ class AnonymousUserResource(UserManagementBaseResource):
 
         if firebase_user.email is None:
             g.user.is_anon = firebase_user.provider_data[0].email is None
-            print(firebase_user.provider_data[0].email)
             g.user.email = firebase_user.provider_data[0].email
         else:
             g.user.is_anon = firebase_user.email is None
