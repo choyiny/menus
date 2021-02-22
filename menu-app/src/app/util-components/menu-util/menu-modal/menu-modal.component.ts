@@ -49,7 +49,6 @@ export class MenuModalComponent implements OnInit {
       // Set Menu Name for editService on Switch Menu
       this.editService.menuName = this.menus[index].name
       this.router.navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`).then(() => {});
-      console.log(menu)
     });
   }
 }

@@ -69,8 +69,6 @@ export class NavbarComponent implements OnInit {
   }
   savePage(): void {
     if (this.editService.edited) {
-      console.log(this.editService.menuName)
-      console.log(this.editService.menuEditable)
       this.restaurantService
         .editMenu(this.slug, this.editService.menuName, this.editService.menuEditable)
         .subscribe((menu) => {
