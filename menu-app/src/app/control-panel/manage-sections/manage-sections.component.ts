@@ -47,6 +47,8 @@ export class ManageSectionsComponent implements OnInit {
 
   open(): void {
     console.log(this.originalSections)
+    // Sets the section list to the current menus sections
+    this.originalSections = this.parse(this.sections);
     this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {});
     this.modalService.open(this.modal);
   }
