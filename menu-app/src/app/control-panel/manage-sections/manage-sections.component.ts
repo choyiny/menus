@@ -36,6 +36,7 @@ export class ManageSectionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.originalSections = this.parse(this.sections);
+    console.log(this.originalSections)
     this.restaurantPermissionService.getSlug().subscribe((slug) => {
       this.slug = slug;
     });
@@ -45,6 +46,7 @@ export class ManageSectionsComponent implements OnInit {
   }
 
   open(): void {
+    console.log(this.originalSections)
     this.restaurantService.getMenus(this.slug, this.menuName).subscribe((menu) => {});
     this.modalService.open(this.modal);
   }

@@ -153,6 +153,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
         currentMenu: this.currentMenu,
       },
     });
+    console.log(this.currentMenu)
   }
 
   sameDay(): boolean {
