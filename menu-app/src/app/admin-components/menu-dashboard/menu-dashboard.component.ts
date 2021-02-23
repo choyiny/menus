@@ -134,7 +134,7 @@ export class MenuDashboardComponent implements OnInit {
 
   deleteMenu(): void {
     if (confirm('are you sure')) {
-        this.restaurantService.deleteMenu(this.slug, this.selectedMenu).subscribe((menu) => {
+      this.restaurantService.deleteMenu(this.slug, this.selectedMenu).subscribe((menu) => {
         this.load();
         window.alert('Success!');
       });
@@ -209,7 +209,7 @@ export class MenuDashboardComponent implements OnInit {
           // const end = this.selectedVersion.end
           const footnote = version.footnote;
           this.restaurantService
-            .editMenu(this.slug, this.selectedMenu, {sections, footnote, name})
+            .editMenu(this.slug, this.selectedMenu, { sections, footnote, name })
             .subscribe(() => {
               window.alert('Reverted');
             });
