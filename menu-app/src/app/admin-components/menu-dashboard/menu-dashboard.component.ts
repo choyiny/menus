@@ -133,16 +133,20 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   deleteMenu(): void {
-    this.restaurantService.deleteMenu(this.slug, this.selectedMenu).subscribe((menu) => {
-      this.load();
-      window.alert('Success!');
-    });
+    if (confirm('are you sure')) {
+      this.restaurantService.deleteMenu(this.slug, this.selectedMenu).subscribe((menu) => {
+        this.load();
+        window.alert('Success!');
+      });
+    }
   }
 
   deleteRestaurant(): void {
-    this.restaurantService.deleteRestaurant(this.slug).subscribe((restaurant) => {
-      window.alert('Success!');
-    });
+    if (confirm('are you sure')) {
+      this.restaurantService.deleteRestaurant(this.slug).subscribe((restaurant) => {
+        window.alert('Success!');
+      });
+    }
   }
 
   generateQr(): void {
@@ -193,22 +197,24 @@ export class MenuDashboardComponent implements OnInit {
   }
 
   revertMenu(): void {
-    this.restaurantService
-      .getVersion(this.slug, this.selectedMenu, this.selectedVersion)
-      .subscribe((res) => {
-        const version = res;
-        const name = version.name;
-        const sections = version.sections;
-        //Start & End times not working ATM
-        // const start = this.selectedVersion.start
-        // const end = this.selectedVersion.end
-        const footnote = version.footnote;
-        this.restaurantService
-          .editMenu(this.slug, this.selectedMenu, { sections, footnote, name })
-          .subscribe(() => {
-            window.alert('Reverted');
-          });
-      });
+    if (confirm('are you sure')) {
+      this.restaurantService
+        .getVersion(this.slug, this.selectedMenu, this.selectedVersion)
+        .subscribe((res) => {
+          const version = res;
+          const name = version.name;
+          const sections = version.sections;
+          //Start & End times not working ATM
+          // const start = this.selectedVersion.start
+          // const end = this.selectedVersion.end
+          const footnote = version.footnote;
+          this.restaurantService
+            .editMenu(this.slug, this.selectedMenu, { sections, footnote, name })
+            .subscribe(() => {
+              window.alert('Reverted');
+            });
+        });
+    }
   }
   updateCanUpload(): void {
     this.restaurantService

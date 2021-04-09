@@ -4,7 +4,7 @@
     <div class="card-body">
       <div>
         <button type="button" (click)="generateQr()">Generate QR</button>
-        <button type="button" (click)="deleteRestaurant()">Delete this restaurant</button>
+        <button class="important" type="button" (click)="deleteRestaurant()">Delete this restaurant</button>
         <p><a [routerLink]="'/restaurants/' + slug">Visit Menu</a></p>
       </div>
       <form *ngIf="configureContactTracing" [formGroup]="contactTracingForm" (ngSubmit)="submitContactTracing()">
@@ -33,13 +33,13 @@
           <label for="csv-upload">Import menu csv</label>
           <input type="file" class="form-control-file" id="csv-append" (change)="onChange($event)" />
           <div>
-            <button (click)="revertMenu()">Revert</button>
+            <button class="important" (click)="revertMenu()">Revert</button>
             <select [(ngModel)]="selectedVersion" [ngModelOptions]="{ standalone: true }" class="d-inline-block">
               <option *ngFor="let version of versions" [ngValue]="version">{{ version.save_time }}</option>
             </select>
           </div>
           <button (click)="appendCsv()">Append</button>
-          <button (click)="deleteMenu()">Delete Menu</button>
+          <button class="important" (click)="deleteMenu()">Delete Menu</button>
 
           <div>
             <p class="d-inline-block">Start:</p>

@@ -4,7 +4,7 @@ import { faCheck } from '@fortawesome/pro-solid-svg-icons';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { RestaurantPermissionService } from '../../../services/restaurantPermission.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {EditService} from "../../../services/edit.service";
+import { EditService } from '../../../services/edit.service';
 
 @Component({
   selector: 'app-menu-modal',
@@ -47,7 +47,7 @@ export class MenuModalComponent implements OnInit {
     this.bottomSheetRef.afterDismissed().subscribe(() => {
       const menu = this.menus[index].name;
       // Set Menu Name for editService on Switch Menu
-      this.editService.menuName = this.menus[index].name
+      this.editService.menuName = this.menus[index].name;
       this.router.navigateByUrl(`/restaurants/${this.slug}?menu=${menu}`).then(() => {});
     });
   }
