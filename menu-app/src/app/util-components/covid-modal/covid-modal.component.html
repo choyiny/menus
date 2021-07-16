@@ -50,20 +50,24 @@
               >Provide phone number for contact tracing only</label
             >
           </div>
-          <input type="text" formControlName="name" class="form-control tracing" placeholder="Enter your name" />
-          <p class="error">{{ nameError }}</p>
-          <input
-            type="text"
-            formControlName="phone_number"
-            class="form-control tracing"
-            placeholder="Enter phone number for contact tracing"
-          />
+          <div *ngIf="!submitted">
+            <input type="text" formControlName="name" class="form-control tracing" placeholder="Enter your name" />
+            <p class="error">{{ nameError }}</p>
+            <input
+              type="text"
+              formControlName="phone_number"
+              class="form-control tracing"
+              placeholder="Enter phone number for contact tracing"
+            />
+          </div>
           <p class="error">{{ phoneError }}</p>
           <p class="disclaimer">
             We will not use this number to contact you with marketing. For more information read our privacy policy
           </p>
         </div>
-        <button class="submit-button">Agree and Start Dining</button>
+        <button class="submit-button" [ngClass]="{'submitted' :submitted, 'not-submitted': !submitted}">>
+          {{ submitted ? 'Thanks for submitting' : 'Agree and Start Dining'}}
+        </button>
       </form>
     </div>
   </div>

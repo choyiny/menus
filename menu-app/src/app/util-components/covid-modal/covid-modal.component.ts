@@ -18,6 +18,7 @@ export class CovidModalComponent implements OnInit {
   nameError: string;
   phoneError: string;
   slug: string;
+  submitted = false;
 
   constructor(
     private modalService: NgbModal,
@@ -41,17 +42,22 @@ export class CovidModalComponent implements OnInit {
   }
 
   submit(): void {
-    const contact = {
-      name: this.tracingForm.value.name,
-      phone_number: `+1${this.tracingForm.value.phone_number}`,
-      key: this.restaurant.tracing_key,
-    };
-    this.validate(contact);
-    if (this.phoneError === '' && this.nameError === '') {
-      this.tracingService.traceCustomer(this.slug, contact).subscribe((timeIn) => {
-        localStorage.setItem('time_in', JSON.stringify(timeIn));
-        this.modalService.dismissAll();
-      });
+
+    if (!this.submitted) {
+      const contact = {
+        name: this.tracingForm.value.name,
+        phone_number: `+1${this.tracingForm.value.phone_number}`,
+        key: this.restaurant.tracing_key,
+      };
+      this.validate(contact);
+      if (this.phoneError === '' && this.nameError === '') {
+        this.tracingService.traceCustomer(this.slug, contact).subscribe((timeIn) => {
+            localStorage.setItem('time_in', JSON.stringify(timeIn));
+            this.submitted = true;
+          });
+      }
+    } else {
+      this.modalService.dismissAll();
     }
   }
 
