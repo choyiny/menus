@@ -136,7 +136,6 @@ $checkbox-size: 18px;
 
 .submit-button {
   width: 100%;
-  background-color: black;
   color: white;
   border-radius: 10px;
   font-size: 21px;
@@ -149,10 +148,20 @@ $checkbox-size: 18px;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     border-radius: 10px;
   }
-  &:hover {
+}
+
+.submitted {
+  background-color: #0ba00f;
+}
+
+.not-submitted {
+  background-color: black;
+
+  &:hover{
     background-color: #ee3353;
   }
 }
+
 
 .content {
   margin: 0px 20px 20px 20px;
