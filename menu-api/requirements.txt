@@ -5,6 +5,8 @@ flask_cors
 # https://serverfault.com/questions/1094062/from-itsdangerous-import-json-as-json-importerror-cannot-import-name-json-fr
 markupsafe==2.0.1
 
+importlib-metadata==4.13.0
+
 # database
 mongoengine==0.20.0
 
