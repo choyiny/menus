@@ -48,3 +48,5 @@ opencv-python
 
 # Numpy
 numpy==1.19.3
+
+dnspython==2.2.1
