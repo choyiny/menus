@@ -17,13 +17,13 @@ SENTRY_DSN = ""
 QR_CODE_ROOT_URL = 'https://menu.pickeasy.ca/api/qr'
 
 # AWS Secrets
-AWS_KEY_ID = "AKIAX7MH2ROBO3P2RAHI"
-AWS_SECRET = "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"
+AWS_KEY_ID = ""
+AWS_SECRET = ""
 AWS_REGION = "us-east-1"
-S3_BUCKET_NAME = "pickeasy-restaurant-images"
+S3_BUCKET_NAME = ""
 
 # Firebase
-FIREBASE_CERT_NAME = "pickeasy-app-firebase-adminsdk-94cx4-03192a4733.json"
+FIREBASE_CERT_NAME = ""
 
 # Sendgrid
 SENDGRID_API_KEY = ""
